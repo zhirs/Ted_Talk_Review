@@ -1,6 +1,6 @@
-package test;
+package tedtalk.controller;
 
-public class Test {
+public class TestController {
 	public static void main(String[]args){
 	String test = "Test";
 	System.out.println(test);
