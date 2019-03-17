@@ -1,8 +1,20 @@
 package tedtalk.controller;
 
+import tedtalk.model.TestModel;
+
 public class TestController {
-	public static void test(String[]args){
-	String test = "Test";
-	System.out.println(test);
+	private TestModel model;
+	
+	public void setModel(TestModel model) {
+		this.model = model;
+	}
+	
+	public void loginLoad() {
+		model.setPlacePass("toor");
+		model.setPlaceUser("root");
+	}
+	
+	public void testLogin() {
+		model.verifiedCred();
 	}
 }
