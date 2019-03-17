@@ -1,4 +1,5 @@
 Ted_Talk_Review Application:
+TESTING. IDK WHY BUT THIS HAS NO PROJECTS??
 This platform will allow students to write narrative reviews and give quality rankings (1-5) on TED talks. Users will be able to search for a TED talk on the database to either add onto the reviews or create a new group of ted talks reviews. This will require the reviews to be sortable by date range, keyword, and title. The site will have separate account roles, allowing for admins to view a count of individual user reviews, as well as to remove user reviews, both features for educational purposes
 
 
