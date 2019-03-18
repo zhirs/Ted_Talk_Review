@@ -8,12 +8,12 @@
   <!-- Servlets -->
   
 <servlet>
-	<servlet-name>testServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.servlettest</servlet-class>
+	<servlet-name>homeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.homeservlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
-	<servlet-name>testServlet</servlet-name>
-	<url-pattern>/test</url-pattern>
+	<servlet-name>homeServlet</servlet-name>
+	<url-pattern>/home</url-pattern>
 </servlet-mapping>
 </web-app>

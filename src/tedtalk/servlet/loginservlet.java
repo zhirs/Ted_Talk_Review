@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import tedtalk.model.TestModel;
 import tedtalk.controller.TestController;
 
-public class servlettest extends HttpServlet {
+public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("GuessingGame Servlet: doGet");	
+		System.out.println("Home Servlet: doGet");	
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/test.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -73,10 +73,10 @@ public class servlettest extends HttpServlet {
 		
 		// set "game" attribute to the model reference
 		// the JSP will reference the model elements through "game"
-		req.setAttribute("testModelAttrib", model);
+		req.setAttribute("homeModelAttrib", model);
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/test.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
 	}
 
 	private String getString(HttpServletRequest req, String string) {
