@@ -17,20 +17,14 @@
 	</head>
 	
 	<body>
-		<h1>TedTalk Reviews</h1>
+		<h1>Profile</h1>
 		<hr>
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+		<input type = "Submit" name = "redirectHome" value = "Home">
 		</form>
 		<hr>
-		
-		<p>THIS IS AN EXAMPLE OF A REVIEW</p>
+		<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
 		<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
-		<input type = "Submit" name = "redirectReview" value = "View">
-		</form>
-		
-		<p> THIS IS AN EXAMPLE OF ANOTHER REVIEW</p>
-		<form action="${pageContext.servletContext.contextPath}/review2" method="get"> 
 		<input type = "Submit" name = "redirectReview" value = "View">
 		</form>
 		
