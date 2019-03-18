@@ -11,9 +11,19 @@
 	<servlet-name>homeServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.homeservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>loginServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.loginservlet</servlet-class>
+</servlet>
 
 <servlet-mapping>
 	<servlet-name>homeServlet</servlet-name>
 	<url-pattern>/home</url-pattern>
 </servlet-mapping>
+
+<servlet-mapping>
+	<servlet-name>loginServlet</servlet-name>
+	<url-pattern>/login</url-pattern>
+</servlet-mapping>
+
 </web-app>

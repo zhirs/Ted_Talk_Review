@@ -19,8 +19,8 @@
 	<body>
 		<h1> Test Login Page </h1>
 		<hr>
-		<form action="${pageContext.servletContext.contextPath}/servlettest" method="post"> 
-		<input type = "Submit" name = "testUser" value = "Test Username">
+		<form action="${pageContext.servletContext.contextPath}/login" method="get"> 
+		<input type = "Submit" name = "redirectLogin" value = "redirectLogin">
 		</form>
 		<hr>
 	</body>

@@ -20,7 +20,7 @@ public class loginservlet extends HttpServlet {
 		System.out.println("Home Servlet: doGet");	
 		
 		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -76,7 +76,7 @@ public class loginservlet extends HttpServlet {
 		req.setAttribute("homeModelAttrib", model);
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 	}
 
 	private String getString(HttpServletRequest req, String string) {
