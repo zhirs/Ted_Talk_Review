@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Login Page</title>
+		<title>TedTalkReviews</title>
 		<style type = "text/css">
 		body{
 		background-color: #ADD8E6;
@@ -17,10 +17,10 @@
 	</head>
 	
 	<body>
-		<h1> Test Login Page </h1>
+		<h1> TedTalkReviews</h1>
 		<hr>
 		<form action="${pageContext.servletContext.contextPath}/login" method="get"> 
-		<input type = "Submit" name = "redirectLogin" value = "redirectLogin">
+		<input type = "Submit" name = "redirectLogin" value = "Login">
 		</form>
 		<hr>
 	</body>
