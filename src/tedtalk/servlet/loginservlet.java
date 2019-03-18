@@ -9,13 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 
 public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private String username = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Login Servlet: doGet");	
-		
+		username = (String) req.getSession().getAttribute("username");
+		// call JSP to generate empty form
+		if(username != null) {
+			resp.sendRedirect(req.getContextPath() + "/login");
+			req.getSession().setAttribute("username", null);
+		}
+		else {
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		}
 		// call JSP to generate empty form
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 	}
@@ -25,6 +33,7 @@ public class loginservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Login Servlet: doPost");
+		
 		
 		// set "game" attribute to the model reference
 		// the JSP will reference the model elements through "game"

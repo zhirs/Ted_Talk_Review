@@ -23,6 +23,10 @@
 		<input type = "Submit" name = "redirectHome" value = "Home">
 		</form>
 		<hr>
+		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+		<input type = "Submit" name = "logout" value = "Logout">
+		</form>
+		<hr>
 		<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
 		<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 		<input type = "Submit" name = "redirectReview" value = "View">
