@@ -9,7 +9,7 @@ public class Main {
 		String webappCodeBase = "./war";
 		File warFile = new File(webappCodeBase);
 		Launcher launcher = new Launcher();
-		//ADDED TEST
+		
 		// get a server for port 8081
 		System.out.println("CREATING: web server on port 8081");
 		Server server = launcher.launch(true, 8081, warFile.getAbsolutePath(), "/tedTalkReview");
