@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tedtalk.model.TestModel;
-import tedtalk.controller.TestController;
+import tedtalk.model.ProfileModel;
+import tedtalk.controller.ProfileController;
 
 public class profileservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +32,17 @@ public class profileservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Profile Servlet: doPost");
+		
+		ProfileModel model = new ProfileModel();
+		
+		ProfileController controller = new ProfileController();
+		
+		String errorMessage = null;
+		
+		controller.setModel(model);
+		
+		req.setAttribute("errorMessage", errorMessage);
+		req.setAttribute("profileM", model);
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
