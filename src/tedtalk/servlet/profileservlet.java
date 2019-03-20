@@ -24,6 +24,22 @@ public class profileservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
+			ProfileModel model = new ProfileModel();
+			
+			ProfileController controller = new ProfileController();
+			
+			String errorMessage = null;
+			
+			controller.setModel(model);
+			
+			model.setSection(model.getTestSection());
+			model.setEmail(model.getTestEmail());
+			model.setRole(model.getTestRole());
+			model.setUser(model.getTestUser());
+			model.setPass(model.getTestPass());
+			
+			req.setAttribute("errorMessage", errorMessage);
+			req.setAttribute("profileM", model);
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
 	}
@@ -32,17 +48,6 @@ public class profileservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Profile Servlet: doPost");
-		
-		ProfileModel model = new ProfileModel();
-		
-		ProfileController controller = new ProfileController();
-		
-		String errorMessage = null;
-		
-		controller.setModel(model);
-		
-		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("profileM", model);
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);

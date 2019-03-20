@@ -9,14 +9,28 @@ public class ProfileModel {
 	
 	private String testUser = "root";
 	private String testPass = "toor";
+	private String testEmail = "jlandau2";
+	private String testSection = "CS320-103";
+	private String testRole = "User";
 	
 	public ProfileModel() {
 	}
+	
 	public String getTestUser() {
 		return testUser;
 	}
+	
 	public String getTestPass() {
 		return testPass;
+	}
+	public String getTestEmail() {
+		return testEmail;
+	}
+	public String getTestSection() {
+		return testSection;
+	}
+	public String getTestRole() {
+		return testRole;
 	}
 	public String getUser() {
 		return user;
