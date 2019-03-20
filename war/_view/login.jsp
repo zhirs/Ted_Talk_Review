@@ -22,10 +22,10 @@
 		<form action="${pageContext.servletContext.contextPath}/login" method="post">
 			<table>
 				<tr>
-					<td> <input type="text" name = "u" placeholder = "Username" required = "required"> </td>
+					<td> <input type="text" name = "u" placeholder = "Username" required = "required" value="${profileM.user}"> </td>
 		 		</tr>
 		 		<tr>
-		 			<td> <input type="text" name = "p" placeholder = "Password" required = "required"> </td>
+		 			<td> <input type="text" name = "p" placeholder = "Password" required = "required" value="${profileM.pass}"> </td>
 		 		</tr>
 	 		</table>
 	 		<button type="submit" name="submit" value = "Login">Login</button>

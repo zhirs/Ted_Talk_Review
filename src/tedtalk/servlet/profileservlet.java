@@ -33,6 +33,17 @@ public class profileservlet extends HttpServlet {
 		
 		System.out.println("Profile Servlet: doPost");
 		
+		ProfileModel model = new ProfileModel();
+		
+		ProfileController controller = new ProfileController();
+		
+		String errorMessage = null;
+		
+		controller.setModel(model);
+		
+		req.setAttribute("errorMessage", errorMessage);
+		req.setAttribute("profileM", model);
+		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 	}

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tedtalk.model.ProfileModel;
+import tedtalk.controller.ProfileController;
+
 public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
@@ -34,24 +37,31 @@ public class loginservlet extends HttpServlet {
 		
 		System.out.println("Login Servlet: doPost");
 		
-		
+		ProfileModel model = new ProfileModel();
+		ProfileController controller = new ProfileController();
+		controller.setModel(model);
+		String errorMessage = null;
 		// set "game" attribute to the model reference
-		// the JSP will reference the model elements through "game"
-		String AdminUser = "root";
-		String AdminPass = "toor";
-		
-		String user = req.getParameter("u");
-		String pass = req.getParameter("p");
-		
-		
-		if( pass.equals(AdminPass) && user.equals(AdminUser)) {
-			resp.sendRedirect(req.getContextPath() + "/home");
-			System.out.println("Login Servlet: Login Successful");
-			req.getSession().setAttribute("username", user); // adds username to session
-		}else{
-			req.setAttribute("response", "Incorrect Username or Password");
-			System.out.println("Login Servlet: Login Failed");
-			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		// the JSP will reference the model elements through "game"	
+		try {
+			String user = req.getParameter("u");
+			String pass = req.getParameter("p");
+			
+			model.setUser(user);
+			model.setPass(pass);
+			
+			if(controller.verified()) {
+				resp.sendRedirect(req.getContextPath() + "/home");
+				System.out.println("Login Servlet: Login Successful");
+				req.getSession().setAttribute("username", model.getUser());
+			}
+			else{
+				req.setAttribute("response", "Incorrect Username or Password");
+				System.out.println("Login Servlet: Login Failed");
+				req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+			}
+		}catch (NumberFormatException e) {
+			errorMessage = "Invalid double";
 		}
 
 		// now call the JSP to render the new page
