@@ -18,6 +18,7 @@
 	
 	<body>
 		<h1>Profile</h1>
+		<h2>${profileM.role} ${profileM.section} ${profileM.email}</h2>
 		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" value = "Home">

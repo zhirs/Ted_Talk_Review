@@ -6,6 +6,7 @@ public class RequestController {
 	public void setModel(RequestModel model) {
 		this.model = model;
 	}
+	
 	public double avgRating() {
 		System.out.println("done");
 		return model.getAvgRating();
