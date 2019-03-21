@@ -6,12 +6,14 @@ public class ProfileModel {
 	private String email;
 	private String section;
 	private String role;
+	private int profID;
 	
 	private String testUser = "root";
 	private String testPass = "toor";
 	private String testEmail = "jlandau2";
 	private String testSection = "CS320-103";
 	private String testRole = "User";
+	private int testProfID= 1;
 	
 	public ProfileModel() {
 	}
@@ -31,6 +33,9 @@ public class ProfileModel {
 	}
 	public String getTestRole() {
 		return testRole;
+	}
+	public int getTestProfID() {
+		return testProfID;
 	}
 	public String getUser() {
 		return user;
@@ -61,5 +66,11 @@ public class ProfileModel {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public int getProfID() {
+		return profID;
+	}
+	public void setProfID(int profID) {
+		this.profID = profID;
 	}
 }
