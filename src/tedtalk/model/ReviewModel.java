@@ -9,13 +9,12 @@ public class ReviewModel {
 	protected int reviewRating = 0;//WHOLE NUBMERS ONLY
 	private int reviewID = 0;
 	private int requestID = 0;
-	//protected Profile user = new Profile();//HAS A PROFILE ASSOCIATED WITH REVIEW
+	ProfileModel profileModel = new ProfileModel();
+	private int profID = profileModel.getProfID();
 //CONSTRUCTORS:
 	ReviewModel(){//BASE CONSTRUCTOR
-
 	}
-	ReviewModel(/*Profile userID,*/ String userReview, int userRating, Date reviewDate){//DEMO CONSTRUCTOR
-		//this.user.setProfileId(userID.getProfileID());
+	ReviewModel(String userReview, int userRating, Date reviewDate){//DEMO CONSTRUCTOR
 		this.reviewMessage = userReview;
 		this.setReviewRating(userRating);
 		this.reviewDate = reviewDate;
@@ -60,5 +59,8 @@ public class ReviewModel {
 		}
 		public Date getReviewDate(){
 			return reviewDate;
+		}
+		public int getProfID() {
+			return profID;
 		}
 }
