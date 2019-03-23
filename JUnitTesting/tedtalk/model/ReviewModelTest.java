@@ -16,6 +16,7 @@ public class ReviewModelTest {
 		System.out.println("expected value: 5");
 		System.out.println("your value: " + tester.getReviewRating());
 	}
+	//
 	@Test
 	public void test1(){
 		System.out.println("initializing test1: ");
