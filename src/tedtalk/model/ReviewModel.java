@@ -5,16 +5,18 @@ public class ReviewModel {
 //MEMBERs:
 	protected Date reviewDate = new Date();//MIGHT CONSIDER USING JAVA.UTIL.TIME??
 	protected String reviewStatus = " ";//PENDING, APPROVED ,DENIED
-	protected String reviewMessage = " ";
+	protected String reviewMessage = "null";
 	protected int reviewRating = 0;//WHOLE NUBMERS ONLY
 	private int reviewID = 0;
 	private int requestID = 0;
 	ProfileModel profileModel = new ProfileModel();
 	private int profID = profileModel.getProfID();
 //CONSTRUCTORS:
-	ReviewModel(){//BASE CONSTRUCTOR
+	public ReviewModel(){//BASE CONSTRUCTOR
+		
 	}
-	ReviewModel(String userReview, int userRating, Date reviewDate){//DEMO CONSTRUCTOR
+	public ReviewModel(String userReview, int userRating, Date reviewDate){//DEMO CONSTRUCTOR
+		this();
 		this.reviewMessage = userReview;
 		this.setReviewRating(userRating);
 		this.reviewDate = reviewDate;
