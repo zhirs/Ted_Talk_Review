@@ -31,13 +31,7 @@ public class profileservlet extends HttpServlet {
 			String errorMessage = null;
 			
 			controller.setModel(model);
-			
-			model.setSection(model.getTestSection());
-			model.setEmail(model.getTestEmail());
-			model.setRole(model.getTestRole());
-			model.setUser(model.getTestUser());
-			model.setPass(model.getTestPass());
-			
+
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
