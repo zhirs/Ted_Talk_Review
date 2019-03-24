@@ -1,5 +1,7 @@
 package tedtalk.model;
+import java.util.List;
 
+import tedtalkDB.model.*;
 public class ProfileModel {
 	private String user;
 	private String pass;
@@ -7,35 +9,8 @@ public class ProfileModel {
 	private String section;
 	private String role;
 	private int profID;
-	
-	private String testUser = "root";
-	private String testPass = "toor";
-	private String testEmail = "jlandau2";
-	private String testSection = "CS320-103";
-	private String testRole = "User";
-	private int testProfID= 1;
-	
+
 	public ProfileModel() {
-	}
-	
-	public String getTestUser() {
-		return testUser;
-	}
-	
-	public String getTestPass() {
-		return testPass;
-	}
-	public String getTestEmail() {
-		return testEmail;
-	}
-	public String getTestSection() {
-		return testSection;
-	}
-	public String getTestRole() {
-		return testRole;
-	}
-	public int getTestProfID() {
-		return testProfID;
 	}
 	public String getUser() {
 		return user;
