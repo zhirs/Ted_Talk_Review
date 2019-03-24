@@ -31,7 +31,10 @@
 		<input type = "Submit" name = "logout" value = "Logout">
 		</form>
 		<hr>
-		<p> THIS IS AN EXAMPLE OF A REVIEW <p>
+		<p> THIS IS AN EXAMPLE OF A REVIEW <p> 
+		<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
+		<input type = "Submit" name = "request" value = "Request">
+		</form>
 		<hr>
 	</body>
 </html>

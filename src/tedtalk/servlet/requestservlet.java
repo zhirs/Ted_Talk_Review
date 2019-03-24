@@ -8,48 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
-import tedtalkDB.model.Username;
 import tedtalk.controller.ProfileController;
 
-public class profileservlet extends HttpServlet {
+public class requestservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Profile Servlet: doGet");	
+		System.out.println("Request: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			ProfileModel model = new ProfileModel();
-			
-			ProfileController controller = new ProfileController();
-			
-			Username userModel = new Username();
-			
-			String errorMessage = null;
-			
-			controller.setModel(model);
-
-			req.setAttribute("errorMessage", errorMessage);
-			req.setAttribute("profileM", model);
-			req.setAttribute("userModel", model);
-			
-			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/request.jsp").forward(req, resp);
 		}
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Profile Servlet: doPost");
+		System.out.println("Review Servlet2: doPost");
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/request.jsp").forward(req, resp);
 	}
 	
 }

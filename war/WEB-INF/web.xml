@@ -24,8 +24,8 @@
 	<servlet-class>tedtalk.servlet.reviewservlet</servlet-class>
 </servlet>
 <servlet>
-	<servlet-name>reviewServlet2</servlet-name>
-	<servlet-class>tedtalk.servlet.reviewservlet2</servlet-class>
+	<servlet-name>requestServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.requestservlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
@@ -44,8 +44,8 @@
 </servlet-mapping>
 
 <servlet-mapping>
-	<servlet-name>reviewServlet2</servlet-name>
-	<url-pattern>/review2</url-pattern>
+	<servlet-name>requestServlet</servlet-name>
+	<url-pattern>/request</url-pattern>
 </servlet-mapping>
 
 <servlet-mapping>

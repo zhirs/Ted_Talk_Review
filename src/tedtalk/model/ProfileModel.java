@@ -7,7 +7,7 @@ public class ProfileModel {
 	private String section;
 	private String role;
 	private int profID;
-	
+	// it feels as if this class is obsolete now ...
 	public ProfileModel() {
 	}
 	public String getUser() {
