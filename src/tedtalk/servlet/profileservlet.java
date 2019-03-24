@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
+import tedtalkDB.model.Username;
 import tedtalk.controller.ProfileController;
 
 public class profileservlet extends HttpServlet {
@@ -28,12 +29,16 @@ public class profileservlet extends HttpServlet {
 			
 			ProfileController controller = new ProfileController();
 			
+			Username userModel = new Username();
+			
 			String errorMessage = null;
 			
 			controller.setModel(model);
 
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
+			req.setAttribute("userModel", model);
+			
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
 	}

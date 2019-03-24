@@ -3,7 +3,7 @@ package tedtalkDB.model;
 public class Username {
 	private String user;
 	private String password;
-	
+
 	public void createUser(String user, String pass) {
 		this.user = user;
 		password = pass;

@@ -17,7 +17,7 @@
 	</head>
 	
 	<body>
-		<h1>Review 2</h1>
+		<h1>Request</h1>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" value = "Home">
 		</form>
@@ -30,7 +30,14 @@
 		<input type = "Submit" name = "logout" value = "Logout">
 		</form>
 		<hr>
-		<p>THIS IS AN EXAMPLE OF A REVIEW</p]>
+		<p>URL</p>
+		<p>Body</p>
+		<hr>
+		<h2>Review Example:</h2>
+		<p> review body </p>
+		<form action = "${pageContext.servletContext.contextPath}/review" method = "get">
+		<input type = "Submit" name = "review" value = "Review">
+		</form>
 		<hr>
 	</body>
 </html>
