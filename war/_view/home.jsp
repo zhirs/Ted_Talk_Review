@@ -52,7 +52,7 @@
 		<hr>
 		<p> THIS IS AN EXAMPLE OF A REQUEST</p>
 		<form action="${pageContext.servletContext.contextPath}/request" method="get"> 
-		<input type = "Submit" name = "redirectReview" class="button2" value = "Reviews">
+		<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
 		</form>
 		
 		<hr>
