@@ -52,6 +52,7 @@
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br>
+		
 		<hr>
 		<p> THIS IS AN EXAMPLE OF A REVIEW<p> 
 		<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
