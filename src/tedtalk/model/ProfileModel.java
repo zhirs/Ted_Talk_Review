@@ -9,7 +9,7 @@ public class ProfileModel {
 	private String section;
 	private String role;
 	private int profID;
-
+	
 	public ProfileModel() {
 	}
 	public String getUser() {
