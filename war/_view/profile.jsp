@@ -4,6 +4,30 @@
 
 <html>
 	<head>
+	<style>
+		.button {
+		background-color: #9370DB; 
+		border: 1px solid black;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		float: left;
+		}
+		.button2 {
+		background-color: #9370DB; 
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		}
+	</style>
+	
 		<title>TedTalkReviews</title>
 		<style type = "text/css">
 		body{
@@ -19,18 +43,17 @@
 	<body>
 		<h1>Profile</h1>
 		<h2>${profileM.role} ${profileM.section} ${profileM.email}</h2>
-		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
-		<input type = "Submit" name = "redirectHome" value = "Home">
+		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 		</form>
-		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" value = "Logout">
+		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<br><br><br>
 		<hr>
 		<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
 		<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
-		<input type = "Submit" name = "redirectReview" value = "View">
+		<input type = "Submit" name = "redirectReview" class="button2" value = "View">
 		</form>
 		
 		<hr>
