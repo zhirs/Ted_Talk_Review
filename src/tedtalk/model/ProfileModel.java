@@ -7,7 +7,7 @@ public class ProfileModel {
 	private String pass;
 	private String email;
 	private String section;
-	private String role;
+	private int role;
 	private int profID;
 	
 	public ProfileModel() {
@@ -36,10 +36,10 @@ public class ProfileModel {
 	public void setSection(String section) {
 		this.section = section;
 	}
-	public String getRole() {
+	public int getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 	public int getProfID() {
