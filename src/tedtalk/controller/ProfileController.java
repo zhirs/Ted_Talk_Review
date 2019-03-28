@@ -29,8 +29,8 @@ public class ProfileController {
 		model.setUser(login.getUser());
 	}
 	
-	// adds a user to users list temporarily on the fake database
-	public void userCreation(String user, String pass, String email, String section, int profID, int role) {
-		fake.createUser(user, pass, email, section, profID, role);
+	// adds a user to users list temporarily on the fake database, profID automatically created
+	public void userCreation(String user, String pass, String email, String section, int role) {
+		fake.createUser(user, pass, email, section, role);
 	}
 }
