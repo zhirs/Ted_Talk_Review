@@ -5,25 +5,29 @@
 <html>
 	<style>
 		.button {
-		background-color: #9370DB; 
+		background-color: grey; 
 		border: 1px solid black;
-		color: white;
-		padding: 15px 32px;
+		color: black;
+		padding: 12px 24px;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
-		font-size: 16px;
+		font-size: 10px;
 		float: left;
 		}
 		.button2 {
-		background-color: #9370DB; 
+		background-color: grey; 
 		border: none;
-		color: white;
-		padding: 15px 32px;
+		color: black;
+		padding: 12px 24px;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
-		font-size: 16px;
+		font-size: 10px;
+		}
+		.reviewSection{
+		clear: both;
+		overflow: auto;
 		}
 	</style>
 	
@@ -31,7 +35,7 @@
 		<title>TedTalkReviews</title>
 		<style type = "text/css">
 		body{
-		background-color: #ADD8E6;
+		background-color: white;
 		}
 		h1{
 		text-align: center;
@@ -41,6 +45,8 @@
 	</head>
 	
 	<body>
+		<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+		<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 		<h1> Review </h1>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
@@ -53,12 +59,13 @@
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br>
-		
-		<hr>
-		<p> THIS IS AN EXAMPLE OF A REVIEW<p> 
-		<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
-		<input type = "Submit" name = "request" class="button2" value = "Request">
-		</form>
-		<hr>
+		<div id = "reviewSection">
+			<hr>
+			<p> THIS IS AN EXAMPLE OF A REVIEW<p> 
+			<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
+			<input type = "Submit" name = "request" class="button2" value = "Request">
+			</form>
+			<hr>
+		</div>
 	</body>
 </html>
