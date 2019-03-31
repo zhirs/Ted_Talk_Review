@@ -42,7 +42,9 @@
 	
 	<body>
 		<h1>Profile</h1>
-		<h2>${profileM.role} ${profileM.section} ${profileM.email}</h2>
+		<h2>role: ${profileM.role}</h2> 
+		<h2>section: ${profileM.section} </h2>
+		<h2>email: ${profileM.email}</h2>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 		</form>

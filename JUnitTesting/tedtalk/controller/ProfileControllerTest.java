@@ -126,6 +126,17 @@ public class ProfileControllerTest {
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandler.verified());
 	}
+	@Test
+	public void createLoginTest() {
+		//setup
+		controllerHandler.createLogin("zhirs");
+		
+		assertTrue(modelHandler.getEmail().equals("zhirs@ycp.edu"));
+		assertTrue(modelHandler.getPass().equals("monkey"));
+		assertTrue(modelHandler.getProfID() == 1);
+		assertTrue(modelHandler.getSection().equals("ADMIN"));
+		assertTrue(modelHandler.getRole() == 2);
+	}
 	//NO @AFTER NEEDED COMPLIMENTS OF JAVA GARBAGE COLLECTION :)
 //***************************************************************     6 TEST CASES     *******************************************************************
 }

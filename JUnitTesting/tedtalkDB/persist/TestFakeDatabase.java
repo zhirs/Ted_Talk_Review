@@ -3,10 +3,14 @@ package tedtalkDB.persist;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import tedtalkDB.model.Account;
+import tedtalkDB.model.Review;
 import tedtalkDB.persist.*;
 
 public class TestFakeDatabase {
@@ -38,5 +42,19 @@ public class TestFakeDatabase {
 		assertTrue(test.checkCredentials("acastro7", "forest") == true);
 		assertFalse(test.checkCredentials("acastro7", "tree") == true);
 		assertFalse(test.checkCredentials("acastro7", "cow") == true);
+	}
+
+	@Test
+	public void addNewUser() {
+		test.addUser("RandomStudent", "unknown", "student@ycp.edu", "CS100", 0);
+		
+		assertTrue(test.getUserList().size() == 7);
+		
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getUser().equals("RandomStudent"));
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getPassword().equals("unknown"));
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getEmail().equals("student@ycp.edu"));
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getSection().equals("CS100"));
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getprofID() == 7);
+		
 	}
 }

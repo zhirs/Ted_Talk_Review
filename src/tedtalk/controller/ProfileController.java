@@ -31,6 +31,6 @@ public class ProfileController {
 	
 	// adds a user to users list temporarily on the fake database, profID automatically created
 	public void userCreation(String user, String pass, String email, String section, int role) {
-		fake.createUser(user, pass, email, section, role);
+		fake.addUser(user, pass, email, section, role);
 	}
 }

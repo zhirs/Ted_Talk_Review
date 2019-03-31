@@ -9,8 +9,8 @@ import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
 	// IMPORTANT: userList and reviewList .get starts at 0, profID and revID starts at 1
-	private List<Account> userList; 
-	private List<Review> reviewList;
+	private ArrayList<Account> userList; 
+	private ArrayList<Review> reviewList;
 	
 	public FakeDatabase() {
 		userList = new ArrayList<Account>();
@@ -19,9 +19,14 @@ public class FakeDatabase implements IDatabase{
 		// Add initial data
 		userList.addAll(InitialData.getUsers());
 		reviewList.addAll(InitialData.getReviews());
-		
-		System.out.println(userList.size() + " userList");
-		System.out.println(reviewList.size() + " reviewList");
+	}
+	
+	public ArrayList<Account> getUserList(){
+		return userList;
+	}
+	
+	public ArrayList<Review> getReviewList(){
+		return reviewList;
 	}
 	
 	// checks credentials of login
@@ -39,7 +44,7 @@ public class FakeDatabase implements IDatabase{
 	// gets user from userList list to return to model
 	public Account setLogin(String user) {
 		for(Account use: userList) {
-			if(use.getUser() == user) {
+			if(use.getUser().equals(user)) {
 				return use;
 			}
 		}
@@ -47,9 +52,9 @@ public class FakeDatabase implements IDatabase{
 	}
 	
 	// adding a new user into the userList (temp)
-	public void createUser(String user, String pass, String email, String section, int role) {
+	public void addUser(String user, String pass, String email, String section, int role) {
 		Account use = new Account();
-		use.createUser(user, pass, email, section, InitialData.ID(), role);
+		use.createUser(user, pass, email, section, userList.size() + 1, role);
 		userList.add(use);
 	}
 	

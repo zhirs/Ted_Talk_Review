@@ -75,7 +75,7 @@ public class InitialData {
 		return reviews;
 	}
 	
-	public static int ID() {
+	private static int ID() {
 		iter ++;
 		return iter;
 	}
