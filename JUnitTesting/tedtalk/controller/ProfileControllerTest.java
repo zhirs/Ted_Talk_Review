@@ -118,7 +118,7 @@ public class ProfileControllerTest {
 		System.out.println("your result: " + controllerHandler.verified());
 	}
 	@Test
-	public void verifiedTest11() {
+	public void verifiedTest11() { 
 		System.out.println("initializing invalid password test case: ");
 		modelHandler.setUser("acastro7");
 		modelHandler.setPass("tree");//INVALID PASSWORD
