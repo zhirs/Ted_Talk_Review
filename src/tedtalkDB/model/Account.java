@@ -1,11 +1,11 @@
 package tedtalkDB.model;
 
-public class Username {
+public class Account {
 	private String user;
 	private String password;
 	private String email;
 	private String section; // set to ADMIN if not student / professor
-	private int profID; // is set to 0 if role is not professor
+	private int profID; // iterates starting at 1
 	private int role; // set to 0 for students, 1 for professors, and 2 for superadmins
 	
 	public void createUser(String user, String pass, String email, String section, int profID, int role) {
