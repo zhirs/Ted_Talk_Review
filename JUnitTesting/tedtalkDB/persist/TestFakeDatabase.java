@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Student;
 import tedtalkDB.persist.*;
 
 public class TestFakeDatabase {
@@ -50,10 +51,10 @@ public class TestFakeDatabase {
 		
 		assertTrue(test.getUserList().size() == 7);
 		
-		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getUser().equals("RandomStudent"));
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getUserName().equals("RandomStudent"));
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getPassword().equals("unknown"));
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getEmail().equals("student@ycp.edu"));
-		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getSection().equals("CS100"));
+		assertTrue(((Student) test.getUserList().get(test.getUserList().size() - 1)).getSection().equals("CS100"));
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getprofID() == 7);
 		
 	}
