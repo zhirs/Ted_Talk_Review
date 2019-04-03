@@ -29,24 +29,19 @@ public class TestAccount {
 		assertTrue(users.get(5).getEmail().equals("randomPerson@ycp.edu"));
 		assertTrue(users.get(5).getPassword().equals("random"));
 		assertTrue(users.get(5).getprofID() == 6);
-		assertTrue(users.get(5).getRole() == 0);
-		assertTrue(users.get(5).getUser().equals("randp"));
-		assertTrue(users.get(5).getSection().equals("CS320"));
+		assertTrue(users.get(5).getUserName().equals("randp"));
+		assertTrue(((Student) users.get(5)).getSection().equals("CS320"));
 	}
 	
 	@Test
 	public void testProf() {
-		assertTrue(users.get(4).getRole() == 1);
+		assertTrue(users.get(4).getUserName().equals("profX"));
 		assertTrue(users.get(4).getprofID() == 5);
-		assertTrue(users.get(4).getSection().equals("CS260"));
 	}
 	
 	@Test
-	public void testSuperAdmins() {
-		assertTrue(users.get(0).getRole() == 2);
-		assertTrue(users.get(0).getprofID() == 1);
-		assertTrue(users.get(0).getSection().equals("ADMIN"));
-		
+	public void testNetworkAdmins() {
+		assertTrue(users.get(0).getprofID() == 1);		
 		assertFalse(users.get(1).getPassword().equals("monkey"));
 	}
 }

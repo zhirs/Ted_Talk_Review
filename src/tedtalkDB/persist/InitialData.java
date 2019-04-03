@@ -3,7 +3,10 @@ package tedtalkDB.persist;
 import java.util.ArrayList;
 import java.util.List;
 import tedtalkDB.model.Account;
+import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Student;
 
 public class InitialData {
 	private static int iter;
@@ -12,29 +15,23 @@ public class InitialData {
 		// four superadmins created
 		iter = 0;
 		// iter count added to create id tags for each user starting at 1
-		Account zack = new Account();
-		zack.createUser("zhirs", "monkey", "zhirs@ycp.edu", "ADMIN", ID(), 2);
+		NetworkAdmin zack = new NetworkAdmin("zhirs", "monkey", "zhirs@ycp.edu", ID());
 		user.add(zack);
 		
-		Account darnell = new Account();
-		darnell.createUser("dhill22", "banana", "dhill22@ycp.edu", "ADMIN", ID(), 2);
+		NetworkAdmin darnell = new NetworkAdmin("dhill22", "banana", "dhill22@ycp.edu", ID());
 		user.add(darnell);
 		
-		Account joe = new Account();
-		joe.createUser("jlandau2", "tree", "jlandau2@ycp.edu", "ADMIN", ID(), 2);
+		NetworkAdmin joe = new NetworkAdmin("jlandau2", "tree", "jlandau2@ycp.edu", ID());
 		user.add(joe);
 		
-		Account adrian = new Account();
-		adrian.createUser("acastro7", "forest", "acastro7@ycp.edu", "ADMIN", ID(), 2);
+		NetworkAdmin adrian = new NetworkAdmin("acastro7", "forest", "acastro7@ycp.edu", ID());
 		user.add(adrian);
 		
 		// test cases that are not superadmins
-		Account professor = new Account();
-		professor.createUser("profx", "professorX", "professorX@ycp.edu", "CS260", ID(), 1);
+		Professor professor = new Professor("profx", "professorX", "professorX@ycp.edu", ID());
 		user.add(professor);
 		
-		Account student = new Account();
-		student.createUser("randp", "random", "randomPerson@ycp.edu", "CS320", ID(), 0);
+		Student student = new Student("randp", "random", "randomPerson@ycp.edu", "CS320", ID());
 		user.add(student);
 		
 		return user;

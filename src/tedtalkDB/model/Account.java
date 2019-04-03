@@ -1,24 +1,20 @@
 package tedtalkDB.model;
 
 public class Account {
-	private String user;
-	private String password;
-	private String email;
-	private String section; // set to ADMIN if not student / professor
-	private int profID; // iterates starting at 1
-	private int role; // set to 0 for students, 1 for professors, and 2 for superadmins
+	protected String userName;
+	protected String password;
+	protected String email;
+	protected int profID; // iterates starting at 1
 	
-	public void createUser(String user, String pass, String email, String section, int profID, int role) {
-		this.user = user;
+	public Account(String user, String pass, String email, int profID) {
+		this.userName = user;
 		password = pass;
 		this.email = email;
-		this.section = section;
 		this.profID = profID;
-		this.role = role;
 	}
 	
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
 	
 	public String getPassword() {
@@ -33,15 +29,7 @@ public class Account {
 		return email;
 	}
 	
-	public String getSection() {
-		return section;
-	}
-	
 	public int getprofID() {
 		return profID;
-	}
-	
-	public int getRole() {
-		return role;
 	}
 }

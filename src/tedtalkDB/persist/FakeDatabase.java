@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tedtalkDB.model.IDatabase;
+import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Student;
 import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
@@ -32,7 +35,7 @@ public class FakeDatabase implements IDatabase{
 	// checks credentials of login
 	public boolean checkCredentials(String user, String pass) {
 		for(Account use: userList) {
-			if(use.getUser().equals(user)) {
+			if(use.getUserName().equals(user)) {
 				if(use.getPassword().equals(pass)) {
 					return true;
 				}
@@ -41,25 +44,35 @@ public class FakeDatabase implements IDatabase{
 		return false;
 	}
 	
-	// gets user from userList list to return to model
+	// gets account from userList list to return to model based on userName
 	public Account setLogin(String user) {
 		for(Account use: userList) {
-			if(use.getUser().equals(user)) {
+			if(use.getUserName().equals(user)) {
 				return use;
 			}
 		}
 		return null;
 	}
 	
-	// adding a new user into the userList (temp)
+	// adding a new account into the userList (temp)
+	// role 0 = student, 1 = professor, 2 = networkAdmin
 	public void addUser(String user, String pass, String email, String section, int role) {
-		Account use = new Account();
-		use.createUser(user, pass, email, section, userList.size() + 1, role);
-		userList.add(use);
+		Account newUser = null;
+		switch(role) {
+		case 1: 
+			newUser = new Professor(user, pass, email, userList.size() + 1);
+			break;
+		case 2:
+			newUser = new NetworkAdmin(user, pass, email, userList.size() + 1);
+			break;
+		default:
+			newUser = new Student(user, pass, email, section, userList.size() + 1);
+		}
+		userList.add(newUser);
 	}
 	
 	// gets all reviews by a certain profile and returns it as an array list
-	public ArrayList<Review> getProfIDreviewList(int profID){
+	public ArrayList<Review> getProfIDReviewList(int profID){
 		ArrayList<Review> profileReviews = new ArrayList<Review>();
 		for(Review rev : reviewList) {
 			if(rev.getProfID() == profID) {
@@ -71,13 +84,7 @@ public class FakeDatabase implements IDatabase{
 	
 	// find total count of reviews by a certain profile
 	public int getReviewTotal(int profID) {
-		int count = 0;
-		for(Review rev : reviewList) {
-			if(rev.getProfID() == profID) {
-				count ++;
-			}
-		}
-		return count;
+		return getProfIDReviewList(profID).size();
 	}
 	
 	// will be used as general lookup by keyword, topic, name
