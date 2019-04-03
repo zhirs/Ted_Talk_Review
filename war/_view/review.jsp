@@ -45,19 +45,28 @@
 	</head>
 	
 	<body>
-		<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
-		<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+		<span class= "images"> 
+			<a href = "https://www.ted.com" target = "blank">
+			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+			</a>
+			<a href = "https://www.my.ycp.edu" target = "blank">
+			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+			</a>
+		</span>
 		<h1> Review </h1>
-		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
-		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
-		</form>
-		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
-		</form>
-		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Logout">
-		</form>
+		<hr>		
+		<div id = "homeButtonRow">
+			<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+			<input type = "Submit" name = "redirectHome" class="button" value = "Home">
+			</form>
+			
+			<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+			<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+			</form>
+			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+			<input type = "Submit" name = "logout" class="button" value = "Logout">
+			</form>
+		</div>
 		<br><br><br>
 		<div id = "reviewSection">
 			<hr>
