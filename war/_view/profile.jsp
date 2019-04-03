@@ -72,8 +72,8 @@
 			<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
-			<hr>
-		</div>
-		</form>		
+			<hr>		
+			</form>	
+		</div>	
 	</body>
 </html>
