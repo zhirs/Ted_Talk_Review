@@ -73,7 +73,7 @@
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
 			<hr>
+			</form>		
 		</div>
-		</form>		
 	</body>
 </html>
