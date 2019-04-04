@@ -6,6 +6,10 @@ public class Account {
 	protected String email;
 	protected int profID; // iterates starting at 1
 	
+	public Account() {
+		
+	}
+	
 	public Account(String user, String pass, String email, int profID) {
 		this.userName = user;
 		password = pass;
