@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
-import tedtalkDB.model.Username;
+import tedtalkDB.model.Account;
 import tedtalk.controller.ProfileController;
 
 public class profileservlet extends HttpServlet {
@@ -29,7 +29,7 @@ public class profileservlet extends HttpServlet {
 			
 			ProfileController controller = new ProfileController();
 			
-			Username userModel = new Username();
+			Account userModel = new Account();
 			
 			String errorMessage = null;
 			
