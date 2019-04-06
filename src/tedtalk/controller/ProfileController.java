@@ -9,6 +9,10 @@ public class ProfileController {
 	private ProfileModel model;
 	private FakeDatabase fake = new FakeDatabase();
 	
+	public ProfileController() {
+		
+	}
+	
 	public void setModel(ProfileModel model) {
 		this.model = model;
 		

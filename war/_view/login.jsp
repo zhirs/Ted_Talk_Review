@@ -24,8 +24,12 @@
 	<body>
 		<h1> YCP-TedTalk Login </h1>
 		<span class = "images">
+			<a href = https://www.ted.com target = blank>
 			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+			</a>
+			<a href = https://my.ycp.edu target = blank>
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+			</a>			
 		</span>
 		<hr>
 		<div id = "bodyForm">
