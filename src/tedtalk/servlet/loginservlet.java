@@ -55,9 +55,7 @@ public class loginservlet extends HttpServlet {
 		if(controller.verified()) {
 			controller.createLogin(user);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("username", model.getUser());
 			session.setAttribute("email", model.getEmail());
-			session.setAttribute("section", model.getSection());
 			System.out.println("Login Servlet: Login Successful");
 			resp.sendRedirect(req.getContextPath() + "/home");
 		}
