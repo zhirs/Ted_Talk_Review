@@ -47,18 +47,18 @@ public class loginservlet extends HttpServlet {
 		String pass = req.getParameter("p");
 
 		model.setUser(user);
-		model.setPass(pass);
-		
-	
+		model.setPass(pass);	
 		
 		
 		if(controller.verified()) {
 			controller.createLogin(user);
 			HttpSession session = req.getSession(true);
+			session.setAttribute("username", model.getUser());
 			session.setAttribute("email", model.getEmail());
 			System.out.println("Login Servlet: Login Successful");
 			resp.sendRedirect(req.getContextPath() + "/home");
 		}
+		
 		else{
 			req.setAttribute("response", "Incorrect Username or Password");
 			System.out.println("Login Servlet: Login Failed");				

@@ -35,10 +35,11 @@ public class profileservlet extends HttpServlet {
 			
 			controller.setModel(model);
 
+			
+			
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.setAttribute("userModel", model);
-			req.setAttribute("user", username);
 			req.setAttribute("email", email);
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
