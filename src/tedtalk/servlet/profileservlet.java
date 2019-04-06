@@ -15,7 +15,6 @@ public class profileservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private String email = null;
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
