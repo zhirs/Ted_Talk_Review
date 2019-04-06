@@ -3,6 +3,9 @@ import tedtalk.model.RequestModel;
 
 public class RequestController {
 	private RequestModel model;
+	public RequestController() {
+		
+	}
 	public void setModel(RequestModel model) {
 		this.model = model;
 	}

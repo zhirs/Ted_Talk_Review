@@ -55,8 +55,8 @@
 			</a>			
 		</span>
 		<h1>Profile</h1>		
-		<h4>Welcome $"{userModel.getUser()}"</h4>
-		<h2>${profileM.role} ${profileM.section} ${profileM.email}</h2>		
+		<h4>Welcome ${user}</h4>
+		<h2>${email}</h2>		
 		<hr>
 		<div id ="homeButtonRow">
 			<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
