@@ -14,12 +14,15 @@ import tedtalk.controller.ProfileController;
 public class profileservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private String email = null;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Profile Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
+		email = (String) req.getSession().getAttribute("email");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
@@ -28,9 +31,7 @@ public class profileservlet extends HttpServlet {
 			ProfileModel model = new ProfileModel();
 			
 			ProfileController controller = new ProfileController();
-			
-			Account userModel = new Account();
-			
+		
 			String errorMessage = null;
 			
 			controller.setModel(model);
@@ -38,7 +39,8 @@ public class profileservlet extends HttpServlet {
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.setAttribute("userModel", model);
-			
+			req.setAttribute("user", username);
+			req.setAttribute("email", email);
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
 	}

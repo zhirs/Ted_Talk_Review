@@ -40,17 +40,24 @@ public class loginservlet extends HttpServlet {
 		ProfileModel model = new ProfileModel();
 		ProfileController controller = new ProfileController();
 		controller.setModel(model);
+
 		// set "game" attribute to the model reference
 		// the JSP will reference the model elements through "game"	
 		String user = req.getParameter("u");
 		String pass = req.getParameter("p");
-			
+
 		model.setUser(user);
 		model.setPass(pass);
-			
+		
+	
+		
+		
 		if(controller.verified()) {
+			controller.createLogin(user);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("username", model.getUser());
+			session.setAttribute("email", model.getEmail());
+			session.setAttribute("section", model.getSection());
 			System.out.println("Login Servlet: Login Successful");
 			resp.sendRedirect(req.getContextPath() + "/home");
 		}
@@ -59,7 +66,6 @@ public class loginservlet extends HttpServlet {
 			System.out.println("Login Servlet: Login Failed");				
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 			}
-
 		// now call the JSP to render the new page	
 	}
 }
