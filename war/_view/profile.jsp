@@ -55,7 +55,7 @@
 			</a>			
 		</span>
 		<h1>Profile</h1>		
-		<h4>Welcome ${user}</h4>
+		<h4>Welcome ${username}</h4>
 		<h2>${email} ${session}</h2>		
 		<hr>
 		<div id ="homeButtonRow">
