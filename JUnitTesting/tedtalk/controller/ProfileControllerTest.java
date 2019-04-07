@@ -134,8 +134,6 @@ public class ProfileControllerTest {
 		assertTrue(modelHandler.getEmail().equals("zhirs@ycp.edu"));
 		assertTrue(modelHandler.getPass().equals("monkey"));
 		assertTrue(modelHandler.getProfID() == 1);
-		assertTrue(modelHandler.getSection().equals("ADMIN"));
-		assertTrue(modelHandler.getRole() == 2);
 	}
 	//NO @AFTER NEEDED COMPLIMENTS OF JAVA GARBAGE COLLECTION :)
 //***************************************************************     6 TEST CASES     *******************************************************************

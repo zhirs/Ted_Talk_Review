@@ -1,7 +1,6 @@
 package tedtalkDB.persist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tedtalkDB.model.IDatabase;
 import tedtalkDB.model.NetworkAdmin;

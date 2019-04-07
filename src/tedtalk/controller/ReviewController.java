@@ -19,6 +19,7 @@ public class ReviewController {
 	public void newReview(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
 		fake.createReview(name, rate, topic, pres, desc, profID, revID);
 	}
+	
 	public ArrayList<Review> fetchReviews(int profID){
 		ArrayList<Review> result = new ArrayList<Review>();
 		result.addAll(fake.getProfIDReviewList(profID));
