@@ -82,6 +82,10 @@ public class FakeDatabase implements IDatabase{
 		return profileReviews;
 	}
 	
+	public void addReview(String name, int rate, String topic, String pres, String desc, int profID) {
+		reviewList.add(new Review(name, rate, topic, pres, desc, profID, reviewList.size() + 1));
+	}
+	
 	// find total count of reviews by a certain profile
 	public int getReviewTotal(int profID) {
 		return getProfIDReviewList(profID).size();
