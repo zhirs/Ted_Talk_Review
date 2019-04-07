@@ -23,8 +23,8 @@ public class ReviewControllerTest {
 	}
 	@Test
 	public void test0() {
-		modelHandler.setReviewRating(5);
-		modelHandler.setReviewMessage(null);//NULL REVIEW MESSAGE
+		modelHandler.setRate(5);
+		modelHandler.setDesc(null);//NULL REVIEW MESSAGE
 		assertTrue(reviewController.verifySubmission() == true);
 
 	}
@@ -40,7 +40,7 @@ public class ReviewControllerTest {
 	}
 	@Test
 	public void test1() {
-		modelHandler.setReviewRating(5);
+		modelHandler.setRate(5);
 		//FAILURE TO SET THE REVIEWMESSAGE RESULTS IN THE INITIALIZED VALUE OF "null"
 		assertTrue(reviewController.verifySubmission() == false);
 

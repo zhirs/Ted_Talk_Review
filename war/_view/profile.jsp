@@ -4,9 +4,20 @@
 
 <html>
 	<head>
-	<style>
-		.button {
-		background-color: #9370DB; 
+	<style type = "text/css">
+		.images{
+			border-radius: 25px;
+		}	
+		body{
+		background-color: grey;
+		color: white;
+		}
+		h1{
+		text-align: center;
+		color: purple;
+		} 
+		.button{
+		background-color: purple; 
 		border: 1px solid black;
 		color: white;
 		padding: 10px 21px;
@@ -15,39 +26,28 @@
 		display: inline-block;
 		font-size: 9px;
 		float: left;
-		}
-		.button2 {
-		background-color: #9370DB; 
-		border: none;
+		}				
+		.button2{
+		background-color: purple; 
+		border: 1px solid black;
 		color: white;
 		padding: 10px 21px;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
 		font-size: 9px;
-		}
-		.reviewSection{
-		background-color:white;
-		
+		}		
+		#reviewSection{
+		background-color:white;		
 		text-align: center;
 		}
-	</style>
-	
-		<title>TedTalkReviews</title>
-		<style type = "text/css">
-		body{
-		background-color: #ADD8E6;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
 		</style>
+			<title>My Account</title>		
 	</head>
 	
 	<body>
 		<span class = "images">
-			<a href = "https://www.ted.com" target = "blank">
+			<a href = "https://www.ted.com" target = "blank" >
 			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
 			</a>
 			<a href = "https://my.ycp.edu" target = "blank">
@@ -55,8 +55,8 @@
 			</a>			
 		</span>
 		<h1>Profile</h1>		
-		<h4>Welcome ${user}</h4>
-		<h2>${email} ${session}</h2>		
+
+		<h4>Welcome ${email} ${session}</h4>		
 		<hr>
 		<div id ="homeButtonRow">
 			<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
@@ -67,9 +67,16 @@
 			</form>
 		</div>
 		<br><br><br>
+		<hr>
 		<div id = "reviewSection">	
 			<hr>	
 			<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
+			
+			<c:forEach var="reviews" items="${reviews}">
+				<c:out value = "${reviews}"/> <br>Another Review<br>
+			</c:forEach>	
+
+			
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
 			<hr>

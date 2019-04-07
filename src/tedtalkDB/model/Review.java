@@ -9,8 +9,12 @@ public class Review {
 	private int profID; // ID associated with who created review
 	private int revID; // review ID associated with each review
 	
+	public Review() {
+		
+	}
+
 	// creates new review
-	public void createReview(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
+	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
 		this.name = name;
 		this.rate = rate;
 		this.topic = topic;
