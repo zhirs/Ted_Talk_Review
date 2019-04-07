@@ -1,15 +1,20 @@
 package tedtalk.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import tedtalk.model.ProfileModel;
+import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Account;
+import tedtalkDB.model.Review;
 import tedtalk.controller.ProfileController;
+import tedtalk.controller.ReviewController;
 
 public class profileservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,9 +39,21 @@ public class profileservlet extends HttpServlet {
 			String errorMessage = null;
 			
 			controller.setModel(model);
-
+			 
+			ReviewController revController = new ReviewController();
+			ReviewModel revModel = new ReviewModel();
 			
+			revController.setModel(revModel);
+			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
+			ArrayList<String> reviews = new ArrayList<String>();
+			if(!revReturn.isEmpty()) {
+				for(int i = 0; i < revReturn.size(); i++) {
+					reviews.add(revReturn.get(i).getDesc());
+				}
+			}
 			
+			req.setAttribute("reviews" , reviews);
+			System.out.println(reviews.get(0));
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.setAttribute("userModel", model);

@@ -35,7 +35,7 @@ public class TestAccount {
 	
 	@Test
 	public void testProf() {
-		assertTrue(users.get(4).getUserName().equals("profX"));
+		assertTrue(users.get(4).getUserName().equals("profx"));
 		assertTrue(users.get(4).getprofID() == 5);
 	}
 	

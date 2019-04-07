@@ -1,13 +1,11 @@
 package tedtalks.db;
 
-import java.util.Scanner;
-
 import tedtalkDB.model.DatabaseProvider;
 import tedtalkDB.persist.FakeDatabase;
 
 
 public class InitDatabase {
-	public static void init(Scanner keyboard) {
+	public static void init() {
 	//	System.out.print("Which database (0=fake, 1=derby): ");
 //		int which = Integer.parseInt(keyboard.nextLine());
 //		if (which == 0) {
