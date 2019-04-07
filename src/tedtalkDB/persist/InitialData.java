@@ -45,6 +45,7 @@ public class InitialData {
 		// 5 reviews, 2 linked to same account 
 		Review talk1 = new Review("World will be gone by 2020", 3, "Environmental Issues", "ProfessorX", "this will be the large"
 				+ " part of the review taking up much room and containing a lot of information", 1, ID());
+		
 		reviews.add(talk1);
 
 		Review talk2 = new Review("a new class drug that could prevent depression and PTSD", 5, "Mental Health", "Rebecca Brachman", ""

@@ -1,7 +1,6 @@
 package tedtalkDB.persist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tedtalkDB.model.IDatabase;
 import tedtalkDB.model.NetworkAdmin;
@@ -81,9 +80,10 @@ public class FakeDatabase implements IDatabase{
 		}
 		return profileReviews;
 	}
-	
-	public void addReview(String name, int rate, String topic, String pres, String desc, int profID) {
-		reviewList.add(new Review(name, rate, topic, pres, desc, profID, reviewList.size() + 1));
+  
+	// creates new review
+	public void createReview(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
+		reviewList.add(new Review(name, rate, topic, pres, desc, profID, reviewList.size()+1));
 	}
 	
 	// find total count of reviews by a certain profile

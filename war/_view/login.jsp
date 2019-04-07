@@ -3,36 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-		<title>Login Page</title>
-		<style type = "text/css">
-		body{
-		background-color: grey;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
-		.bodyForm{
-		text-align:below;
-		clear:both;
-		color: red
-		}
-		</style>
-	</head>
-	
-	<body>
-		<h1> YCP-TedTalk Login </h1>
+<head>
+		<title> Account Login </title>		
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/testCSS.css">
+</head>	
+	<body>		
 		<span class = "images">
 			<a href = https://www.ted.com target = blank>
-			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+			<img src = "images/TedTalk.png" align = "left" width = "200" height = "150">
 			</a>
 			<a href = https://my.ycp.edu target = blank>
-			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+			<img src = "images/YorkCollge.png" align = "right" width = "200" height = "150">
 			</a>			
 		</span>
+		<h1>YCP-TedTalk Login</h1>		
 		<hr>
-		<div id = "bodyForm">
+		<div id = "buttonForm">
 			<form action="${pageContext.servletContext.contextPath}/login" method="post">
 				<table>
 					<tr>
