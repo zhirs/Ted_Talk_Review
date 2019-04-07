@@ -47,12 +47,13 @@ public class profileservlet extends HttpServlet {
 			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
 			ArrayList<String> reviews = new ArrayList<String>();
 			if(!revReturn.isEmpty()) {
-				for(int i = 0; i < revReturn.size() - 1; i++) {
-					reviews.add(revReturn.get(0).getDesc());
+				for(int i = 0; i < revReturn.size(); i++) {
+					reviews.add(revReturn.get(i).getDesc());
 				}
 			}
 			
-			req.setAttribute("review" , reviews);
+			req.setAttribute("reviews" , reviews);
+			System.out.println(reviews.get(0));
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.setAttribute("userModel", model);

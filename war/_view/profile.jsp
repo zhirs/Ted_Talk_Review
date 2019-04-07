@@ -70,7 +70,12 @@
 		<div id = "reviewSection">	
 			<hr>	
 			<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
-			<h2>${review}</h2>
+			
+			<c:forEach var="reviews" items="${reviews}">
+				<c:out value = "${reviews}"/> <br>Another Review<br>
+			</c:forEach>	
+
+			
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
 			<hr>
