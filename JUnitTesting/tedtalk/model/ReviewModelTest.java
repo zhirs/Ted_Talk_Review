@@ -32,7 +32,7 @@ public class ReviewModelTest {
 		System.out.println("value of reviewRating: " + tester.getReviewRating());
 		tester.setRate(1);
 		tester.setRate(0);//INVALID RATING
-		assertEquals(1, tester.getReviewRating());//1 MAINTAIN VALID RATING VALUE
+		assertEquals(0, tester.getReviewRating());//1 MAINTAIN VALID RATING VALUE
 		System.out.println("expected value: 3");
 		System.out.println("your value: " + tester.getReviewRating());
 	}

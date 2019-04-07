@@ -23,6 +23,9 @@ public class Review {
 		this.profID = profID;
 		this.revID = revID;
 	}
+
+	
+	
 	
 	// get methods
 	public String getName() {
