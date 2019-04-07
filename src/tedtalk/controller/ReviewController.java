@@ -27,9 +27,9 @@ public class ReviewController {
 	}
 	
 	public boolean verifySubmission(){
-		if(reviewModel.getReviewRating() > 0 && reviewModel.getReviewMessage() != "null")//INTENTIONAL 
+		if(reviewModel.getReviewRating() > 0 && reviewModel.getDesc() != "null")//INTENTIONAL 
 			return true;//SUBMISSION MET REQS
 		else
 			return false;//SUBMISSION DID NOT MET REQS
-	}
+	}	
 }

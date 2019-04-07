@@ -12,6 +12,7 @@ public class Review {
 	public Review() {
 		
 	}
+
 	// creates new review
 	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
 		this.name = name;
