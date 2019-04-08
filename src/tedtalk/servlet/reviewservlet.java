@@ -35,19 +35,23 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
-		 
+		
 		ReviewController revController = new ReviewController();
 		Review revModel = new Review();
+		String reviewDesc = req.getParameter("reviewText");
 		
 		revController.setModel(revModel);
 		ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
 		ArrayList<String> reviews = new ArrayList<String>();
 					
-		if(!revReturn.isEmpty()) {
+		/*if(!revReturn.isEmpty()) {
 			for(int i = 0; i < revReturn.size(); i++) {
-				reviews.add(revReturn.get(i).getDesc());
+				//reviews.add(revReturn.get(i).getDesc());
+				reviews.add(reviewDesc);
 			}
-		}
+		} */
+		reviews.add(reviewDesc);
+		req.setAttribute("UpdatedReviews", reviews);
 		
 		//reviews.add(revController.newReview(req.getSession().getAttribute("username"), rate, topic, pres, desc, profID, revID));
 		
