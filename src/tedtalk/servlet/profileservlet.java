@@ -42,6 +42,7 @@ public class profileservlet extends HttpServlet {
 			 
 			ReviewController revController = new ReviewController();
 			Review revModel = new Review();
+
 			//Adrian's code, needed something that would grab the session parameter. temporary
 			ArrayList<String> test = new ArrayList<String>();
 			test.add(req.getParameter("UpdatedReviews"));
