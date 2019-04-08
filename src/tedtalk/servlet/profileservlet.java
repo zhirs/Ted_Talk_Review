@@ -41,7 +41,7 @@ public class profileservlet extends HttpServlet {
 			controller.setModel(model);
 			 
 			ReviewController revController = new ReviewController();
-			ReviewModel revModel = new ReviewModel();
+			Review revModel = new Review();
 			
 			revController.setModel(revModel);
 			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
