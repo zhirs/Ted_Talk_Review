@@ -59,7 +59,7 @@ public class InitialData {
 				+ "Solar power is inefficient at the current moment in time, nowhere near that of oil, but it is slowly being"
 				+ " researched and will one day be more efficient and more compact that it is today", 6, ID());
 		reviews.add(talk4);
-
+		
 		Review talk5 = new Review("How to keep human bias out of AI", 2, "Technology", "Phil Plait", "keeping human bias out of robots"
 				+ " will become a huge part of those creating this robots for some reason", 6, ID());
 		reviews.add(talk5);

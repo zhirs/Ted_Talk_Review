@@ -9,10 +9,8 @@ public class Review {
 	private int profID; // ID associated with who created review
 	private int revID; // review ID associated with each review
 	
-	public Review() {
-		
+	public Review() {	
 	}
-
 	// creates new review
 	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
 		this.name = name;
@@ -23,10 +21,7 @@ public class Review {
 		this.profID = profID;
 		this.revID = revID;
 	}
-
-	
-	
-	
+		
 	// get methods
 	public String getName() {
 		return name;

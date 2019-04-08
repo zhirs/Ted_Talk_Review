@@ -8,16 +8,18 @@ import tedtalkDB.persist.FakeDatabase;
 
 public class ReviewController {
 	private Review reviewModel;
-	private FakeDatabase fake = new FakeDatabase();
+	private FakeDatabase fake;
 	public ReviewController() {
-		
+		 fake = new FakeDatabase();
 	}
 
 	public void setModel(Review modelHandler) {
 		this.reviewModel = modelHandler;
 	}
-	public void newReview(String name, int rate, String topic, String pres, String desc, int profID) {
-		fake.createReview(name, rate, topic, pres, desc, profID);
+	public ArrayList<Review> newReview(String name, int rate, String topic, String pres, String desc, int profID) {
+		ArrayList<Review>result = fake.createReview(name, rate, topic, pres, desc, profID);
+		
+		return result;
 	}
 	
 	public ArrayList<Review> fetchReviews(int profID){
