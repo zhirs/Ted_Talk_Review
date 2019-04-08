@@ -41,11 +41,12 @@ public class profileservlet extends HttpServlet {
 			controller.setModel(model);
 			 
 			ReviewController revController = new ReviewController();
-			ReviewModel revModel = new ReviewModel();
+			Review revModel = new Review();
 			
 			revController.setModel(revModel);
 			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
 			ArrayList<String> reviews = new ArrayList<String>();
+						
 			if(!revReturn.isEmpty()) {
 				for(int i = 0; i < revReturn.size(); i++) {
 					reviews.add(revReturn.get(i).getDesc());

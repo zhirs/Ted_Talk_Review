@@ -38,7 +38,7 @@
 		font-size: 9px;
 		}		
 		#reviewSection{
-		background-color:white;		
+		background-color:gray;		
 		text-align: center;
 		}
 		</style>
