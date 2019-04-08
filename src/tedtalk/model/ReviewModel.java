@@ -16,7 +16,6 @@ public class ReviewModel {
 	public ReviewModel(){//BASE CONSTRUCTOR
 		
 	}
-	
 	public int getReviewRating(){
 		return rate;
 	}

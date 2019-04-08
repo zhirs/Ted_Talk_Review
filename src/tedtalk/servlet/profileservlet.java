@@ -42,10 +42,15 @@ public class profileservlet extends HttpServlet {
 			 
 			ReviewController revController = new ReviewController();
 			Review revModel = new Review();
+
+			//Adrian's code, needed something that would grab the session parameter. temporary
+			ArrayList<String> test = new ArrayList<String>();
+			test.add(req.getParameter("UpdatedReviews"));
 			
 			revController.setModel(revModel);
 			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
 			ArrayList<String> reviews = new ArrayList<String>();
+						
 			if(!revReturn.isEmpty()) {
 				for(int i = 0; i < revReturn.size(); i++) {
 					reviews.add(revReturn.get(i).getDesc());
@@ -53,7 +58,6 @@ public class profileservlet extends HttpServlet {
 			}
 			
 			req.setAttribute("reviews" , reviews);
-			System.out.println(reviews.get(0));
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("profileM", model);
 			req.setAttribute("userModel", model);

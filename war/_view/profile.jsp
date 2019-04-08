@@ -38,7 +38,7 @@
 		font-size: 9px;
 		}		
 		#reviewSection{
-		background-color:white;		
+		background-color:gray;		
 		text-align: center;
 		}
 		</style>
@@ -68,6 +68,12 @@
 		</div>
 		<br><br><br>
 		<hr>
+		<%--div that presents a created review. when real database is implemented this will be unnecessary --%>
+		<div id = "reviewSection">
+		<c:forEach var="review" items="${UpdatedReviews}">
+				<c:out value = "${UpdatedReviews}"/> <br>Created Review<br>
+			</c:forEach>
+		</div>
 		<div id = "reviewSection">	
 			<hr>	
 			<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>

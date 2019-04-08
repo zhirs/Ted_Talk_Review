@@ -29,6 +29,11 @@
 		clear: both;
 		overflow: auto;
 		}
+		textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 	</style>
 	
 	<head>
@@ -67,11 +72,21 @@
 		<br><br><br>
 		<div id = "reviewSection">
 			<hr>
-			<p> THIS IS AN EXAMPLE OF A REVIEW<p> 
+			<p> THIS IS AN EXAMPLE OF A REVIEW<p>
+			
 			<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
 			<input type = "Submit" name = "request" class="button2" value = "Request">
 			</form>
 			<hr>
+		</div>
+		
+		 <%--This is the textfield for the review's description --%> 
+		<div align ="center">
+		 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
+		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
+		<textarea name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here" spellcheck="true"></textarea>
+		<input type = "Submit" class="button2" value = "Submit Review">
+		</form>
 		</div>
 	</body>
 </html>
