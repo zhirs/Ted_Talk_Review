@@ -5,33 +5,42 @@
 <html>
 	<style>
 		.button {
-		background-color: #9370DB; 
+		background-color: grey; 
 		border: 1px solid black;
-		color: white;
-		padding: 15px 32px;
+		color: black;
+		padding: 12px 24px;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
-		font-size: 16px;
+		font-size: 10px;
 		float: left;
 		}
 		.button2 {
-		background-color: #9370DB; 
+		background-color: grey; 
 		border: none;
-		color: white;
-		padding: 15px 32px;
+		color: black;
+		padding: 12px 24px;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
-		font-size: 16px;
+		font-size: 10px;
 		}
+		.reviewSection{
+		clear: both;
+		overflow: auto;
+		}
+		textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 	</style>
 	
 	<head>
 		<title>TedTalkReviews</title>
 		<style type = "text/css">
 		body{
-		background-color: #ADD8E6;
+		background-color: white;
 		}
 		h1{
 		text-align: center;
@@ -41,6 +50,14 @@
 	</head>
 	
 	<body>
+		<span class = "images">
+			<a href = https://www.ted.com target = blank>
+			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+			</a>
+			<a href = https://my.ycp.edu target = blank>
+			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+			</a>			
+		</span>
 		<h1> Review </h1>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
@@ -53,12 +70,23 @@
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br>
+		<div id = "reviewSection">
+			<hr>
+			<p> THIS IS AN EXAMPLE OF A REVIEW<p>
+			
+			<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
+			<input type = "Submit" name = "request" class="button2" value = "Request">
+			</form>
+			<hr>
+		</div>
 		
-		<hr>
-		<p> THIS IS AN EXAMPLE OF A REVIEW<p> 
-		<form action = "${pageContext.servletContext.contextPath}/request" method = "get">
-		<input type = "Submit" name = "request" class="button2" value = "Request">
+		 <%--This is the textfield for the review's description --%> 
+		<div align ="center">
+		 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
+		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
+		<textarea name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here" spellcheck="true"></textarea>
+		<input type = "Submit" class="button2" value = "Submit Review">
 		</form>
-		<hr>
+		</div>
 	</body>
 </html>

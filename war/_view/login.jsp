@@ -3,33 +3,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-		<title>Login Page</title>
-		<style type = "text/css">
-		body{
-		background-color: #ADD8E6;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
-		</style>
-	</head>
-	
-	<body>
-		<h1> Login Page </h1>
+<head>
+		<title> Account Login </title>		
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/testCSS.css">
+</head>	
+	<body>		
+		<span class = "images">
+			<a href = https://www.ted.com target = blank>
+			<img src = "images/TedTalk.png" align = "left" width = "200" height = "150">
+			</a>
+			<a href = https://my.ycp.edu target = blank>
+			<img src = "images/YorkCollge.png" align = "right" width = "200" height = "150">
+			</a>			
+		</span>
+		<h1>YCP-TedTalk Login</h1>		
 		<hr>
-		<form action="${pageContext.servletContext.contextPath}/login" method="post">
-			<table>
-				<tr>
-					<td> <input type="text" name = "u" placeholder = "Username" required = "required" value="${profileM.user}"> </td>
-		 		</tr>
-		 		<tr>
-		 			<td> <input type="password" name = "p" placeholder = "Password" required = "required" value="${profileM.pass}"> </td>
-		 		</tr>
-	 		</table>
-	 		<button type="submit" name="submit" value = "Login">Login</button>
-		 </form>
+		<div id = "buttonForm">
+			<form action="${pageContext.servletContext.contextPath}/login" method="post">
+				<table>
+					<tr>
+						<td> <input type="text" name = "u" placeholder = "Username" required = "required" value="${profileM.user}"> </td>
+			 		</tr>
+			 		<tr>
+			 			<td> <input type="password" name = "p" placeholder = "Password" required = "required" value="${profileM.pass}"> </td>
+			 		</tr>
+		 		</table>
+		 		<button type="submit" name="submit" value = "Login">Login</button>
+		 		<button type="submit" name="forgotPW" value = "Forgot Password ">Forgot Password </button>
+			 </form>
+		 </div>
 		<hr>
 		
 	</body>

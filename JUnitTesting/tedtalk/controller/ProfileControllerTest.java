@@ -118,13 +118,22 @@ public class ProfileControllerTest {
 		System.out.println("your result: " + controllerHandler.verified());
 	}
 	@Test
-	public void verifiedTest11() {
+	public void verifiedTest11() { 
 		System.out.println("initializing invalid password test case: ");
 		modelHandler.setUser("acastro7");
 		modelHandler.setPass("tree");//INVALID PASSWORD
 		assertTrue(controllerHandler.verified() == false);
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandler.verified());
+	}
+	@Test
+	public void createLoginTest() {
+		//setup
+		controllerHandler.createLogin("zhirs");
+		
+		assertTrue(modelHandler.getEmail().equals("zhirs@ycp.edu"));
+		assertTrue(modelHandler.getPass().equals("monkey"));
+		assertTrue(modelHandler.getProfID() == 1);
 	}
 	//NO @AFTER NEEDED COMPLIMENTS OF JAVA GARBAGE COLLECTION :)
 //***************************************************************     6 TEST CASES     *******************************************************************

@@ -4,44 +4,51 @@
 
 <html>
 	<head>
-	<style>
-		.button {
-		background-color: #9370DB; 
-		border: 1px solid black;
-		color: white;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		float: left;
-		}
-		.button2 {
-		background-color: #9370DB; 
-		border: 1px solid black;
-		color: white;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		}
-	</style>
-		
-		<title>TedTalkReviews</title>
 		<style type = "text/css">
-		body{
-		background-color: #ADD8E6;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
+			body{
+			background-color: orange;
+			color: black
+			}
+			h1{
+			text-align: center;
+			color: purple;
+			}		
+			.button {
+			background-color: #9370DB; 
+			border: 1px solid black;
+			color: white;
+			padding: 10px 21px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 9px;
+			float: left;
+			}
+			.button2 {
+			background-color: #9370DB; 
+			border: 1px solid black;
+			color: white;
+			padding: 10px 21px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 9px;
+			}
 		</style>
-	</head>
+		<title>TedTalkReviews</title>				
+ 	</head>
 	
 	<body>
+		<span class = "images">
+			<a href = https://www.ted.com target = blank>
+			<img src = "images/TedTalk.png" align = "left" width = 200 height = 150 >
+			</a>
+			<a href = https://my.ycp.edu target = blank>
+			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
+			</a>			
+		</span>
 		<h1>TedTalk Reviews</h1>
+		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
