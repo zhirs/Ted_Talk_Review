@@ -1,9 +1,9 @@
 package tedtalkDB.model;
 
 public class Account {
-	protected String userName;
-	protected String password;
-	protected String email;
+	protected String userName; // name displayed on profile
+	protected String password; // for logging in
+	protected String email; // email of profile
 	protected int profID; // iterates starting at 1
 	
 	public Account() {
