@@ -2,17 +2,19 @@ package tedtalkDB.model;
 
 public class Review {
 	private String name; // name of review
-	private int rate;
+	private int rate; // rating of tED talk
 	private String topic; // topic of ted talk
 	private String pres; // presenter
 	private String desc; // body of review
 	private int profID; // ID associated with who created review
 	private int revID; // review ID associated with each review
+	private int status; // status of review (needs review = 0, approved = 1, denied = 2), defaults status to 0
 	
 	public Review() {	
+		status = 0;
 	}
 	// creates new review
-	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
+	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID, int status) {
 		this.name = name;
 		this.rate = rate;
 		this.topic = topic;
@@ -20,6 +22,7 @@ public class Review {
 		this.desc = desc;
 		this.profID = profID;
 		this.revID = revID;
+		this.status = status;
 	}
 		
 	// get methods
@@ -51,8 +54,17 @@ public class Review {
 		return revID;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+	
 	// for editing of a review
 	public void updateDesc(String desc) {
 		this.desc = desc;
+	}
+	
+	// for updating review status
+	public void updateStatus(int update) {
+		status = update;
 	}
 }

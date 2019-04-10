@@ -20,6 +20,7 @@ public class ReviewControllerTest {
 	public void setup0() {
 		fake = new FakeDatabase();
 		reviewController = new ReviewController();
+		// sets model to a review already in database for testing methods
 		modelHandler = fake.getReviewList().get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
@@ -27,6 +28,7 @@ public class ReviewControllerTest {
 	
 	@Test
 	public void checkValidReview() {
+		// finds if submission is valid to be sent in for review from professor
 		assertTrue(reviewController.verifySubmission() == true);
 	}
 	
