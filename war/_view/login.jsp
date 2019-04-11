@@ -5,7 +5,7 @@
 <html>
 <head>
 		<title> Account Login </title>		
-		<jsp:include page="CSS/loginPage.css"/>
+		<jsp:include page="CSS/loginPage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 </head>	
 	<body>		
 		<span class = "images">

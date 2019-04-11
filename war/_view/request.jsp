@@ -5,7 +5,7 @@
 <html>
 	<head>		
 		<title>TedTalkReviews</title>
-		<jsp:include page ="CSS/coreCSS.css"/>	
+		<jsp:include page ="CSS/coreCSS.css"/> <!-- ALTERNATIVE TO USEING HREFS-->	
 			
 	</head>
 	
@@ -36,11 +36,10 @@
 		<h3>Suggested TEDTalks</h3>
 		<p>Here's what your peers are viewing:</p>
 		<ul id = "links">
-			<li><a href="https://ycpcs.github.io/cs320-spring2019" target = blank>Software Engineering Design </a></li>
-			<li><a href="https://ycpcs.github.io/cs201-spring2019" target = blank>Computer Science II</a></li>
 			<li><a href="https://www.ted.com/talks/anupam_mishra_the_ancient_ingenuity_of_water_harvesting" target = blank>Ingenuity of water harvesting</a></li>
 			<li><a href="https://www.ted.com/talks/norman_foster_s_green_agenda" target = blank>Norman Foster's Green Agenda</a></li>
 			<li><a href="https://www.ted.com/talks/majd_mashharawi_how_i_m_making_bricks_out_of_ashes_and_rubble_in_gaza" target = blank>Rubble in Gaza</a></li>
+			<li><a href="https://ycpcs.github.io/cs320-spring2019" target = blank>Software Engineering Design </a></li>
 		</ul>		
 		<hr>
 		<h2>Review Example:</h2>

@@ -5,7 +5,7 @@
 <html>
 	<head>		
 		<title>TedTalkReviews</title>
-		<jsp:include page ="CSS/homePage.css"/>				
+		<jsp:include page ="CSS/homePage.css"/>	<!-- ALTERNATIVE TO USEING HREFS-->			
  	</head>
 	
 	<body>

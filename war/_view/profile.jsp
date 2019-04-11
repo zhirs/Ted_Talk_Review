@@ -5,7 +5,7 @@
 <html>
 	<head>
 			<title>My Account</title>
-			<jsp:include page ="CSS/profilePage.css"/>
+			<jsp:include page ="CSS/profilePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 					
 	</head>
 	
