@@ -16,7 +16,7 @@ public class ReviewController {
 	public void setModel(Review modelHandler) {
 		this.reviewModel = modelHandler;
 	}
-
+	
 	// creates new review, does same thing as database method
 	public ArrayList<Review> newReview(String name, int rate, String topic, String pres, String desc, int profID) {
 		ArrayList<Review>result = fake.createReview(name, rate, topic, pres, desc, profID);

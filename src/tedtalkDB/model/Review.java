@@ -1,20 +1,25 @@
 package tedtalkDB.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Review {
 	private String name; // name of review
 	private int rate; // rating of tED talk
-	private String topic; // topic of ted talk
+	private String topic; // topic of tED talk
 	private String pres; // presenter
 	private String desc; // body of review
 	private int profID; // ID associated with who created review
 	private int revID; // review ID associated with each review
 	private int status; // status of review (needs review = 0, approved = 1, denied = 2), defaults status to 0
+	private Date date; // time when review was created
 	
 	public Review() {	
 		status = 0;
 	}
 	// creates new review
-	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID, int status) {
+	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
 		this.name = name;
 		this.rate = rate;
 		this.topic = topic;
@@ -22,7 +27,10 @@ public class Review {
 		this.desc = desc;
 		this.profID = profID;
 		this.revID = revID;
-		this.status = status;
+		// sets status automatically to 0, needs review
+		status = 0;
+		// sets date as current time when review is created
+		date = new Date();
 	}
 		
 	// get methods
@@ -66,5 +74,12 @@ public class Review {
 	// for updating review status
 	public void updateStatus(int update) {
 		status = update;
+	}
+	
+	// prints out time stamp of review creation
+	// not sure how it works, pulled from stack overflow
+	public void printTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println(dateFormat.format(date));
 	}
 }
