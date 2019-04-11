@@ -3,39 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-		<style type = "text/css">
-			body{
-			background-color: orange;
-			color: black
-			}
-			h1{
-			text-align: center;
-			color: purple;
-			}		
-			.button {
-			background-color: #9370DB; 
-			border: 1px solid black;
-			color: white;
-			padding: 10px 21px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 9px;
-			float: left;
-			}
-			.button2 {
-			background-color: #9370DB; 
-			border: 1px solid black;
-			color: white;
-			padding: 10px 21px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 9px;
-			}
-		</style>
-		<title>TedTalkReviews</title>				
+	<head>		
+		<title>TedTalkReviews</title>
+		<jsp:include page ="CSS/homePage.css"/>				
  	</head>
 	
 	<body>
