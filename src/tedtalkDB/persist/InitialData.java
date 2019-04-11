@@ -3,6 +3,7 @@ package tedtalkDB.persist;
 import java.util.ArrayList;
 import java.util.List;
 import tedtalkDB.model.Account;
+import tedtalkDB.model.AccountReview;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
@@ -71,5 +72,10 @@ public class InitialData {
 	private static int ID() {
 		iter ++;
 		return iter;
+	}
+
+	public static List<AccountReview> getAccountReviews() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

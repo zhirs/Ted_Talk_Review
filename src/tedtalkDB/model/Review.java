@@ -1,5 +1,7 @@
 package tedtalkDB.model;
 
+import java.sql.Date;
+
 public class Review {
 	private String name; // name of review
 	private int rate; // rating of tED talk
@@ -66,5 +68,9 @@ public class Review {
 	// for updating review status
 	public void updateStatus(int update) {
 		status = update;
+	}
+	public Date getDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
