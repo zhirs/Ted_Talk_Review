@@ -1,6 +1,6 @@
 package tedtalks.db;
 
-import tedtalkDB.model.DatabaseProvider;
+import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.FakeDatabase;
 
 

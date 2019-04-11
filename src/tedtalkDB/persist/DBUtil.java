@@ -1,4 +1,4 @@
-package tedtalkDB.model;
+package tedtalkDB.persist;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

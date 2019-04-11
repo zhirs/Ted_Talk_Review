@@ -1,6 +1,9 @@
-package tedtalkDB.model;
+package tedtalkDB.persist;
 
 import java.util.ArrayList;
+
+import tedtalkDB.model.Account;
+import tedtalkDB.model.Review;
 
 public interface IDatabase {
 	// used for switching between real and fake databases
