@@ -5,7 +5,7 @@
 <html>
 <head>
 		<title> Account Login </title>		
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/testCSS.css">
+		<jsp:include page="CSS/loginPage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 </head>	
 	<body>		
 		<span class = "images">
