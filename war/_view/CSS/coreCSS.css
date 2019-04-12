@@ -1,0 +1,39 @@
+<html>
+	<style type = "text/css">
+	body{
+	background-color: white;
+	}
+	h1{
+	text-align: center;
+	color: purple;
+	} 
+	h3{
+	text-align: center;
+	color:red;			
+	}
+	#link{
+	color: blue;
+	}
+	.button {
+	background-color: #9370DB; 
+	border: 1px solid black;
+	color: white;
+	padding: 10px 21px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 9px;
+	float: left;
+	}
+	.button2 {
+	background-color: #9370DB; 
+	border: 1px solid black;
+	color: white;
+	padding: 10px 21px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 9px;
+	}		
+	</style>
+</html>
