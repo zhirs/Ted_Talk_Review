@@ -7,6 +7,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.Tags;
 import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
@@ -87,9 +88,9 @@ public class FakeDatabase implements IDatabase{
 	}
   
 	// creates new review
-	public ArrayList<Review> createReview(String name, int rate, String topic, String pres, String desc, int profID) {
+	public ArrayList<Review> createReview(String name, int rate, String pres, String desc, int profID, Tags tag) {
 		// creates new review with inputed info
-		Review rev = new Review(name, rate, topic, pres, desc, profID, reviewList.size() + 1, 0);
+		Review rev = new Review(name, rate, pres, desc, profID, reviewList.size() + 1, tag);
 		// adds new review to list
 		reviewList.add(rev);
 		// returns the new full reviewList
