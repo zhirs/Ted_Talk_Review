@@ -19,8 +19,8 @@ public class ReviewController {
 	}
 	
 	// creates new review, does same thing as database method
-	public ArrayList<Review> newReview(String name, int rate, String pres, String desc, int profID, Tags tag) {
-		ArrayList<Review>result = fake.createReview(name, rate, pres, desc, profID, tag);
+	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
+		ArrayList<Review>result = fake.createReview(url, name, rate, pres, desc, profID, tag);
 		
 		return result;
 	}
