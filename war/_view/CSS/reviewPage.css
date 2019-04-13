@@ -28,9 +28,12 @@
 	display: inline-block;
 	font-size: 10px;
 	}
-	.reviewSection{
-	clear: both;
+	.reviewSection{	
 	overflow: auto;
+
+	border: 2px dotted red;
+	background: url(Ted_Talk_Review/war/images/TedTalk.png);
+	background-size: cover;
 	}
 	textarea{
 	    display: block;

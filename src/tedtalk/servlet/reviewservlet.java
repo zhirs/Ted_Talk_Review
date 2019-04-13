@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
+import tedtalk.model.ReviewModel;
+
 import tedtalkDB.model.Review;
 import tedtalk.controller.ProfileController;
 import tedtalk.controller.ReviewController;
@@ -38,9 +40,27 @@ public class reviewservlet extends HttpServlet {
 		
 		ReviewController revController = new ReviewController();
 		Review revModel = new Review();
+		ReviewModel handle = new ReviewModel();
+		ProfileModel profileHandle = new ProfileModel();
+		/*USE OF THE DB REVIEWMODEL TO SET OBTAIN ATTRIB:
+		 * String reviewName = req.getParameter("name");
 		String reviewDesc = req.getParameter("reviewText");
+		String reviewTitle = req.getParameter("title");
+		String reviewPresenter = req.getParameter("presenterName");
+		String	url = req.getParameter("url");
+		String tags = req.getParameter("tags");
+		int reviewRating = req.getIntHeader("rating");*/
 		
-		revController.setModel(revModel);
+	/*	//USE OF THE ORGINAL MODEL TO SET ATTRIB:
+		handle.setDesc(req.getParameter("description"));
+		handle.setPres(req.getParameter("presenterName"));
+		handle.setRate(req.getIntHeader("rating"));
+		handle.setName( req.getParameter("name"));
+		handle.setTopic(req.getParameter("title"));*/
+				
+		revController.setModel(revModel);//USED WITH THE DB REVIEW MODEL
+		
+		revController.newReview(handle.getName(), handle.getReviewRating(), handle.getTopic(), handle.getPresenter(),handle.getDesc(), profileHandle.getProfID());
 		ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
 		ArrayList<String> reviews = new ArrayList<String>();
 					
@@ -50,8 +70,11 @@ public class reviewservlet extends HttpServlet {
 				reviews.add(reviewDesc);
 			}
 		} */
+		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER
+
 		reviews.add(reviewDesc);
 		req.setAttribute("UpdatedReviews", reviews);
+		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
 		
 		//reviews.add(revController.newReview(req.getSession().getAttribute("username"), rate, topic, pres, desc, profID, revID));
 		

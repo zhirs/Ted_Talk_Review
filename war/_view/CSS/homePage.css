@@ -4,10 +4,8 @@
 	background-color: orange;
 	color: black
 	}
-	h1{
-	text-align: center;
-	color: purple;
-	}		
+	h1{	text-align: center;	color: purple;}		
+	h2{text-align: center; color:red; }
 	.button {
 	background-color: #9370DB; 
 	border: 1px solid black;
@@ -29,5 +27,6 @@
 	display: inline-block;
 	font-size: 9px;
 	}
+	.searchSection{text-align: center;}
 	</style>
 </html>
