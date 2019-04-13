@@ -13,13 +13,15 @@ public class Review {
 	private int revID; // review ID associated with each review
 	private int status; // status of review (needs review = 0, approved = 1, denied = 2), defaults status to 0
 	private Date date; // time when review was created
-	private Tags tag;
+	private Tags tag; // topic of review
+	private String url;
 	
 	public Review() {	
 		status = 0;
 	}
 	// creates new review
-	public Review(String name, int rate, String pres, String desc, int profID, int revID, Tags tag) {
+	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, Tags tag) {
+		this.url = url;
 		this.name = name;
 		this.rate = rate;
 		this.pres = pres;

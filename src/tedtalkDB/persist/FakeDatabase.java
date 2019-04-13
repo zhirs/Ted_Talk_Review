@@ -88,9 +88,9 @@ public class FakeDatabase implements IDatabase{
 	}
   
 	// creates new review
-	public ArrayList<Review> createReview(String name, int rate, String pres, String desc, int profID, Tags tag) {
+	public ArrayList<Review> createReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
 		// creates new review with inputed info
-		Review rev = new Review(name, rate, pres, desc, profID, reviewList.size() + 1, tag);
+		Review rev = new Review(url, name, rate, pres, desc, profID, reviewList.size() + 1, tag);
 		// adds new review to list
 		reviewList.add(rev);
 		// returns the new full reviewList
