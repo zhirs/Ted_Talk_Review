@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
 
 public class ReviewController {
@@ -18,8 +19,8 @@ public class ReviewController {
 	}
 	
 	// creates new review, does same thing as database method
-	public ArrayList<Review> newReview(String name, int rate, String topic, String pres, String desc, int profID) {
-		ArrayList<Review>result = fake.createReview(name, rate, topic, pres, desc, profID);
+	public ArrayList<Review> newReview(String name, int rate, String pres, String desc, int profID, Tags tag) {
+		ArrayList<Review>result = fake.createReview(name, rate, pres, desc, profID, tag);
 		
 		return result;
 	}

@@ -7,6 +7,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.Tags;
 
 public class InitialData {
 	private static int iter;
@@ -43,26 +44,26 @@ public class InitialData {
 		List<Review> reviews = new ArrayList<Review>();
 		
 		// 5 reviews, 2 linked to same account 
-		Review talk1 = new Review("World will be gone by 2020", 3, "Environmental Issues", "ProfessorX", "this will be the large"
-				+ " part of the review taking up much room and containing a lot of information", 1, ID());
+		Review talk1 = new Review("World will be gone by 2020", 3, "ProfessorX", "this will be the large"
+				+ " part of the review taking up much room and containing a lot of information", 1, ID(), Tags.environmental);
 		reviews.add(talk1);
 
-		Review talk2 = new Review("a new class drug that could prevent depression and PTSD", 5, "Mental Health", "Rebecca Brachman", ""
-				+ "A crazy new drug development that could help cure severe mental issues with those who were in war", 2, ID());
+		Review talk2 = new Review("a new class drug that could prevent depression and PTSD", 5, "Rebecca Brachman", ""
+				+ "A crazy new drug development that could help cure severe mental issues with those who were in war", 2, ID(), Tags.health);
 		reviews.add(talk2);
 
-		Review talk3 = new Review("why we need to clean up our space debris", 1, "Space", "Moriba Jah", ""
-				+ "a possible problem that pertains to all living people on earth by space debris blocking out sunlight", 3, ID());
+		Review talk3 = new Review("why we need to clean up our space debris", 1, "Moriba Jah", ""
+				+ "a possible problem that pertains to all living people on earth by space debris blocking out sunlight", 3, ID(), Tags.space);
 		reviews.add(talk3);
 		
 		// these two linked to same student account, one denied, one approved
-		Review talk4 = new Review("the beautiful future of solar power", 4, "Environmental Issues", "Marjan van Aubel", ""
+		Review talk4 = new Review("the beautiful future of solar power", 4, "Marjan van Aubel", ""
 				+ "Solar power is inefficient at the current moment in time, nowhere near that of oil, but it is slowly being"
-				+ " researched and will one day be more efficient and more compact that it is today", 6, ID());
+				+ " researched and will one day be more efficient and more compact that it is today", 6, ID(), Tags.environmental);
 		reviews.add(talk4);
 		
-		Review talk5 = new Review("How to keep human bias out of AI", 2, "Technology", "Phil Plait", "keeping human bias out of robots"
-				+ " will become a huge part of those creating this robots for some reason", 6, ID());
+		Review talk5 = new Review("How to keep human bias out of AI", 2, "Phil Plait", "keeping human bias out of robots"
+				+ " will become a huge part of those creating this robots for some reason", 6, ID(), Tags.technology);
 		reviews.add(talk5);
 		
 		return reviews;

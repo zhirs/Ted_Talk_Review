@@ -7,26 +7,27 @@ import java.util.Date;
 public class Review {
 	private String name; // name of review
 	private int rate; // rating of tED talk
-	private String topic; // topic of tED talk
 	private String pres; // presenter
 	private String desc; // body of review
 	private int profID; // ID associated with who created review
 	private int revID; // review ID associated with each review
 	private int status; // status of review (needs review = 0, approved = 1, denied = 2), defaults status to 0
 	private Date date; // time when review was created
+	private Tags tag;
 	
 	public Review() {	
 		status = 0;
 	}
 	// creates new review
-	public Review(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
+	public Review(String name, int rate, String pres, String desc, int profID, int revID, Tags tag) {
 		this.name = name;
 		this.rate = rate;
-		this.topic = topic;
 		this.pres = pres;
 		this.desc = desc;
 		this.profID = profID;
 		this.revID = revID;
+		// newly created tag class, only one tag per review right now
+		this.tag = tag;
 		// sets status automatically to 0, needs review
 		status = 0;
 		// sets date as current time when review is created
@@ -40,10 +41,6 @@ public class Review {
 	
 	public int getRate() {
 		return rate;
-	}
-	
-	public String getTopic() {
-		return topic;
 	}
 	
 	public String getPres() {
