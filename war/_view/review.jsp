@@ -3,50 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<style>
-		.button {
-		background-color: grey; 
-		border: 1px solid black;
-		color: black;
-		padding: 12px 24px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 10px;
-		float: left;
-		}
-		.button2 {
-		background-color: grey; 
-		border: none;
-		color: black;
-		padding: 12px 24px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 10px;
-		}
-		.reviewSection{
-		clear: both;
-		overflow: auto;
-		}
-		textarea {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-	</style>
-	
 	<head>
 		<title>TedTalkReviews</title>
-		<style type = "text/css">
-		body{
-		background-color: white;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
-		</style>
+		<jsp:include page = "CSS/reviewPage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 	</head>
 	
 	<body>

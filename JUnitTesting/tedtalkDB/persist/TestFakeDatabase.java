@@ -96,4 +96,13 @@ public class TestFakeDatabase {
 		assertTrue(test.getReviewTotal(1) == 1);
 		assertTrue(test.getReviewTotal(test.getUserList().size()) == 2);
 	}
+	
+	@Test
+	public void createReviewTest() {
+		int oldSize = test.getReviewList().size();
+		test.createReview("Wilds", 3, "Environment", "Hamilton", "fake description", 6);
+		assertTrue(test.getReviewList().size() > oldSize);
+		assertTrue(test.getReviewList().get(oldSize).getRate() == 3);
+		assertTrue(test.getReviewList().get(oldSize).getName().equals("Wilds"));
+	}
 }

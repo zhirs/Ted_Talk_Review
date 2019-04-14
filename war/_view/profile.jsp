@@ -4,45 +4,9 @@
 
 <html>
 	<head>
-	<style type = "text/css">
-		.images{
-			border-radius: 25px;
-		}	
-		body{
-		background-color: grey;
-		color: white;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
-		.button{
-		background-color: purple; 
-		border: 1px solid black;
-		color: white;
-		padding: 10px 21px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 9px;
-		float: left;
-		}				
-		.button2{
-		background-color: purple; 
-		border: 1px solid black;
-		color: white;
-		padding: 10px 21px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 9px;
-		}		
-		#reviewSection{
-		background-color:gray;		
-		text-align: center;
-		}
-		</style>
-			<title>My Account</title>		
+			<title>My Account</title>
+			<jsp:include page ="CSS/profilePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+					
 	</head>
 	
 	<body>
