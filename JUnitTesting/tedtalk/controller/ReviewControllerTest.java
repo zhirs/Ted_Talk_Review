@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import tedtalk.controller.ReviewController;
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
+
 public class ReviewControllerTest {
 	private Review modelHandler;
 	private ReviewController reviewController;

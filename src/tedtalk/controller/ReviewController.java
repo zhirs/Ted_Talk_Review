@@ -2,7 +2,6 @@ package tedtalk.controller;
 
 import java.util.ArrayList;
 
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
