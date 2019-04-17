@@ -64,7 +64,7 @@ public class ProfileController {
 			// checks role based on login
 			if(model.getRole() > 0) {
 				// updates status on review
-				rev.updateStatus(approve);
+				rev.setStatus(approve);
 			}
 		}
 }

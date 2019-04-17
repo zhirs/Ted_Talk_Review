@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import tedtalk.controller.ReviewController;
 import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
 public class ReviewControllerTest {
 	private Review modelHandler;
@@ -37,13 +38,14 @@ public class ReviewControllerTest {
 		result = fake.getReviewList();
 		System.out.println(result.size());
 		String testName = "Wilds";
+		String testURL = "tEDtalk.com/Wilds";
 		int testRate = 3;
-		String testTopic = "Environment";
+		Tags tag = Tags.environmental;
 		String testPresenter= "Hamilton";
 		String testDescription = "fake description";
 		int fakeprofID = 6;
 		
-		ArrayList<Review>test = reviewController.newReview(testName, testRate, testTopic, testPresenter, testDescription, fakeprofID);
+		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
 		
 		//System.out.println(fake.getReviewList().size());
 
