@@ -12,6 +12,7 @@ import org.junit.Test;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.Tags;
 import tedtalkDB.persist.*;
 
 public class TestFakeDatabase {
@@ -88,7 +89,7 @@ public class TestFakeDatabase {
 		assertTrue(prof2.size() == 2);
 		
 		assertTrue(prof1.get(0).getRate() == 3);
-		assertTrue(prof2.get(1).getTopic().equals("Technology"));
+		assertTrue(prof2.get(1).getTag() == Tags.technology);
 	}
 	
 	@Test
@@ -100,7 +101,7 @@ public class TestFakeDatabase {
 	@Test
 	public void createReviewTest() {
 		int oldSize = test.getReviewList().size();
-		test.createReview("Wilds", 3, "Environment", "Hamilton", "fake description", 6);
+		test.createReview("tEDTalk.com/Wilds", "Wilds", 3, "Hamilton", "fake description", 6, Tags.environmental);
 		assertTrue(test.getReviewList().size() > oldSize);
 		assertTrue(test.getReviewList().get(oldSize).getRate() == 3);
 		assertTrue(test.getReviewList().get(oldSize).getName().equals("Wilds"));

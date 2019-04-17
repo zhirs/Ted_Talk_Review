@@ -36,7 +36,7 @@ public class Review {
 		date = new Date();
 	}
 		
-	// get methods
+	// getter methods
 	public String getName() {
 		return name;
 	}
@@ -65,13 +65,42 @@ public class Review {
 		return status;
 	}
 	
+	public String getURL() {
+		return url;
+	}
+	
+	public Tags getTag() {
+		return tag;
+	}
+	
+	// setter methods
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setURL(String url) {
+		this.url = url;
+	}
+	
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+	
+	public void setPres(String pres) {
+		this.pres = pres;
+	}
+	
+	public void setTag(Tags tag) {
+		this.tag = tag;
+	}
+	
 	// for editing of a review
-	public void updateDesc(String desc) {
+	public void setDesc(String desc) {
 		this.desc = desc;
 	}
 	
 	// for updating review status
-	public void updateStatus(int update) {
+	public void setStatus(int update) {
 		status = update;
 	}
 	
