@@ -29,8 +29,11 @@ public class InitialData {
 		user.add(adrian);
 		
 		// test cases that are not superadmins
-		Professor professor = new Professor("profx", "professorX", "professorX@ycp.edu", ID());
-		user.add(professor);
+		Professor professorX = new Professor("profx", "professorX", "professorX@ycp.edu", ID());
+		user.add(professorX);
+		
+		Professor professorHake = new Professor("djhake2", "hake", "djhake2@ycp.edu", ID());
+		user.add(professorHake);
 		
 		Student student = new Student("randp", "random", "randomPerson@ycp.edu", "CS320", ID());
 		user.add(student);
