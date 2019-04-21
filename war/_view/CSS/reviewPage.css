@@ -1,0 +1,44 @@
+<html>
+	<style>
+	background{
+	background-color: white;		
+	}
+	h1{
+	text-align: center;
+	color: purple;
+	}
+	.button {
+	background-color: grey; 
+	border: 1px solid black;
+	color: black;
+	padding: 12px 24px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 10px;
+	float: left;
+	}
+	.button2 {
+	background-color: grey; 
+	border: none;
+	color: black;
+	padding: 12px 24px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 10px;
+	}
+	.reviewSection{	
+	overflow: auto;
+
+	border: 2px dotted red;
+	background: url(Ted_Talk_Review/war/images/TedTalk.png);
+	background-size: cover;
+	}
+	textarea{
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+	</style>
+</html>

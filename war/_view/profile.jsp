@@ -4,45 +4,9 @@
 
 <html>
 	<head>
-	<style type = "text/css">
-		.images{
-			border-radius: 25px;
-		}	
-		body{
-		background-color: grey;
-		color: white;
-		}
-		h1{
-		text-align: center;
-		color: purple;
-		} 
-		.button{
-		background-color: purple; 
-		border: 1px solid black;
-		color: white;
-		padding: 10px 21px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 9px;
-		float: left;
-		}				
-		.button2{
-		background-color: purple; 
-		border: 1px solid black;
-		color: white;
-		padding: 10px 21px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 9px;
-		}		
-		#reviewSection{
-		background-color:gray;		
-		text-align: center;
-		}
-		</style>
-			<title>My Account</title>		
+			<title>My Account</title>
+			<jsp:include page ="CSS/profilePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+					
 	</head>
 	
 	<body>
@@ -62,17 +26,27 @@
 			<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 			<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 			</form>
+			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
+			<input type = "Submit" name = "redirectReview" class="button" value = "Review">
+			</form>			
+			<form action = "${pageContext.servletContext.contextPath}/ " method = "get">
+			<input type = "Submit" name = "settings" class="button" value = "settings">
+			</form>
 			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 			<input type = "Submit" name = "logout" class="button" value = "Logout">
-			</form>
+			</form>			
 		</div>
 		<br><br><br>
 		<hr>
 		<%--div that presents a created review. when real database is implemented this will be unnecessary --%>
 		<div id = "reviewSection">
-		<c:forEach var="review" items="${UpdatedReviews}">
-				<c:out value = "${UpdatedReviews}"/> <br>Created Review<br>
-			</c:forEach>
+			<h3>Your pending reviews:</h3>		
+			<div class = "pendingReviewSection">
+			
+				<c:forEach var="review" items="${UpdatedReviews}">
+					<c:out value = "${UpdatedReviews}"/> <br>Created Review<br>
+				</c:forEach>
+			</div>
 		</div>
 		<div id = "reviewSection">	
 			<hr>	
@@ -81,12 +55,9 @@
 			<c:forEach var="reviews" items="${reviews}">
 				<c:out value = "${reviews}"/> <br>Another Review<br>
 			</c:forEach>	
+			<hr>					
+		</div>					
 
-			
-			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
-			<input type = "Submit" name = "redirectReview" class="button2" value = "Review">
-			<hr>
-			</form>		
-		</div>
+
 	</body>
 </html>
