@@ -119,7 +119,7 @@ public class InitialData {
 				int profID = Integer.parseInt(i.next());
 				String tag = i.next();
 				int status = Integer.parseInt(i.next());
-				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, 0);
+				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status);
 				reviewList.add(review);
 			}
 			System.out.println("studentList loaded from CSV file");

@@ -1,12 +1,9 @@
 package tedtalkDB.model;
 
-<<<<<<< HEAD
+
 import java.sql.Date;
-=======
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
->>>>>>> branch 'dev' of https://Jlandau2@github.com/zhirs/Ted_Talk_Review.git
 
 public class Review {
 	private String name; // name of review
@@ -107,17 +104,15 @@ public class Review {
 	public void setStatus(int update) {
 		status = update;
 	}
-<<<<<<< HEAD
 	public Date getDate() {
 		// TODO Auto-generated method stub
 		return null;
-=======
+	}
 	
 	// prints out time stamp of review creation
 	// not sure how it works, pulled from stack overflow
 	public void printTime() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println(dateFormat.format(date));
->>>>>>> branch 'dev' of https://Jlandau2@github.com/zhirs/Ted_Talk_Review.git
 	}
 }

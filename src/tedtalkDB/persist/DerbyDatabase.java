@@ -81,7 +81,7 @@ public class DerbyDatabase implements IDatabase {
 	// TODO: Change it here and in SQLDemo.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.sqldemo
 	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Ted-Talk-Review-Lib/library.db;create=true");		
+		Connection conn = DriverManager.getConnection("jdbc:derby:library.db;create=true");		
 		
 		// Set autocommit() to false to allow the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -106,18 +106,19 @@ public class DerbyDatabase implements IDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40), " +
-						"	email varchar(100), " +
+						"	email varchar(100) " +
 						")"
 					);	
 					stmt1.executeUpdate();
+					System.out.print("Admin table created");
 					
 					stmt2 = conn.prepareStatement(
-							"create table profs(" +
+							"create table professors(" +
 							"	prof_id integer primary key " +
 							"		generated always as identity (start with 10000, increment by 1), " +									
 							"	username varchar(40)," +
 							"	password varchar(40), " +
-							"	email varchar(100), " +
+							"	email varchar(100) " +
 							")"
 						);	
 						stmt2.executeUpdate();
@@ -130,10 +131,11 @@ public class DerbyDatabase implements IDatabase {
 							"	username varchar(40)," +
 							"	password varchar(40), " +
 							"	email varchar(100), " +
-							"	section varchar(1000), " +
+							"	section varchar(1000) " +
 							")"
 						);	
 					stmt3.executeUpdate();
+					System.out.println("Students table created");
 					
 					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
@@ -143,10 +145,10 @@ public class DerbyDatabase implements IDatabase {
 							"	url varchar(100), " +
 							"	name varchar(100)," +
 							"   rate int, " +
-							"	pres varchar(100)," + 
-							"	desc varchar(1000)," +
-							"   prof_ID int" +
-							"	tag varchar(100)," +
+							"	pres varchar(100), " + 
+							"	description varchar(4000), " +
+							"   prof_ID int, " +
+							"	tag varchar(100), " +
 							"   status int" + //MISSING COMMA. 
 							//"   subDate date" +
 							")"
@@ -231,7 +233,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
-					insertReview = conn.prepareStatement("insert into reviews (url, name, rate, pres, desc, prof_ID, tag, status) values (?, ?, ?, ?, ?, ?, ?, ?)");
+					insertReview = conn.prepareStatement("insert into reviews (url, name, rate, pres, description, prof_ID, tag, status) values (?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Review review : reviewList) {
 //						insertBook.setInt(1, book.getBookId());	
 						insertReview.setString(1, review.getURL());

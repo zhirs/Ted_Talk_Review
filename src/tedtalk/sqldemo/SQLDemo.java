@@ -44,9 +44,9 @@ public class SQLDemo {
 		Connection conn = null;
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			conn = DriverManager.getConnection("jdbc:derby:C:/Ted-Talk-Review-Lib/library.db;create=true");
+			conn = DriverManager.getConnection("jdbc:derby:library.db;create=true");
 			conn.setAutoCommit(true);
-	
+			
 			queryLoop(conn);
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
