@@ -8,4 +8,6 @@ public class NetworkAdmin extends Professor{
 	// will soon implement new methods
 	// once such being a method to turn on and off the need to verify reviews
 	// will also be able to assign moderators possibly
+
+	
 }

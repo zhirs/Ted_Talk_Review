@@ -9,10 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import tedtalk.model.*;
 import tedtalkDB.model.Account;
-import tedtalkDB.model.AccountReview;
+import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Professor;
+import tedtalkDB.model.Student;
 
 
 public class DerbyDatabase implements IDatabase {
@@ -105,6 +106,7 @@ public class DerbyDatabase implements IDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40), " +
+						"	email varchar(100), " +
 						")"
 					);	
 					stmt1.executeUpdate();
@@ -115,6 +117,7 @@ public class DerbyDatabase implements IDatabase {
 							"		generated always as identity (start with 10000, increment by 1), " +									
 							"	username varchar(40)," +
 							"	password varchar(40), " +
+							"	email varchar(100), " +
 							")"
 						);	
 						stmt2.executeUpdate();
@@ -126,6 +129,8 @@ public class DerbyDatabase implements IDatabase {
 							"		generated always as identity (start with 20000, increment by 1), " +									
 							"	username varchar(40)," +
 							"	password varchar(40), " +
+							"	email varchar(100), " +
+							"	section varchar(1000), " +
 							")"
 						);	
 					stmt3.executeUpdate();
@@ -135,10 +140,13 @@ public class DerbyDatabase implements IDatabase {
 							"	rev_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
+							"	url varchar(100), " +
 							"	name varchar(100)," +
+							"   rate int, " +
 							"	pres varchar(100)," + 
-							"	topic varchar(100)," +
 							"	desc varchar(1000)," +
+							"   prof_ID int" +
+							"	tag varchar(100)," +
 							"   status int" + //MISSING COMMA. 
 							//"   subDate date" +
 							")"
@@ -163,18 +171,16 @@ public class DerbyDatabase implements IDatabase {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				List<Account> adminList;
-				List<Account> profList;
-				List<Account> studentList;
+				List<NetworkAdmin> adminList;
+				List<Professor> profList;
+				List<Student> studentList;
 				List<Review> reviewList;
-				List<AccountReview> accountReviewList;
 				
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
 					studentList = InitialData.getStudents();
 					reviewList = InitialData.getReviews();
-					accountReviewList = InitialData.getAccountReviews();					
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -183,37 +189,40 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertProf = null;
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
-				PreparedStatement insertAccountReview = null;
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
-					insertAdmin = conn.prepareStatement("insert into admins (username, password) values (?, ?)");
-					for (Account account: adminList) {
+					insertAdmin = conn.prepareStatement("insert into admins (username, password, email) values (?, ?, ?)");
+					for (NetworkAdmin admin: adminList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertAdmin.setString(1, account.getUserName());
-						insertAdmin.setString(2, account.getPassword());
+						insertAdmin.setString(1, admin.getUserName());
+						insertAdmin.setString(2, admin.getPassword());
+						insertAdmin.setString(3, admin.getEmail());
 						insertAdmin.addBatch();
 					}
 					insertAdmin.executeBatch();
 					
 					System.out.println("Admin table populated");
 					
-					insertProf = conn.prepareStatement("insert into profs (username, password) values (?, ?)");
-					for (Account account: profList) {
+					insertProf = conn.prepareStatement("insert into professors (username, password, email) values (?, ?, ?)");
+					for (Professor professor: profList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertProf.setString(1, account.getUserName());
-						insertProf.setString(2, account.getPassword());
+						insertProf.setString(1, professor.getUserName());
+						insertProf.setString(2, professor.getPassword());
+						insertProf.setString(3,  professor.getEmail());
 						insertProf.addBatch();
 					}
 					insertProf.executeBatch();
 					
 					System.out.println("Prof table populated");
 					
-					insertProf = conn.prepareStatement("insert into students (username, password) values (?, ?)");
-					for (Account account: studentList) {
+					insertStudent = conn.prepareStatement("insert into students (username, password, email, section) values (?, ?, ?, ?)");
+					for (Student student: studentList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertStudent.setString(1, account.getUserName());
-						insertStudent.setString(2, account.getPassword());
+						insertStudent.setString(1, student.getUserName());
+						insertStudent.setString(2, student.getPassword());
+						insertStudent.setString(3, student.getEmail());
+						insertStudent.setString(4, student.getSection());
 						insertStudent.addBatch();
 					}
 					insertStudent.executeBatch();
@@ -222,15 +231,17 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
-					insertReview = conn.prepareStatement("insert into reviews (profID, name, pres, topic, desc, status) values (?, ?, ?, ?, ?, ?)");
+					insertReview = conn.prepareStatement("insert into reviews (url, name, rate, pres, desc, prof_ID, tag, status) values (?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Review review : reviewList) {
-//						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-						insertReview.setInt(1, review.getProfID());	
+//						insertBook.setInt(1, book.getBookId());	
+						insertReview.setString(1, review.getURL());
 						insertReview.setString(2, review.getName());
-						insertReview.setString(3, review.getPres());
-						insertReview.setString(4, review.getTopic());
+						insertReview.setInt(3, review.getRate());
+						insertReview.setString(4, review.getPres());
 						insertReview.setString(5, review.getDesc());
-						insertReview.setInt(6, review.getStatus());
+						insertReview.setInt(6, review.getProfID());
+						insertReview.setString(7, review.getTag());
+						insertReview.setInt(8, review.getStatus());
 						//insertReview.setDate(6, review.getDate());
 						
 						insertReview.addBatch();
@@ -248,13 +259,49 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertProf);
 					DBUtil.closeQuietly(insertStudent);
 					DBUtil.closeQuietly(insertAdmin);
-					DBUtil.closeQuietly(insertAccountReview);					
 				}
 			}
 		});
 	}
 	
 	// The main method creates the database tables and loads the initial data.
+	
+
+	public boolean checkCredentials(String user, String pass) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public Account setLogin(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	public ArrayList<Account> addUser(String user, String pass, String email, String section, int role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public ArrayList<Review> getProfIDReviewList(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getReviewTotal(int profID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public ArrayList<Review> findReview(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
 		DerbyDatabase db = new DerbyDatabase();
@@ -267,44 +314,4 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 
-	@Override
-	public boolean checkCredentials(String user, String pass) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public Account setLogin(String user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Account> addUser(String user, String pass, String email, String section, int role) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Review> getProfIDReviewList(int profID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public int getReviewTotal(int profID) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
-	public ArrayList<Review> findReview(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
