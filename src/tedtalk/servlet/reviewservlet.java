@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
-import tedtalk.model.ReviewModel;
-
 import tedtalkDB.model.Review;
-import tedtalk.controller.ProfileController;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -39,8 +36,7 @@ public class reviewservlet extends HttpServlet {
 		System.out.println("Review Servlet: doPost");
 		
 		ReviewController revController = new ReviewController();
-		Review revModel = new Review();
-		ReviewModel handle = new ReviewModel();
+		Review handle = new Review();
 		ProfileModel profileHandle = new ProfileModel();
 		/*USE OF THE DB REVIEWMODEL TO SET OBTAIN ATTRIB:
 		 * String reviewName = req.getParameter("name");
@@ -58,18 +54,11 @@ public class reviewservlet extends HttpServlet {
 		handle.setName( req.getParameter("name"));
 		handle.setTopic(req.getParameter("title"));*/
 				
-		revController.setModel(revModel);//USED WITH THE DB REVIEW MODEL
+		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
-		revController.newReview(handle.getName(), handle.getReviewRating(), handle.getTopic(), handle.getPresenter(),handle.getDesc(), profileHandle.getProfID());
-		ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
+		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
-					
-		/*if(!revReturn.isEmpty()) {
-			for(int i = 0; i < revReturn.size(); i++) {
-				//reviews.add(revReturn.get(i).getDesc());
-				reviews.add(reviewDesc);
-			}
-		} */
+							
 		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER
 
 		reviews.add(reviewDesc);
