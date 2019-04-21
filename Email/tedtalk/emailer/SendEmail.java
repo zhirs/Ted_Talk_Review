@@ -8,21 +8,18 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class SendEmail {
-
-	public static void main(String [] args) {
+	
+	//need to figure out how to test this
+	public SendEmail(String mailTo) {
 	final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-	      // Recipient's email ID needs to be mentioned.
-	      String to = "acastro7@ycp.edu";
-
-	      // Sender's email ID needs to be mentioned
-	      String from = "Berjoigy@gmail.com";
-
 	      // Assuming you are sending email from localhost
 	      String host = "localhost";
+	      
+	      //The email address this originates from
+	      String mailFrom = "Berjoigy@gmail.com";
 
 	      // Get system properties
 	      Properties properties = System.getProperties();
@@ -52,10 +49,10 @@ public class SendEmail {
 	         MimeMessage message = new MimeMessage(session);
 
 	         // Set From: header field of the header.
-	         message.setFrom(new InternetAddress(from));
+	         message.setFrom(new InternetAddress(mailFrom));
 
 	         // Set To: header field of the header.
-	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
 
 	         // Set Subject: header field
 	         message.setSubject("This is Adrian, testing stuff");
