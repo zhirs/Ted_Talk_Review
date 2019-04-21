@@ -11,7 +11,7 @@ import tedtalkDB.model.Student;
 
 public class InitialData {
 	private static int iter;
-	public static List<Account> getUsers(){
+	public static List<Account> getAdmins(){
 		List<Account> user = new ArrayList<Account>();
 		// four superadmins created
 		iter = 0;
@@ -36,6 +36,13 @@ public class InitialData {
 		user.add(student);
 		
 		return user;
+	}
+	public static List<Account> getProfs(){
+		
+	}
+	
+	public static List<Account> getStudents(){
+		
 	}
 	
 	public static List<Review> getReviews(){
@@ -72,10 +79,5 @@ public class InitialData {
 	private static int ID() {
 		iter ++;
 		return iter;
-	}
-
-	public static List<AccountReview> getAccountReviews() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

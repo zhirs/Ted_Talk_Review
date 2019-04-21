@@ -97,22 +97,40 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;				
-			
+				PreparedStatement stmt4 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"create table accounts(" +
+						"create table admins(" +
 						"	prof_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40), " +
-						"   email varchar(40)" +
 						")"
 					);	
 					stmt1.executeUpdate();
 					
-					System.out.println("Accounts table created");
-					
 					stmt2 = conn.prepareStatement(
+							"create table profs(" +
+							"	prof_id integer primary key " +
+							"		generated always as identity (start with 10000, increment by 1), " +									
+							"	username varchar(40)," +
+							"	password varchar(40), " +
+							")"
+						);	
+						stmt2.executeUpdate();
+					System.out.println("Profs table created");
+					
+					stmt3 = conn.prepareStatement(
+							"create table students(" +
+							"	prof_id integer primary key " +
+							"		generated always as identity (start with 20000, increment by 1), " +									
+							"	username varchar(40)," +
+							"	password varchar(40), " +
+							")"
+						);	
+					stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
 							"	rev_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
@@ -125,24 +143,16 @@ public class DerbyDatabase implements IDatabase {
 							//"   subDate date" +
 							")"
 					);
-					stmt2.executeUpdate();
+					stmt4.executeUpdate();
 					
 					System.out.println("Reviews table created");					
 					
-					stmt3 = conn.prepareStatement(
-							"create table accountReviews(" +
-							"	prof_id integer constraint prof_id references accounts, " +
-							"	rev_id integer constraint rev_id references reviews " +
-							")"
-					);
-					stmt3.executeUpdate();
-					
-					System.out.println("ReviewAuthors table created");					
-										
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -153,46 +163,74 @@ public class DerbyDatabase implements IDatabase {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				List<Account> accountList;
+				List<Account> adminList;
+				List<Account> profList;
+				List<Account> studentList;
 				List<Review> reviewList;
 				List<AccountReview> accountReviewList;
 				
 				try {
-					accountList     = InitialData.getUsers();
-					reviewList       = InitialData.getReviews();
+					adminList = InitialData.getAdmins();
+					profList = InitialData.getProfs();
+					studentList = InitialData.getStudents();
+					reviewList = InitialData.getReviews();
 					accountReviewList = InitialData.getAccountReviews();					
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
-				PreparedStatement insertAccount     = null;
+				PreparedStatement insertAdmin     = null;
+				PreparedStatement insertProf = null;
+				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
 				PreparedStatement insertAccountReview = null;
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
-					insertAccount = conn.prepareStatement("insert into accounts (username, password, email) values (?, ?, ?)");
-					for (Account account: accountList) {
-//						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
-						insertAccount.setString(1, account.getUserName());
-						insertAccount.setString(2, account.getPassword());
-						insertAccount.setString(3, account.getEmail());
-						insertAccount.addBatch();
+					insertAdmin = conn.prepareStatement("insert into admins (username, password) values (?, ?)");
+					for (Account account: adminList) {
+//						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
+						insertAdmin.setString(1, account.getUserName());
+						insertAdmin.setString(2, account.getPassword());
+						insertAdmin.addBatch();
 					}
-					insertAccount.executeBatch();
+					insertAdmin.executeBatch();
 					
-					System.out.println("Account table populated");
+					System.out.println("Admin table populated");
+					
+					insertProf = conn.prepareStatement("insert into profs (username, password) values (?, ?)");
+					for (Account account: profList) {
+//						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
+						insertProf.setString(1, account.getUserName());
+						insertProf.setString(2, account.getPassword());
+						insertProf.addBatch();
+					}
+					insertProf.executeBatch();
+					
+					System.out.println("Prof table populated");
+					
+					insertProf = conn.prepareStatement("insert into students (username, password) values (?, ?)");
+					for (Account account: studentList) {
+//						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
+						insertStudent.setString(1, account.getUserName());
+						insertStudent.setString(2, account.getPassword());
+						insertStudent.addBatch();
+					}
+					insertStudent.executeBatch();
+					
+					System.out.println("Student table populated");
+					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
-					insertReview = conn.prepareStatement("insert into reviews (name, pres, topic, desc, status) values (?, ?, ?, ?, ?)");
+					insertReview = conn.prepareStatement("insert into reviews (profID, name, pres, topic, desc, status) values (?, ?, ?, ?, ?, ?)");
 					for (Review review : reviewList) {
 //						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-//						insertBook.setInt(1, book.getAuthorId());	// this is now in the BookAuthors table
-						insertReview.setString(1, review.getName());
-						insertReview.setString(2, review.getPres());
-						insertReview.setString(3, review.getTopic());
-						insertReview.setString(4, review.getDesc());
-						insertReview.setInt(5, review.getStatus());
+						insertReview.setInt(1, review.getProfID());	
+						insertReview.setString(2, review.getName());
+						insertReview.setString(3, review.getPres());
+						insertReview.setString(4, review.getTopic());
+						insertReview.setString(5, review.getDesc());
+						insertReview.setInt(6, review.getStatus());
 						//insertReview.setDate(6, review.getDate());
 						
 						insertReview.addBatch();
@@ -202,21 +240,14 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Reviews table populated");					
 					
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
-					// since this table consists entirely of foreign keys, with constraints applied
-					insertAccountReview = conn.prepareStatement("insert into accountReviews (prof_id, rev_id) values (?, ?)");
-					for (AccountReview accountReview : accountReviewList) {
-						insertAccountReview.setInt(1, accountReview.getProfId());
-						insertAccountReview.setInt(2, accountReview.getRevId());
-						insertAccountReview.addBatch();
-					}
-					insertAccountReview.executeBatch();	
-					
-					System.out.println("AuthorReviews table populated");					
+					// since this table consists entirely of foreign keys, with constraints applied				
 					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertReview);
-					DBUtil.closeQuietly(insertAccount);
+					DBUtil.closeQuietly(insertProf);
+					DBUtil.closeQuietly(insertStudent);
+					DBUtil.closeQuietly(insertAdmin);
 					DBUtil.closeQuietly(insertAccountReview);					
 				}
 			}
