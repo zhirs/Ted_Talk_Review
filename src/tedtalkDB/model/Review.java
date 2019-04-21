@@ -115,4 +115,8 @@ public class Review {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println(dateFormat.format(date));
 	}
+	public void setProfID(int profID) {
+		// TODO Auto-generated method stub
+		this.profID = profID;
+	}
 }

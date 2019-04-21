@@ -2,6 +2,9 @@ package tedtalkDB.model;
 
 public class NetworkAdmin extends Professor{
 	// nothing new yet, just creates new Admin
+	public NetworkAdmin() {
+		
+	}
 	public NetworkAdmin(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);
 	}
