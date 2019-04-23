@@ -10,5 +10,4 @@ public class Professor extends Account{
 	/* possible moderator status may be added to be used to assign specific
 	 * admins to become the only admins to verify reviews
 	 */
-
 }
