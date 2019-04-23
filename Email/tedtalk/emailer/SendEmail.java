@@ -13,7 +13,10 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
 	
 	//need to figure out how to test this
-	public SendEmail(String mailTo) {
+	public SendEmail(){
+		
+	}
+	public void sendEmail(String mailTo) {
 	final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 	      // Assuming you are sending email from localhost
 	      String host = "localhost";
@@ -58,9 +61,7 @@ public class SendEmail {
 	         message.setSubject("This is Adrian, testing stuff");
 
 	         // Now set the actual message
-	         message.setText("Yo is this email junk working bro?"
-	         		+ " \n Please respond back if you got this \n Only an email that allows less secure apps to access it to be used"
-	         		+ " \n so we will have to create one for the project");
+	         message.setText("This is a test email please do not respond back");
 	         
 	         //Sets the date for the message
 	         message.setSentDate(new Date());
