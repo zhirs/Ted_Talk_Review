@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Users/Adrian/Documents/Code/Jar files/smtp-1.6.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adrian/Documents/Code/Jar files/jaf-1_1_1/jaf-1.1.1/activation.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adrian/Documents/Code/Jar files/javamail1_4_5/javamail-1.4.5/mail.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CS320_Derby"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

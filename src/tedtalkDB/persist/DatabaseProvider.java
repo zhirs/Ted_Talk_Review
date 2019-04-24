@@ -1,4 +1,4 @@
-package tedtalkDB.model;
+package tedtalkDB.persist;
 
 public class DatabaseProvider {
 	private static IDatabase theInstance;

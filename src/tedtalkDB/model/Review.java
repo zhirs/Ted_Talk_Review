@@ -1,8 +1,9 @@
 package tedtalkDB.model;
 
+
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Review {
 	private String name; // name of review
@@ -13,14 +14,14 @@ public class Review {
 	private int revID; // review ID associated with each review
 	private int status; // status of review (needs review = 0, approved = 1, denied = 2), defaults status to 0
 	private Date date; // time when review was created
-	private Tags tag; // topic of review
+	private String tag; // topic of review
 	private String url;
 	
 	public Review() {	
 		status = 0;
 	}
 	// creates new review
-	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, Tags tag) {
+	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, String tag, int status) {
 		this.url = url;
 		this.name = name;
 		this.rate = rate;
@@ -33,7 +34,7 @@ public class Review {
 		// sets status automatically to 0, needs review
 		status = 0;
 		// sets date as current time when review is created
-		date = new Date();
+		date = new Date(revID);
 	}
 		
 	// getter methods
@@ -69,7 +70,7 @@ public class Review {
 		return url;
 	}
 	
-	public Tags getTag() {
+	public String getTag() {
 		return tag;
 	}
 	
@@ -90,7 +91,7 @@ public class Review {
 		this.pres = pres;
 	}
 	
-	public void setTag(Tags tag) {
+	public void setTag(String tag) {
 		this.tag = tag;
 	}
 	
@@ -103,11 +104,19 @@ public class Review {
 	public void setStatus(int update) {
 		status = update;
 	}
+	public Date getDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	// prints out time stamp of review creation
 	// not sure how it works, pulled from stack overflow
 	public void printTime() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println(dateFormat.format(date));
+	}
+	public void setProfID(int profID) {
+		// TODO Auto-generated method stub
+		this.profID = profID;
 	}
 }
