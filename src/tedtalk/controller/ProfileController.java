@@ -10,7 +10,7 @@ import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
 import tedtalkDB.persist.FakeDatabase;
 
-public class ProfileController {
+public class ProfileController{
 	private ProfileModel model;
 	private FakeDatabase fake = new FakeDatabase();
 	

@@ -1,5 +1,6 @@
 package tedtalkDB.persist;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.NetworkAdmin;
@@ -15,13 +16,35 @@ public class FakeDatabase implements IDatabase{
 	private ArrayList<Review> reviewList;
 	
 	// every time called, recreates userList and reviewList
-	public FakeDatabase() {
+	public FakeDatabase(){
 		userList = new ArrayList<Account>();
 		reviewList = new ArrayList<Review>();
 		
 		// Add initial data
-		userList.addAll(InitialData.getUsers());
-		reviewList.addAll(InitialData.getReviews());
+		try {
+			userList.addAll(InitialData.getAdmins());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getProfs());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getStudents());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			reviewList.addAll(InitialData.getReviews());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Account> getUserList(){
@@ -89,7 +112,7 @@ public class FakeDatabase implements IDatabase{
 	// creates new review
 	public ArrayList<Review> createReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
 		// creates new review with inputed info
-		Review rev = new Review(url, name, rate, pres, desc, profID, reviewList.size() + 1, tag);
+		Review rev = new Review();
 		// adds new review to list
 		reviewList.add(rev);
 		// returns the new full reviewList
@@ -135,5 +158,30 @@ public class FakeDatabase implements IDatabase{
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Professor> addProfessor(String user, String pass, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID,
+			String tag, int status) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
