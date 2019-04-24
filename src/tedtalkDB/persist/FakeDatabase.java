@@ -7,6 +7,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.Tags;
 import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
@@ -14,6 +15,7 @@ public class FakeDatabase implements IDatabase{
 	private ArrayList<Account> userList; 
 	private ArrayList<Review> reviewList;
 	
+	// every time called, recreates userList and reviewList
 	public FakeDatabase() {
 		userList = new ArrayList<Account>();
 		reviewList = new ArrayList<Review>();
@@ -32,6 +34,7 @@ public class FakeDatabase implements IDatabase{
 	}
 	
 	// checks credentials of login
+	// pulls login info from input and compares it against database data
 	public boolean checkCredentials(String user, String pass) {
 		for(Account use: userList) {
 			if(use.getUserName().equals(user)) {
@@ -44,6 +47,7 @@ public class FakeDatabase implements IDatabase{
 	}
 	
 	// gets account from userList list to return to model based on userName
+	// used to send profile data to profileModel to store session info
 	public Account setLogin(String user) {
 		for(Account use: userList) {
 			if(use.getUserName().equals(user)) {
@@ -55,8 +59,9 @@ public class FakeDatabase implements IDatabase{
 	
 	// adding a new account into the userList (temp)
 	// role 0 = student, 1 = professor, 2 = networkAdmin
-	public void addUser(String user, String pass, String email, String section, int role) {
+	public ArrayList<Account> addUser(String user, String pass, String email, String section, int role) {
 		Account newUser = null;
+		// based on role int, new user is created in database
 		switch(role) {
 		case 1: 
 			newUser = new Professor(user, pass, email, userList.size() + 1);
@@ -68,6 +73,7 @@ public class FakeDatabase implements IDatabase{
 			newUser = new Student(user, pass, email, section, userList.size() + 1);
 		}
 		userList.add(newUser);
+		return userList;
 	}
 	
 	// gets all reviews by a certain profile and returns it as an array list
@@ -82,8 +88,13 @@ public class FakeDatabase implements IDatabase{
 	}
   
 	// creates new review
-	public void createReview(String name, int rate, String topic, String pres, String desc, int profID, int revID) {
-		reviewList.add(new Review(name, rate, topic, pres, desc, profID, reviewList.size()+1));
+	public ArrayList<Review> createReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
+		// creates new review with inputed info
+		Review rev = new Review(url, name, rate, pres, desc, profID, reviewList.size() + 1, tag);
+		// adds new review to list
+		reviewList.add(rev);
+		// returns the new full reviewList
+		return reviewList;
 	}
 	
 	// find total count of reviews by a certain profile

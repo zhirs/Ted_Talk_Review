@@ -4,51 +4,56 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 
 import tedtalk.controller.ReviewController;
-import tedtalk.model.ReviewModel;
+import tedtalkDB.model.Review;
+import tedtalkDB.model.Tags;
+import tedtalkDB.persist.FakeDatabase;
+
 public class ReviewControllerTest {
-	private ReviewModel modelHandler =  new ReviewModel();
-	private ReviewController reviewController = new ReviewController();
-	
-	/* NOTE THE SET RATING METHOD WITHIN THE REVIEWMODEL CASE    * 
-	 * ENSURE THE RATING IS BETWEEN 1 AND 5 OTHERWISE THE RATING *
-	 * DEFAULTS TO 1 STAR; THEREFORE THERE IS NO TESTING DONE ON *
-	 * THE RATING PORTION OF THE VERIFYSUBMISSION() IN THIS FILE */
+	private Review modelHandler;
+	private ReviewController reviewController;
+	private FakeDatabase fake;
+	private ArrayList <Review> result;
 	
 	@Before
-	public void setup0() {//NULL CASE
-		System.out.println("initializing invalid message test case: ");
+	public void setup0() {
+		fake = new FakeDatabase();
+		reviewController = new ReviewController();
+		// sets model to a review already in database for testing methods
+		modelHandler = fake.getReviewList().get(0);
 		reviewController.setModel(modelHandler);
+		result = new ArrayList<Review>();
 	}
+	
 	@Test
-	public void test0() {
-		modelHandler.setRate(5);
-		modelHandler.setDesc(null);//NULL REVIEW MESSAGE
+	public void checkValidReview() {
+		// finds if submission is valid to be sent in for review from professor
 		assertTrue(reviewController.verifySubmission() == true);
-
 	}
-	@After
-	public void test0Result() {
-	System.out.println("expected: false\nyour result:" + reviewController.verifySubmission());
-}
 	
-	@Before
-	public void setup1() {//MESSAGE NOT SET
-		System.out.println("initializing invalid message test case2: ");
-		reviewController.setModel(modelHandler);
-	}
 	@Test
-	public void test1() {
-		modelHandler.setRate(5);
-		//FAILURE TO SET THE REVIEWMESSAGE RESULTS IN THE INITIALIZED VALUE OF "null"
-		assertTrue(reviewController.verifySubmission() == false);
+	public void createNewReview() {
+		result = fake.getReviewList();
+		System.out.println(result.size());
+		String testName = "Wilds";
+		String testURL = "tEDtalk.com/Wilds";
+		int testRate = 3;
+		Tags tag = Tags.environmental;
+		String testPresenter= "Hamilton";
+		String testDescription = "fake description";
+		int fakeprofID = 6;
+		
+		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
+		
+		//System.out.println(fake.getReviewList().size());
 
+		
+		assertTrue(test.size() == 6);
+		//System.out.println(result.get(5).getName());
+		assertTrue(test.get(5).getName().equals("Wilds"));
+		assertTrue(test.get(5).getProfID() == 6);
 	}
-	@After
-	public void test1Result() {
-	System.out.println("expected: false\nyour result:" + reviewController.verifySubmission());
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/
-
-}

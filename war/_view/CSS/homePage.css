@@ -1,0 +1,32 @@
+<html>
+	<style type = text/css>
+	body{
+	background-color: orange;
+	color: black
+	}
+	h1{	text-align: center;	color: purple;}		
+	h2{text-align: center; color:red; }
+	.button {
+	background-color: #9370DB; 
+	border: 1px solid black;
+	color: white;
+	padding: 10px 21px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 9px;
+	float: left;
+	}
+	.button2 {
+	background-color: #9370DB; 
+	border: 1px solid black;
+	color: white;
+	padding: 10px 21px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 9px;
+	}
+	.searchSection{text-align: center;}
+	</style>
+</html>

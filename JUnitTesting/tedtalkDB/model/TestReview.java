@@ -68,7 +68,7 @@ public class TestReview {
 	@Test
 	public void testUpdateDesc() {
 		String rev = reviews.get(0).getDesc();
-		reviews.get(0).updateDesc("this is an updated description");
+		reviews.get(0).setDesc("this is an updated description");
 		
 		assertTrue(rev != reviews.get(0).getDesc());
 	}
