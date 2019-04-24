@@ -1,4 +1,4 @@
-package tedtalkDB.model;
+package tedtalk.sqldemo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

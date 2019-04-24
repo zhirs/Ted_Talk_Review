@@ -2,7 +2,6 @@ package tedtalkDB.persist;
 
 import java.util.ArrayList;
 
-import tedtalkDB.model.IDatabase;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
