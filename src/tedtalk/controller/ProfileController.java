@@ -37,6 +37,8 @@ public class ProfileController {
 		model.setProfID(login.getprofID());
 		model.setUser(login.getUserName());
 		
+		// finds whether reviewing reviews is on or off
+		model.setModStat(fake.getModStat());
 		// sets role based on account class
 		// also if student sets section
 		if(login instanceof NetworkAdmin) {
@@ -44,6 +46,7 @@ public class ProfileController {
 		}
 		else if(login instanceof Professor){
 			model.setRole(1);
+			model.setMod(((Professor) login).getMod());
 		}
 		else {
 			model.setSection(((Student) login).getSection());
@@ -59,12 +62,15 @@ public class ProfileController {
 		return newUser;
 	}
 	
-	// allows professors and NetworkAdmins to verify reviews
+	// allows professors to verify reviews
 		public void verifyReview(Review rev, int approve) {
 			// checks role based on login
-			if(model.getRole() > 0) {
-				// updates status on review
-				rev.setStatus(approve);
+			if(model.getRole() == 1) {
+				// checks if mod
+				if(model.getMod() == 1) {
+					// updates status on review
+					rev.setStatus(approve);
+				}
 			}
 		}
 }

@@ -16,6 +16,7 @@ public class InitialData {
 		List<NetworkAdmin> adminList = new ArrayList<NetworkAdmin>();
 		ReadCSV readAdmins = new ReadCSV("admins.csv");
 		// four superadmins created
+
 		try {
 			Integer adminID = 1;
 			while(true) {
