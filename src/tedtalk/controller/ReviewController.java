@@ -1,5 +1,6 @@
 package tedtalk.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.Review;
@@ -9,7 +10,7 @@ import tedtalkDB.persist.FakeDatabase;
 public class ReviewController {
 	private Review reviewModel;
 	private FakeDatabase fake;
-	public ReviewController() {
+	public ReviewController() throws IOException {
 		 fake = new FakeDatabase();
 	}
 

@@ -2,6 +2,7 @@ package tedtalkDB.persist;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import tedtalkDB.model.Account;
@@ -130,5 +131,4 @@ public class InitialData {
 			readReviews.close();
 		}
 	}
-	
 }

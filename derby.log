@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Apr 21 11:40:54 EDT 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016a-408e-b0b7-000003204b30 
+Wed Apr 24 04:06:03 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016a-4e61-5846-000003216508 
 on database directory /home/babystew/git/Ted_Talk_Review/library.db with class loader sun.misc.Launcher$AppClassLoader@45ee12a7 
 Loaded from file:/home/babystew/Desktop/CS320/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
