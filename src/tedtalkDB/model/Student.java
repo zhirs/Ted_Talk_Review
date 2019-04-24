@@ -8,7 +8,9 @@ public class Student extends Account{
 		super(user, pass, email, profID);
 		this.section = section;
 	}
-	
+	public Student() {
+		
+	}
 	// will be used to get reviews of all profiles in a given section
 	public String getSection() {
 		return section;

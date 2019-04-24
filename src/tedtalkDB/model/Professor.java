@@ -10,6 +10,11 @@ public class Professor extends Account{
 		mod = 0;
 	}
 	// will soon implement new methods such as verifying reviews
+
+	public Professor() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	/* possible moderator status may be added to be used to assign specific
 	 * admins to become the only admins to verify reviews
