@@ -2,7 +2,6 @@ package tedtalkDB.persist;
 
 import java.util.ArrayList;
 
-import tedtalkDB.model.IDatabase;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
@@ -111,5 +110,30 @@ public class FakeDatabase implements IDatabase{
 			}
 		}
 		return revs;
+	}
+	
+	// finds all professor accounts
+	// used to display on NetworkAdmin profile page
+	// so that prof mod status can be switched
+	public ArrayList<Professor> findAllProfessors(){
+		ArrayList<Professor> professors = new ArrayList<Professor>();
+		for(Account use : userList) {
+			if(use instanceof Professor) {
+				professors.add((Professor) use);
+			}
+		}
+		return professors;
+	}
+	
+	// finds whether reviewing is on or off for entire website 
+	public int getModStat() {
+		for(Account use : userList) {
+			if(use instanceof NetworkAdmin) {
+				if(((NetworkAdmin) use).getModStat() != 0) {
+					return ((NetworkAdmin) use).getModStat();
+				}
+			}
+		}
+		return 0;
 	}
 }

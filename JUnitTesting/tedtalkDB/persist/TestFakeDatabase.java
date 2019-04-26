@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tedtalkDB.model.Account;
+import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
 import tedtalkDB.model.Tags;
@@ -69,12 +70,12 @@ public class TestFakeDatabase {
 	public void addNewUserTest() {
 		test.addUser("RandomStudent", "unknown", "student@ycp.edu", "CS100", 0);
 		
-		assertTrue(test.getUserList().size() == 7);
+		assertTrue(test.getUserList().size() == 8);
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getUserName().equals("RandomStudent"));
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getPassword().equals("unknown"));
 		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getEmail().equals("student@ycp.edu"));
 		assertTrue(((Student) test.getUserList().get(test.getUserList().size() - 1)).getSection().equals("CS100"));
-		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getprofID() == 7);
+		assertTrue(test.getUserList().get(test.getUserList().size() - 1).getprofID() == 8);
 	}
 	
 	@Test
@@ -95,7 +96,7 @@ public class TestFakeDatabase {
 	@Test
 	public void getReviewTotalTest() {
 		assertTrue(test.getReviewTotal(1) == 1);
-		assertTrue(test.getReviewTotal(test.getUserList().size()) == 2);
+		assertTrue(test.getReviewTotal(test.getUserList().size() - 1) == 2);
 	}
 	
 	@Test
@@ -105,5 +106,13 @@ public class TestFakeDatabase {
 		assertTrue(test.getReviewList().size() > oldSize);
 		assertTrue(test.getReviewList().get(oldSize).getRate() == 3);
 		assertTrue(test.getReviewList().get(oldSize).getName().equals("Wilds"));
+	}
+	
+	@Test
+	public void getAllProfessorAccounts() {
+		ArrayList<Professor> professors = test.findAllProfessors();
+		assertTrue(professors.size() == 2);
+		assertTrue(professors.get(0).getMod() == 0);
+		assertTrue(professors.get(1).getMod() == 0);
 	}
 }

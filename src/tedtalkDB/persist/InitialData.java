@@ -1,6 +1,8 @@
 package tedtalkDB.persist;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
@@ -10,67 +12,123 @@ import tedtalkDB.model.Student;
 import tedtalkDB.model.Tags;
 
 public class InitialData {
-	private static int iter;
-	public static List<Account> getUsers(){
-		List<Account> user = new ArrayList<Account>();
+	public static List<NetworkAdmin> getAdmins() throws IOException{
+		List<NetworkAdmin> adminList = new ArrayList<NetworkAdmin>();
+		ReadCSV readAdmins = new ReadCSV("admins.csv");
 		// four superadmins created
-		iter = 0;
-		// iter count added to create id tags for each user starting at 1
-		NetworkAdmin zack = new NetworkAdmin("zhirs", "monkey", "zhirs@ycp.edu", ID());
-		user.add(zack);
-		
-		NetworkAdmin darnell = new NetworkAdmin("dhill22", "banana", "dhill22@ycp.edu", ID());
-		user.add(darnell);
-		
-		NetworkAdmin joe = new NetworkAdmin("jlandau2", "tree", "jlandau2@ycp.edu", ID());
-		user.add(joe);
-		
-		NetworkAdmin adrian = new NetworkAdmin("acastro7", "forest", "acastro7@ycp.edu", ID());
-		user.add(adrian);
-		
-		// test cases that are not superadmins
-		Professor professor = new Professor("profx", "professorX", "professorX@ycp.edu", ID());
-		user.add(professor);
-		
-		Student student = new Student("randp", "random", "randomPerson@ycp.edu", "CS320", ID());
-		user.add(student);
-		
-		return user;
+
+		try {
+			Integer adminID = 1;
+			while(true) {
+				List<String> tuple = readAdmins.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				adminID = adminID++;
+				String username = i.next();
+				String password = i.next();
+				String email = i.next();
+				NetworkAdmin admin = new NetworkAdmin(username, password, email, adminID);
+				adminList.add(admin);
+			}
+			System.out.println("adminList loaded from CSV file");
+			return adminList;
+		}
+		finally {
+			readAdmins.close();
+		}
+	}
+	public static List<Professor> getProfs() throws IOException{
+		List<Professor> profList = new ArrayList<Professor>();
+		ReadCSV readProfs = new ReadCSV("professors.csv");
+		// prof created
+		try {
+			Integer profID = 10000;
+			while(true) {
+				List<String> tuple = readProfs.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				profID = profID++;
+				String username = i.next();
+				String password = i.next();
+				String email = i.next();
+				Professor prof = new Professor(username, password, email, profID);
+				profList.add(prof);
+			}
+			System.out.println("profList loaded from CSV file");
+			return profList;
+		}
+		finally {
+			readProfs.close();
+		}
 	}
 	
-	public static List<Review> getReviews(){
-		iter = 0;
-		
-		List<Review> reviews = new ArrayList<Review>();
-		
-		// 5 reviews, 2 linked to same account 
-		Review talk1 = new Review("tedTalk.com/world", "World will be gone by 2020", 3, "ProfessorX", "this will be the large"
-				+ " part of the review taking up much room and containing a lot of information", 1, ID(), Tags.environmental);
-		reviews.add(talk1);
-
-		Review talk2 = new Review("tedTalk.com/PTSD", "a new class drug that could prevent depression and PTSD", 5, "Rebecca Brachman", ""
-				+ "A crazy new drug development that could help cure severe mental issues with those who were in war", 2, ID(), Tags.health);
-		reviews.add(talk2);
-
-		Review talk3 = new Review("tedTalk.com/spaceDebris", "why we need to clean up our space debris", 1, "Moriba Jah", ""
-				+ "a possible problem that pertains to all living people on earth by space debris blocking out sunlight", 3, ID(), Tags.space);
-		reviews.add(talk3);
-		
-		// these two linked to same student account, one denied, one approved
-		Review talk4 = new Review("tedTalk.com/solarPower", "the beautiful future of solar power", 4, "Marjan van Aubel", ""
-				+ "Solar power is inefficient at the current moment in time, nowhere near that of oil, but it is slowly being"
-				+ " researched and will one day be more efficient and more compact that it is today", 6, ID(), Tags.environmental);
-		reviews.add(talk4);
-		
-		Review talk5 = new Review("tedTalk.com/robotsTakingOver", "How to keep human bias out of AI", 2, "Phil Plait", "keeping human bias out of robots"
-				+ " will become a huge part of those creating this robots for some reason", 6, ID(), Tags.technology);
-		reviews.add(talk5);
-		
-		return reviews;
+	public static List<Student> getStudents() throws IOException{
+		List<Student> studentList = new ArrayList<Student>();
+		ReadCSV readStudents = new ReadCSV("students.csv");
+		// four superadmins created
+		try {
+			Integer studentID = 20000;
+			while(true) {
+				List<String> tuple = readStudents.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				studentID = studentID++;
+				String username = i.next();
+				String password = i.next();
+				String email = i.next();
+				String section = i.next();
+				Student student = new Student(username, password, email, section, studentID);
+				studentList.add(student);
+			}
+			System.out.println("studentList loaded from CSV file");
+			return studentList;
+		}
+		finally {
+			readStudents.close();
+		}
 	}
 	
-	private static int ID() {
-		iter ++;
-		return iter;
+	public static List<Review> getReviews() throws IOException{		
+		List<Review> reviewList = new ArrayList<Review>();
+		
+		ReadCSV readReviews = new ReadCSV("reviews.csv");
+		// four superadmins created
+		try {
+			Integer reviewID = 1;
+			while(true) {
+				List<String> tuple = readReviews.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				reviewID = reviewID++;
+				String url = i.next();
+				String name = i.next();
+				int rate = Integer.parseInt(i.next());
+				String pres = i.next();
+				String desc = i.next();
+				int profID = Integer.parseInt(i.next());
+				String tag = i.next();
+				int status = Integer.parseInt(i.next());
+				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status);
+				reviewList.add(review);
+			}
+			System.out.println("studentList loaded from CSV file");
+			return reviewList;
+		}
+		finally {
+			readReviews.close();
+		}
 	}
+	
 }

@@ -20,7 +20,10 @@ public class ReviewController {
 	// creates new review, does same thing as database method
 	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
 		ArrayList<Review>result = fake.createReview(url, name, rate, pres, desc, profID, tag);
-		
+		// if mods are turned off, review is automatically approved and added
+		if(fake.getModStat() == 1) {
+			result.get(result.size() - 1).setStatus(1);
+		}
 		return result;
 	}
 	

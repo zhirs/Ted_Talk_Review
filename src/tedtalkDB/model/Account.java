@@ -1,11 +1,11 @@
 package tedtalkDB.model;
 
 public class Account {
-	protected String userName; // name displayed on profile
-	protected String password; // for logging in
-	protected String email; // email of profile
-	protected int profID; // iterates starting at 1
-	
+	private String userName; // name displayed on profile
+	private String password; // for logging in
+	private String email; // email of profile
+	private int profID; // iterates starting at 1
+
 	public Account() {
 		
 	}
@@ -21,6 +21,10 @@ public class Account {
 		return userName;
 	}
 	
+	public void setUsername(String username) {
+		this.userName = username;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -29,11 +33,21 @@ public class Account {
 		password = pass;
 	}
 	
+	public void setPassword(String pass) {
+		this.password = pass;
+	}
+	
 	public String getEmail() {
 		return email;
+	}
+	public void setEmail(String em) {
+		this.email = em;
 	}
 	
 	public int getprofID() {
 		return profID;
+	}
+	public void setprofID(int prof_id) {
+		this.profID = prof_id;
 	}
 }
