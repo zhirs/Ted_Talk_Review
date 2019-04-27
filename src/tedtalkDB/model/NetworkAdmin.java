@@ -21,15 +21,4 @@ public class NetworkAdmin extends Account{
 	public int getModStat() {
 		return modStat;
 	}
-	
-	// switch status of professors from on to off or off to on
-	// professors are all not moderators until promoted by a NetworkAdmin
-	public void setMod(Professor prof) {
-		if(prof.getMod() == 0) {
-			prof.setMod(1);
-		}
-		else {
-			prof.setMod(0);
-		}
-	}
 }

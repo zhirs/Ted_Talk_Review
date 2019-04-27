@@ -21,7 +21,7 @@ public class Review {
 		status = 0;
 	}
 	// creates new review
-	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, String tag, int status) {
+	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, String tag) {
 		this.url = url;
 		this.name = name;
 		this.rate = rate;

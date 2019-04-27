@@ -159,6 +159,17 @@ public class FakeDatabase implements IDatabase{
 		}
 		return 0;
 	}
+	
+	// automatically sets mods to off is necessary
+	public void setMod() {
+		if(getModStat() == 1) {
+			for(Account use: userList) {
+				if(use instanceof Professor) {
+					((Professor) use).setMod(0);
+				}
+			}
+		}
+	}
 
 	@Override
 	public ArrayList<Professor> addProfessor(String user, String pass, String email) {
