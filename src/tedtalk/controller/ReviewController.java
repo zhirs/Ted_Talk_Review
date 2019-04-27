@@ -11,7 +11,7 @@ public class ReviewController {
 	private FakeDatabase fake;
 	private DerbyDatabase derby;
 	public ReviewController() {
-		 fake = new FakeDatabase();
+		 fake = new FakeDatabase();	//still in use so getModStat doesn't fail
 		 derby = new DerbyDatabase();
 	}
 

@@ -65,6 +65,7 @@ public class ProfileController {
 		return newUser;
 	}
 	
+	
 	//adds a professor to add into the database and the arraylist of Professors
 	public ArrayList<Professor> professorCreation(String user, String pass, String email){
 		ArrayList<Professor> newProfessor = derby.addProfessor(user, pass, email);
