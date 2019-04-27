@@ -16,6 +16,18 @@
 	<servlet-class>tedtalk.servlet.profileservlet</servlet-class>
 </servlet>
 <servlet>
+	<servlet-name>studentServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studentservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>professorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>networkAdminServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.networkadminservlet</servlet-class>
+</servlet>
+<servlet>
 	<servlet-name>loginServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.loginservlet</servlet-class>
 </servlet>
@@ -52,5 +64,16 @@
 	<servlet-name>profileServlet</servlet-name>
 	<url-pattern>/profile</url-pattern>
 </servlet-mapping>
-
+<servlet-mapping>
+	<servlet-name>studentServlet</servlet-name>
+	<url-pattern>/student</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminServlet</servlet-name>
+	<url-pattern>/networkadmin</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorServlet</servlet-name>
+	<url-pattern>/professor</url-pattern>
+</servlet-mapping>
 </web-app>
