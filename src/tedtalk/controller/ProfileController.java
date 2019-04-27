@@ -9,10 +9,12 @@ import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
 import tedtalkDB.persist.FakeDatabase;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class ProfileController {
 	private ProfileModel model;
 	private FakeDatabase fake = new FakeDatabase();
+	private DerbyDatabase derby = new DerbyDatabase();
 	
 	public ProfileController() {
 		
@@ -26,12 +28,12 @@ public class ProfileController {
 	// checks login info against fake database
 	// calls fake to approve based on userList
 	public Boolean verified() {
-		return fake.checkCredentials(model.getUser(), model.getPass());
+		return derby.checkCredentials(model.getUser(), model.getPass());
 	}
 	
 	// creates login on fake database, sets model to all attributes of returned user
 	public void createLogin(String user) {
-		Account login = fake.setLogin(user);
+		Account login = derby.setLogin(user);
 		model.setEmail(login.getEmail());
 		model.setPass(login.getPassword());
 		model.setProfID(login.getprofID());
@@ -59,7 +61,23 @@ public class ProfileController {
 	// role = 0 for students,  1 for professors, 2 for networkAdmins
 	public ArrayList<Account> userCreation(String user, String pass, String email, String section, int role) {
 		ArrayList<Account> newUser = fake.addUser(user, pass, email, section, role);
+		
 		return newUser;
+	}
+	
+	
+	//adds a professor to add into the database and the arraylist of Professors
+	public ArrayList<Professor> professorCreation(String user, String pass, String email){
+		ArrayList<Professor> newProfessor = derby.addProfessor(user, pass, email);
+		
+		return newProfessor;
+	}
+	
+	//add a network admin to an array list and the database
+	public ArrayList<NetworkAdmin> adminCreation(String user, String pass, String email){
+		ArrayList<NetworkAdmin> newAdmin = derby.addAdmin(user, pass, email);
+		
+		return newAdmin;
 	}
 	
 	// allows professors to verify reviews
