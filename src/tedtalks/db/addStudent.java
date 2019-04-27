@@ -23,9 +23,10 @@ public class addStudent {
 		String email = keyboard.nextLine();
 		System.out.println("Enter a section: ");
 		String section = keyboard.nextLine();
-		
+		System.out.println("Enter a major: ");
+		String major = keyboard.nextLine();
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<Student> found = db.addStudent(user, pass, email, section);
+		ArrayList<Student> found = db.addStudent(user, pass, email, section, major);
 		if (found.size() == 0){
 			System.out.println("Creation error");
 		}

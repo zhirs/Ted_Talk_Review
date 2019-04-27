@@ -13,7 +13,7 @@ public interface IDatabase {
 	public boolean checkCredentials(String user, String pass);
 	public Account setLogin(String user);
 	public ArrayList<Professor> addProfessor(String user, String pass, String email);
-	public ArrayList<Student> addStudent(String user, String pass, String email, String section);
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major);
 	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email);
 	public ArrayList<Review> getProfIDReviewList(int profID);
 	public int getReviewTotal(int profID);
