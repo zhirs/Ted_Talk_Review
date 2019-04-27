@@ -87,7 +87,8 @@ public class InitialData {
 				String password = i.next();
 				String email = i.next();
 				String section = i.next();
-				Student student = new Student(username, password, email, section, studentID);
+				String major = i.next();
+				Student student = new Student(username, password, email, section, studentID, major);
 				studentList.add(student);
 			}
 			System.out.println("studentList loaded from CSV file");

@@ -141,7 +141,8 @@ public class DerbyDatabase implements IDatabase {
 							"	username varchar(40)," +
 							"	password varchar(40), " +
 							"	email varchar(100), " +
-							"	section varchar(1000) " +
+							"	section varchar(1000), "+ 
+							"   major varchar(1000) " +
 							")"
 						);	
 					stmt3.executeUpdate();
@@ -150,7 +151,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
 							"	rev_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
+							"		generated always as identity (start with 50000, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
 							"	url varchar(100), " +
 							"	name varchar(100)," +
@@ -228,13 +229,14 @@ public class DerbyDatabase implements IDatabase {
 					
 					System.out.println("Prof table populated");
 					
-					insertStudent = conn.prepareStatement("insert into students (username, password, email, section) values (?, ?, ?, ?)");
+					insertStudent = conn.prepareStatement("insert into students (username, password, email, section, major) values (?, ?, ?, ?, ?)");
 					for (Student student: studentList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertStudent.setString(1, student.getUserName());
 						insertStudent.setString(2, student.getPassword());
 						insertStudent.setString(3, student.getEmail());
 						insertStudent.setString(4, student.getSection());
+						insertStudent.setString(5, student.getMajor());
 						insertStudent.addBatch();
 					}
 					insertStudent.executeBatch();
@@ -527,7 +529,6 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public ArrayList<Professor> execute(Connection conn) throws SQLException {
 				// TODO Auto-generated method stub
-				ArrayList<Professor> professor= new ArrayList<Professor>();
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet1 = null;
@@ -567,7 +568,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<Student> addStudent(String user, String pass, String email, String section) {
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major) {
 		return executeTransaction(new Transaction<ArrayList<Student>>() {
 			@Override
 			public ArrayList<Student> execute(Connection conn) throws SQLException {
@@ -578,13 +579,14 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into students (username, password, email, section) "+
-						"values(?, ?, ?, ?)"
+						"insert into students (username, password, email, section, major) "+
+						"values(?, ?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					stmt1.setString(2, pass);
 					stmt1.setString(3, email);
 					stmt1.setString(4, section);
+					stmt1.setString(5, major);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
@@ -683,7 +685,8 @@ public class DerbyDatabase implements IDatabase {
 		String password = resultSet.getString(index++);
 		String email = resultSet.getString(index++);
 		String section = resultSet.getString(index++);
-		Student studentX = new Student(username, password, email, section, profID);
+		String major = resultSet.getString(index++);
+		Student studentX = new Student(username, password, email, section, profID, major);
 		return studentX;
 	}
 	protected void loadReview(Review review, ResultSet resultSet1, int i) throws SQLException {

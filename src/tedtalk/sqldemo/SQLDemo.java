@@ -53,7 +53,7 @@ public class SQLDemo {
 		} finally {
 			DBUtil.closeQuietly(conn);
 		}
-}
+ }
 
 	private static void queryLoop(Connection conn) throws IOException {
 		StatementReader stmtReader = new StatementReader(new InputStreamReader(System.in));
