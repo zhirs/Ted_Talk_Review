@@ -18,7 +18,7 @@ public class ProfessorController {
 	//******	professorModel.setModStat(derby.getModStat());//FUNCTIONALITY NOT COMPLETE YET
 		
 		//CREATES NEW ADMIN IN THE DATABASE:
-		derby.addProfessor(professorModel.getUserName(),professorModel.getPassword(),professorModel.getEmail());
+		derby.addProfessor(professorModel.getUserName(),professorModel.getPassword(),professorModel.getEmail(), derby.getMod(professorModel.getMod()));
 				
 	}	
 	

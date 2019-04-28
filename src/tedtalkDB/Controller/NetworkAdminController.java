@@ -22,7 +22,7 @@ public class NetworkAdminController {
 //******		NAModel.setModStat(derby.getModStat());//FUNCTIONALITY NOT COMPLETE YET
 		
 		//CREATES NEW ADMIN IN THE DATABASE:
-		derby.addAdmin(NAModel.getUserName(),NAModel.getPassword(),NAModel.getEmail());
+		derby.addAdmin(NAModel.getUserName(),NAModel.getPassword(),NAModel.getEmail(), 0);
 				
 	}	
 	

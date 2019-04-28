@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
-import tedtalk.controller.NetworkAdminController;
+import tedtalkDB.Controller.NetworkAdminController;
 import tedtalk.controller.ReviewController;
 
 public class networkadminsettingservlet extends HttpServlet {
