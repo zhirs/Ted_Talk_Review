@@ -1,26 +1,30 @@
 package tedtalk.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
 
 public class ReviewController {
 	private Review reviewModel;
 	private FakeDatabase fake;
-	public ReviewController() {
+	public ReviewController() throws IOException {
 		 fake = new FakeDatabase();
 	}
 
 	public void setModel(Review modelHandler) {
 		this.reviewModel = modelHandler;
 	}
-
+	
 	// creates new review, does same thing as database method
-	public ArrayList<Review> newReview(String name, int rate, String topic, String pres, String desc, int profID) {
-		ArrayList<Review>result = fake.createReview(name, rate, topic, pres, desc, profID);
-		
+	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
+		ArrayList<Review>result = fake.createReview(url, name, rate, pres, desc, profID, tag);
+		// if mods are turned off, review is automatically approved and added
+		if(fake.getModStat() == 1) {
+			result.get(result.size() - 1).setStatus(1);
+		}
 		return result;
 	}
 	

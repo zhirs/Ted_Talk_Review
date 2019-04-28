@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tedtalk.model.ProfileModel;
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
 import tedtalk.controller.ProfileController;

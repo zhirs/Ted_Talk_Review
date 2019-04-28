@@ -7,6 +7,8 @@ public class ProfileModel {
 	private String section;
 	private int role;
 	private int profID;
+	private int mod;
+	private int modStat;
 	
 	public ProfileModel() {
 	}
@@ -45,5 +47,17 @@ public class ProfileModel {
 	}
 	public void setProfID(int profID) {
 		this.profID = profID;
+	}
+	public int getMod() {
+		return mod;
+	}
+	public void setMod(int mod) {
+		this.mod = mod;
+	}
+	public int getModStat() {
+		return modStat;
+	}
+	public void setModStat(int modStat) {
+		this.modStat = modStat;
 	}
 }

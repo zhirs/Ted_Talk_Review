@@ -1,12 +1,13 @@
 package tedtalkDB.persist;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import tedtalkDB.model.IDatabase;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.Tags;
 import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
@@ -15,13 +16,35 @@ public class FakeDatabase implements IDatabase{
 	private ArrayList<Review> reviewList;
 	
 	// every time called, recreates userList and reviewList
-	public FakeDatabase() {
+	public FakeDatabase(){
 		userList = new ArrayList<Account>();
 		reviewList = new ArrayList<Review>();
 		
 		// Add initial data
-		userList.addAll(InitialData.getUsers());
-		reviewList.addAll(InitialData.getReviews());
+		try {
+			userList.addAll(InitialData.getAdmins());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getProfs());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getStudents());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			reviewList.addAll(InitialData.getReviews());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Account> getUserList(){
@@ -87,9 +110,9 @@ public class FakeDatabase implements IDatabase{
 	}
   
 	// creates new review
-	public ArrayList<Review> createReview(String name, int rate, String topic, String pres, String desc, int profID) {
+	public ArrayList<Review> createReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
 		// creates new review with inputed info
-		Review rev = new Review(name, rate, topic, pres, desc, profID, reviewList.size() + 1, 0);
+		Review rev = new Review();
 		// adds new review to list
 		reviewList.add(rev);
 		// returns the new full reviewList
@@ -110,5 +133,66 @@ public class FakeDatabase implements IDatabase{
 			}
 		}
 		return revs;
+	}
+	
+	// finds all professor accounts
+	// used to display on NetworkAdmin profile page
+	// so that prof mod status can be switched
+	public ArrayList<Professor> findAllProfessors(){
+		ArrayList<Professor> professors = new ArrayList<Professor>();
+		for(Account use : userList) {
+			if(use instanceof Professor) {
+				professors.add((Professor) use);
+			}
+		}
+		return professors;
+	}
+	
+	// finds whether reviewing is on or off for entire website 
+	public int getModStat() {
+		for(Account use : userList) {
+			if(use instanceof NetworkAdmin) {
+				if(((NetworkAdmin) use).getModStat() != 0) {
+					return ((NetworkAdmin) use).getModStat();
+				}
+			}
+		}
+		return 0;
+	}
+	
+	// automatically sets mods to off is necessary
+	public void setMod() {
+		if(getModStat() == 1) {
+			for(Account use: userList) {
+				if(use instanceof Professor) {
+					((Professor) use).setMod(0);
+				}
+			}
+		}
+	}
+
+	@Override
+	public ArrayList<Professor> addProfessor(String user, String pass, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID,
+			String tag, int status) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
