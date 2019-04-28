@@ -5,6 +5,9 @@ import tedtalkDB.persist.*;
 public class NetworkAdminController {
 	private NetworkAdmin NAModel;
 	private DerbyDatabase derby = new DerbyDatabase();
+	
+	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST LIKE IT DOES GARBAGE COLLECTION
+	
 	public void setModel(NetworkAdmin NAModel) {
 		this.NAModel = NAModel;
 	}
