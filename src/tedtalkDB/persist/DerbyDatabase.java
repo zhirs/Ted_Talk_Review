@@ -844,7 +844,7 @@ public class DerbyDatabase implements IDatabase {
 		return studentX;
 	}
 	protected void loadReview(Review review, ResultSet resultSet1, int i) throws SQLException {
-		review.setrevID = resultSet1.getInt(i++);
+		review.setRevID(resultSet1.getInt(i++));
 		review.setURL(resultSet1.getString(i++));
 		review.setName(resultSet1.getString(i++));
 		review.setRate(resultSet1.getInt(i++));
@@ -864,7 +864,7 @@ public class DerbyDatabase implements IDatabase {
 
 	@Override
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID,
-			String tag, int status, Date date) {
+			String tag, int status) {
 		return executeTransaction(new Transaction<ArrayList<Review>>() {
 			@Override
 			public ArrayList<Review> execute(Connection conn) throws SQLException {
@@ -876,7 +876,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt1 = conn.prepareStatement(
 						"insert into reviews (url, name, rate, pres, description, prof_id, tag, status, pubDate) "+
-						"values(?, ?, ?, ?, ?, ?, ?, ?, convert(datetime, ?))"
+						"values(?, ?, ?, ?, ?, ?, ?, ?, ?) " 
 					);
 					stmt1.setString(1, URL);
 					stmt1.setString(2, name);
@@ -886,7 +886,10 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setInt(6, profID);
 					stmt1.setString(7, tag);
 					stmt1.setInt(8, status);
-					stmt1.setDate(9, date);
+					
+					java.util.Date date = new java.util.Date();
+					java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+					stmt1.setDate(9, sqlDate);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
@@ -912,6 +915,44 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
+	}
+
+	@Override
+	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2) {
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where prof_id = ? and "
+							+ "pubDate between ? and ?");
+					stmt1.setInt(1, profID);
+					stmt1.setDate(2, date1);
+					stmt1.setDate(3, date2);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);// TODO Auto-generated method stub
 	}
 		
 }

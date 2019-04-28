@@ -1,6 +1,5 @@
 package tedtalks.db;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,8 +32,8 @@ public class addReview {
 		System.out.println("Status: ");
 		int status = keyboard.nextInt();
 		IDatabase db = DatabaseProvider.getInstance();
-		Date date = new Date(System.currentTimeMillis());
-		ArrayList<Review> found = db.addReview(URL, name, rate, pres, desc, prof_id, tag, status, date);
+		
+		ArrayList<Review> found = db.addReview(URL, name, rate, pres, desc, prof_id, tag, status);
 		if (found.size() == 0){
 			System.out.println("Creation error");
 		}
