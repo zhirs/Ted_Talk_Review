@@ -13,9 +13,8 @@ public class ProfessorController {
 		professorModel.setEmail(login.getEmail());
 		professorModel.setPassword(login.getPassword());
 		professorModel.setprofID(login.getprofID());
-		professorModel.setUsername(login.getUserName());
-		
-		// finds whether reviewing reviews is on or off
+		professorModel.setUsername(login.getUserName());		
+		//ENABLE OR DISABLE MODERATING SETTINGS:
 	//******	professorModel.setModStat(derby.getModStat());//FUNCTIONALITY NOT COMPLETE YET
 		
 		//CREATES NEW ADMIN IN THE DATABASE:
