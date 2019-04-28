@@ -1,5 +1,6 @@
 package tedtalk.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.Review;
@@ -10,8 +11,9 @@ public class ReviewController {
 	private Review reviewModel;
 	private FakeDatabase fake;
 	private DerbyDatabase derby;
-	public ReviewController() {
-		 fake = new FakeDatabase();	//still in use so getModStat doesn't fail
+	
+	public ReviewController() throws IOException {
+		 fake = new FakeDatabase();
 		 derby = new DerbyDatabase();
 	}
 

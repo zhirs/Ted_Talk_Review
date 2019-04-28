@@ -11,7 +11,7 @@ import tedtalkDB.model.Student;
 import tedtalkDB.persist.FakeDatabase;
 import tedtalkDB.persist.DerbyDatabase;
 
-public class ProfileController {
+public class ProfileController{
 	private ProfileModel model;
 	private FakeDatabase fake = new FakeDatabase();
 	private DerbyDatabase derby = new DerbyDatabase();

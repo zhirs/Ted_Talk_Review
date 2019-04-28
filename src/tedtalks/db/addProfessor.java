@@ -22,7 +22,7 @@ public class addProfessor {
 		String email = keyboard.nextLine();
 		
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<Professor> found = db.addProfessor(user, pass, email);
+		ArrayList<Professor> found = db.addProfessor(user, pass, email, 0);
 		if (found.size() == 0){
 			System.out.println("Creation error");
 		}

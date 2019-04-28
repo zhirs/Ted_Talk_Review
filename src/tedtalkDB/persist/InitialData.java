@@ -1,15 +1,17 @@
 package tedtalkDB.persist;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
-import tedtalkDB.model.Tags;
 
 public class InitialData {
 	public static List<NetworkAdmin> getAdmins() throws IOException{
@@ -86,7 +88,8 @@ public class InitialData {
 				String password = i.next();
 				String email = i.next();
 				String section = i.next();
-				Student student = new Student(username, password, email, section, studentID);
+				String major = i.next();
+				Student student = new Student(username, password, email, section, studentID, major);
 				studentList.add(student);
 			}
 			System.out.println("studentList loaded from CSV file");
@@ -97,13 +100,13 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Review> getReviews() throws IOException{		
+	public static List<Review> getReviews() throws IOException, ParseException{		
 		List<Review> reviewList = new ArrayList<Review>();
 		
 		ReadCSV readReviews = new ReadCSV("reviews.csv");
 		// four superadmins created
 		try {
-			Integer reviewID = 1;
+			Integer reviewID = 50000;
 			while(true) {
 				List<String> tuple = readReviews.next();
 				if(tuple == null) {
@@ -120,7 +123,13 @@ public class InitialData {
 				int profID = Integer.parseInt(i.next());
 				String tag = i.next();
 				int status = Integer.parseInt(i.next());
-				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status);
+				String date = i.next();
+				java.util.Date utilDate = new java.util.Date(date);
+			    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			    System.out.println("utilDate:" + utilDate);
+			    System.out.println("sqlDate:" + sqlDate);
+
+				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status, sqlDate);
 				reviewList.add(review);
 			}
 			System.out.println("studentList loaded from CSV file");
@@ -130,5 +139,4 @@ public class InitialData {
 			readReviews.close();
 		}
 	}
-	
 }
