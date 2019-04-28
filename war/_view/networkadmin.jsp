@@ -18,7 +18,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Profile</h1>		
+		<h1>Network Admin Profile</h1>		
 
 		<h4>Welcome ${email} ${session}</h4>		
 		<hr>
@@ -29,8 +29,11 @@
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button" value = "Review">
 			</form>			
-			<form action = "${pageContext.servletContext.contextPath}/networkadminSetting " method = "get">
+			<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "get">
 			<input type = "Submit" name = "settings" class="button" value = "settings">
+			</form>
+			<form action = "${pageContext.servletContext.contextPath}/professor" method = "get">
+			<input type = "Submit" name = "professor Setting" class="button" value = "Change">
 			</form>
 			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 			<input type = "Submit" name = "logout" class="button" value = "Logout">

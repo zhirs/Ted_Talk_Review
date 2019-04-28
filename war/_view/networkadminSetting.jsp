@@ -17,7 +17,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>TedTalk Reviews</h1>
+		<h1>Network Admin Settings</h1>
 		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
@@ -29,4 +29,4 @@
 
 		
 	</body>
-</html>ml>
+</html>

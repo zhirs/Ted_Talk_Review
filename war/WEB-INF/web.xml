@@ -78,7 +78,7 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
-	<url-pattern>/networkAdminSetting</url-pattern>
+	<url-pattern>/networkadminSetting</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>professorServlet</servlet-name>
