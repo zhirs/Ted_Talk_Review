@@ -9,17 +9,20 @@ import java.util.ArrayList;
 import tedtalk.controller.ReviewController;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Tags;
+import tedtalkDB.persist.DerbyDatabase;
 import tedtalkDB.persist.FakeDatabase;
 
 public class ReviewControllerTest {
 	private Review modelHandler;
 	private ReviewController reviewController;
 	private FakeDatabase fake;
+	private DerbyDatabase derby;
 	private ArrayList <Review> result;
 	
 	@Before
 	public void setup0() {
 		fake = new FakeDatabase();
+		derby = new DerbyDatabase();
 		reviewController = new ReviewController();
 		// sets model to a review already in database for testing methods
 		modelHandler = fake.getReviewList().get(0);
@@ -35,12 +38,12 @@ public class ReviewControllerTest {
 	
 	@Test
 	public void createNewReview() {
-		result = fake.getReviewList();
+		//result = fake.getReviewList();
 		System.out.println(result.size());
 		String testName = "Wilds";
 		String testURL = "tEDtalk.com/Wilds";
 		int testRate = 3;
-		Tags tag = Tags.environmental;
+		String tag = "environmental";
 		String testPresenter= "Hamilton";
 		String testDescription = "fake description";
 		int fakeprofID = 6;

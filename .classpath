@@ -12,5 +12,9 @@
 	<classpathentry kind="src" path="/CS320_Jetty9"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS320_Derby"/>
+	<classpathentry kind="lib" path="jars/activation.jar"/>
+	<classpathentry kind="lib" path="jars/jortho.jar"/>
+	<classpathentry kind="lib" path="jars/mail.jar"/>
+	<classpathentry kind="lib" path="jars/smtp-1.6.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
