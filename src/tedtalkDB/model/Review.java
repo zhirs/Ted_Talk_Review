@@ -1,9 +1,8 @@
 package tedtalkDB.model;
 
 
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 public class Review {
 	private String name; // name of review
@@ -16,12 +15,13 @@ public class Review {
 	private Date date; // time when review was created
 	private String tag; // topic of review
 	private String url;
+	public int setrevID;
 	
 	public Review() {	
 		status = 0;
 	}
 	// creates new review
-	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, String tag) {
+	public Review(String url, String name, int rate, String pres, String desc, int profID, int revID, String tag, int status, Date date) {
 		this.url = url;
 		this.name = name;
 		this.rate = rate;
@@ -32,9 +32,9 @@ public class Review {
 		// newly created tag class, only one tag per review right now
 		this.tag = tag;
 		// sets status automatically to 0, needs review
-		status = 0;
+		this.status = status;
 		// sets date as current time when review is created
-		date = new Date(revID);
+		this.date = date;
 	}
 		
 	// getter methods
@@ -73,6 +73,9 @@ public class Review {
 	public String getTag() {
 		return tag;
 	}
+	public int getRevID() {
+		return revID;
+	}
 	
 	// setter methods
 	public void setName(String name) {
@@ -85,6 +88,9 @@ public class Review {
 	
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+	public void setRevID(int revID) {
+		this.revID = revID;
 	}
 	
 	public void setPres(String pres) {
@@ -105,16 +111,13 @@ public class Review {
 		status = update;
 	}
 	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 	
-	// prints out time stamp of review creation
-	// not sure how it works, pulled from stack overflow
-	public void printTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		System.out.println(dateFormat.format(date));
+	public void setDate(Date date) {
+		this.date = date;
 	}
+	
 	public void setProfID(int profID) {
 		// TODO Auto-generated method stub
 		this.profID = profID;

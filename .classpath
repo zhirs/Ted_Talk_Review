@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="tedtalk/|tedtalk/controller/|tedtalk/model/|tedtalk/persist/|tedtalk/servlet/|tedtalk/sqldemo/|tedtalkDB/|tedtalkDB/model/|tedtalkDB/persist/|tedtalks/|tedtalks/db/" kind="src" path="src"/>
+	<classpathentry excluding="jBCrypt-0.4/" including="tedtalk/|tedtalk/controller/|tedtalk/model/|tedtalk/persist/|tedtalk/servlet/|tedtalk/sqldemo/|tedtalkDB/|tedtalkDB/model/|tedtalkDB/persist/|tedtalks/|tedtalks/db/" kind="src" path="src"/>
 	<classpathentry kind="src" path="main"/>
 	<classpathentry kind="src" path="JUnitTesting"/>
+	<classpathentry kind="src" path="src/jBCrypt-0.4"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -10,6 +11,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="src" path="/CS320_Jetty9"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-		<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CS320_Derby"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CS320_Derby"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

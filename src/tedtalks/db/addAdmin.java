@@ -23,7 +23,7 @@ public class addAdmin {
 		String email = keyboard.nextLine();
 		
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<NetworkAdmin> found = db.addAdmin(user, pass, email);
+		ArrayList<NetworkAdmin> found = db.addAdmin(user, pass, email, 0);
 		if (found.size() == 0){
 			System.out.println("Creation error");
 		}

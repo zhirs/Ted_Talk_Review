@@ -1,6 +1,9 @@
 package tedtalkDB.persist;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -99,7 +102,7 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Review> getReviews() throws IOException{		
+	public static List<Review> getReviews() throws IOException, ParseException{		
 		List<Review> reviewList = new ArrayList<Review>();
 		
 		ReadCSV readReviews = new ReadCSV("reviews.csv");
@@ -122,7 +125,8 @@ public class InitialData {
 				int profID = Integer.parseInt(i.next());
 				String tag = i.next();
 				int status = Integer.parseInt(i.next());
-				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status);
+				Date date = Date/i.next();
+				Review review = new Review(url, name, rate, pres, desc, profID, reviewID, tag, status, date);
 				reviewList.add(review);
 			}
 			System.out.println("studentList loaded from CSV file");
