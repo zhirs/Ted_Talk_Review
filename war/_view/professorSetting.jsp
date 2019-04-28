@@ -22,6 +22,9 @@
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+		<input type = "Submit" name = "home" class="button" value = "Home">
+		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>

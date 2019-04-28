@@ -29,9 +29,7 @@
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button" value = "Review">
 			</form>			
-			<form action = "${pageContext.servletContext.contextPath}/ " method = "get">
-			<input type = "Submit" name = "settings" class="button" value = "settings">
-			</form>
+			
 			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 			<input type = "Submit" name = "logout" class="button" value = "Logout">
 			</form>			
