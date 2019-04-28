@@ -1,7 +1,6 @@
 package tedtalk.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tedtalkDB.model.Professor;
-import tedtalkDB.model.Account;
-import tedtalk.controller.ProfessorController;
+import tedtalkDB.Controller.ProfessorController;
 import tedtalk.controller.ReviewController;
 
 public class professorsettingservlet extends HttpServlet {

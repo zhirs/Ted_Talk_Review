@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class SendEmail {
@@ -74,4 +75,18 @@ public class SendEmail {
 	      }
 	   }
 	
+	//made by App Shah on crunchify.com
+	private boolean isEmailValid(String email) {
+		boolean isValid = false;
+		try {
+		InternetAddress internetAddress = new InternetAddress(email);
+		internetAddress.validate();
+		isValid = true;
+		} catch(AddressException e) {
+			System.out.println("Incorrect email address! " + email + " is not a correct email address.");
+			return false;
+		}
+		return isValid;
 	}
+	
+}

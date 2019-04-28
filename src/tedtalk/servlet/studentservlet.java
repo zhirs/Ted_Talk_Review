@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tedtalkDB.model.Student;
-import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
-import tedtalk.controller.StudentController;
+import tedtalkDB.Controller.StudentController;
 import tedtalk.controller.ReviewController;
 
 public class studentservlet extends HttpServlet {

@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalk.controller.ReviewController;
@@ -23,7 +24,12 @@ public class ReviewControllerTest {
 	public void setup0() {
 		fake = new FakeDatabase();
 		derby = new DerbyDatabase();
-		reviewController = new ReviewController();
+		try {
+			reviewController = new ReviewController();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// sets model to a review already in database for testing methods
 		modelHandler = fake.getReviewList().get(0);
 		reviewController.setModel(modelHandler);
