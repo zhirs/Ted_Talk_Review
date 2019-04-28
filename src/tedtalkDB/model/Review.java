@@ -1,7 +1,6 @@
 package tedtalkDB.model;
 
 
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 public class Review {

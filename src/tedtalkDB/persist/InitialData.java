@@ -1,13 +1,11 @@
 package tedtalkDB.persist;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
@@ -18,7 +16,6 @@ public class InitialData {
 		List<NetworkAdmin> adminList = new ArrayList<NetworkAdmin>();
 		ReadCSV readAdmins = new ReadCSV("admins.csv");
 		// four superadmins created
-
 		try {
 			Integer adminID = 1;
 			while(true) {
@@ -42,6 +39,7 @@ public class InitialData {
 			readAdmins.close();
 		}
 	}
+	
 	public static List<Professor> getProfs() throws IOException{
 		List<Professor> profList = new ArrayList<Professor>();
 		ReadCSV readProfs = new ReadCSV("professors.csv");
@@ -100,6 +98,7 @@ public class InitialData {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static List<Review> getReviews() throws IOException, ParseException{		
 		List<Review> reviewList = new ArrayList<Review>();
 		

@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Review;
-import tedtalk.controller.NetworkAdminController;
+import tedtalkDB.Controller.NetworkAdminController;
 import tedtalk.controller.ReviewController;
 
 public class networkadminservlet extends HttpServlet {
