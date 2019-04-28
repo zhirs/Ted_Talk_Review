@@ -117,7 +117,7 @@ public class DerbyDatabase implements IDatabase {
 						"	prof_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
-						"	password varchar(40), " +
+						"	password varchar(100), " +
 						"	email varchar(100), "
 						+ "modstat integer" +
 						")"
@@ -131,7 +131,7 @@ public class DerbyDatabase implements IDatabase {
 							"	prof_id integer primary key " +
 							"		generated always as identity (start with 10000, increment by 1), " +									
 							"	username varchar(40)," +
-							"	password varchar(40), " +
+							"	password varchar(100), " +
 							"	email varchar(100), "
 							+ " mod integer " +
 							")"
@@ -144,7 +144,7 @@ public class DerbyDatabase implements IDatabase {
 							"	prof_id integer primary key " +
 							"		generated always as identity (start with 20000, increment by 1), " +									
 							"	username varchar(40)," +
-							"	password varchar(40), " +
+							"	password varchar(100), " +
 							"	email varchar(100), " +
 							"	section varchar(1000), "+ 
 							"   major varchar(1000) " +
@@ -156,7 +156,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
 							"	rev_id integer primary key " +
-							"		generated always as identity (start with 50000, increment by 1), " +
+							"		generated always as identity (start with ``50000, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
 							"	url varchar(100), " +
 							"	name varchar(100)," +
@@ -214,7 +214,8 @@ public class DerbyDatabase implements IDatabase {
 					for (NetworkAdmin admin: adminList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertAdmin.setString(1, admin.getUserName());
-						insertAdmin.setString(2, admin.getPassword());
+						String adminpw = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt());
+						insertAdmin.setString(2, adminpw);
 						insertAdmin.setString(3, admin.getEmail());
 						insertAdmin.setInt(4, admin.getModStat());
 						insertAdmin.addBatch();
@@ -227,7 +228,8 @@ public class DerbyDatabase implements IDatabase {
 					for (Professor professor: profList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertProf.setString(1, professor.getUserName());
-						insertProf.setString(2, professor.getPassword());
+						String adminpw = BCrypt.hashpw(professor.getPassword(), BCrypt.gensalt());
+						insertProf.setString(2, adminpw);
 						insertProf.setString(3,  professor.getEmail());
 						insertProf.setInt(4, professor.getMod());
 						insertProf.addBatch();
@@ -240,7 +242,8 @@ public class DerbyDatabase implements IDatabase {
 					for (Student student: studentList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertStudent.setString(1, student.getUserName());
-						insertStudent.setString(2, student.getPassword());
+						String studentPW = BCrypt.hashpw(student.getPassword(), BCrypt.gensalt());
+						insertStudent.setString(2, studentPW);
 						insertStudent.setString(3, student.getEmail());
 						insertStudent.setString(4, student.getSection());
 						insertStudent.setString(5, student.getMajor());
@@ -301,61 +304,58 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet3 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						" select * "+
+						" select password "+
 						" from students " +
-						" where username = ? and password = ?"
+						" where username = ?"
 					);
 					stmt1.setString(1, user);
-					stmt1.setString(2, pass);
 					resultSet1 = stmt1.executeQuery();
-					List<Account> students = new ArrayList<Account>();
-					while(resultSet1.next()) {
-						Account account = new Account();
-						loadAccount(account, resultSet1, 1);
-						students.add(account);
+					String storedStudentPass =null;
+					while(resultSet1.next()) { 
+						storedStudentPass = resultSet1.getString(1);
 					}
-					if(students.size() == 1) {
-						System.out.println("Found Account");
-						return true;
+					if(storedStudentPass != null) {
+						if(BCrypt.checkpw(pass, storedStudentPass)){
+							System.out.println("Found Account");
+							return true;
+						}
 					}
-	
+					
 					stmt2 = conn.prepareStatement(
-							" select * "+
+							" select password "+
 							" from professors " +
-							" where username = ? and password = ?"
+							" where username = ?"
 						);
 					stmt2.setString(1, user);
-					stmt2.setString(2, pass);
 					resultSet2 = stmt2.executeQuery();
-					List<Account> professors = new ArrayList<Account>();
+					String storedProfessorPass = null;
 					while(resultSet2.next()) {
-						Account account = new Account();
-						loadAccount(account, resultSet2, 1);
-						professors.add(account);
+						storedProfessorPass = resultSet2.getString(1);
 					}
-					if(professors.size() == 1) {
-						System.out.println("Found Account");
-						return true;
+					if(storedProfessorPass != null) {
+							if(BCrypt.checkpw(pass, storedProfessorPass)){
+								System.out.println("Found Account");
+								return true;
+							}
 					}
-			
-				
+					
+							
 					stmt3 = conn.prepareStatement(
-						" select * "+
+						" select password"+
 						" from admins " +
-						" where username = ? and password = ?"
+						" where username = ?"
 					);
 					stmt3.setString(1, user);
-					stmt3.setString(2, pass);
 					resultSet3 = stmt3.executeQuery();
-					List<Account> admins = new ArrayList<Account>();
+					String storedAdminPass = null;
 					while(resultSet3.next()) {
-						Account account = new Account();
-						loadAccount(account, resultSet3, 1);
-						admins.add(account);
+						storedAdminPass = resultSet3.getString(1);
 					}
-					if(admins.size() == 1) {
-						System.out.println("Found Account");
-						return true;
+					if(storedAdminPass != null) {
+						if(BCrypt.checkpw(pass, storedAdminPass)){
+							System.out.println("Found Account");
+							return true;
+						}
 					}
 					return false;
 			}
@@ -417,6 +417,7 @@ public class DerbyDatabase implements IDatabase {
 						loadAccount(account, resultSet2, 1);
 						professors.add(account);
 					}
+					
 					if(professors.size() == 1) {
 						System.out.println("Found Account");
 						professors.get(0);
@@ -686,7 +687,8 @@ public class DerbyDatabase implements IDatabase {
 						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
-					stmt1.setString(2, pass);
+					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
 					stmt1.setInt(4, mod);
 					stmt1.executeUpdate();
@@ -732,7 +734,8 @@ public class DerbyDatabase implements IDatabase {
 						"values(?, ?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
-					stmt1.setString(2, pass);
+					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
 					stmt1.setString(4, section);
 					stmt1.setString(5, major);
@@ -778,7 +781,8 @@ public class DerbyDatabase implements IDatabase {
 						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
-					stmt1.setString(2, pass);
+					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
 					stmt1.setInt(4, modstat);
 					stmt1.executeUpdate();
@@ -953,6 +957,64 @@ public class DerbyDatabase implements IDatabase {
 			}
 		}
 		);// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Integer updateStatus(int revID, int status) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update reviews "
+							+ "set status = ? "
+							+ "where rev_id = ? ");
+					stmt1.setInt(1, status);
+					stmt1.setInt(2, revID);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+
+	@Override
+	public Integer getStatus(int revID) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select status "
+							+ "from reviews "
+							+ "where rev_id = ? ");
+					stmt1.setInt(1, revID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					int test;
+					while(resultSet1.next()) {
+						test = resultSet1.getInt(i++);
+						return test;
+					}
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
 	}
 		
 }

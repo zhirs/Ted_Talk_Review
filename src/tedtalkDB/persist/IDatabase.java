@@ -25,4 +25,6 @@ public interface IDatabase {
 	public Integer updateModStat(int profID, int modStat);
 	public Integer updateMod(int input, int i);
 	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2);
+	public Integer updateStatus(int revID, int status);
+	public Integer getStatus(int revID);
 }
