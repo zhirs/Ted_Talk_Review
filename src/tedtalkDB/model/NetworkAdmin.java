@@ -8,7 +8,6 @@ public class NetworkAdmin extends Account{
   
 	public NetworkAdmin(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);
-		modStat = 0;
 	}
 	// will soon implement new methods
 	// once such being a method to turn on and off the need to verify reviews

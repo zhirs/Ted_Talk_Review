@@ -2,19 +2,21 @@ package tedtalkDB.persist;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import src.org.mindrot.jbcrypt.BCrypt;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
-import tedtalk.model.Pair;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -116,9 +118,11 @@ public class DerbyDatabase implements IDatabase {
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	username varchar(40)," +
 						"	password varchar(40), " +
-						"	email varchar(100) " +
+						"	email varchar(100), "
+						+ "modstat integer" +
 						")"
 					);	
+					
 					stmt1.executeUpdate();
 					System.out.print("Admin table created");
 					
@@ -128,7 +132,8 @@ public class DerbyDatabase implements IDatabase {
 							"		generated always as identity (start with 10000, increment by 1), " +									
 							"	username varchar(40)," +
 							"	password varchar(40), " +
-							"	email varchar(100) " +
+							"	email varchar(100), "
+							+ " mod integer " +
 							")"
 						);	
 						stmt2.executeUpdate();
@@ -160,8 +165,8 @@ public class DerbyDatabase implements IDatabase {
 							"	description varchar(4000), " +
 							"   prof_ID integer, " +
 							"	tag varchar(100), " +
-							"   status integer" + //MISSING COMMA. 
-							//"   subDate date" +
+							"   status integer, " + //MISSING COMMA. 
+							"   pubDate date " +
 							")"
 					);
 					stmt4.executeUpdate();
@@ -194,7 +199,7 @@ public class DerbyDatabase implements IDatabase {
 					profList = InitialData.getProfs();
 					studentList = InitialData.getStudents();
 					reviewList = InitialData.getReviews();
-				} catch (IOException e) {
+				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
@@ -205,24 +210,26 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
-					insertAdmin = conn.prepareStatement("insert into admins (username, password, email) values (?, ?, ?)");
+					insertAdmin = conn.prepareStatement("insert into admins (username, password, email, modstat) values (?, ?, ?, ?)");
 					for (NetworkAdmin admin: adminList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertAdmin.setString(1, admin.getUserName());
 						insertAdmin.setString(2, admin.getPassword());
 						insertAdmin.setString(3, admin.getEmail());
+						insertAdmin.setInt(4, admin.getModStat());
 						insertAdmin.addBatch();
 					}
 					insertAdmin.executeBatch();
 					
 					System.out.println("Admin table populated");
 					
-					insertProf = conn.prepareStatement("insert into professors (username, password, email) values (?, ?, ?)");
+					insertProf = conn.prepareStatement("insert into professors (username, password, email, mod) values (?, ?, ?, ?)");
 					for (Professor professor: profList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
 						insertProf.setString(1, professor.getUserName());
 						insertProf.setString(2, professor.getPassword());
 						insertProf.setString(3,  professor.getEmail());
+						insertProf.setInt(4, professor.getMod());
 						insertProf.addBatch();
 					}
 					insertProf.executeBatch();
@@ -245,7 +252,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
-					insertReview = conn.prepareStatement("insert into reviews (url, name, rate, pres, description, prof_ID, tag, status) values (?, ?, ?, ?, ?, ?, ?, ?)");
+					insertReview = conn.prepareStatement("insert into reviews (url, name, rate, pres, description, prof_ID, tag, status, pubDate) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Review review : reviewList) {
 //						insertBook.setInt(1, book.getBookId());	
 						insertReview.setString(1, review.getURL());
@@ -256,7 +263,7 @@ public class DerbyDatabase implements IDatabase {
 						insertReview.setInt(6, review.getProfID());
 						insertReview.setString(7, review.getTag());
 						insertReview.setInt(8, review.getStatus());
-						//insertReview.setDate(6, review.getDate());
+						insertReview.setDate(9, review.getDate());
 						
 						insertReview.addBatch();
 					}
@@ -483,9 +490,38 @@ public class DerbyDatabase implements IDatabase {
 		);
 	}
 
-	public int getReviewTotal(int profID) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Integer getReviewTotal(int profID) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						System.out.println("Found reviews");
+						return reviews.size();
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return -1;
+			}
+		}
+		);
 	}
 
 	@Override
@@ -522,9 +558,121 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
-
 	@Override
-	public ArrayList<Professor> addProfessor(String user, String pass, String email) {
+	public Integer getModStat(int profID) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select modstat "
+							+ "from admins "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					int test;
+					while(resultSet1.next()) {
+						test = resultSet1.getInt(i++);
+						//System.out.println(test);
+						return test;
+					}
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	@Override
+	public Integer updateModStat(int profID, int modStat) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update admins "
+							+ "set modstat = ? "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, modStat);
+					stmt1.setInt(2, profID);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	@Override
+	public Integer updateMod(int profID, int mod) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update professors "
+							+ "set mod = ? "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, mod);
+					stmt1.setInt(2, profID);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	@Override
+	public Integer getMod(int profID) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select mod "
+							+ "from professors "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					int test;
+					while(resultSet1.next()) {
+						test = resultSet1.getInt(i++);
+						return test;
+					}
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	@Override
+	public ArrayList<Professor> addProfessor(String user, String pass, String email, int mod) {
 		return executeTransaction(new Transaction<ArrayList<Professor>>() {
 			@Override
 			public ArrayList<Professor> execute(Connection conn) throws SQLException {
@@ -534,12 +682,13 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into professors (username, password, email) "+
-						"values(?, ?, ?)"
+						"insert into professors (username, password, email, mod) "+
+						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					stmt1.setString(2, pass);
 					stmt1.setString(3, email);
+					stmt1.setInt(4, mod);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
@@ -614,7 +763,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email) {
+	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email, int modstat) {
 		return executeTransaction(new Transaction<ArrayList<NetworkAdmin>>() {
 			@Override
 			public ArrayList<NetworkAdmin> execute(Connection conn) throws SQLException {
@@ -625,12 +774,13 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into admins (username, password, email) "+
-						"values(?, ?, ?)"
+						"insert into admins (username, password, email, modstat) "+
+						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					stmt1.setString(2, pass);
 					stmt1.setString(3, email);
+					stmt1.setInt(4, modstat);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
@@ -665,7 +815,9 @@ public class DerbyDatabase implements IDatabase {
 		String username = resultSet.getString(index++);
 		String password = resultSet.getString(index++);
 		String email = resultSet.getString(index++);
+		int mod = resultSet.getInt(index++);
 		Professor profX = new Professor(username, password, email, profID);
+		profX.setMod(mod);
 		return profX;
 	}
 	protected NetworkAdmin loadAdmin(ResultSet resultSet, int index) throws SQLException {
@@ -674,7 +826,9 @@ public class DerbyDatabase implements IDatabase {
 		String username = resultSet.getString(index++);
 		String password = resultSet.getString(index++);
 		String email = resultSet.getString(index++);
+		int modStat = resultSet.getInt(index++);
 		NetworkAdmin adminX = new NetworkAdmin(username, password, email, profID);
+		adminX.setModStat(modStat);
 		return adminX;
 	}
 
@@ -690,10 +844,8 @@ public class DerbyDatabase implements IDatabase {
 		return studentX;
 	}
 	protected void loadReview(Review review, ResultSet resultSet1, int i) throws SQLException {
-		int revID = resultSet1.getInt(i++);
-		String URL = resultSet1.getString(i++);
-		review.setURL(URL);
-			
+		review.setRevID(resultSet1.getInt(i++));
+		review.setURL(resultSet1.getString(i++));
 		review.setName(resultSet1.getString(i++));
 		review.setRate(resultSet1.getInt(i++));
 		review.setPres(resultSet1.getString(i++));
@@ -701,6 +853,7 @@ public class DerbyDatabase implements IDatabase {
 		review.setProfID(resultSet1.getInt(i++));
 		review.setTag(resultSet1.getString(i++));
 		review.setStatus(resultSet1.getInt(i++));
+		review.setDate(resultSet1.getDate(i++));
 	}
 	private void loadAccount(Account account, ResultSet resultSet, int index) throws SQLException{
 		account.setprofID(resultSet.getInt(index++));
@@ -722,8 +875,8 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into reviews (url, name, rate, pres, description, prof_id, tag, status) "+
-						"values(?, ?, ?, ?, ?, ?, ?, ?)"
+						"insert into reviews (url, name, rate, pres, description, prof_id, tag, status, pubDate) "+
+						"values(?, ?, ?, ?, ?, ?, ?, ?, ?) " 
 					);
 					stmt1.setString(1, URL);
 					stmt1.setString(2, name);
@@ -733,6 +886,10 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setInt(6, profID);
 					stmt1.setString(7, tag);
 					stmt1.setInt(8, status);
+					
+					java.util.Date date = new java.util.Date();
+					java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+					stmt1.setDate(9, sqlDate);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
@@ -748,7 +905,7 @@ public class DerbyDatabase implements IDatabase {
 						loadReview(rev, resultSet1, 1);
 						review.add(rev);
 					}
-					System.out.println("Account made");
+					System.out.println("Review saved");
 					return review;
 				}
 				finally {
@@ -758,6 +915,44 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
+	}
+
+	@Override
+	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2) {
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where prof_id = ? and "
+							+ "pubDate between ? and ?");
+					stmt1.setInt(1, profID);
+					stmt1.setDate(2, date1);
+					stmt1.setDate(3, date2);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);// TODO Auto-generated method stub
 	}
 		
 }

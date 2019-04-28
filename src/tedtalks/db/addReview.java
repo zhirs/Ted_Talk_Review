@@ -3,9 +3,6 @@ package tedtalks.db;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
-import tedtalkDB.model.NetworkAdmin;
-import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
@@ -35,6 +32,7 @@ public class addReview {
 		System.out.println("Status: ");
 		int status = keyboard.nextInt();
 		IDatabase db = DatabaseProvider.getInstance();
+		
 		ArrayList<Review> found = db.addReview(URL, name, rate, pres, desc, prof_id, tag, status);
 		if (found.size() == 0){
 			System.out.println("Creation error");
@@ -42,6 +40,7 @@ public class addReview {
 		else {
 			System.out.println("Review Made");
 			System.out.println(found.get(0).getURL() + " " + found.get(0).getName()+ " " + found.get(0).getRate() + " " + found.get(0).getPres() + " " + found.get(0).getDesc() + " " + found.get(0).getProfID());
-			}			
+		}
+		keyboard.close();
 		}
 }
