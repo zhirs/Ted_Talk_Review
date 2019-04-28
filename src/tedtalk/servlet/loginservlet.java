@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import tedtalk.model.ProfileModel;
-import tedtalk.controller.ProfileController;
+import tedtalkDB.model.Account;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private DerbyDatabase derby;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -37,26 +38,27 @@ public class loginservlet extends HttpServlet {
 		
 		System.out.println("Login Servlet: doPost");
 		
-		ProfileModel model = new ProfileModel();
-		ProfileController controller = new ProfileController();
-		controller.setModel(model);
+		//ProfileModel model = new ProfileModel();
+		//ProfileController controller = new ProfileController();
+		//controller.setModel(model);
 
 		// set "game" attribute to the model reference
 		// the JSP will reference the model elements through "game"	
 		String user = req.getParameter("u");
 		String pass = req.getParameter("p");
 
-		model.setUser(user);
-		model.setPass(pass);	
+		//model.setUser(user);
+		//model.setPass(pass);
+		derby = new DerbyDatabase();	//used derby instead of controller
+		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
 		
-		
-		if(controller.verified()) {
-			controller.createLogin(user);
+		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
+			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("username", model.getUser());
-			session.setAttribute("email", model.getEmail());
-			session.setAttribute("profID", model.getProfID());
-			session.setAttribute("section", model.getSection());
+			session.setAttribute("username", login.getUserName());
+			session.setAttribute("email", login.getEmail());
+			session.setAttribute("profID", login.getprofID());
+			session.setAttribute("section", "Section");	//need to change this depending if they are student/admin/ or professor
 			
 			System.out.println("Login Servlet: Login Successful");
 			resp.sendRedirect(req.getContextPath() + "/home");

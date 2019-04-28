@@ -156,7 +156,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
 							"	rev_id integer primary key " +
-							"		generated always as identity (start with ``50000, increment by 1), " +
+							"		generated always as identity (start with 50000, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
 							"	url varchar(100), " +
 							"	name varchar(100)," +
