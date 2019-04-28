@@ -12,16 +12,21 @@ import static org.junit.Assert.assertFalse;
 
 import tedtalkDB.model.*;
 import tedtalkDB.persist.InitialData;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class TestAccount {
 	private List<Account> users;
+	private DerbyDatabase derby;
 	
 	@Before
 	public void setup() {
 		users = new ArrayList<Account>();
+		derby = new DerbyDatabase();
 		
 		// Add initial data
 		users.addAll(InitialData.getUsers());
+		users.addAll(derby.get)
+		
 	}
 	
 	@Test
