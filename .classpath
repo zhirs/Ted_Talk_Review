@@ -9,8 +9,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="src" path="/CS320_Jetty9"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CS320_Derby"/>
+	<classpathentry kind="src" path="/CS320_Jetty9"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CS320_Derby"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
