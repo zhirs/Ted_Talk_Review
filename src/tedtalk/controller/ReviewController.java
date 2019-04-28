@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Tags;
 import tedtalkDB.persist.FakeDatabase;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class ReviewController {
 	private Review reviewModel;
 	private FakeDatabase fake;
+	private DerbyDatabase derby;
+	
 	public ReviewController() throws IOException {
 		 fake = new FakeDatabase();
+		 derby = new DerbyDatabase();
 	}
 
 	public void setModel(Review modelHandler) {
