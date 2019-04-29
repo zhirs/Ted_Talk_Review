@@ -47,7 +47,7 @@ public class networkadminsettingservlet extends HttpServlet {
 			req.setAttribute("networkAdminM", model);
 			req.setAttribute("userModel", model);
 			req.setAttribute("email", email);
-			req.getRequestDispatcher("/_view/networkadminsetting.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/networkadminSetting.jsp").forward(req, resp);
 		}
 	}
 	@Override
@@ -57,7 +57,7 @@ public class networkadminsettingservlet extends HttpServlet {
 		System.out.println("Network Admin Servlet: doPost");
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/networkadminsetting.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/networkadminSetting.jsp").forward(req, resp);
 	}
 	
 }

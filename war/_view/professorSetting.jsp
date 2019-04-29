@@ -17,10 +17,13 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>TedTalk Reviews</h1>
+		<h1>Professor Settings</h1>
 		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+		<input type = "Submit" name = "home" class="button" value = "Home">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">

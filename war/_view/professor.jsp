@@ -18,7 +18,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Profile</h1>		
+		<h1>Professor Profile</h1>		
 
 		<h4>Welcome ${email} ${session}</h4>		
 		<hr>
@@ -29,7 +29,7 @@
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
 			<input type = "Submit" name = "redirectReview" class="button" value = "Review">
 			</form>			
-			<form action = "${pageContext.servletContext.contextPath}/ " method = "get">
+			<form action = "${pageContext.servletContext.contextPath}/professorSetting" method = "get">
 			<input type = "Submit" name = "settings" class="button" value = "settings">
 			</form>
 			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">

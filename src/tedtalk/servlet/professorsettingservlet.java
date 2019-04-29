@@ -42,7 +42,7 @@ public class professorsettingservlet extends HttpServlet {
 			req.setAttribute("professorM", model);
 			req.setAttribute("userModel", model);
 			req.setAttribute("email", email);
-			req.getRequestDispatcher("/_view/professorsetting.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/professorSetting.jsp").forward(req, resp);
 		}
 	}
 	@Override
@@ -52,7 +52,7 @@ public class professorsettingservlet extends HttpServlet {
 		System.out.println("Professor Servlet: doPost");
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/professorsetting.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/professorSetting.jsp").forward(req, resp);
 	}
 	
 }
