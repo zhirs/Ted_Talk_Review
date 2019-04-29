@@ -24,5 +24,7 @@ public class setLogin {
 			System.out.println("Account set");
 			System.out.println(found.getUserName() + " " + found.getprofID() + " " + found.getEmail());
 			}			
-		}
+		keyboard.close();
+	}
+
 }

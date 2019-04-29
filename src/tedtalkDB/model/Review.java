@@ -95,7 +95,7 @@ public class Review {
 	public void setPres(String pres) {
 		this.pres = pres;
 	}
-	
+	 
 	public void setTag(String tag) {
 		this.tag = tag;
 	}

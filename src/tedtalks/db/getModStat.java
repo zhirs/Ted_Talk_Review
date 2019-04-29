@@ -1,18 +1,14 @@
 package tedtalks.db;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
-import tedtalkDB.model.Professor;
-import tedtalkDB.model.Review;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
 
 public class getModStat {
 	public static void main(String[] args) throws Exception {
 		
-		Scanner keyboard = new Scanner(System.in);
+		Scanner keyboard = new Scanner(System.in); 
 		InitDatabase.init();
 		// Create the default IDatabase instance
 		System.out.print("Enter admin id: ");
@@ -25,6 +21,7 @@ public class getModStat {
 		else {
 			System.out.println("ModStat found");
 			System.out.println(found);
-			}			
+			}
+		keyboard.close();
 		}
 }

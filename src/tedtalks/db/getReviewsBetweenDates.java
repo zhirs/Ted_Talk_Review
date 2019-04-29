@@ -11,6 +11,7 @@ import tedtalkDB.persist.IDatabase;
 
 
 public class getReviewsBetweenDates {
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		
 		Scanner keyboard = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class getReviewsBetweenDates {
 		if(!isValidDate(date1)) {
 			System.out.println("Please enter in yyyy/mm/dd format");
 			System.exit(0);
-		}
+		} 
 		java.util.Date utilDate1 = new java.util.Date(date1);
 	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
 	    
@@ -43,6 +44,7 @@ public class getReviewsBetweenDates {
 				System.out.println(found.get(i).getDesc() + "Title:" + found.get(i).getName() + "\nTalk by:" + found.get(0).getPres());
 			}
 			}
+		keyboard.close();
 		}
 	public static boolean isValidDate(String d) 
 	{ 
