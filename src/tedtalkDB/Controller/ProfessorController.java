@@ -4,7 +4,10 @@ import tedtalkDB.persist.*;
 
 public class ProfessorController {
 	private Professor professorModel;
-	private DerbyDatabase derby;
+	private DerbyDatabase derby = new DerbyDatabase();
+	
+	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST AS IT DOES GARBAGE COLLECTION
+
 	public void setModel(Professor professorModel) {
 		this.professorModel = professorModel;
 	}
