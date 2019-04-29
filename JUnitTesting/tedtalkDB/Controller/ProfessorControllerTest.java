@@ -1,29 +1,32 @@
 package tedtalkDB.Controller;
+import tedtalkDB.model.*;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class NetworkAdminControllerTest {
-	private NetworkAdminController controllerHandle = new NetworkAdminController();
-	private NetworkAdmin NAModel = new NetworkAdmin();
+public class ProfessorControllerTest {
+	Professor professorHandle = new Professor();
+	ProfessorController controllerHandle = new ProfessorController();
 	@Before
 	public void init() {
-		//ASSOCIATING MODEL WITH CONTROLLER:
-		controllerHandle.setModel(NAModel);
+		controllerHandle.setModel(professorHandle);
 	}
 	@Test
 	public void Test_Verified_Existing_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("dhill22");
-		NAModel.setPassword("banana");
+		professorHandle.setUsername("profx");
+		professorHandle.setPassword("professorX");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
+		System.out.println("expected result: true");
+		System.out.println("your result: " + controllerHandle.verified());
+		
 	}
 	@Test
 	public void Test_Verified_Existing_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau");
-		NAModel.setPassword("tree");
+		professorHandle.setUsername("profy");
+		professorHandle.setPassword("professorY");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -33,19 +36,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("zhirs");
-		NAModel.setPassword("monkey");
-		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
-		
-	}
-	@Test
-	public void Test_Verified_Existing_User3() {
-		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastro7");
-		NAModel.setPassword("wizard");
+		professorHandle.setUsername("profz");
+		professorHandle.setPassword("professorZ");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -55,8 +47,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("dhill22");
-		NAModel.setPassword("Monkey");
+		professorHandle.setUsername("profz");
+		professorHandle.setPassword("professorY");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -65,8 +57,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastro7");
-		NAModel.setPassword("Monkey");
+		professorHandle.setUsername("profy");
+		professorHandle.setPassword("professorZ");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -75,8 +67,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau2");
-		NAModel.setPassword("wizard");
+		professorHandle.setUsername("profx");
+		professorHandle.setPassword("wizard");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -85,8 +77,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("Jlandau2");
-		NAModel.setPassword("Tree");
+		professorHandle.setUsername("profX");
+		professorHandle.setPassword("professorX");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -95,8 +87,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("Dhill22");
-		NAModel.setPassword("banana");
+		professorHandle.setUsername("PROFY");
+		professorHandle.setPassword("professorY");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -105,8 +97,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastrO7");
-		NAModel.setPassword("Wizard");
+		professorHandle.setUsername("pRofz");
+		professorHandle.setPassword("professorZ");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -115,8 +107,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("_dhill22");
-		NAModel.setPassword("nana");
+		professorHandle.setUsername("Professor3l22");
+		professorHandle.setPassword("hello");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -125,8 +117,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau20");
-		NAModel.setPassword("tree");
+		professorHandle.setUsername("prof");
+		professorHandle.setPassword("professor");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -135,14 +127,14 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau20");
-		NAModel.setPassword("tree");
+		professorHandle.setUsername("profxyz");
+		professorHandle.setPassword("prefeso");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandle.verified());
 	}
-	//***************************************************************     13 TEST CASES     *******************************************************************
-
+	//***************************************************************     12 TEST CASES     *******************************************************************
 
 }
+
