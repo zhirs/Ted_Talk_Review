@@ -357,7 +357,7 @@ public class DerbyDatabase implements IDatabase {
 							return true;
 						}
 					}
-					return false;
+				
 			}
 				finally {
 					DBUtil.closeQuietly(conn);
@@ -368,6 +368,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 				}
+				return false;
 			}
 		});
 	}
