@@ -45,8 +45,8 @@ public class profileservlet extends HttpServlet {
 				System.out.println("This is null");
 			}
 			int id = login.getprofID();
-			if(id <2000) {
-				if(id < 1000) {
+			if(id < 20000) {
+				if(id < 10000) {
 					req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
 				}
 				else {

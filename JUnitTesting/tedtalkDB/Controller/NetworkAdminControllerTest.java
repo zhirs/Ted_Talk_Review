@@ -3,6 +3,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import tedtalkDB.model.NetworkAdmin;
+
 public class NetworkAdminControllerTest {
 	private NetworkAdminController controllerHandle = new NetworkAdminController();
 	private NetworkAdmin NAModel = new NetworkAdmin();
@@ -22,7 +24,7 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau");
+		NAModel.setUsername("jlandau2");
 		NAModel.setPassword("tree");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
