@@ -1,38 +1,34 @@
 package tedtalkDB.Controller;
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 public class NetworkAdminControllerTest {
-	private NetworkAdmin NAModel;
-	private DerbyDatabase derby = new DerbyDatabase();
-	
-	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST LIKE IT DOES GARBAGE COLLECTION
-	
-	public void setModel(NetworkAdmin NAModel) {
-		this.NAModel = NAModel;
+	private NetworkAdminController controllerHandle = new NetworkAdminController();
+	private NetworkAdmin NAModel = new NetworkAdmin();
+	@Before
+	public void init() {
+		//ASSOCIATING MODEL WITH CONTROLLER:
+		controllerHandle.setModel(NAModel);
 	}
-	boolean verified() {
-		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
-		return (derby.checkCredentials(NAModel.getUserName(), NAModel.getPassword()));
-	}
-	public void createLogin(String user) {
-		Account login = derby.setLogin(user);
-		NAModel.setEmail(login.getEmail());
-		NAModel.setPassword(login.getPassword());
-		NAModel.setprofID(login.getprofID());
-		NAModel.setUsername(login.getUserName());
-		//ENABLE OR DISABLE MODERATING SETTINGS:
-//******		NAModel.setModStat(derby.getModStat());//FUNCTIONALITY NOT COMPLETE YET
+	@Test
+	public void Test_Verified_Method_On_Existing_User() {
+		//SETTING UN & PW TO EXISTING USER CREDITS:
+		NAModel.setUsername("dhill22");
+		NAModel.setPassword("banana");
+		//TESTING VERIFIED():
+		assertTrue(controllerHandle.verified());
 		
-		//CREATES NEW ADMIN IN THE DATABASE:
-		derby.addAdmin(NAModel.getUserName(),NAModel.getPassword(),NAModel.getEmail(), 0);
-				
-	}	
-	
-	public void verifyReview(Review rev, int approve) {
-		if(approve == 1) {//INDICATES ADMIN APPROVED REVIEW
-			//TOGGLE STATUS IN DB TO 1
-		}
-		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
+	}
+	@Test
+	public void Test_Verified_Method_On_Nonexisting_User() {
+		//SETTING UN & PW TO EXISTING USER CREDITS:
+		NAModel.setUsername("_dhill22");
+		NAModel.setPassword("nana");
+		//TESTING VERIFIED():
+		assertTrue(controllerHandle.verified() == false);
+		
 	}
 }

@@ -3,7 +3,7 @@ import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
 public class NetworkAdminController {
-	private NetworkAdmin NAModel;
+	private NetworkAdmin NAModel = new NetworkAdmin();
 	private DerbyDatabase derby = new DerbyDatabase();
 	public void setModel(NetworkAdmin NAModel) {
 		this.NAModel = NAModel;
