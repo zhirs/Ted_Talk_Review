@@ -1,5 +1,4 @@
 package tedtalkDB.Controller;
-import tedtalkDB.model.*;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +18,6 @@ public class NetworkAdminControllerTest {
 		NAModel.setPassword("banana");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
-		
 	}
 	@Test
 	public void Test_Verified_Existing_User1() {
