@@ -4,19 +4,19 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class NetworkAdminControllerTest {
-	private NetworkAdminController controllerHandle = new NetworkAdminController();
-	private NetworkAdmin NAModel = new NetworkAdmin();
+public class StudentControllerTest {
+	private StudentController controllerHandle = new StudentController();
+	private Student studentHandle = new Student();
 	@Before
 	public void init() {
 		//ASSOCIATING MODEL WITH CONTROLLER:
-		controllerHandle.setModel(NAModel);
+		controllerHandle.setModel(studentHandle);
 	}
 	@Test
 	public void Test_Verified_Existing_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("dhill22");
-		NAModel.setPassword("banana");
+		studentHandle.setUsername("student3");
+		studentHandle.setPassword("plzno");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -26,8 +26,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau");
-		NAModel.setPassword("tree");
+		studentHandle.setUsername("student2");
+		studentHandle.setPassword("rab");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -37,19 +37,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("zhirs");
-		NAModel.setPassword("monkey");
-		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
-		
-	}
-	@Test
-	public void Test_Verified_Existing_User3() {
-		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastro7");
-		NAModel.setPassword("wizard");
+		studentHandle.setUsername("student1");
+		studentHandle.setPassword("oof");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -59,8 +48,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("dhill22");
-		NAModel.setPassword("Monkey");
+		studentHandle.setUsername("student1");
+		studentHandle.setPassword("ooF");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -69,8 +58,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastro7");
-		NAModel.setPassword("Monkey");
+		studentHandle.setUsername("student2");
+		studentHandle.setPassword("Rab");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -79,8 +68,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau2");
-		NAModel.setPassword("wizard");
+		studentHandle.setUsername("student3");
+		studentHandle.setPassword("wizard");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -89,8 +78,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("Jlandau2");
-		NAModel.setPassword("Tree");
+		studentHandle.setUsername("Student3");
+		studentHandle.setPassword("plzno");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -99,8 +88,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("Dhill22");
-		NAModel.setPassword("banana");
+		studentHandle.setUsername("stuDent1");
+		studentHandle.setPassword("oof");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -109,8 +98,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("acastrO7");
-		NAModel.setPassword("Wizard");
+		studentHandle.setUsername("Student2");
+		studentHandle.setPassword("rab");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -119,8 +108,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("_dhill22");
-		NAModel.setPassword("nana");
+		studentHandle.setUsername("Student3l22");
+		studentHandle.setPassword("nana");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -129,8 +118,8 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau20");
-		NAModel.setPassword("tree");
+		studentHandle.setUsername("tudent3");
+		studentHandle.setPassword("plzno");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
@@ -139,14 +128,13 @@ public class NetworkAdminControllerTest {
 	@Test
 	public void Test_Verified_Nonexisting_User2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		NAModel.setUsername("jlandau20");
-		NAModel.setPassword("tree");
+		studentHandle.setUsername("test321");
+		studentHandle.setPassword("321tset");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandle.verified());
 	}
-	//***************************************************************     13 TEST CASES     *******************************************************************
-
+	//***************************************************************     12 TEST CASES     *******************************************************************
 
 }
