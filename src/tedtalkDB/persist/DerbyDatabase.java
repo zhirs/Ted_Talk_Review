@@ -1016,5 +1016,283 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
+
+	@Override
+	public ArrayList<Student> studentsByMajor(String major) {
+		return executeTransaction(new Transaction<ArrayList<Student>>() {
+			@Override
+			public ArrayList<Student> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<Student> students = new ArrayList<Student>();
+				try {
+					stmt1 = conn.prepareStatement(
+							"select *  "
+							+ "from students "
+							+ "where major  = ? ");
+					stmt1.setString(1, major);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Student student = new Student();
+						student = loadStudent(resultSet1, 1);
+						students.add(student);
+					}
+					if(students.size() >= 1) {
+						System.out.println("Found students");
+						return students;
+					}
+					
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(conn);
+				}
+				return students;
+			}
+			
+		}
+		);
 		
+	}
+	public Student studentByProfID(int profID) {
+		return executeTransaction(new Transaction<Student>() {
+			@Override
+			public Student execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<Student> students = new ArrayList<Student>();
+				try {
+					stmt1 = conn.prepareStatement(
+							"select *  "
+							+ "from students "
+							+ "where prof_id  = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Student student = new Student();
+						student = loadStudent(resultSet1, 1);
+						students.add(student);
+					}
+					if(students.size() == 1) {
+						System.out.println("Found student");
+						return students.get(0);
+					}
+					
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(conn);
+				}
+				return null;
+			}
+			
+		}
+		);
+		
+	}
+	public Professor professorByProfID(int profID) {
+		return executeTransaction(new Transaction<Professor>() {
+			@Override
+			public Professor execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<Professor> professors= new ArrayList<Professor>();
+				try {
+					stmt1 = conn.prepareStatement(
+							"select *  "
+							+ "from professors "
+							+ "where prof_id  = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Professor professor= new Professor();
+						professor= loadProfessor(resultSet1, 1);
+						professors.add(professor);
+					}
+					if(professors.size() == 1) {
+						System.out.println("Found student");
+						return professors.get(0);
+					}
+					
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(conn);
+				}
+				return null;
+			}
+			
+		}
+		);
+		
+	}
+	public NetworkAdmin adminByProfID(int profID) {
+		return executeTransaction(new Transaction<NetworkAdmin>() {
+			@Override
+			public NetworkAdmin execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<NetworkAdmin> admins= new ArrayList<NetworkAdmin>();
+				try {
+					stmt1 = conn.prepareStatement(
+							"select *  "
+							+ "from admins "
+							+ "where prof_id  = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						NetworkAdmin admin = new NetworkAdmin();
+						admin = loadAdmin(resultSet1, 1);
+						admins.add(admin);
+					}
+					if(admins.size() == 1) {
+						System.out.println("Found student");
+						return admins.get(0);
+					}
+					
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(conn);
+				}
+				return null;
+			}
+			
+		}
+		);
+		
+	}
+	@Override
+	public Integer updateSection(int profID, String section) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update students "
+							+ "set section = ? "
+							+ "where prof_id = ? ");
+					stmt1.setString(1, section);
+					stmt1.setInt(2, profID);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+
+	@Override
+	public String getSection(int profID) {
+		return executeTransaction(new Transaction<String>() {
+			@Override
+			public String execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select section "
+							+ "from students  "
+							+ "where prof_id = ? ");
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					String test = null;
+					while(resultSet1.next()) {
+						test = resultSet1.getString(i++);
+					}
+					return test;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	@Override
+	public Integer getProfID(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
+				ResultSet resultSet3 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						" select prof_id "+
+						" from students " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					resultSet1 = stmt1.executeQuery();
+					int foundProfID = -1;
+					while(resultSet1.next()) { 
+						foundProfID = resultSet1.getInt(1);
+					}
+					if(foundProfID != -1) {
+						System.out.println("Found Account");
+						return foundProfID;
+					}
+					
+					stmt2 = conn.prepareStatement(
+							" select prof_id "+
+							" from professors " +
+							" where username = ?"
+						);
+					stmt2.setString(1, user);
+					resultSet2 = stmt2.executeQuery();
+					while(resultSet2.next()) { 
+						foundProfID = resultSet2.getInt(1);
+					}
+					if(foundProfID != -1) {
+						System.out.println("Found Account");
+						return foundProfID;
+					}
+					
+							
+					stmt3 = conn.prepareStatement(
+						" select prof_id"+
+						" from admins " +
+						" where username = ?"
+					);
+					stmt3.setString(1, user);
+					resultSet3 = stmt3.executeQuery();
+					while(resultSet3.next()) { 
+						foundProfID = resultSet3.getInt(1);
+					}
+					if(foundProfID != -1) {
+						System.out.println("Found Account");
+						return foundProfID;
+					}
+					return null;
+			}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+				}
+			}
+		});
+	}
 }

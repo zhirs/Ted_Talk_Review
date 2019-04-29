@@ -28,5 +28,6 @@ public class updateMod {
 		}
 		int check = db.getMod(input);
 		System.out.println("Double check : " + check);
+		keyboard.close();
 	}
 }

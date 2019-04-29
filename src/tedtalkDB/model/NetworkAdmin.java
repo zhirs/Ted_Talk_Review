@@ -13,6 +13,10 @@ public class NetworkAdmin extends Account{
 	// once such being a method to turn on and off the need to verify reviews
 	// will also be able to assign moderators possibly
 
+	public NetworkAdmin() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setModStat(int modStat) {
 		this.modStat = modStat;
 	}
