@@ -9,20 +9,16 @@ import java.util.ArrayList;
 
 import tedtalk.controller.ReviewController;
 import tedtalkDB.model.Review;
-import tedtalkDB.model.Tags;
 import tedtalkDB.persist.DerbyDatabase;
-import tedtalkDB.persist.FakeDatabase;
 
 public class ReviewControllerTest {
 	private Review modelHandler;
 	private ReviewController reviewController;
-	private FakeDatabase fake;
 	private DerbyDatabase derby;
 	private ArrayList <Review> result;
 	
 	@Before
 	public void setup0() {
-		fake = new FakeDatabase();
 		derby = new DerbyDatabase();
 		try {
 			reviewController = new ReviewController();
@@ -31,7 +27,7 @@ public class ReviewControllerTest {
 			e.printStackTrace();
 		}
 		// sets model to a review already in database for testing methods
-		modelHandler = fake.getReviewList().get(0);
+		modelHandler = derby.getProfIDReviewList(20001).get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
 	}
@@ -52,17 +48,18 @@ public class ReviewControllerTest {
 		String tag = "environmental";
 		String testPresenter= "Hamilton";
 		String testDescription = "fake description";
-		int fakeprofID = 6;
-		
+		int fakeprofID = 20001;
+		ArrayList<Review>InitialSize = reviewController.fetchReviews(fakeprofID);
+		int initialSize = InitialSize.size();
 		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
-		
-		//System.out.println(fake.getReviewList().size());
 
-		
-		assertTrue(test.size() == 6);
 		//System.out.println(result.get(5).getName());
-		assertTrue(test.get(5).getName().equals("Wilds"));
-		assertTrue(test.get(5).getProfID() == 6);
+		assertTrue(test.get(0).getName().equals("Wilds"));
+		assertTrue(test.get(0).getDesc().equals(testDescription));
+		assertTrue(test.get(0).getURL().equals(testURL));
+		
+		ArrayList<Review> doubleCheck = reviewController.fetchReviews(fakeprofID);
+		assertTrue(doubleCheck.size() == (initialSize + 1));
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/
