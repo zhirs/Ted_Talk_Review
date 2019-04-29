@@ -3,8 +3,6 @@ package tedtalks.db;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
-import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
@@ -25,7 +23,9 @@ public class findReview {
 		}
 		else {
 			System.out.println("Review found");
-			System.out.println(found.get(0).getName() + "\nWritten by:" + found.get(0).getProfID() + "  \nTalk by:" + found.get(0).getPres());
-			}			
-		}
+			System.out.println(found.get(0).getName() + "\nWritten by:" + found.get(0).getProfID() + "  \nTalk by:" + found.get(0).getPres() + found.get(0).getDate());
+			}
+		keyboard.close();
+	}
+
 }

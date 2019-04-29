@@ -16,6 +16,18 @@
 	<servlet-class>tedtalk.servlet.profileservlet</servlet-class>
 </servlet>
 <servlet>
+	<servlet-name>studentServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studentservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>professorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>networkAdminServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.networkadminservlet</servlet-class>
+</servlet>
+<servlet>
 	<servlet-name>loginServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.loginservlet</servlet-class>
 </servlet>
@@ -27,30 +39,54 @@
 	<servlet-name>requestServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.requestservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>professorSettingServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorsettingservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>networkAdminSettingServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.networkadminsettingservlet</servlet-class>
+</servlet>
 
 <servlet-mapping>
 	<servlet-name>homeServlet</servlet-name>
 	<url-pattern>/home</url-pattern>
 </servlet-mapping>
-
 <servlet-mapping>
 	<servlet-name>loginServlet</servlet-name>
 	<url-pattern>/login</url-pattern>
 </servlet-mapping>
-
 <servlet-mapping>
 	<servlet-name>reviewServlet</servlet-name>
 	<url-pattern>/review</url-pattern>
 </servlet-mapping>
-
 <servlet-mapping>
 	<servlet-name>requestServlet</servlet-name>
 	<url-pattern>/request</url-pattern>
 </servlet-mapping>
-
 <servlet-mapping>
 	<servlet-name>profileServlet</servlet-name>
 	<url-pattern>/profile</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>studentServlet</servlet-name>
+	<url-pattern>/student</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminServlet</servlet-name>
+	<url-pattern>/networkAdmin</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminSettingServlet</servlet-name>
+	<url-pattern>/networkadminSetting</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorServlet</servlet-name>
+	<url-pattern>/professor</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorSettingServlet</servlet-name>
+	<url-pattern>/professorSetting</url-pattern>
 </servlet-mapping>
 
 </web-app>

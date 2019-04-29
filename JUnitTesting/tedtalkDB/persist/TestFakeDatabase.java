@@ -90,7 +90,7 @@ public class TestFakeDatabase {
 		assertTrue(prof2.size() == 2);
 		
 		assertTrue(prof1.get(0).getRate() == 3);
-		assertTrue(prof2.get(1).getTag() == Tags.technology);
+		//assertTrue(prof2.get(1).getTag() == Tags.technology);
 	}
 	
 	@Test

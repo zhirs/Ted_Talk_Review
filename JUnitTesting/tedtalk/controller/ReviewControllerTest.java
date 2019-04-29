@@ -4,25 +4,30 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalk.controller.ReviewController;
 import tedtalkDB.model.Review;
-import tedtalkDB.model.Tags;
-import tedtalkDB.persist.FakeDatabase;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class ReviewControllerTest {
 	private Review modelHandler;
 	private ReviewController reviewController;
-	private FakeDatabase fake;
+	private DerbyDatabase derby;
 	private ArrayList <Review> result;
 	
 	@Before
 	public void setup0() {
-		fake = new FakeDatabase();
-		reviewController = new ReviewController();
+		derby = new DerbyDatabase();
+		try {
+			reviewController = new ReviewController();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// sets model to a review already in database for testing methods
-		modelHandler = fake.getReviewList().get(0);
+		modelHandler = derby.getProfIDReviewList(20001).get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
 	}
@@ -35,25 +40,26 @@ public class ReviewControllerTest {
 	
 	@Test
 	public void createNewReview() {
-		result = fake.getReviewList();
+		//result = fake.getReviewList();
 		System.out.println(result.size());
 		String testName = "Wilds";
 		String testURL = "tEDtalk.com/Wilds";
 		int testRate = 3;
-		Tags tag = Tags.environmental;
+		String tag = "environmental";
 		String testPresenter= "Hamilton";
 		String testDescription = "fake description";
-		int fakeprofID = 6;
-		
+		int fakeprofID = 20001;
+		ArrayList<Review>InitialSize = reviewController.fetchReviews(fakeprofID);
+		int initialSize = InitialSize.size();
 		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
-		
-		//System.out.println(fake.getReviewList().size());
 
-		
-		assertTrue(test.size() == 6);
 		//System.out.println(result.get(5).getName());
-		assertTrue(test.get(5).getName().equals("Wilds"));
-		assertTrue(test.get(5).getProfID() == 6);
+		assertTrue(test.get(0).getName().equals("Wilds"));
+		assertTrue(test.get(0).getDesc().equals(testDescription));
+		assertTrue(test.get(0).getURL().equals(testURL));
+		
+		ArrayList<Review> doubleCheck = reviewController.fetchReviews(fakeprofID);
+		assertTrue(doubleCheck.size() == (initialSize + 1));
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/

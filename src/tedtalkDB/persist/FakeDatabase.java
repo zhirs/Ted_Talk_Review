@@ -1,5 +1,8 @@
 package tedtalkDB.persist;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.NetworkAdmin;
@@ -15,13 +18,35 @@ public class FakeDatabase implements IDatabase{
 	private ArrayList<Review> reviewList;
 	
 	// every time called, recreates userList and reviewList
-	public FakeDatabase() {
+	public FakeDatabase() throws ParseException{
 		userList = new ArrayList<Account>();
 		reviewList = new ArrayList<Review>();
 		
 		// Add initial data
-		userList.addAll(InitialData.getUsers());
-		reviewList.addAll(InitialData.getReviews());
+		try {
+			userList.addAll(InitialData.getAdmins());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getProfs());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			userList.addAll(InitialData.getStudents());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			reviewList.addAll(InitialData.getReviews());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Account> getUserList(){
@@ -58,7 +83,7 @@ public class FakeDatabase implements IDatabase{
 	
 	// adding a new account into the userList (temp)
 	// role 0 = student, 1 = professor, 2 = networkAdmin
-	public ArrayList<Account> addUser(String user, String pass, String email, String section, int role) {
+	public ArrayList<Account> addUser(String user, String pass, String email, String section, int role, String major) {
 		Account newUser = null;
 		// based on role int, new user is created in database
 		switch(role) {
@@ -69,7 +94,7 @@ public class FakeDatabase implements IDatabase{
 			newUser = new NetworkAdmin(user, pass, email, userList.size() + 1);
 			break;
 		default:
-			newUser = new Student(user, pass, email, section, userList.size() + 1);
+			newUser = new Student(user, pass, email, section, userList.size() + 1, major);
 		}
 		userList.add(newUser);
 		return userList;
@@ -89,7 +114,7 @@ public class FakeDatabase implements IDatabase{
 	// creates new review
 	public ArrayList<Review> createReview(String url, String name, int rate, String pres, String desc, int profID, Tags tag) {
 		// creates new review with inputed info
-		Review rev = new Review(url, name, rate, pres, desc, profID, reviewList.size() + 1, tag);
+		Review rev = new Review();
 		// adds new review to list
 		reviewList.add(rev);
 		// returns the new full reviewList
@@ -97,7 +122,7 @@ public class FakeDatabase implements IDatabase{
 	}
 	
 	// find total count of reviews by a certain profile
-	public int getReviewTotal(int profID) {
+	public Integer getReviewTotal(int profID) {
 		return getProfIDReviewList(profID).size();
 	}
 	
@@ -135,5 +160,125 @@ public class FakeDatabase implements IDatabase{
 			}
 		}
 		return 0;
+	}
+	
+	// automatically sets mods to off is necessary
+	public void setMod() {
+		if(getModStat() == 1) {
+			for(Account use: userList) {
+				if(use instanceof Professor) {
+					((Professor) use).setMod(0);
+				}
+			}
+		}
+	}
+
+	@Override
+	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID,
+			String tag, int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Professor> addProfessor(String user, String pass, String email, int mod) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email, int modstat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getModStat(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMod(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateModStat(int profID, int modStat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateMod(int input, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateStatus(int revID, int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getStatus(int revID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> studentsByMajor(String major) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Student studentByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateSection(int profID, String section) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSection(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Professor professorByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NetworkAdmin adminByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getProfID(String user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -7,7 +7,7 @@ public class Account {
 	private int profID; // iterates starting at 1
 
 	public Account() {
-		
+
 	}
 	
 	public Account(String user, String pass, String email, int profID) {
