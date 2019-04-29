@@ -29,6 +29,5 @@ public class NetworkAdminControllerTest {
 		NAModel.setPassword("nana");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified() == false);
-		
 	}
 }
