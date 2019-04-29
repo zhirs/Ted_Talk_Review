@@ -1,26 +1,30 @@
 package tedtalk.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Review;
-import tedtalkDB.persist.FakeDatabase;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class ReviewController {
 	private Review reviewModel;
-	private FakeDatabase fake;
-	public ReviewController() {
-		 fake = new FakeDatabase();
+	private DerbyDatabase derby;
+	
+	public ReviewController() throws IOException {
+		 derby = new DerbyDatabase();
 	}
 
 	public void setModel(Review modelHandler) {
 		this.reviewModel = modelHandler;
 	}
-
+	
 	// creates new review, does same thing as database method
-	public ArrayList<Review> newReview(String name, int rate, String topic, String pres, String desc, int profID) {
-		ArrayList<Review>result = fake.createReview(name, rate, topic, pres, desc, profID);
-		
+	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, String tag) {
+		ArrayList<Review>result = derby.addReview(url, name, rate, pres, desc, profID, tag, 0);
+		// if mods are turned off, review is automatically approved and added
+		if(derby.getModStat(profID) == 1) {
+			result.get(result.size() - 1).setStatus(1);
+		}
 		return result;
 	}
 	
@@ -28,7 +32,7 @@ public class ReviewController {
 	// used primarily for printing all reviews by the user within the profile page
 	public ArrayList<Review> fetchReviews(int profID){
 		ArrayList<Review> result = new ArrayList<Review>();
-		result.addAll(fake.getProfIDReviewList(profID));
+		result.addAll(derby.getProfIDReviewList(profID));
 		return result;
 	}
 	
