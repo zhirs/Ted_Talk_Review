@@ -7,7 +7,7 @@ import tedtalkDB.persist.IDatabase;
 
 public class updateStatus {
 	public static void main(String[] args) throws Exception {
-		
+		 
 		Scanner keyboard = new Scanner(System.in);
 		InitDatabase.init();
 		// Create the default IDatabase instance
@@ -26,5 +26,6 @@ public class updateStatus {
 			int newStatus = db.getStatus(revID);
 			System.out.println("found: " + initialStatus + " changed to " + newStatus);
 		}
+		keyboard.close();
 	}
 }

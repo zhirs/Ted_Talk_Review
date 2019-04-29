@@ -20,6 +20,7 @@ public class getMod {
 		else {
 			System.out.println("Mod found");
 			System.out.println(found);
-			}			
+			}	
+		keyboard.close();
 		}
 }

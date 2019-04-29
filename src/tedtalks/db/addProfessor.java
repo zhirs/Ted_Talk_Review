@@ -3,7 +3,6 @@ package tedtalks.db;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
 import tedtalkDB.model.Professor;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
@@ -29,6 +28,7 @@ public class addProfessor {
 		else {
 			System.out.println("Professor Account Made");
 			System.out.println(found.get(0).getUserName() + " " + found.get(0).getprofID() + " " + found.get(0).getEmail());
-			}			
+			}		
+		keyboard.close();
 		}
 }

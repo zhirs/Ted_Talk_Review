@@ -30,6 +30,7 @@ public class addAdmin {
 		else {
 			System.out.println("Admin Account Made");
 			System.out.println(found.get(0).getUserName() + " " + found.get(0).getprofID() + " " + found.get(0).getEmail());
-			}			
+			}
+		keyboard.close();
 		}
 }
