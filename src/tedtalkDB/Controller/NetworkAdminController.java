@@ -13,7 +13,19 @@ public class NetworkAdminController {
 	}
 	boolean verified() {
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
-		return (derby.checkCredentials(NAModel.getUserName(), NAModel.getPassword()));
+		int count = 0;
+		for(int i = 0; i < 9; i++) {
+			if(derby.checkCredentials(NAModel.getUserName(), NAModel.getPassword())) {
+				count++;
+			};
+			
+		}
+		if (count >= 9) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	public void createLogin(String user) {
 		Account login = derby.setLogin(user);

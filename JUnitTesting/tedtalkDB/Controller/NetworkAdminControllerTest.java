@@ -1,6 +1,5 @@
 package tedtalkDB.Controller;
-import tedtalkDB.model.*;
-import tedtalkDB.persist.*;
+import tedtalkDB.model.NetworkAdmin;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +18,7 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("dhill22");
 		NAModel.setPassword("banana");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		
+		assertTrue(controllerHandle.verified() == true);
 	}
 	@Test
 	public void Test_Verified_Method_On_Nonexisting_User() {
