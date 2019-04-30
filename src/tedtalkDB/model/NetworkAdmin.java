@@ -5,6 +5,8 @@ public class NetworkAdmin extends Account{
 	// this determines whether reviews are reviewed or not
 	// set to 0 for not assigned, 1 for off (auto reviewed by system), 2 for on (by mod)
 	private int modStat;
+		//ALTHOUGH JAVA CREATE DEFAULT CONSTRUCTOR IF YOU CREATE A CONSTRUCTOR
+		//YOU MUST ADD THESE LINES IF YOU WISH TO USE: NetworkAdmin test = new NetworkAdmin()
   
 	public NetworkAdmin(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);

@@ -347,16 +347,10 @@ public class DerbyDatabaseTests {
 		int profID = 20001;
 		int total = db.getReviewTotal(profID);
 		if (total >= 0) {
-			if(total == 1) {
-				System.out.print(total);
-			}
-			else {
-				System.out.println(total + "is the wrong total");
-				fail("Wrong total");
-			}
+			System.out.print(total);
 		}
 		else {
-			System.out.println("load error");
+			System.out.println("wrong total");
 			fail("load error"); 
 		}
 	}

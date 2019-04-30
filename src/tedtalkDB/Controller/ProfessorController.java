@@ -11,6 +11,10 @@ public class ProfessorController {
 	public void setModel(Professor professorModel) {
 		this.professorModel = professorModel;
 	}
+	boolean verified() {
+		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
+		return (derby.checkCredentials(professorModel.getUserName(), professorModel.getPassword()));
+	}
 	public void createLogin(String user) {
 		Account login = derby.setLogin(user);
 		professorModel.setEmail(login.getEmail());
