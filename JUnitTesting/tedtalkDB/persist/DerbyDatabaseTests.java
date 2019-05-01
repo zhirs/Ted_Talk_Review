@@ -133,7 +133,7 @@ public class DerbyDatabaseTests {
 		int rate = 5;
 		String pres = "The man";
 		String desc = "So tired of databases";
-		int profID = 20002;
+		int profID = 9;
 		String tag = "Mechanical";
 		int status = 0;
   
@@ -308,7 +308,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetProfIDReviewList() {
 		System.out.println("\n*** Testing getProfIDReviewList**");
-		int profID = 20001;
+		int profID = 9;
 		reviews = db.getProfIDReviewList(profID);
 		if(reviews.size() <= 0) {
 			System.out.println("No reviews found");
@@ -322,7 +322,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetReviewsBetweenDates() {
 		System.out.println("\n*** Testing getReviewsBetweenDates***");
-		int profID = 20001;
+		int profID = 8;
 		String date1 = "2019/04/26";
 		java.util.Date utilDate1 = new java.util.Date(date1);
 	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
@@ -344,7 +344,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetReviewTotal() {
 		System.out.println("\n*** Testing getReviewTotal***");
-		int profID = 20001;
+		int profID = 8;
 		int total = db.getReviewTotal(profID);
 		if (total >= 0) {
 			System.out.print(total);
