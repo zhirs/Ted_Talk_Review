@@ -37,13 +37,13 @@ public class DerbyDatabase implements IDatabase {
 		
 		System.out.println("Library DB successfully initialized!");
 	}
+	
 	private interface Transaction<ResultType> {
 		public ResultType execute(Connection conn) throws SQLException;
 	}
 
 	private static final int MAX_ATTEMPTS = 10;
 
-	
 	// wrapper SQL transaction function that calls actual transaction function (which has retries)
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -89,9 +89,9 @@ public class DerbyDatabase implements IDatabase {
 		}
 	}
 
-	// TODO: Here is where you name and specify the location of your Derby SQL database
-	// TODO: Change it here and in SQLDemo.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.sqldemo
-	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
+	// Here is where you name and specify the location of your Derby SQL database
+	// Change it here and in SQLDemo.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.sqldemo
+	// DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	private Connection connect() throws SQLException {
 		Connection conn = DriverManager.getConnection("jdbc:derby:library.db;create=true");		
 		
@@ -111,15 +111,14 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;				
 				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table admins(" +
-						"	prof_id integer primary key " +
+						"	admin_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
-						"	username varchar(40)," +
-						"	password varchar(100), " +
-						"	email varchar(100), "
-						+ "modstat integer" +
+						"	prof_id integer," + 
+						"	modstat integer" +
 						")"
 					);	
 					
@@ -128,12 +127,10 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt2 = conn.prepareStatement(
 							"create table professors(" +
-							"	prof_id integer primary key " +
-							"		generated always as identity (start with 10000, increment by 1), " +									
-							"	username varchar(40)," +
-							"	password varchar(100), " +
-							"	email varchar(100), "
-							+ " mod integer " +
+							"	teacher_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +									
+							"	prof_id integer, " +
+							"  	mod integer " +
 							")"
 						);	
 						stmt2.executeUpdate();
@@ -141,11 +138,9 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt3 = conn.prepareStatement(
 							"create table students(" +
-							"	prof_id integer primary key " +
-							"		generated always as identity (start with 20000, increment by 1), " +									
-							"	username varchar(40)," +
-							"	password varchar(100), " +
-							"	email varchar(100), " +
+							"	student_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +									
+							"	prof_id integer," +
 							"	section varchar(1000), "+ 
 							"   major varchar(1000) " +
 							")"
@@ -156,7 +151,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4 = conn.prepareStatement(
 							"create table reviews(" +
 							"	rev_id integer primary key " +
-							"		generated always as identity (start with 50000, increment by 1), " +
+							"		generated always as identity (start with 1, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
 							"	url varchar(100), " +
 							"	name varchar(100)," +
@@ -170,8 +165,20 @@ public class DerbyDatabase implements IDatabase {
 							")"
 					);
 					stmt4.executeUpdate();
+					System.out.println("Reviews table created");
 					
-					System.out.println("Reviews table created");					
+					stmt5 = conn.prepareStatement(
+							"create table accounts(" + 
+							"	prof_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " + 
+							"	username varchar(100), " +
+							" 	password varchar(100), " +
+							"	email varchar(100), " + 
+							" 	role integer" +
+							")"
+							);
+					stmt5.executeUpdate();
+					System.out.println("Accounts table created");					
 					
 					return true;
 				} finally {
@@ -179,6 +186,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
 				}
 			}
 		});
@@ -193,12 +201,14 @@ public class DerbyDatabase implements IDatabase {
 				List<Professor> profList;
 				List<Student> studentList;
 				List<Review> reviewList;
+				List<Account> accountList;
 				
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
 					studentList = InitialData.getStudents();
 					reviewList = InitialData.getReviews();
+					accountList = InitialData.getAccounts();
 				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -207,50 +217,53 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertProf = null;
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
-
+				PreparedStatement insertAccount = null;
 				try {
+					insertAccount = conn.prepareStatement("insert into accounts(username, password, email, role) values (?, ?, ?, ?)");
+					for (Account account: accountList) {
+//						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
+						insertAccount.setString(1, account.getUserName());
+						String accountPW = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt());
+						insertAccount.setString(2, accountPW);
+						insertAccount.setString(3, account.getEmail());
+						insertAccount.setInt(4, account.getRole());
+						insertAccount.addBatch();
+					}
+					insertAccount.executeBatch();
+					System.out.println("Account table populated");
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
-					insertAdmin = conn.prepareStatement("insert into admins (username, password, email, modstat) values (?, ?, ?, ?)");
+					
+					insertAdmin = conn.prepareStatement("insert into admins (prof_id, modstat) values (?, ?)");
 					for (NetworkAdmin admin: adminList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertAdmin.setString(1, admin.getUserName());
-						String adminpw = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt());
-						insertAdmin.setString(2, adminpw);
-						insertAdmin.setString(3, admin.getEmail());
-						insertAdmin.setInt(4, admin.getModStat());
+						insertAdmin.setInt(1, admin.getprofID());
+						insertAdmin.setInt(2, admin.getModStat());
 						insertAdmin.addBatch();
 					}
 					insertAdmin.executeBatch();
-					
 					System.out.println("Admin table populated");
 					
-					insertProf = conn.prepareStatement("insert into professors (username, password, email, mod) values (?, ?, ?, ?)");
+					
+					insertProf = conn.prepareStatement("insert into professors (prof_id, mod) values (?, ?)");
 					for (Professor professor: profList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertProf.setString(1, professor.getUserName());
-						String adminpw = BCrypt.hashpw(professor.getPassword(), BCrypt.gensalt());
-						insertProf.setString(2, adminpw);
-						insertProf.setString(3,  professor.getEmail());
-						insertProf.setInt(4, professor.getMod());
+						insertProf.setInt(1, professor.getprofID());
+						insertProf.setInt(2, professor.getMod());
 						insertProf.addBatch();
 					}
 					insertProf.executeBatch();
-					
 					System.out.println("Prof table populated");
 					
-					insertStudent = conn.prepareStatement("insert into students (username, password, email, section, major) values (?, ?, ?, ?, ?)");
+				
+					insertStudent = conn.prepareStatement("insert into students (prof_id, section, major) values (?, ?, ?)");
 					for (Student student: studentList) {
 //						insertAdmin.setInt(1, account.getProfId());	// auto-generated primary key, don't insert this
-						insertStudent.setString(1, student.getUserName());
-						String studentPW = BCrypt.hashpw(student.getPassword(), BCrypt.gensalt());
-						insertStudent.setString(2, studentPW);
-						insertStudent.setString(3, student.getEmail());
-						insertStudent.setString(4, student.getSection());
-						insertStudent.setString(5, student.getMajor());
+						insertStudent.setInt(1,  student.getprofID());
+						insertStudent.setString(2, student.getSection());
+						insertStudent.setString(3, student.getMajor());
 						insertStudent.addBatch();
 					}
 					insertStudent.executeBatch();
-					
 					System.out.println("Student table populated");
 					
 					
@@ -270,10 +283,10 @@ public class DerbyDatabase implements IDatabase {
 						
 						insertReview.addBatch();
 					}
-					insertReview.executeBatch();
-					
+					insertReview.executeBatch();					
 					System.out.println("Reviews table populated");					
 					
+					System.out.println("All tables populated");
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied				
 					
@@ -283,6 +296,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertProf);
 					DBUtil.closeQuietly(insertStudent);
 					DBUtil.closeQuietly(insertAdmin);
+					DBUtil.closeQuietly(insertAccount);
 				}
 			}
 		});
@@ -295,17 +309,13 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
 				ResultSet resultSet1 = null;
-				ResultSet resultSet2 = null;
-				ResultSet resultSet3 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						" select password "+
-						" from students " +
+						" from accounts " +
 						" where username = ?"
 					);
 					stmt1.setString(1, user);
@@ -320,53 +330,11 @@ public class DerbyDatabase implements IDatabase {
 							return true;
 						}
 					}
-					
-					stmt2 = conn.prepareStatement(
-							" select password "+
-							" from professors " +
-							" where username = ?"
-						);
-					stmt2.setString(1, user);
-					resultSet2 = stmt2.executeQuery();
-					String storedProfessorPass = null;
-					while(resultSet2.next()) {
-						storedProfessorPass = resultSet2.getString(1);
-					}
-					if(storedProfessorPass != null) {
-							if(BCrypt.checkpw(pass, storedProfessorPass)){
-								System.out.println("Found Account");
-								return true;
-							}
-					}
-					
-							
-					stmt3 = conn.prepareStatement(
-						" select password"+
-						" from admins " +
-						" where username = ?"
-					);
-					stmt3.setString(1, user);
-					resultSet3 = stmt3.executeQuery();
-					String storedAdminPass = null;
-					while(resultSet3.next()) {
-						storedAdminPass = resultSet3.getString(1);
-					}
-					if(storedAdminPass != null) {
-						if(BCrypt.checkpw(pass, storedAdminPass)){
-							System.out.println("Found Account");
-							return true;
-						}
-					}
-				
-			}
+				}
 				finally {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(resultSet2);
-					DBUtil.closeQuietly(resultSet3);
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
-					DBUtil.closeQuietly(stmt3);
 				}
 				return false;
 			}
@@ -379,79 +347,33 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<Account>() {
 			@Override
 			public Account execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
 				ResultSet resultSet1 = null;
-				ResultSet resultSet2 = null;
-				ResultSet resultSet3 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						" select * "+
-						" from students " +
+						" from accounts " +
 						" where username = ? "
 					);
 					stmt1.setString(1, user);
 					resultSet1 = stmt1.executeQuery();
-					List<Account> students = new ArrayList<Account>();
+					List<Account> accounts = new ArrayList<Account>();
 					while(resultSet1.next()) {
 						Account account = new Account();
 						loadAccount(account, resultSet1, 1);
-						students.add(account);
+						accounts.add(account);
 					}
-					if(students.size() == 1) {
+					if(accounts.size() == 1) {
 						System.out.println("Found Account");
-						return students.get(0);
-					}
-	
-					stmt2 = conn.prepareStatement(
-							" select * "+
-							" from professors " +
-							" where username = ? "
-						);
-					stmt2.setString(1, user);
-					resultSet2 = stmt2.executeQuery();
-					List<Account> professors = new ArrayList<Account>();
-					while(resultSet2.next()) {
-						Account account = new Account();
-						loadAccount(account, resultSet2, 1);
-						professors.add(account);
-					}
-					
-					if(professors.size() == 1) {
-						System.out.println("Found Account");
-						professors.get(0);
-					}
-			
-				
-					stmt3 = conn.prepareStatement(
-						" select * "+
-						" from admins " +
-						" where username = ?"
-					);
-					stmt3.setString(1, user);
-					resultSet3 = stmt3.executeQuery();
-					List<Account> admins = new ArrayList<Account>();
-					while(resultSet3.next()) {
-						Account account = new Account();
-						loadAccount(account, resultSet3, 1);
-						admins.add(account);
-					}
-					if(admins.size() == 1) {
-						System.out.println("Found Account");
-						return admins.get(0);
+						return accounts.get(0);
 					}
 					return null;
 			}
 				finally {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(resultSet2);
-					DBUtil.closeQuietly(resultSet3);
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
-					DBUtil.closeQuietly(stmt3);
 				}
 			}
 		});
@@ -678,42 +600,75 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<ArrayList<Professor>>() {
 			@Override
 			public ArrayList<Professor> execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
+				ArrayList<Professor> professors= new ArrayList<Professor>();
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into professors (username, password, email, mod) "+
+						"insert into accounts (username, password, email, role) "+
 						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
 					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
-					stmt1.setInt(4, mod);
+					stmt1.setInt(4, 1);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
-							"select * "
-							+ "from professors "
-							+ "where username = ?"
+							"select prof_id "
+							+ "from accounts "
+							+ "where username = ? and email = ? and password = ?"
 							);
 					stmt2.setString(1, user);
+					stmt2.setString(2, email);
+					stmt2.setString(3, hashPass);
 					resultSet1 = stmt2.executeQuery();
-					
-					ArrayList<Professor> profs = new ArrayList<Professor>();
+					int i = 1;
+					int newID = -1;
 					while(resultSet1.next()) {
-						Professor account = loadProfessor(resultSet1, 1);
-						profs.add(account);
+						newID = resultSet1.getInt(i++);
 					}
-					System.out.println("Account made");
-					return profs;
+					if(newID == -1) {
+						System.out.println("Account not made");
+						return null;
+					}
+	
+					stmt3 = conn.prepareStatement(
+							"insert into professors (prof_id, mod) "+
+							"values(?, ?)"
+					);
+					stmt3.setInt(1, newID);
+					stmt3.setInt(2, mod);
+					stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
+							"select professors.prof_id, username, password, email, professors.mod "
+							+ "from professors, accounts "
+							+ "where professors.prof_id = accounts.prof_id "
+							+ "and professors.prof_id = ? ");
+					
+					stmt4.setInt(1, newID);
+					resultSet2 = stmt4.executeQuery();
+					while(resultSet2.next()) {
+						Professor account = loadProfessor(resultSet2, 1);
+						professors.add(account);
+					}
+					return professors;
 				}
 				finally {
 					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet2);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -724,43 +679,75 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<ArrayList<Student>>() {
 			@Override
 			public ArrayList<Student> execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
-				ArrayList<Student> student= new ArrayList<Student>();
+				//  Auto-generated method stub
+				ArrayList<Student> students= new ArrayList<Student>();
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into students (username, password, email, section, major) "+
-						"values(?, ?, ?, ?, ?)"
+						"insert into accounts (username, password, email, role) "+
+						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
 					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
-					stmt1.setString(4, section);
-					stmt1.setString(5, major);
+					stmt1.setInt(4, 2);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
-							"select * "
-							+ "from students "
-							+ "where username = ?"
+							"select prof_id "
+							+ "from accounts "
+							+ "where username = ? and email = ? and password = ?"
 							);
 					stmt2.setString(1, user);
+					stmt2.setString(2, email);
+					stmt2.setString(3, hashPass);
 					resultSet1 = stmt2.executeQuery();
-				
+					int i = 1;
+					int newID = -1;
 					while(resultSet1.next()) {
-						Student account = loadStudent(resultSet1, 1);
-						student.add(account);
+						newID = resultSet1.getInt(i++);
 					}
-					System.out.println("Account made");
-					return student;
+					if(newID == -1) {
+						System.out.println("Account not made");
+						return null;
+					}
+	
+					stmt3 = conn.prepareStatement(
+							"insert into students (prof_id, section, major) "+
+							"values(?, ?, ?)"
+					);
+					stmt3.setInt(1, newID);
+					stmt3.setString(2, section);
+					stmt3.setString(3, major);
+					stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
+							"select students.prof_id, username, password, email, students.section, students.major "
+							+ "from students, accounts "
+							+ "where students.prof_id = accounts.prof_id "
+							+ "and students.prof_id = ?");
+					stmt4.setInt(1, newID);
+					resultSet2 = stmt4.executeQuery();
+					while(resultSet2.next()) {
+						Student account = loadStudent(resultSet2, 1);
+						students.add(account);
+					}
+					return students;
 				}
 				finally {
 					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet2);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -771,51 +758,81 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<ArrayList<NetworkAdmin>>() {
 			@Override
 			public ArrayList<NetworkAdmin> execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				ArrayList<NetworkAdmin> admins= new ArrayList<NetworkAdmin>();
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"insert into admins (username, password, email, modstat) "+
+						"insert into accounts (username, password, email, role) "+
 						"values(?, ?, ?, ?)"
 					);
 					stmt1.setString(1, user);
 					String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
 					stmt1.setString(2, hashPass);
 					stmt1.setString(3, email);
-					stmt1.setInt(4, modstat);
+					stmt1.setInt(4, 0);
 					stmt1.executeUpdate();
 				
 					stmt2 = conn.prepareStatement(
-							"select * "
-							+ "from admins "
-							+ "where username = ?"
+							"select prof_id "
+							+ "from accounts "
+							+ "where username = ? and email = ? and password = ?"
 							);
 					stmt2.setString(1, user);
+					stmt2.setString(2, email);
+					stmt2.setString(3, hashPass);
 					resultSet1 = stmt2.executeQuery();
-					
+					int i = 1;
+					int newID = -1;
 					while(resultSet1.next()) {
-						NetworkAdmin account = loadAdmin(resultSet1, 1);
-						admins.add(account);
+						newID = resultSet1.getInt(i++);
 					}
-					if(admins.isEmpty()) {
+					if(newID == -1) {
 						System.out.println("Account not made");
+						return null;
+					}
+	
+					stmt3 = conn.prepareStatement(
+							"insert into admins (prof_id, modstat) "+
+							"values(?, ?)"
+					);
+					stmt3.setInt(1, newID);
+					stmt3.setInt(2, modstat);
+					stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
+							"select admins.prof_id, username, password, email, admins.modstat "
+							+ "from admins, accounts "
+							+ "where admins.prof_id = accounts.prof_id "
+							+ "and admins.prof_id = ?");
+					stmt4.setInt(1, newID);
+					resultSet2 = stmt4.executeQuery();
+					while(resultSet2.next()) {
+						NetworkAdmin account = loadAdmin(resultSet2, 1);
+						admins.add(account);
 					}
 					return admins;
 				}
 				finally {
 					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet2);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
 	}
 
 	protected Professor loadProfessor(ResultSet resultSet, int index) throws SQLException {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
 		String username = resultSet.getString(index++);
 		String password = resultSet.getString(index++);
@@ -825,12 +842,17 @@ public class DerbyDatabase implements IDatabase {
 		profX.setMod(mod);
 		return profX;
 	}
+	
 	protected NetworkAdmin loadAdmin(ResultSet resultSet, int index) throws SQLException {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
+		System.out.print(profID);
 		String username = resultSet.getString(index++);
+		System.out.print(username);
 		String password = resultSet.getString(index++);
+		
 		String email = resultSet.getString(index++);
+		System.out.print(email);
 		int modStat = resultSet.getInt(index++);
 		NetworkAdmin adminX = new NetworkAdmin(username, password, email, profID);
 		adminX.setModStat(modStat);
@@ -838,7 +860,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	protected Student loadStudent(ResultSet resultSet, int index) throws SQLException {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
 		String username = resultSet.getString(index++);
 		String password = resultSet.getString(index++);
@@ -873,7 +895,7 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<ArrayList<Review>>() {
 			@Override
 			public ArrayList<Review> execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				ArrayList<Review> review= new ArrayList<Review>();
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
@@ -957,7 +979,7 @@ public class DerbyDatabase implements IDatabase {
 				return reviews;
 			}
 		}
-		);// TODO Auto-generated method stub
+		);
 	}
 
 	@Override
@@ -1028,9 +1050,10 @@ public class DerbyDatabase implements IDatabase {
 				ArrayList<Student> students = new ArrayList<Student>();
 				try {
 					stmt1 = conn.prepareStatement(
-							"select *  "
-							+ "from students "
-							+ "where major  = ? ");
+							"select students.prof_id, username, password, email, students.section, students.major "
+							+ "from students, accounts "
+							+ "where students.prof_id = accounts.prof_id and "
+							+ "students.major  = ? ");
 					stmt1.setString(1, major);
 					resultSet1 = stmt1.executeQuery();
 					while(resultSet1.next()) {
@@ -1065,9 +1088,10 @@ public class DerbyDatabase implements IDatabase {
 				ArrayList<Student> students = new ArrayList<Student>();
 				try {
 					stmt1 = conn.prepareStatement(
-							"select *  "
-							+ "from students "
-							+ "where prof_id  = ? ");
+							"select students.prof_id, username, password, email, students.section, students.major "
+							+ "from students, accounts "
+							+ "where students.prof_id = accounts.prof_id and "
+							+ "students.prof_id  = ? ");
 					stmt1.setInt(1, profID);
 					resultSet1 = stmt1.executeQuery();
 					while(resultSet1.next()) {
@@ -1103,8 +1127,9 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt1 = conn.prepareStatement(
 							"select *  "
-							+ "from professors "
-							+ "where prof_id  = ? ");
+							+ "from professors, accounts "
+							+ "where professors.prof_id  = accounts.prof_id and "
+							+ "professors.prof_id = ? ");
 					stmt1.setInt(1, profID);
 					resultSet1 = stmt1.executeQuery();
 					while(resultSet1.next()) {
@@ -1139,9 +1164,10 @@ public class DerbyDatabase implements IDatabase {
 				ArrayList<NetworkAdmin> admins= new ArrayList<NetworkAdmin>();
 				try {
 					stmt1 = conn.prepareStatement(
-							"select *  "
-							+ "from admins "
-							+ "where prof_id  = ? ");
+							"select admins.prof_id, username, password, email, admins.modstat  "
+							+ "from admins, accounts "
+							+ "where (accounts.prof_id = admins.prof_id) and "
+							+ "admins.prof_id  = ? ");
 					stmt1.setInt(1, profID);
 					resultSet1 = stmt1.executeQuery();
 					while(resultSet1.next()) {
@@ -1150,7 +1176,7 @@ public class DerbyDatabase implements IDatabase {
 						admins.add(admin);
 					}
 					if(admins.size() == 1) {
-						System.out.println("Found student");
+						System.out.println("Found admin");
 						return admins.get(0);
 					}
 					
@@ -1228,17 +1254,13 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
 				ResultSet resultSet1 = null;
-				ResultSet resultSet2 = null;
-				ResultSet resultSet3 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						" select prof_id "+
-						" from students " +
+						" from accounts " +
 						" where username = ?"
 					);
 					stmt1.setString(1, user);
@@ -1251,47 +1273,12 @@ public class DerbyDatabase implements IDatabase {
 						System.out.println("Found Account");
 						return foundProfID;
 					}
-					
-					stmt2 = conn.prepareStatement(
-							" select prof_id "+
-							" from professors " +
-							" where username = ?"
-						);
-					stmt2.setString(1, user);
-					resultSet2 = stmt2.executeQuery();
-					while(resultSet2.next()) { 
-						foundProfID = resultSet2.getInt(1);
-					}
-					if(foundProfID != -1) {
-						System.out.println("Found Account");
-						return foundProfID;
-					}
-					
-							
-					stmt3 = conn.prepareStatement(
-						" select prof_id"+
-						" from admins " +
-						" where username = ?"
-					);
-					stmt3.setString(1, user);
-					resultSet3 = stmt3.executeQuery();
-					while(resultSet3.next()) { 
-						foundProfID = resultSet3.getInt(1);
-					}
-					if(foundProfID != -1) {
-						System.out.println("Found Account");
-						return foundProfID;
-					}
 					return null;
-			}
+				}
 				finally {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(resultSet2);
-					DBUtil.closeQuietly(resultSet3);
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
-					DBUtil.closeQuietly(stmt3);
 				}
 			}
 		});
