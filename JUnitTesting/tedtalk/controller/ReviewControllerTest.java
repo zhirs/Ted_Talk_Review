@@ -27,7 +27,7 @@ public class ReviewControllerTest {
 			e.printStackTrace();
 		}
 		// sets model to a review already in database for testing methods
-		modelHandler = derby.getProfIDReviewList(20001).get(0);
+		modelHandler = derby.getProfIDReviewList(8).get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
 	}
@@ -48,7 +48,7 @@ public class ReviewControllerTest {
 		String tag = "environmental";
 		String testPresenter= "Hamilton";
 		String testDescription = "fake description";
-		int fakeprofID = 20001;
+		int fakeprofID = 8;
 		ArrayList<Review>InitialSize = reviewController.fetchReviews(fakeprofID);
 		int initialSize = InitialSize.size();
 		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
