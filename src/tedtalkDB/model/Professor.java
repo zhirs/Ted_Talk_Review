@@ -4,7 +4,7 @@ public class Professor extends Account{
 	// moderator int determines who reviews reviews
 	// 0 is not a mod, 1 is a mod
 	private int mod;
-	
+	private int professorID;
 	public Professor(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);
 	}
@@ -26,5 +26,13 @@ public class Professor extends Account{
 	
 	public void setMod(int mod) {
 		this.mod = mod;
+	}
+	
+	public void setProfessorID(int professorID) {
+		this.professorID = professorID;
+	}
+	
+	public int getProfessorID() {
+		return professorID;
 	}
 }

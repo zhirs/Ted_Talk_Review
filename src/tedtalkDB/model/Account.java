@@ -5,7 +5,7 @@ public class Account {
 	private String password; // for logging in
 	private String email; // email of profile
 	private int profID; // iterates starting at 1
-
+	private int role;
 	public Account() {
 
 	}
@@ -49,5 +49,13 @@ public class Account {
 	}
 	public void setprofID(int prof_id) {
 		this.profID = prof_id;
+	}
+
+	public int getRole() {
+		// TODO Auto-generated method stub
+		return role;
+	}
+	public void setRole(int role) {
+		this.role = role;
 	}
 }
