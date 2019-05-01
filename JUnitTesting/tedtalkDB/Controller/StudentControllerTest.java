@@ -16,7 +16,7 @@ public class StudentControllerTest {
 	public void Test_Verified_Existing_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
 		studentHandle.setUsername("student3");
-		studentHandle.setPassword("plzno");
+		studentHandle.setPassword("muspi");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");

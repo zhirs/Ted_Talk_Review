@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
@@ -25,11 +26,11 @@ public class InitialData {
 				}
 				Iterator<String>i = tuple.iterator();
 				Integer.parseInt(i.next());
-				adminID = adminID++;
-				String username = i.next();
-				String password = i.next();
-				String email = i.next();
-				NetworkAdmin admin = new NetworkAdmin(username, password, email, adminID);
+				NetworkAdmin admin = new NetworkAdmin();
+				admin.setAdminId(adminID++);
+				admin.setprofID(Integer.parseInt(i.next()));
+				admin.setModStat(Integer.parseInt(i.next()));
+				
 				adminList.add(admin);
 			}
 			System.out.println("adminList loaded from CSV file");
@@ -45,7 +46,7 @@ public class InitialData {
 		ReadCSV readProfs = new ReadCSV("professors.csv");
 		// prof created
 		try {
-			Integer profID = 10000;
+			Integer profID = 1;
 			while(true) {
 				List<String> tuple = readProfs.next();
 				if(tuple == null) {
@@ -53,11 +54,12 @@ public class InitialData {
 				}
 				Iterator<String>i = tuple.iterator();
 				Integer.parseInt(i.next());
-				profID = profID++;
-				String username = i.next();
-				String password = i.next();
-				String email = i.next();
-				Professor prof = new Professor(username, password, email, profID);
+				Professor prof = new Professor();
+				
+				prof.setProfessorID(profID++);
+				prof.setprofID(Integer.parseInt(i.next()));
+				prof.setMod(Integer.parseInt(i.next()));
+				
 				profList.add(prof);
 			}
 			System.out.println("profList loaded from CSV file");
@@ -81,13 +83,13 @@ public class InitialData {
 				}
 				Iterator<String>i = tuple.iterator();
 				Integer.parseInt(i.next());
-				studentID = studentID++;
-				String username = i.next();
-				String password = i.next();
-				String email = i.next();
-				String section = i.next();
-				String major = i.next();
-				Student student = new Student(username, password, email, section, studentID, major);
+				Student student = new Student();
+				
+				student.setStudentID(studentID++);
+				student.setprofID(Integer.parseInt(i.next()));
+				student.setSection(i.next()); 
+				student.setMajor(i.next());
+				
 				studentList.add(student);
 			}
 			System.out.println("studentList loaded from CSV file");
@@ -136,6 +138,37 @@ public class InitialData {
 		}
 		finally {
 			readReviews.close();
+		}
+	}
+
+	public static List<Account> getAccounts() throws IOException, ParseException {
+		List<Account> accountList = new ArrayList<Account>();
+		ReadCSV readStudents = new ReadCSV("accounts.csv");
+		// four superadmins created
+		try {
+			Integer profID = 1;
+			while(true) {
+				List<String> tuple = readStudents.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				Account account = new Account();
+				
+				account.setprofID(profID++);
+				account.setUsername(i.next());
+				account.setPassword(i.next());
+				account.setEmail(i.next());
+				account.setRole(Integer.parseInt(i.next()));
+				
+				accountList.add(account);
+			}
+			System.out.println("accountList loaded from CSV file");
+			return accountList;
+		}
+		finally {
+			readStudents.close();
 		}
 	}
 }

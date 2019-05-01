@@ -5,6 +5,7 @@ public class NetworkAdmin extends Account{
 	// this determines whether reviews are reviewed or not
 	// set to 0 for not assigned, 1 for off (auto reviewed by system), 2 for on (by mod)
 	private int modStat;
+	private int adminID;
 		//ALTHOUGH JAVA CREATE DEFAULT CONSTRUCTOR IF YOU CREATE A CONSTRUCTOR
 		//YOU MUST ADD THESE LINES IF YOU WISH TO USE: NetworkAdmin test = new NetworkAdmin()
   
@@ -25,5 +26,14 @@ public class NetworkAdmin extends Account{
 	
 	public int getModStat() {
 		return modStat;
+	}
+
+	public void setAdminId(int adminID) {
+		// TODO Auto-generated method stub
+		this.adminID = adminID;
+	}
+	
+	public int getAdminID() {
+		return adminID;
 	}
 }

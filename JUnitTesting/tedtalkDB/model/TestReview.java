@@ -42,8 +42,8 @@ public class TestReview {
 	
 	@Test
 	public void testGetRevID() {
-		assertTrue(reviews1.get(0).getrevID() == 50000);
-		assertTrue(reviews2.get(0).getrevID() == 50001);
+		assertTrue(reviews1.get(0).getrevID() == 1);
+		assertTrue(reviews2.get(0).getrevID() == 2);
 	}
 	
 	@Test
