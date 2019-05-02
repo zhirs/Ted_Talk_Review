@@ -7,10 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import tedtalk.model.ProfileModel;
 import tedtalkDB.model.Review;
 import tedtalk.controller.ReviewController;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,41 +33,34 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
-		
-		ReviewController revController = new ReviewController();
 		Review handle = new Review();
-		ProfileModel profileHandle = new ProfileModel();
-		/*USE OF THE DB REVIEWMODEL TO SET OBTAIN ATTRIB:
-		 * String reviewName = req.getParameter("name");
-		String reviewDesc = req.getParameter("reviewText");
-		String reviewTitle = req.getParameter("title");
-		String reviewPresenter = req.getParameter("presenterName");
-		String	url = req.getParameter("url");
-		String tags = req.getParameter("tags");
-		int reviewRating = req.getIntHeader("rating");*/
+		ReviewController revController = new ReviewController();
+		DerbyDatabase derby = new DerbyDatabase();
+		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
-	/*	//USE OF THE ORGINAL MODEL TO SET ATTRIB:
+		//USE OF THE ORGINAL MODEL TO SET ATTRIB:
 		handle.setDesc(req.getParameter("description"));
 		handle.setPres(req.getParameter("presenterName"));
 		handle.setRate(req.getIntHeader("rating"));
-		handle.setName( req.getParameter("name"));
-		handle.setTopic(req.getParameter("title"));*/
+		handle.setName( req.getParameter("title"));
 				
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
+		//FIND OUT WHAT TYPE OF USER IS LOGGED IN CURRENTLY THEN GET THERE PROFID:		
+	//	revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
 		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
-		ArrayList<String> reviews = new ArrayList<String>();
+		//GET REVIEWS FROM DATABASE:
+		ArrayList<Review> derbyResults =  derby.findReview("Database");//SEARCHED BY KEYWORD
+		//handle.setDesc((String)derbyResults.get(6));//REVIEW DESCRIPTION;CAN'T CONVERT REVIEW TO STRING...
 							
-		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER
-
-		reviews.add(reviewDesc);
-		req.setAttribute("UpdatedReviews", reviews);
+		handle.setDesc("TESTING AUTOFILL IN DESC FIELD");
 		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
-		
+		//req.getSession().setAttribute("reviewHandle", handle);//JOES SUGGESTION
+
 		//reviews.add(revController.newReview(req.getSession().getAttribute("username"), rate, topic, pres, desc, profID, revID));
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);//SHOULD UPDATE CURRENT PAGE 
+		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);//ALSO UPDATE THE PENDING REVIEW SECTION ON PROFILE
+
 	}
 	
 }

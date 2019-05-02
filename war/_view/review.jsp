@@ -32,27 +32,28 @@
 		<br><br><br>
 		<hr>		
 		<div class = "reviewSection">
+		<h3>${reviewHandle}</h3>
 				<table>
 					<tr>
-						<td> <input type="text" name = "name" placeholder = "e.g. my first review" required = "required" value="${reviewHandle}"> </td>
+						<td>Review Name:<input type="text" name = "name" placeholder = "e.g. my first review" required = "required" size = "40" value="${reviewHandle}"> </td>
 			 		</tr>
 					<tr>
-						<td> <input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" value="${reviewHandle}"> </td>
+						<td>Review Title:<input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" size = "40" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required" value="${reviewHandle}"> </td>
+			 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" value="${reviewHandle}"> </td>
+			 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "description" placeholder = "e.g. wearable tech is the future!" required = "required" value="${reviewHandle}"> </td>
+			 			<td>Video Description:<input type="text" name = "description" placeholder = "e.g. wearable tech is the future!" required = "required" size = "55" value= "${reviewHandle.getDesc()}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" value="${reviewHandle}"> </td>
+			 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr><!-- consider having click to input rather than user entering asterisk -->
-			 			<td> <input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" value="${reviewHandle}"> </td>
+			 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		
 			 	
@@ -61,6 +62,7 @@
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
 			<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
+			Review Body:
 			<textarea id="cct_embed_input_text" name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
 			<input type = "Submit" class="button2" value = "Submit Review">
 			</form>
