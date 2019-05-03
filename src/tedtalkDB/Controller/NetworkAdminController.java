@@ -3,13 +3,13 @@ import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
 public class NetworkAdminController {
-	private NetworkAdmin NAModel = new NetworkAdmin();
+	private static NetworkAdmin NAModel = new NetworkAdmin();
 	private DerbyDatabase derby = new DerbyDatabase();
 	
 	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST LIKE IT DOES GARBAGE COLLECTION
 	
-	public void setModel(NetworkAdmin NAModel) {
-		this.NAModel = NAModel;
+	public static void setModel(NetworkAdmin model) {
+		NAModel = model;
 	}
 	boolean verified() {
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
@@ -46,5 +46,30 @@ public class NetworkAdminController {
 			//TOGGLE STATUS IN DB TO 1
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
+	}
+	
+	public void switchModStat() {
+		if(NAModel.getModStat() == 0 ||NAModel.getModStat() == 1) {
+			NAModel.setModStat(1);
+		}
+		else if(NAModel.getModStat() == 1) {
+			NAModel.setModStat(2);
+		}
+	}
+	
+	public void newProfessor(String user, String pass, String email) {
+		derby.addProfessor(user, pass, email, 0);
+	}
+	
+	public void newNetworkAdmin(String user, String pass, String email) {
+		derby.addAdmin(user, pass, email, 0);
+	}
+	
+	public void demote(String user) {
+		derby.demoteAccount(user);
+	}
+	
+	public void promote(String user) {
+		derby.promoteAccount(user);
 	}
 }

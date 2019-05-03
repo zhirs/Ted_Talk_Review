@@ -3,13 +3,13 @@ import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
 public class ProfessorController {
-	private Professor professorModel;
+	private static Professor professorModel;
 	private DerbyDatabase derby = new DerbyDatabase();
 	
 	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST AS IT DOES GARBAGE COLLECTION
 
-	public void setModel(Professor professorModel) {
-		this.professorModel = professorModel;
+	public static void setModel(Professor model) {
+		professorModel = model;
 	}
 	boolean verified() {
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
@@ -35,5 +35,12 @@ public class ProfessorController {
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
 	}
-
+	
+	public void newStudent(String user, String pass, String email, String section, String major) {
+		derby.addStudent(user, pass, email, section, major);
+	}
+	
+	public void removeStudent() {
+		
+	}
 }

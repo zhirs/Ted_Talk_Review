@@ -22,8 +22,8 @@ public class TestReview {
 		derby = new DerbyDatabase();
 		
 		// Add initial data
-		reviews1.addAll(derby.getProfIDReviewList(20000));
-		reviews2.addAll(derby.getProfIDReviewList(20001));
+		reviews1.addAll(derby.getProfIDReviewList(8));
+		reviews2.addAll(derby.getProfIDReviewList(9));
 	}
 	
 	@Test
@@ -42,8 +42,8 @@ public class TestReview {
 	
 	@Test
 	public void testGetRevID() {
-		assertTrue(reviews1.get(0).getrevID() == 50000);
-		assertTrue(reviews2.get(0).getrevID() == 50001);
+		assertTrue(reviews1.get(0).getrevID() == 1);
+		assertTrue(reviews2.get(0).getrevID() == 2);
 	}
 	
 	@Test

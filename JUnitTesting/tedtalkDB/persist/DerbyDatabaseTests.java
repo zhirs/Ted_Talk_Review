@@ -133,7 +133,7 @@ public class DerbyDatabaseTests {
 		int rate = 5;
 		String pres = "The man";
 		String desc = "So tired of databases";
-		int profID = 20002;
+		int profID = 9;
 		String tag = "Mechanical";
 		int status = 0;
   
@@ -262,7 +262,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testgetMod() {
 		System.out.println("\n*** Testing getMod***");
-		int profID = 10001;
+		int profID = 5;
 		if (db.getMod(profID) >= 0) {
 			System.out.println("Mod found");
 			System.out.print(db.getMod(profID));
@@ -308,7 +308,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetProfIDReviewList() {
 		System.out.println("\n*** Testing getProfIDReviewList**");
-		int profID = 20001;
+		int profID = 9;
 		reviews = db.getProfIDReviewList(profID);
 		if(reviews.size() <= 0) {
 			System.out.println("No reviews found");
@@ -322,7 +322,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetReviewsBetweenDates() {
 		System.out.println("\n*** Testing getReviewsBetweenDates***");
-		int profID = 20001;
+		int profID = 8;
 		String date1 = "2019/04/26";
 		java.util.Date utilDate1 = new java.util.Date(date1);
 	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
@@ -344,7 +344,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetReviewTotal() {
 		System.out.println("\n*** Testing getReviewTotal***");
-		int profID = 20001;
+		int profID = 8;
 		int total = db.getReviewTotal(profID);
 		if (total >= 0) {
 			System.out.print(total);
@@ -358,7 +358,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetStatus() {
 		System.out.println("\n*** Testing getStats***");
-		int rev_id = 50001;
+		int rev_id = 1;
 		int stat = db.getStatus(rev_id);
 		if(stat >= 0) {
 			System.out.println("found status "+ stat);
@@ -408,7 +408,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testStudentByProfID() {
 		System.out.println("\n*** Testing studentByProfID***");
-		int profID = 20001;
+		int profID = 9;
 		Student found = db.studentByProfID(profID);
 		if (found !=  null){
 			if(found.getUserName().equals("student2")) {
@@ -428,7 +428,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testUpdateMod() {
 		System.out.println("\n*** Testing updateMod***");
-		int input = 10001;
+		int input = 6;
 		int found = db.getMod(input);
 		if (found == -1){
 			System.out.println("Load error");
@@ -507,7 +507,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testUpdateSection() {
 		System.out.println("\n*** Testing updateSection***");
-		int profID = 20001;
+		int profID = 8;
 		String section = "testSection";
 		String initialState = db.getSection(profID);
 		int found = db.updateSection(profID, section);
@@ -530,7 +530,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testGetSection() {
 		System.out.println("\n*** Testing getSection***");
-		int profID= 20001;
+		int profID= 8;
 		String currentSection = db.getSection(profID);
 		if(currentSection.isEmpty()){
 			System.out.println("load error");

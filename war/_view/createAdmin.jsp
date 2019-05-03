@@ -4,7 +4,7 @@
 
 <html>
 	<head>		
-		<title>Network Admin Settings</title>
+		<title>Admin Creation</title>
 		<jsp:include page ="CSS/homePage.css"/>	<!-- ALTERNATIVE TO USEING HREFS-->			
  	</head>
 	
@@ -17,7 +17,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Network Admin Settings</h1>
+		<h1>Create Network Admin Account</h1>
 		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
@@ -25,9 +25,26 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/networkAdminSetting" method = "get">
+		<input type = "Submit" name = "settings" class="button" value = "Settings">
+		</form>
 		<br><br><br>
 
-		<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "get">
-		<input type = "Submit" name = "creation" class="button" value = "Create Admin">
+		<table>
+					<tr>
+						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${adminHandle}"> </td>
+			 		</tr>
+					<tr>
+						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${adminHandle}"> </td>
+			 		</tr>
+			 		<tr>
+			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${adminHandle}"> </td>
+			 		</tr>			 	
+		 </table>
+		 		
+			<div id="cct_embed_counts" align ="center">
+			
+			<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "post">
+			<input type = "Submit" class="button2" value = "Create Account">
 	</body>
 </html>

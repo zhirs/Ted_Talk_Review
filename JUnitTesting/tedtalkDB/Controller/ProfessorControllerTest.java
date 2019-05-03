@@ -14,8 +14,8 @@ public class ProfessorControllerTest {
 	@Test
 	public void Test_Verified_Existing_User0() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		professorHandle.setUsername("profx");
-		professorHandle.setPassword("professorX");
+		professorHandle.setUsername("profX");
+		professorHandle.setPassword("profx");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -25,8 +25,8 @@ public class ProfessorControllerTest {
 	@Test
 	public void Test_Verified_Existing_User1() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		professorHandle.setUsername("profy");
-		professorHandle.setPassword("professorY");
+		professorHandle.setUsername("profY");
+		professorHandle.setPassword("profy");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
@@ -36,8 +36,8 @@ public class ProfessorControllerTest {
 	@Test
 	public void Test_Verified_Existing_User2() {
 		//SETTING UN & PW TO EXISTING USER CREDITS:
-		professorHandle.setUsername("profz");
-		professorHandle.setPassword("professorZ");
+		professorHandle.setUsername("profZ");
+		professorHandle.setPassword("profz");
 		//TESTING VERIFIED():
 		assertTrue(controllerHandle.verified());
 		System.out.println("expected result: true");
