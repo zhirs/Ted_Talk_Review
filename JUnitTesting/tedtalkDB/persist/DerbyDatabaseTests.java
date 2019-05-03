@@ -20,6 +20,7 @@ import tedtalkDB.model.NetworkAdmin;
 public class DerbyDatabaseTests {
 
 	private IDatabase db = null;
+	private int role;
 	
 	ArrayList<Student> students = null;
 	ArrayList<Professor> professors = null;
@@ -555,6 +556,21 @@ public class DerbyDatabaseTests {
 		else if (found == 1) {
 			int newStatus = db.getStatus(revID);
 			System.out.println("found: " + initialStatus + " changed to " + newStatus);
+		}
+	}
+	@Test
+	public void testGetRole() {
+		String username = "jlandau2";
+		role = db.getRole(username);
+		if (role >= 0) {	//zero role number should be for network admin
+			if(role!=0) {
+				System.out.println(db.getProfID(username) + "is the wrong id");
+				fail("Wrong id");
+			}
+		}
+		else {
+			System.out.println("Account role not found");
+			fail("Account not found"); 
 		}
 	}
 }

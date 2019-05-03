@@ -35,4 +35,5 @@ public interface IDatabase {
 	public Professor professorByProfID(int profID);
 	public NetworkAdmin adminByProfID(int profID);
 	public Integer getProfID(String user);
+	public Integer getRole(String user);
 }

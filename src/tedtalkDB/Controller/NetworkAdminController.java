@@ -39,7 +39,17 @@ public class NetworkAdminController {
 		//CREATES NEW ADMIN IN THE DATABASE:
 		derby.addAdmin(NAModel.getUserName(),NAModel.getPassword(),NAModel.getEmail(), 0);
 				
-	}	
+	}
+	
+	public void addStudents(String user, String pass, String email, String section, String major) {
+		derby.addStudent(user, pass, email, section, major);
+	}
+	public void addProfessors(String user, String pass, String email, int mod) {
+		derby.addProfessor(user, pass, email, mod);
+	}
+	public void addNetworkAdmins(String user, String pass, String email, int modStat) {
+		derby.addAdmin(user, pass, email, modStat);
+	}
 	
 	public void verifyReview(Review rev, int approve) {
 		if(approve == 1) {//INDICATES ADMIN APPROVED REVIEW
