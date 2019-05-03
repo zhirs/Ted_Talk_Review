@@ -1283,4 +1283,37 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public Integer getRole(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						" select role "+
+						" from accounts " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					resultSet1 = stmt1.executeQuery();
+					int foundProfID = -1;
+					while(resultSet1.next()) { 
+						foundProfID = resultSet1.getInt(1);
+					}
+					if(foundProfID != -1) {
+						return foundProfID;
+					}
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
 }
