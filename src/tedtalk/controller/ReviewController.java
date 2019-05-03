@@ -1,17 +1,16 @@
 package tedtalk.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.Review;
-import tedtalkDB.persist.FakeDatabase;
 import tedtalkDB.persist.DerbyDatabase;
 
 public class ReviewController {
 	private Review reviewModel;
-	private FakeDatabase fake;
 	private DerbyDatabase derby;
-	public ReviewController() {
-		 fake = new FakeDatabase();	//still in use so getModStat doesn't fail
+	
+	public ReviewController() throws IOException {
 		 derby = new DerbyDatabase();
 	}
 
@@ -23,7 +22,7 @@ public class ReviewController {
 	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, String tag) {
 		ArrayList<Review>result = derby.addReview(url, name, rate, pres, desc, profID, tag, 0);
 		// if mods are turned off, review is automatically approved and added
-		if(fake.getModStat() == 1) {
+		if(derby.getModStat(profID) == 1) {
 			result.get(result.size() - 1).setStatus(1);
 		}
 		return result;

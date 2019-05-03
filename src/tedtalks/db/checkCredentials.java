@@ -1,9 +1,7 @@
 package tedtalks.db;
 
-import java.util.List;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
 
@@ -25,6 +23,7 @@ public class checkCredentials {
 		}
 		else {
 			System.out.println("Account found");
-			}			
+			}		
+		keyboard.close();
 		}
 }

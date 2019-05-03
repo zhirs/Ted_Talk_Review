@@ -5,14 +5,20 @@ public class NetworkAdmin extends Account{
 	// this determines whether reviews are reviewed or not
 	// set to 0 for not assigned, 1 for off (auto reviewed by system), 2 for on (by mod)
 	private int modStat;
+	private int adminID;
+		//ALTHOUGH JAVA CREATE DEFAULT CONSTRUCTOR IF YOU CREATE A CONSTRUCTOR
+		//YOU MUST ADD THESE LINES IF YOU WISH TO USE: NetworkAdmin test = new NetworkAdmin()
   
 	public NetworkAdmin(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);
-		modStat = 0;
 	}
 	// will soon implement new methods
 	// once such being a method to turn on and off the need to verify reviews
 	// will also be able to assign moderators possibly
+
+	public NetworkAdmin() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public void setModStat(int modStat) {
 		this.modStat = modStat;
@@ -21,15 +27,13 @@ public class NetworkAdmin extends Account{
 	public int getModStat() {
 		return modStat;
 	}
+
+	public void setAdminId(int adminID) {
+		// TODO Auto-generated method stub
+		this.adminID = adminID;
+	}
 	
-	// switch status of professors from on to off or off to on
-	// professors are all not moderators until promoted by a NetworkAdmin
-	public void setMod(Professor prof) {
-		if(prof.getMod() == 0) {
-			prof.setMod(1);
-		}
-		else {
-			prof.setMod(0);
-		}
+	public int getAdminID() {
+		return adminID;
 	}
 }

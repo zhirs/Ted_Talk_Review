@@ -3,8 +3,6 @@ package tedtalks.db;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tedtalkDB.model.Account;
-import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
 import tedtalkDB.persist.DatabaseProvider;
 import tedtalkDB.persist.IDatabase;
@@ -23,9 +21,10 @@ public class addStudent {
 		String email = keyboard.nextLine();
 		System.out.println("Enter a section: ");
 		String section = keyboard.nextLine();
-		
+		System.out.println("Enter a major: ");
+		String major = keyboard.nextLine();
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<Student> found = db.addStudent(user, pass, email, section);
+		ArrayList<Student> found = db.addStudent(user, pass, email, section, major);
 		if (found.size() == 0){
 			System.out.println("Creation error");
 		}
@@ -33,5 +32,6 @@ public class addStudent {
 			System.out.println("Student Account Made");
 			System.out.println(found.get(0).getUserName() + " " + found.get(0).getprofID() + " " + found.get(0).getEmail());
 			}			
+		keyboard.close();
 		}
 }
