@@ -10,16 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tedtalk.model.ProfileModel;
-import tedtalk.model.ReviewModel;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
 import tedtalk.controller.ProfileController;
 import tedtalk.controller.ReviewController;
+import tedtalkDB.persist.DerbyDatabase;
 
 public class profileservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private String email = null;
+	private DerbyDatabase derby;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -32,13 +33,29 @@ public class profileservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			ProfileModel model = new ProfileModel();
+			//ProfileModel model = new ProfileModel();
 			
-			ProfileController controller = new ProfileController();
+			//ProfileController controller = new ProfileController();
 		
 			String errorMessage = null;
-			
-			controller.setModel(model);
+			//controller.setModel(model);
+			derby = new DerbyDatabase();
+			Account login = derby.setLogin(username);
+			if(login == null) {
+				System.out.println("This is null");
+			}
+			int id = login.getprofID();
+			if(id < 20000) {
+				if(id < 10000) {
+					req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
+				}
+				else {
+					req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
+				}
+			}
+			else {
+				req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
+			}
 			 
 			ReviewController revController = new ReviewController();
 			Review revModel = new Review();
@@ -59,8 +76,8 @@ public class profileservlet extends HttpServlet {
 			
 			req.setAttribute("reviews" , reviews);
 			req.setAttribute("errorMessage", errorMessage);
-			req.setAttribute("profileM", model);
-			req.setAttribute("userModel", model);
+			//req.setAttribute("profileM", model);
+			//req.setAttribute("userModel", model);
 			req.setAttribute("email", email);
 			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
