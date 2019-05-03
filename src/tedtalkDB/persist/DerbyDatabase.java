@@ -326,7 +326,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					if(storedStudentPass != null) {
 						if(BCrypt.checkpw(pass, storedStudentPass)){
-							System.out.println("Found Account");
+							//System.out.println("Found Account");
 							return true;
 						}
 					}
@@ -401,7 +401,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -846,13 +846,13 @@ public class DerbyDatabase implements IDatabase {
 	protected NetworkAdmin loadAdmin(ResultSet resultSet, int index) throws SQLException {
 		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
-		System.out.print(profID);
+		//System.out.print("The profile id is: " + profID);
 		String username = resultSet.getString(index++);
-		System.out.print(username);
+		//System.out.print(" The username is: " + username);
 		String password = resultSet.getString(index++);
 		
 		String email = resultSet.getString(index++);
-		System.out.print(email);
+		//System.out.println(" The back up email is: " + email);
 		int modStat = resultSet.getInt(index++);
 		NetworkAdmin adminX = new NetworkAdmin(username, password, email, profID);
 		adminX.setModStat(modStat);
@@ -1270,7 +1270,7 @@ public class DerbyDatabase implements IDatabase {
 						foundProfID = resultSet1.getInt(1);
 					}
 					if(foundProfID != -1) {
-						System.out.println("Found Account");
+						//System.out.println("Found Account");
 						return foundProfID;
 					}
 					return null;
