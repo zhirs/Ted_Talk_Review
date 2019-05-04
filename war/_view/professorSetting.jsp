@@ -30,6 +30,7 @@
 		</form>
 		<br><br><br>
 		<hr>
-		
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
 	</body>
 </html>

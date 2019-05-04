@@ -35,9 +35,6 @@ public class createadminservlet extends HttpServlet {
 		
 		NetworkAdminController NAController = new NetworkAdminController();
 		NetworkAdmin handle = new NetworkAdmin();
-		NetworkAdmin profHandle = new NetworkAdmin();
-		
-		NetworkAdminController.setModel(profHandle);
 		
 		NAController.newNetworkAdmin(handle.getUserName(), handle.getPassword(), handle.getEmail());
 		

@@ -1290,8 +1290,6 @@ public class DerbyDatabase implements IDatabase {
 			public Integer execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
-				PreparedStatement stmt2 = null;
-				ResultSet resultSet2 = null;
 				
 				// checks to see if valid account found to demote
 				int foundAcc = -1;
@@ -1318,22 +1316,6 @@ public class DerbyDatabase implements IDatabase {
 						DBUtil.closeQuietly(resultSet1);
 						DBUtil.closeQuietly(stmt1);
 					}
-					
-					// delete from account
-					try {
-						stmt2 = conn.prepareStatement(
-							" delete from acounts"+
-							" where username = ?"
-						);
-						stmt2.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet2);
-						DBUtil.closeQuietly(stmt2);
-					}
-					
-					// creates demoted student
-					addStudent(demotee.getUserName(), demotee.getPassword(), demotee.getEmail(), "", "");
 				}
 				
 				if(demotee == null) {
@@ -1355,22 +1337,6 @@ public class DerbyDatabase implements IDatabase {
 						DBUtil.closeQuietly(resultSet1);
 						DBUtil.closeQuietly(stmt1);
 					}
-					
-					// delete from account
-					try {
-						stmt2 = conn.prepareStatement(
-							" delete from acounts"+
-							" where username = ?"
-						);
-						stmt2.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet2);
-						DBUtil.closeQuietly(stmt2);
-					}
-					
-					// creates demoted professor
-					addProfessor(demotee.getUserName(), demotee.getPassword(), demotee.getEmail(), 0);
 				}
 				
 				return foundAcc;
@@ -1385,8 +1351,6 @@ public class DerbyDatabase implements IDatabase {
 				// checks to see if valid account found to promote
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
-				PreparedStatement stmt2 = null;
-				ResultSet resultSet2 = null;
 				
 				int foundAcc = -1;
 				int profID = getProfID(user);
@@ -1411,21 +1375,6 @@ public class DerbyDatabase implements IDatabase {
 						DBUtil.closeQuietly(resultSet1);
 						DBUtil.closeQuietly(stmt1);
 					}
-					
-					// delete from account
-					try {
-						stmt2 = conn.prepareStatement(
-							" delete from acounts"+
-							" where username = ?"
-						);
-						stmt2.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet2);
-						DBUtil.closeQuietly(stmt2);
-					}
-					
-					addAdmin(promotee.getUserName(), promotee.getPassword(), promotee.getEmail(), 0);
 				}
 				
 				if(promotee == null) {
@@ -1447,26 +1396,67 @@ public class DerbyDatabase implements IDatabase {
 						DBUtil.closeQuietly(resultSet1);
 						DBUtil.closeQuietly(stmt1);
 					}
-					
-					// delete from account
-					try {
-						stmt2 = conn.prepareStatement(
-							" delete from acounts"+
-							" where username = ?"
-						);
-						stmt2.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet2);
-						DBUtil.closeQuietly(stmt2);
-					}
-					
-					addProfessor(promotee.getUserName(), promotee.getPassword(), promotee.getEmail(), 0);
 				}
 				
 				DBUtil.closeQuietly(conn);
 				return foundAcc;
 			}
 		});
+	}
+	
+	/*public ArrayList<NetworkAdmin> addToSubAdmin(String user) {
+		return executeTransaction(new Transaction<ArrayList<NetworkAdmin>>() {
+			@Override
+			public ArrayList<NetworkAdmin> execute(Connection conn) throws SQLException {
+				ArrayList<NetworkAdmin> admins= new ArrayList<NetworkAdmin>();
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
+		stmt2 = conn.prepareStatement(
+				"select prof_id "
+				+ "from accounts "
+				+ "where username = ? and email = ? and password = ?"
+				);
+		stmt2.setString(1, user);
+		stmt2.setString(2, email);
+		stmt2.setString(3, hashPass);
+		resultSet1 = stmt2.executeQuery();
+		int i = 1;
+		int newID = -1;
+		while(resultSet1.next()) {
+			newID = resultSet1.getInt(i++);
+		}
+		if(newID == -1) {
+			System.out.println("Account not made");
+			return null;
+		}
+
+		stmt3 = conn.prepareStatement(
+				"insert into admins (prof_id, modstat) "+
+				"values(?, ?)"
+		);
+		stmt3.setInt(1, newID);
+		stmt3.setInt(2, modstat);
+		stmt3.executeUpdate();
+		while(resultSet2.next()) {
+			NetworkAdmin account = loadAdmin(resultSet2, 1);
+			admins.add(account);
+		}
+		return admins;
+	}
+	
+	public Integer addToSubProfessor(String user) {
+		
+	}
+	
+	public Integer addToSubAdmin(String user) {
+		
+	}*/
+	
+	public Integer removeAccount(String user, int role) {
+		
 	}
 }

@@ -25,9 +25,15 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<br><br><br>
+		<br><br><br><br><br><br>
 
 		<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "get">
-		<input type = "Submit" name = "creation" class="button" value = "Create Admin">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Admin">
+		<br><br>
+		<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Professor">
+		<br><br>
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
 	</body>
 </html>
