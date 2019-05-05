@@ -42,22 +42,15 @@
 			</form>
 		</div>
 		<hr>
-		<div class="searchSection">
-		    <form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post">
-		      <select name="dateSearch">
-				  <option value="oneDay">Within the last day</option>
-				  <option value="sevenDay">Within Seven Days</option>
-				  <option value="oneMonth">Last Month</option>
-				  <option value="sixMonth">Six Months</option>
-				</select>
-		      <button type="submit" value="search">Search</button>
-		    </form>
-		 </div>
 		 <div class = "searchSection">
 			<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post">
-			<input type="text" name = "month" placeholder = "Month" required = "required" >
-			<input type="text" name = "day" placeholder = "Day" required = "required">
-			<input type="text" name = "year" placeholder = "Year" required = "required">
+			<input type="text" name = "month1" placeholder = "Month" required = "required" >
+			<input type="text" name = "day1" placeholder = "Day" required = "required">
+			<input type="text" name = "year1" placeholder = "Year" required = "required">
+			<br>
+			<input type="text" name = "month2" placeholder = "Month" required = "required" >
+			<input type="text" name = "day2" placeholder = "Day" required = "required">
+			<input type="text" name = "year2" placeholder = "Year" required = "required">
 		 		<button type="submit" name="submit" value = "searchDate">Submit Date</button>
 			 </form>
 		 </div>

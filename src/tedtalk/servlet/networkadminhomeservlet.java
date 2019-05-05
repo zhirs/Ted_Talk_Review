@@ -36,24 +36,34 @@ public class networkadminhomeservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//getting the data from the search bar
-		String searchTitle = req.getParameter("dateSearch");
-		String year = req.getParameter("year");
-		String month = req.getParameter("month"); //remember to use ## format. EX: 01 or 12
-		String day = req.getParameter("day"); //remember to use ## format. EX: 04
-		profID = (int) req.getSession().getAttribute("profID");
-		System.out.println(searchTitle);
+		String year = req.getParameter("year1");
+		String month = req.getParameter("month1"); //remember to use ## format. EX: 01 or 12
+		String day = req.getParameter("day1"); //remember to use ## format. EX: 04
+		String year2 = req.getParameter("year2");
+		String month2 = req.getParameter("month2");   
+		String day2 = req.getParameter("day2");  
+		profID = 8;
 		
-		Calendar today = Calendar.getInstance();	//Grabs the current day, to use as date1
-		java.util.Date utilDate1 = today.getTime();
+		String date1 = year+"/"+month+"/"+day;
+		//String date1 = "2019/04/26";
+		java.util.Date utilDate1 = new java.util.Date(date1);
 	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
 		
-		String date2 = year+"/"+month+"/"+ day;
+		String date2 = year2+"/"+month2+"/"+day2;
+	    //String date2 = "2019/04/28";
 		java.util.Date utilDate2 = new java.util.Date(date2);
 	    java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
-		ArrayList<Review> reviews = derby.getReviewsBetweenDates(profID, sqlDate1, sqlDate2);
-		if(reviews.isEmpty()) {
-			System.out.println("It is empty the date2 is " + date2 + " the prof id is " + profID);
+	    
+	    ArrayList<Review> revReturn = derby.getReviewsBetweenDates(profID, sqlDate1, sqlDate2);
+	    ArrayList<String> reviews = new ArrayList<String>();
+		
+		if(!revReturn.isEmpty()) {
+			for(int i = 0; i < revReturn.size(); i++) {
+				reviews.add(revReturn.get(i).getDesc());
+			}
 		}
+		
+		System.out.println(reviews.get(0));
 		
 		req.setAttribute("reviews" , reviews);
 		System.out.println("Network Admin Home Servlet: doPost");
