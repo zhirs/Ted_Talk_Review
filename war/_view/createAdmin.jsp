@@ -25,7 +25,7 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/networkAdminSetting" method = "get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "get">
 		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
 		<br><br><br>

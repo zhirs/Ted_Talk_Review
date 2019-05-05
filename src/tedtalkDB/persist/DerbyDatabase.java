@@ -1283,180 +1283,342 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
-	public Integer demoteAccount(String user) {
+	@Override
+	public Integer getRole(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
-				
-				// checks to see if valid account found to demote
-				int foundAcc = -1;
-				int profID = getProfID(user);
-				Account demotee = professorByProfID(profID);
-				
-				if(demotee == null) {
-					// if not a professor, checks admins
-					demotee = adminByProfID(profID);
-				}
-				else {
-					// if account is professor
-					foundAcc = 1;
-					
-					// delete from professors
-					try {
-						stmt1 = conn.prepareStatement(
-							" delete from professors"+
-							" where username = ?"
-						);
-						stmt1.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet1);
-						DBUtil.closeQuietly(stmt1);
+				try {
+					stmt1 = conn.prepareStatement(
+						" select role "+
+						" from accounts " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					resultSet1 = stmt1.executeQuery();
+					int foundProfID = -1;
+					while(resultSet1.next()) { 
+						foundProfID = resultSet1.getInt(1);
 					}
-				}
-				
-				if(demotee == null) {
-					System.out.println("No Valid Account found with that username");
-				}
-				else if(foundAcc == -1){
-					// if account is admin
-					foundAcc = 1;
-					
-					// delete from admins
-					try {
-						stmt1 = conn.prepareStatement(
-							" delete from admins"+
-							" where username = ?"
-						);
-						stmt1.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet1);
-						DBUtil.closeQuietly(stmt1);
+					if(foundProfID != -1) {
+						return foundProfID;
 					}
+					return null;
 				}
-				
-				return foundAcc;
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
 			}
 		});
-	}
-	
-	public Integer promoteAccount(String user) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				// checks to see if valid account found to promote
-				PreparedStatement stmt1 = null;
-				ResultSet resultSet1 = null;
-				
-				int foundAcc = -1;
-				int profID = getProfID(user);
-				Account promotee = professorByProfID(profID);
-				
-				if(promotee == null) {
-					promotee = studentByProfID(profID);
-				}
-				else {
-					// if promotee is professor
-					foundAcc = 1;
-					
-					// delete from professor
-					try {
-						stmt1 = conn.prepareStatement(
-							" delete from professors"+
-							" where username = ?"
-						);
-						stmt1.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet1);
-						DBUtil.closeQuietly(stmt1);
-					}
-				}
-				
-				if(promotee == null) {
-					System.out.println("No Valid Account found with that username");
-				}
-				else if(foundAcc == -1){
-					// if promotee is student
-					foundAcc = 1;
-					
-					// delete from student
-					try {
-						stmt1 = conn.prepareStatement(
-							" delete from students"+
-							" where username = ?"
-						);
-						stmt1.setString(1, user);
-						
-					}finally {
-						DBUtil.closeQuietly(resultSet1);
-						DBUtil.closeQuietly(stmt1);
-					}
-				}
-				
-				DBUtil.closeQuietly(conn);
-				return foundAcc;
-			}
-		});
-	}
-	
-	/*public ArrayList<NetworkAdmin> addToSubAdmin(String user) {
-		return executeTransaction(new Transaction<ArrayList<NetworkAdmin>>() {
-			@Override
-			public ArrayList<NetworkAdmin> execute(Connection conn) throws SQLException {
-				ArrayList<NetworkAdmin> admins= new ArrayList<NetworkAdmin>();
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				ResultSet resultSet1 = null;
-				ResultSet resultSet2 = null;
-		stmt2 = conn.prepareStatement(
-				"select prof_id "
-				+ "from accounts "
-				+ "where username = ? and email = ? and password = ?"
-				);
-		stmt2.setString(1, user);
-		stmt2.setString(2, email);
-		stmt2.setString(3, hashPass);
-		resultSet1 = stmt2.executeQuery();
-		int i = 1;
-		int newID = -1;
-		while(resultSet1.next()) {
-			newID = resultSet1.getInt(i++);
-		}
-		if(newID == -1) {
-			System.out.println("Account not made");
-			return null;
-		}
-
-		stmt3 = conn.prepareStatement(
-				"insert into admins (prof_id, modstat) "+
-				"values(?, ?)"
-		);
-		stmt3.setInt(1, newID);
-		stmt3.setInt(2, modstat);
-		stmt3.executeUpdate();
-		while(resultSet2.next()) {
-			NetworkAdmin account = loadAdmin(resultSet2, 1);
-			admins.add(account);
-		}
-		return admins;
-	}
-	
-	public Integer addToSubProfessor(String user) {
-		
 	}
 	
 	public Integer addToSubAdmin(String user) {
-		
-	}*/
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeSubAdmin(user);
+						break;
+					case 1: 
+						removeSubProfessor(user);
+						break;
+					default:
+						removeSubStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into admins (prof_id, modStat) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
 	
-	public Integer removeAccount(String user, int role) {
-		
+	public Integer addToSubProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeSubAdmin(user);
+						break;
+					case 1: 
+						removeSubProfessor(user);
+						break;
+					default:
+						removeSubStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into professors (prof_id, mod) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	
+	public Integer addToSubStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeSubAdmin(user);
+						break;
+					case 1: 
+						removeSubProfessor(user);
+						break;
+					default:
+						removeSubStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into students (prof_id, section, major) "+
+							"values(?, ?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "");
+						stmt1.setString(3, "");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+
+	// deletes from sub branch
+	public Integer removeSubAdmin(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from admins " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from sub branch
+	public Integer removeSubProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from professors " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from sub branch
+	public Integer removeSubStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from students " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from all branches
+	public Integer removeAccount(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				switch(getRole(user)) {
+				case 0:
+					removeSubAdmin(user);
+					break;
+				case 1: 
+					removeSubProfessor(user);
+					break;
+				default:
+					removeSubStudent(user);	
+				}
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				
+				try {
+					// deletes from main branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from accounts " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	public Integer updateRole(String user, boolean promo) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				switch(getRole(user)) {
+				case 0:
+					removeSubAdmin(user);
+					break;
+				case 1: 
+					removeSubProfessor(user);
+					break;
+				default:
+					removeSubStudent(user);	
+				}
+				int role = getRole(user);
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int newRole = 0;
+				
+				// checks type of role change
+				if(promo == true) {
+					// subtracts since account role integers are backwards
+					newRole = role - 1;
+				}
+				else {
+					// 0 is admin, 2 is student
+					newRole = role + 1;
+				}
+				
+				try {
+					// updates main branch role 
+					stmt1 = conn.prepareStatement(
+						" update accounts "+
+						" set role = ? " +
+						" where username = ?"
+					);
+					stmt1.setInt(1, newRole);
+					stmt1.setString(2, user);
+					stmt1.executeUpdate();
+				
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
 	}
 }

@@ -4,7 +4,7 @@
 
 <html>
 	<head>		
-		<title>Professor Creation</title>
+		<title>Promote/Demote</title>
 		<jsp:include page ="CSS/homePage.css"/>	<!-- ALTERNATIVE TO USEING HREFS-->			
  	</head>
 	
@@ -17,7 +17,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Create Professor Account</h1>
+		<h1>Promote Demote Account</h1>
 		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
@@ -32,19 +32,16 @@
 
 		<table>
 					<tr>
-						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${profHandle}"> </td>
-			 		</tr>
-					<tr>
-						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${profHandle}"> </td>
+						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${user}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${profHandle}"> </td>
-			 		</tr>			 	
+			 			<td> <input type="text" name = "type" placeholder = "promote/demote" required = "required" value="${promo}"> </td>
+			 		</tr>	 	
 		 </table>
 		 		
 			<div id="cct_embed_counts" align ="center">
 			
-			<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "post">
-			<input type = "Submit" class="button2" value = "Create Account">
+			<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "post">
+			<input type = "Submit" class="button2" value = "Promote/Demote">
 	</body>
 </html>

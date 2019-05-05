@@ -59,11 +59,39 @@
 	<servlet-name>createStudentServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.createstudentservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>networkAdminHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.networkadminhomeservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorhomeservlet</servlet-class>
+</servlet><servlet>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studenthomeservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>promoteDemoteServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.promotedemoteservlet</servlet-class>
+  </servlet>
+    
 
-
+<!-- servlet mapping -->
 <servlet-mapping>
 	<servlet-name>homeServlet</servlet-name>
 	<url-pattern>/home</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminHomeServlet</servlet-name>
+	<url-pattern>/networkadminHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<url-pattern>/professorHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<url-pattern>/studentHome</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>loginServlet</servlet-name>
@@ -113,5 +141,10 @@
 	<servlet-name>professorSettingServlet</servlet-name>
 	<url-pattern>/professorSetting</url-pattern>
 </servlet-mapping>
+<servlet-mapping>
+	<servlet-name>promoteDemoteServlet</servlet-name>
+	<url-pattern>/promoteDemote</url-pattern>
+</servlet-mapping>
 
-</web-app>
+
+</web-app>	

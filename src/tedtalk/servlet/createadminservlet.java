@@ -36,7 +36,7 @@ public class createadminservlet extends HttpServlet {
 		NetworkAdminController NAController = new NetworkAdminController();
 		NetworkAdmin handle = new NetworkAdmin();
 		
-		NAController.newNetworkAdmin(handle.getUserName(), handle.getPassword(), handle.getEmail());
+		NAController.addNetworkAdmins(handle.getUserName(), handle.getPassword(), handle.getEmail(), 0);
 		
 		req.setAttribute("adminHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
 		

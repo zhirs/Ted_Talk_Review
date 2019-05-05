@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Fri May 03 14:46:12 EDT 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016a-7f04-a6af-0000095362d0 
-on database directory C:\Users\zhirs\Documents\ComputerScience\CS320-workspace\Ted_Talk_Review\library.db with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+Sun May 05 13:07:24 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016a-88f6-e9a2-00000de15370 
+on database directory C:\Users\zhirs\Documents\ComputerScience\CS320-workspace\Ted_Talk_Review\library.db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/C:/Users/zhirs/Documents/ComputerScience/CS320-workspace/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_192-b12

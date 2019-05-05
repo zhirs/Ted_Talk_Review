@@ -26,14 +26,27 @@
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br><br><br><br>
-
+		
+		Create an account here:
 		<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Create Admin">
+		</form>
 		<br><br>
 		<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "get">
-		<input type = "Submit" name = "createAdmin" class="button" value = "Create Professor">
+		<input type = "Submit" name = "createProfessor" class="button" value = "Create Professor">
+		</form>
 		<br><br>
 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
-		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		<input type = "Submit" name = "createStudent" class="button" value = "Create Student">
+		</form>
+		<br><br><br>
+		promote/demote an account here:<br>
+		<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "get">
+		<input type = "Submit" name = "promoteDemote" class="button" value = "Promote/Demote">
+		<br><br><br>
+		or remove an account here:<br>
+		<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "get">
+		<input type = "Submit" name = "removeAcc" class="button" value = "Remove Account">
+		</form>
 	</body>
 </html>

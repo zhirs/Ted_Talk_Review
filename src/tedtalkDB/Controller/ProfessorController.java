@@ -3,13 +3,13 @@ import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
 public class ProfessorController {
-	private static Professor professorModel;
+	private Professor professorModel;
 	private DerbyDatabase derby = new DerbyDatabase();
 	
 	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST AS IT DOES GARBAGE COLLECTION
 
-	public static void setModel(Professor model) {
-		professorModel = model;
+	public void setModel(Professor professorModel) {
+		this.professorModel = professorModel;
 	}
 	boolean verified() {
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
@@ -27,7 +27,10 @@ public class ProfessorController {
 		//CREATES NEW ADMIN IN THE DATABASE:
 		derby.addProfessor(professorModel.getUserName(),professorModel.getPassword(),professorModel.getEmail(), derby.getMod(professorModel.getMod()));
 				
-	}	
+	}
+	public void addStudents(String user, String pass, String email, String section, String major) {
+		derby.addStudent(user, pass, email, section, major);
+	}
 	
 	public void verifyReview(Review rev, int approve) {
 		if(approve == 1) {//INDICATES ADMIN APPROVED REVIEW
@@ -35,12 +38,5 @@ public class ProfessorController {
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
 	}
-	
-	public void newStudent(String user, String pass, String email, String section, String major) {
-		derby.addStudent(user, pass, email, section, major);
-	}
-	
-	public void removeStudent() {
-		
-	}
+
 }

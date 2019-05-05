@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tedtalkDB.Controller.NetworkAdminController;
 import tedtalkDB.Controller.ProfessorController;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
@@ -34,18 +35,15 @@ public class createstudentservlet extends HttpServlet {
 		
 		System.out.println("Review Servlet: doPost");
 		
-		ProfessorController NAController = new ProfessorController();
-		Professor profHandle = new Professor();
+		NetworkAdminController NAController = new NetworkAdminController();
 		Student handle = new Student();
 
-		ProfessorController.setModel(profHandle);
-		
-		NAController.newStudent(handle.getUserName(), handle.getPassword(), handle.getEmail(), handle.getSection(), handle.getMajor());
+		NAController.addStudents(handle.getUserName(), handle.getPassword(), handle.getEmail(), handle.getSection(), handle.getMajor());
 		
 		req.setAttribute("profHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/createProfessor.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 	}
 	
 }

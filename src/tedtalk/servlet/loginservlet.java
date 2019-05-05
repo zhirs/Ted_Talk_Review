@@ -15,6 +15,7 @@ public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private DerbyDatabase derby;
+	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -55,13 +56,28 @@ public class loginservlet extends HttpServlet {
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
 			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("username", login.getUserName());
+			session.setAttribute("username", user);
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
 			session.setAttribute("section", "Section");	//need to change this depending if they are student/admin/ or professor
 			
+			role = derby.getRole(user);	//grabs the role number from accounts to find the correct home page
+			if(role==0) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
+			}
+			else if(role==1) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/professorHome");
+			}
+			else if(role ==2) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/StudentHome");
+			}
+			else {	//this should never occur
 			System.out.println("Login Servlet: Login Successful");
 			resp.sendRedirect(req.getContextPath() + "/home");
+			}
 		}
 		
 		else{
