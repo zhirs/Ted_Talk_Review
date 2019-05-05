@@ -36,13 +36,14 @@ public class networkadminhomeservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//getting the data from the search bar
+		String searchName = req.getParameter("searchName");
 		String year = req.getParameter("year1");
 		String month = req.getParameter("month1"); //remember to use ## format. EX: 01 or 12
 		String day = req.getParameter("day1"); //remember to use ## format. EX: 04
 		String year2 = req.getParameter("year2");
 		String month2 = req.getParameter("month2");   
 		String day2 = req.getParameter("day2");  
-		profID = 8;
+		profID = derby.getProfID(searchName);
 		
 		String date1 = year+"/"+month+"/"+day;
 		//String date1 = "2019/04/26";
@@ -62,8 +63,6 @@ public class networkadminhomeservlet extends HttpServlet {
 				reviews.add(revReturn.get(i).getDesc());
 			}
 		}
-		
-		System.out.println(reviews.get(0));
 		
 		req.setAttribute("reviews" , reviews);
 		System.out.println("Network Admin Home Servlet: doPost");
