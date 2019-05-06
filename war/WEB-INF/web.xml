@@ -44,26 +44,54 @@
 	<servlet-class>tedtalk.servlet.professorsettingservlet</servlet-class>
 </servlet>
 <servlet>
+	<servlet-name>createAdminServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createadminservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>createProfessorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createprofessorservlet</servlet-class>
+</servlet>
+<servlet>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.networkadminsettingservlet</servlet-class>
 </servlet>
-
 <servlet>
-	<servlet-name>studentHomeServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.studenthomeservlet</servlet-class>
-</servlet>
-<servlet>
-	<servlet-name>professorHomeServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.professorhomeservlet</servlet-class>
+	<servlet-name>createStudentServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createstudentservlet</servlet-class>
 </servlet>
 <servlet>
 	<servlet-name>networkAdminHomeServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.networkadminhomeservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorhomeservlet</servlet-class>
+</servlet><servlet>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studenthomeservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>promoteDemoteServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.promotedemoteservlet</servlet-class>
+  </servlet>
+    
 
+<!-- servlet mapping -->
 <servlet-mapping>
 	<servlet-name>homeServlet</servlet-name>
 	<url-pattern>/home</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminHomeServlet</servlet-name>
+	<url-pattern>/networkadminHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<url-pattern>/professorHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<url-pattern>/studentHome</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>loginServlet</servlet-name>
@@ -94,6 +122,18 @@
 	<url-pattern>/networkadminSetting</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
+	<servlet-name>createProfessorServlet</servlet-name>
+	<url-pattern>/createProfessor</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>createStudentServlet</servlet-name>
+	<url-pattern>/createStudent</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>createAdminServlet</servlet-name>
+	<url-pattern>/createAdmin</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
 	<servlet-name>professorServlet</servlet-name>
 	<url-pattern>/professor</url-pattern>
 </servlet-mapping>
@@ -101,18 +141,10 @@
 	<servlet-name>professorSettingServlet</servlet-name>
 	<url-pattern>/professorSetting</url-pattern>
 </servlet-mapping>
-
 <servlet-mapping>
-	<servlet-name>studentHomeServlet</servlet-name>
-	<url-pattern>/studentHome</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>professorHomeServlet</servlet-name>
-	<url-pattern>/professorHome</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>networkAdminHomeServlet</servlet-name>
-	<url-pattern>/networkadminHome</url-pattern>
+	<servlet-name>promoteDemoteServlet</servlet-name>
+	<url-pattern>/promoteDemote</url-pattern>
 </servlet-mapping>
 
-</web-app>
+
+</web-app>	

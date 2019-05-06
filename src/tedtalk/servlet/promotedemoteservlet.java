@@ -1,7 +1,6 @@
 package tedtalk.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpSession;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.Controller.NetworkAdminController;
-import tedtalk.controller.ReviewController;
 
-public class networkadminsettingservlet extends HttpServlet {
+public class promotedemoteservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private String email = null;
@@ -47,7 +45,7 @@ public class networkadminsettingservlet extends HttpServlet {
 			req.setAttribute("networkAdminM", model);
 			req.setAttribute("userModel", model);
 			req.setAttribute("email", email);
-			req.getRequestDispatcher("/_view/networkadminSetting.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/promoteDemote.jsp").forward(req, resp);
 		}
 	}
 	@Override
@@ -56,8 +54,22 @@ public class networkadminsettingservlet extends HttpServlet {
 		
 		System.out.println("Network Admin Servlet: doPost");
 		
+		NetworkAdminController NAController = new NetworkAdminController();
+
+		String user = req.getParameter("user");
+		String promo = req.getParameter("promo");
+		boolean promote = false;
+		
+		if(promo == "promote") {
+			promote = true;
+		}
+		
+		NAController.promoteDemote(promote, user);
+		
+		req.setAttribute("user", user);
+		req.setAttribute("promote", promo);
+		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/promoteDemote.jsp").forward(req, resp);
 	}
-	
 }
