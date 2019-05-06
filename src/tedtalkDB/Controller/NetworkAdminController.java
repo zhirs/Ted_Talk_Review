@@ -44,11 +44,45 @@ public class NetworkAdminController {
 	public void addStudents(String user, String pass, String email, String section, String major) {
 		derby.addStudent(user, pass, email, section, major);
 	}
+	
 	public void addProfessors(String user, String pass, String email, int mod) {
 		derby.addProfessor(user, pass, email, mod);
 	}
+	
 	public void addNetworkAdmins(String user, String pass, String email, int modStat) {
 		derby.addAdmin(user, pass, email, modStat);
+	}
+	
+	public void promoteDemote(boolean promote, String user) {
+		int role = derby.getRole(user);
+		System.out.println(role);
+		
+		if(promote == true) {
+			switch(role) {
+			case 1:
+				derby.addToSubAdmin(user);
+				derby.updateRole(user, promote);
+				break;
+			case 2:
+				derby.addToSubProfessor(user);
+				derby.updateRole(user, promote);
+			}
+		}
+		else {			
+			switch(role) {
+			case 0:
+				derby.addToSubProfessor(user);
+				derby.updateRole(user, promote);
+				break;
+			case 1:
+				derby.addToSubStudent(user);
+				derby.updateRole(user, promote);
+			}
+		}
+	}
+	
+	public void removeAccount(String user) {
+		derby.removeAccount(user);
 	}
 	
 	public void verifyReview(Review rev, int approve) {
