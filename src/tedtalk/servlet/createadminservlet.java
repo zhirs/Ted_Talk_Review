@@ -13,25 +13,30 @@ import tedtalkDB.model.NetworkAdmin;
 public class createadminservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Review Servlet: doGet");	
+		System.out.println("Create Admin Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			req.getRequestDispatcher("/_view/createAdmin.jsp").forward(req, resp);
+			role = (int) req.getSession().getAttribute("role");
+			System.out.println(role);
+			if(role == 0) {
+				req.getRequestDispatcher("/_view/createAdmin.jsp").forward(req, resp);
+			}
 		}
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Review Servlet: doPost");
+		System.out.println("Create Admin Servlet: doPost");
 		
 		NetworkAdminController NAController = new NetworkAdminController();
 		NetworkAdmin handle = new NetworkAdmin();

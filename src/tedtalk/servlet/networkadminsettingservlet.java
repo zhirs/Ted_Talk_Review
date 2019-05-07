@@ -25,7 +25,7 @@ public class networkadminsettingservlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Network Admin Servlet: doGet");	
+		System.out.println("Network Admin Settings Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		password = (String) req.getSession().getAttribute("password");
 		email = (String) req.getSession().getAttribute("email");
@@ -54,10 +54,10 @@ public class networkadminsettingservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Network Admin Servlet: doPost");
+		System.out.println("Network Admin Settings Servlet: doPost");
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/networkadminSetting.jsp").forward(req, resp);
 	}
 	
 }

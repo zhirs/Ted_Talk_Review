@@ -1317,7 +1317,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	public Integer addToSubAdmin(String user) {
+	public Integer addToAdmin(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1330,13 +1330,13 @@ public class DerbyDatabase implements IDatabase {
 					// removes sub role account
 					switch(getRole(user)) {
 					case 0:
-						removeSubAdmin(user);
+						removeFromAdmin(user);
 						break;
 					case 1: 
-						removeSubProfessor(user);
+						removeFromProfessor(user);
 						break;
 					default:
-						removeSubStudent(user);	
+						removeFromStudent(user);	
 					}
 					
 					// inserts in blank student
@@ -1359,7 +1359,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	public Integer addToSubProfessor(String user) {
+	public Integer addToProfessor(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1373,13 +1373,13 @@ public class DerbyDatabase implements IDatabase {
 					// removes sub role account
 					switch(getRole(user)) {
 					case 0:
-						removeSubAdmin(user);
+						removeFromAdmin(user);
 						break;
 					case 1: 
-						removeSubProfessor(user);
+						removeFromProfessor(user);
 						break;
 					default:
-						removeSubStudent(user);	
+						removeFromStudent(user);	
 					}
 					
 					// inserts in blank student
@@ -1402,7 +1402,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	public Integer addToSubStudent(String user) {
+	public Integer addToStudent(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1415,13 +1415,13 @@ public class DerbyDatabase implements IDatabase {
 					// removes sub role account
 					switch(getRole(user)) {
 					case 0:
-						removeSubAdmin(user);
+						removeFromAdmin(user);
 						break;
 					case 1: 
-						removeSubProfessor(user);
+						removeFromProfessor(user);
 						break;
 					default:
-						removeSubStudent(user);	
+						removeFromStudent(user);	
 					}
 					
 					// inserts in blank student
@@ -1446,7 +1446,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	// deletes from sub branch
-	public Integer removeSubAdmin(String user) {
+	public Integer removeFromAdmin(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1475,7 +1475,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	// deletes from sub branch
-	public Integer removeSubProfessor(String user) {
+	public Integer removeFromProfessor(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1505,7 +1505,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	// deletes from sub branch
-	public Integer removeSubStudent(String user) {
+	public Integer removeFromStudent(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1535,19 +1535,24 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	// deletes from all branches
-	public Integer removeAccount(String user) {
+	public Integer removeAccount(String user, int role) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
-				switch(getRole(user)) {
-				case 0:
-					removeSubAdmin(user);
-					break;
-				case 1: 
-					removeSubProfessor(user);
-					break;
-				default:
-					removeSubStudent(user);	
+				if(role == 0) {
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+				}
+				else {
+					removeFromStudent(user);
 				}
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
@@ -1578,13 +1583,13 @@ public class DerbyDatabase implements IDatabase {
 			public Integer execute(Connection conn) throws SQLException {
 				switch(getRole(user)) {
 				case 0:
-					removeSubAdmin(user);
+					removeFromAdmin(user);
 					break;
 				case 1: 
-					removeSubProfessor(user);
+					removeFromProfessor(user);
 					break;
 				default:
-					removeSubStudent(user);	
+					removeFromStudent(user);	
 				}
 				int role = getRole(user);
 				//  Auto-generated method stub
@@ -1617,6 +1622,47 @@ public class DerbyDatabase implements IDatabase {
 				finally {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	public Integer getGlobalMod() {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				// count of modStat, 0 or negative if off, positive if on
+				int countStat = 0;
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" select modStat "+
+						" from admins "
+					);
+					resultSet1 = stmt1.executeQuery();
+					
+					int i = 0;
+					while(resultSet1.next()) {
+						// gets next mod from admin
+						int modStat = resultSet1.getInt(i++);
+						switch(modStat) {
+						case 1:
+							// if off, subract, otherwise add
+							countStat --;
+							break;
+						case 2: 
+							countStat ++;
+						}
+					}
+					return countStat;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(resultSet1);
 				}
 			}
 		});
