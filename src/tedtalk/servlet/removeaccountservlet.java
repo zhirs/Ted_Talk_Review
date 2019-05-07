@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.Controller.NetworkAdminController;
-import tedtalkDB.model.Professor;
 
-public class createprofessorservlet extends HttpServlet {
+public class removeaccountservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private int role;
@@ -18,7 +17,7 @@ public class createprofessorservlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Create Professor Servlet: doGet");	
+		System.out.println("Remove Account Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
 		if(username == null) {
@@ -27,7 +26,10 @@ public class createprofessorservlet extends HttpServlet {
 		else {
 			role = (int) req.getSession().getAttribute("role");
 			if(role == 0) {
-				req.getRequestDispatcher("/_view/createProfessor.jsp").forward(req, resp);
+				req.getRequestDispatcher("/_view/removeAcc.jsp").forward(req, resp);
+			}
+			else if(role == 1) {
+				req.getRequestDispatcher("/_view/removeStudent.jsp").forward(req, resp);
 			}
 		}
 	}
@@ -35,17 +37,17 @@ public class createprofessorservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Creatae Professor Servlet: doPost");
+		System.out.println("Remove Account Servlet: doPost");
 		
 		NetworkAdminController NAController = new NetworkAdminController();
-		Professor handle = new Professor();
+		String handle = null;
 		
-		NAController.addProfessors(handle.getUserName(), handle.getPassword(), handle.getEmail(), 0);
+		NAController.removeAccount(handle);
 		
-		req.setAttribute("profHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("remove", handle);//CREATING AN ATTRIB TO USE IN JSP
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/createProfessor.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/removeAcc.jsp").forward(req, resp);
 	}
 	
 }

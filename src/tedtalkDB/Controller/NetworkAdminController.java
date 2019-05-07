@@ -60,29 +60,29 @@ public class NetworkAdminController {
 		if(promote == true) {
 			switch(role) {
 			case 1:
-				derby.addToSubAdmin(user);
+				derby.addToAdmin(user);
 				derby.updateRole(user, promote);
 				break;
 			case 2:
-				derby.addToSubProfessor(user);
+				derby.addToProfessor(user);
 				derby.updateRole(user, promote);
 			}
 		}
 		else {			
 			switch(role) {
 			case 0:
-				derby.addToSubProfessor(user);
+				derby.addToProfessor(user);
 				derby.updateRole(user, promote);
 				break;
 			case 1:
-				derby.addToSubStudent(user);
+				derby.addToStudent(user);
 				derby.updateRole(user, promote);
 			}
 		}
 	}
 	
 	public void removeAccount(String user) {
-		derby.removeAccount(user);
+		derby.removeAccount(user, 0);
 	}
 	
 	public void verifyReview(Review rev, int approve) {

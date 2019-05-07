@@ -7,12 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import tedtalk.model.ProfileModel;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
-import tedtalk.controller.ProfileController;
 import tedtalk.controller.ReviewController;
 import tedtalkDB.persist.DerbyDatabase;
 
@@ -44,16 +41,16 @@ public class profileservlet extends HttpServlet {
 			if(login == null) {
 				System.out.println("This is null");
 			}
-			int id = login.getprofID();
-			if(id < 20000) {
-				if(id < 10000) {
-					req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
-				}
-				else {
-					req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
-				}
-			}
-			else {
+			int role = derby.getRole(username);
+			System.out.println("role :" + role);
+			switch(role){
+			case 0:
+				req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
+				break;
+			case 1:	
+				req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
+				break;
+			default:
 				req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
 			}
 			 
@@ -76,6 +73,7 @@ public class profileservlet extends HttpServlet {
 			
 			req.setAttribute("reviews" , reviews);
 			req.setAttribute("errorMessage", errorMessage);
+			req.getSession().setAttribute("role", role);
 			//req.setAttribute("profileM", model);
 			//req.setAttribute("userModel", model);
 			req.setAttribute("email", email);

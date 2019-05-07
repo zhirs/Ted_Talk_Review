@@ -38,5 +38,9 @@ public class ProfessorController {
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
 	}
+	public void removeAccount(String student) {
+		// TODO Auto-generated method stub
+		derby.removeAccount(student, 1);
+	}
 
 }

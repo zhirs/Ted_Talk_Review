@@ -8,39 +8,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.Controller.NetworkAdminController;
-import tedtalkDB.Controller.ProfessorController;
-import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
 
 public class createstudentservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Review Servlet: doGet");	
+		System.out.println("Create Student Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
+			role = (int) req.getSession().getAttribute("role");
+			if(role == 1 || role == 0) {
+				req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
+			}
 		}
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Review Servlet: doPost");
+		System.out.println("Create Student Servlet: doPost");
 		
 		NetworkAdminController NAController = new NetworkAdminController();
 		Student handle = new Student();
 
 		NAController.addStudents(handle.getUserName(), handle.getPassword(), handle.getEmail(), handle.getSection(), handle.getMajor());
 		
-		req.setAttribute("profHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("studHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
