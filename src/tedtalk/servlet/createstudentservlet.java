@@ -12,24 +12,13 @@ import tedtalkDB.model.Student;
 
 public class createstudentservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String username = null;
-	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Create Student Servlet: doGet");	
-		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
-		if(username == null) {
-			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
-		}
-		else {
-			role = (int) req.getSession().getAttribute("role");
-			if(role == 1 || role == 0) {
-				req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
-			}
-		}
+		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

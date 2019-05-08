@@ -42,7 +42,6 @@ public class profileservlet extends HttpServlet {
 				System.out.println("This is null");
 			}
 			int role = derby.getRole(username);
-			System.out.println("role :" + role);
 			switch(role){
 			case 0:
 				req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
