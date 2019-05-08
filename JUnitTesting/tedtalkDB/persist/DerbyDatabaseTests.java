@@ -573,6 +573,28 @@ public class DerbyDatabaseTests {
 			fail("Account not found"); 
 		}
 	}
+	
+	@Test
+	public void testGetRevID() {
+		String key = "Endgame";
+		
+		ArrayList<Integer> revs = db.getRevID(key);
+		if(revs.get(0) != 3) {
+			fail("Incorrect review found");
+		}
+		
+		ArrayList<Integer> revs2 = db.getRevID("Hill");
+		if(revs2.get(0) != 2) {
+			fail("Incorrect review found");
+		}
+		
+		ArrayList<Integer> revs3 = db.getRevID("Symposium");
+		if(revs3.get(0) != 1) {
+			fail("Incorrect review found");
+		}
+	}
+	
+	
 }
 	
 
