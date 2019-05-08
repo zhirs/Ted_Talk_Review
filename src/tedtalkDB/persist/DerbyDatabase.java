@@ -1667,4 +1667,33 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	public Integer removeReview(String user, String title) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from reviews"
+						+ "where profID = ?"
+						+ "and name = ?"
+					);
+					stmt1.setInt(1, profID);
+					stmt1.setString(2, title);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
 }
