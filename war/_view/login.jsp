@@ -30,7 +30,7 @@
 		 		</table>
 		 		<button type="submit" name="submit" value = "Login">Login</button>
 		 		<button type="submit" name="forgotPW" value = "Forgot Password ">Forgot Password </button> <br><br>
-		 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "post">
+		 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 				<input type = "Submit" class="button2" value = "Create Account">
 			 </form>
 		 </div>

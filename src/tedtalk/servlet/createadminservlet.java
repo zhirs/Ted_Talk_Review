@@ -38,12 +38,17 @@ public class createadminservlet extends HttpServlet {
 		
 		System.out.println("Create Admin Servlet: doPost");
 		
+		String username = null;
+		String password = null;
+		String email = null;
+		
 		NetworkAdminController NAController = new NetworkAdminController();
-		NetworkAdmin handle = new NetworkAdmin();
 		
-		NAController.addNetworkAdmins(handle.getUserName(), handle.getPassword(), handle.getEmail(), 0);
+		req.setAttribute("username", username);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("password", password);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("email", email);//CREATING AN ATTRIB TO USE IN JSP
 		
-		req.setAttribute("adminHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
+		NAController.addNetworkAdmins(username, password, email, 0);
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/createAdmin.jsp").forward(req, resp);

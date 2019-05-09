@@ -26,12 +26,21 @@ public class createstudentservlet extends HttpServlet {
 		
 		System.out.println("Create Student Servlet: doPost");
 		
-		NetworkAdminController NAController = new NetworkAdminController();
-		Student handle = new Student();
-
-		NAController.addStudents(handle.getUserName(), handle.getPassword(), handle.getEmail(), handle.getSection(), handle.getMajor());
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String email = req.getParameter("email");
+		String section = req.getParameter("section");
+		String major = req.getParameter("major");
 		
-		req.setAttribute("studHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
+		NetworkAdminController NAController = new NetworkAdminController();
+		
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(email);
+		System.out.println(section);
+		System.out.println(major);
+		
+		NAController.addStudents(username, password, email, section, major);
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);

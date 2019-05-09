@@ -29,28 +29,27 @@
 		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
 		<br><br><br>
-
+	
+	<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "post">
 		<table>
-					<tr>
-						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${studHandle}"> </td>
-			 		</tr>
-					<tr>
-						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${studHandle}"> </td>
-			 		</tr>
-			 		<tr>
-			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${studHandle}"> </td>
-			 		</tr>
-			 		<tr>
-						<td> <input type="text" name = "Section" placeholder = "Section" required = "required" value="${studHandle}"> </td>
-			 		</tr>
-			 		<tr>
-			 			<td> <input type="text" name = "Major" placeholder = "Major" required = "required" value="${studHandle}"> </td>
-			 		</tr>			 	
-		 </table>
-		 		
-			<div id="cct_embed_counts" align ="center">
-			
-			<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "post">
-			<input type = "Submit" class="button2" value = "Create Account">
+				<tr>
+					<td> <input type="text" name = "username" placeholder = "User Name" required = "required" value="${username}"/> </td>
+		 		</tr>
+				<tr>
+					<td> <input type="text" name = "password" placeholder = "Password" required = "required" value="${password}"/> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "email" placeholder = "Email" required = "required" value="${email}"/> </td>
+		 		</tr>
+		 		<tr>
+					<td> <input type="text" name = "section" placeholder = "Section" required = "required" value="${section}"/> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "major" placeholder = "Major" required = "required" value="${major}"/> </td>
+		 		</tr>			 	
+		 </table>	
+		 <div id="cct_embed_counts" align ="center">
+		<input type = "Submit" class="button2" value = "Create Account">
+		</form>
 	</body>
 </html>
