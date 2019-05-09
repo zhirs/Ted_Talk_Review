@@ -180,15 +180,20 @@ public class DerbyDatabase implements IDatabase {
 							")"
 							);
 					stmt5.executeUpdate();
-					System.out.println("Accounts table created");					
+					System.out.println("Accounts table created");		
 					
 					stmt6 = conn.prepareStatement(
-							"create table keywords(" +
-							"	key_id integer primary key " +
+							"create table keywords( " +
+							"	keywords_id integer primary key " + 
 							"		generated always as identity (start with 1, increment by 1), " +
 							"	words varchar(200), " +
-							"	rev_id integer)" );
+							" 	rev_id integer " + 
+							")"
+							);
 					stmt6.executeUpdate();
+					System.out.println("Keywords table created");
+							
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -196,6 +201,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
 				}
 			}
 		});
@@ -212,7 +218,6 @@ public class DerbyDatabase implements IDatabase {
 				List<Review> reviewList;
 				List<Account> accountList;
 				List<keywords> keyList;
-				
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
@@ -229,7 +234,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
 				PreparedStatement insertAccount = null;
-				PreparedStatement insertKeyWords = null;
+				PreparedStatement insertKeys = null;
 				
 				try {
 					insertAccount = conn.prepareStatement("insert into accounts(username, password, email, role) values (?, ?, ?, ?)");
@@ -299,16 +304,15 @@ public class DerbyDatabase implements IDatabase {
 					insertReview.executeBatch();					
 					System.out.println("Reviews table populated");					
 					
-					insertKeyWords = conn.prepareStatement("insert into keywords (words, rev_id) values (? , ?)");
+					insertKeys = conn.prepareStatement("insert into keywords (words, rev_id) values (?, ?)");
 					for(keywords key : keyList) {
-						insertKeyWords.setString(1, key.getKeyWord());
-						insertKeyWords.setInt(2, key.getReviewID());
+						insertKeys.setString(1, key.getKeyWord());
+						insertKeys.setInt(2, key.getReviewID());
 						
-						insertKeyWords.addBatch();
+						insertKeys.addBatch();
 					}
-					insertKeyWords.executeBatch();
+					insertKeys.executeBatch();
 					System.out.println("Keywords table populated");
-					
 					System.out.println("All tables populated");
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied				
@@ -949,41 +953,24 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setString(1, URL);
 					resultSet1 = stmt2.executeQuery();
-					int newID = -1;
+					
 					while(resultSet1.next()) {
 						Review rev = new Review();
 						loadReview(rev, resultSet1, 1);
-						newID = rev.getRevID();
 						review.add(rev);
 					}
 					System.out.println("Review saved");
-					
-					String[] keywords = review.get(0).getName().split(" ");
-					for(int i = 0; i < keywords.length; i++) {
-						PreparedStatement stmt3 = conn.prepareStatement("insert into keywords (words, rev_id) values (?, ?)");
-						stmt3.setString(1, keywords[i]);
-						stmt3.setInt(2, newID);
-						stmt3.executeUpdate();
-						if(i < keywords.length - 1) {
-							PreparedStatement stmt4 = conn.prepareStatement("insert into keywords (words, rev_id) values (?, ?)");
-							stmt4.setString(1, keywords[i] + keywords[i+1]);
-							stmt4.setInt(3, newID);
-							stmt4.executeUpdate();
-							DBUtil.closeQuietly(stmt4);
-						}
-						DBUtil.closeQuietly(stmt3);
-					}
 					return review;
 				}
 				finally {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
 	}
+
 	@Override
 	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2) {
 		return executeTransaction(new Transaction<ArrayList<Review>>() {
@@ -1707,6 +1694,35 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	public Integer removeReview(String user, String title) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from reviews"
+						+ "where profID = ?"
+						+ "and name = ?"
+					);
+					stmt1.setInt(1, profID);
+					stmt1.setString(2, title);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
 
 	@Override
 	public ArrayList<Integer> getRevID(String keyword) {
@@ -1748,5 +1764,4 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
 }
