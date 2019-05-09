@@ -30,18 +30,17 @@
 		</form>
 		<br><br><br>
 
+		<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "post">
 		<table>
 					<tr>
-						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${user}"> </td>
+						<td> <input type="text" name = "user" placeholder = "Username" required = "required" value="${user}"/> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "type" placeholder = "promote/demote" required = "required" value="${promo}"> </td>
+			 			<td> <input type="text" name = "promo" placeholder = "promote/demote" required = "required" value="${promo}"/> </td>
 			 		</tr>	 	
 		 </table>
-		 		
-			<div id="cct_embed_counts" align ="center">
-			
-			<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "post">
-			<input type = "Submit" class="button2" value = "Promote/Demote">
+		  <div id="cct_embed_counts" align ="center">
+		<input type = "Submit" class="button2" value = "Promote/Demote">
+		</form>
 	</body>
 </html>
