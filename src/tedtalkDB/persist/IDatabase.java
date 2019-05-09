@@ -9,6 +9,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 
 public interface IDatabase {
 	// used for switching between real and fake databases
@@ -37,4 +38,16 @@ public interface IDatabase {
 	public Integer getProfID(String user);
 	public Integer getRole(String user);
 	public ArrayList<Integer> getRevID(String keyword);
+	public ArrayList<keywords> addKeyword(String keyword, int rev_id);
+	public ArrayList<String> parseTitle(String title, int rev_id);
+	public Integer removeReview(String user, String title);
+	public Integer addToAdmin(String user);
+	public Integer addToProfessor(String user);
+	public Integer addToStudent(String user);
+	public Integer removeFromAdmin(String user);
+	public Integer removeFromProfessor(String user);
+	public Integer removeFromStudent(String user);
+	public Integer removeAccount(String user, int role);
+	public Integer updateRole(String user, boolean promo);
+	public Integer getGlobalMod();
 }

@@ -60,7 +60,6 @@ public class DerbyDatabaseTests {
 				
 		// insert new book (and possibly new author) into DB
 		admins = db.addAdmin(user, pass, email, modStat);
-
 		// check the return value - should be a book_id > 0
 		if (admins.size() >  0)
 		{
@@ -85,6 +84,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new admin into admin table: <" + user + ">");
 			fail("Failed to insert new admin <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddProfessor() {
@@ -124,6 +124,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new professor into professor table: <" + user + ">");
 			fail("Failed to insert new professor <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddReview() {
@@ -167,6 +168,7 @@ public class DerbyDatabaseTests {
 			fail("Failed to insert new review");
 		}
 	}
+	
 	@Test
 	public void testAddStudent() {
 		System.out.println("\n*** Testing addProfessor***");
@@ -206,6 +208,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new student into student table: <" + user + ">");
 			fail("Failed to insert new student<" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAdminByProfID() {
@@ -545,7 +548,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testUpdateStatus() {
 		System.out.println("\n*** Testing updateStatus***");
-		int revID = 50001;
+		int revID = 1;
 		int status = 2;
 		int initialStatus = db.getStatus(revID);
 		int found = db.updateStatus(revID, status);
@@ -591,6 +594,28 @@ public class DerbyDatabaseTests {
 		ArrayList<Integer> revs3 = db.getRevID("Symposium");
 		if(revs3.get(0) != 1) {
 			fail("Incorrect review found");
+		}
+	}
+	
+	@Test
+	public void testParseTitle() {
+		String URL = "placeholder.com";
+		String name = "One hundred dollars would be nice";
+		int rate = 5;
+		String pres = "Brendan Frasier";
+		String desc = "I bet the big B.F. could make a great database";
+		int profID = 9;
+		String tag = "Civil Engineering";
+		int status = 0;
+		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
+		int rev_id = revs.get(0).getrevID();
+		System.out.print(rev_id);
+		ArrayList<String> keys =  db.parseTitle(name, rev_id);
+		if(keys.contains("hundred")) {
+			System.out.println("Successfully added");
+		}
+		else {
+			fail("not found.");
 		}
 	}
 	
