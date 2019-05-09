@@ -36,4 +36,5 @@ public interface IDatabase {
 	public NetworkAdmin adminByProfID(int profID);
 	public Integer getProfID(String user);
 	public Integer getRole(String user);
+	public ArrayList<Integer> getRevID(String keyword);
 }
