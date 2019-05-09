@@ -29,22 +29,21 @@
 		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
 		<br><br><br>
-
+	
+	<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "post">
 		<table>
 					<tr>
-						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${profHandle}"> </td>
+						<td> <input type="text" name = "Username" placeholder = "User Name" required = "required" value="${username}"> </td>
 			 		</tr>
 					<tr>
-						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${profHandle}"> </td>
+						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${password}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${profHandle}"> </td>
+			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${email}"> </td>
 			 		</tr>			 	
 		 </table>
-		 		
-			<div id="cct_embed_counts" align ="center">
-			
-			<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "post">
-			<input type = "Submit" class="button2" value = "Create Account">
+		 <div id="cct_embed_counts" align ="center">
+	<input type = "Submit" class="button2" value = "Create Account">
+	</form>
 	</body>
 </html>

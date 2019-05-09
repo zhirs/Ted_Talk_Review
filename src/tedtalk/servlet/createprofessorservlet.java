@@ -37,12 +37,17 @@ public class createprofessorservlet extends HttpServlet {
 		
 		System.out.println("Creatae Professor Servlet: doPost");
 		
+		String username = null;
+		String password = null;
+		String email = null;
+		
 		NetworkAdminController NAController = new NetworkAdminController();
-		Professor handle = new Professor();
 		
-		NAController.addProfessors(handle.getUserName(), handle.getPassword(), handle.getEmail(), 0);
+		req.setAttribute("username", username);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("password", password);//CREATING AN ATTRIB TO USE IN JSP
+		req.setAttribute("email", email);//CREATING AN ATTRIB TO USE IN JSP
 		
-		req.setAttribute("profHandle", handle);//CREATING AN ATTRIB TO USE IN JSP
+		NAController.addProfessors(username, password, email, 0);
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/createProfessor.jsp").forward(req, resp);
