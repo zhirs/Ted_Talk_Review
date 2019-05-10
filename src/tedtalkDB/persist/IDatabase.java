@@ -20,6 +20,7 @@ public interface IDatabase {
 	public ArrayList<Review> getProfIDReviewList(int profID);
 	public Integer getReviewTotal(int profID);
 	public ArrayList<Review> findReview(String keyword);
+	public Review findReviewByRevID(int rev_id);
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID, String tag, int status);
 	public Integer getModStat(int profID);
 	public Integer getMod(int profID);
@@ -38,5 +39,7 @@ public interface IDatabase {
 	public Integer getRole(String user);
 	public ArrayList<Integer> getRevID(String keyword);
 	public ArrayList<Review> getReviewByStatus();
+	public Integer changeReviewStatus(int status, int rev_id);
 	public Integer resetPassword(String username, String password);
+	public Integer averageReviewRating(String url);
 }
