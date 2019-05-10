@@ -4,7 +4,7 @@
 
 <html>
 	<head>		
-		<title>Professor Settings</title>
+		<title>Account Deletion</title>
 		<jsp:include page ="CSS/homePage.css"/>	<!-- ALTERNATIVE TO USEING HREFS-->			
  	</head>
 	
@@ -17,20 +17,29 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Professor Settings</h1>
+		<h1>Remove Account</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/professor" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
-		</form>
-		<form action = "${pageContext.servletContext.contextPath}/professorHome" method = "get">
-		<input type = "Submit" name = "home" class="button" value = "Home">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "get">
+		<input type = "Submit" name = "settings" class="button" value = "Settings">
+		</form>
 		<br><br><br>
-		<hr>
-		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
-		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+
+		IMPORTANT: ONCE AN ACCOUNT IS DELETED IT IS GONE FOREVER <br><br>
+		<table>
+					<tr>
+						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${remove}"> </td>
+			 		</tr>	 	
+		 </table>
+		 		
+			<div id="cct_embed_counts" align ="center">
+			
+			<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "post">
+			<input type = "Submit" class="button2" value = "Remove Account">
 	</body>
-</html>	
+</html>

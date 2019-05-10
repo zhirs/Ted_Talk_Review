@@ -22,14 +22,20 @@
 			<form action="${pageContext.servletContext.contextPath}/login" method="post">
 				<table>
 					<tr>
-						<td> <input type="text" name = "u" placeholder = "Username" required = "required" value="${profileM.user}"> </td>
+						<td> <input type="text" name = "u" placeholder = "Username" value="${profileM.user}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="password" name = "p" placeholder = "Password" required = "required" value="${profileM.pass}"> </td>
+			 			<td> <input type="password" name = "p" placeholder = "Password" value="${profileM.pass}"> </td>
 			 		</tr>
 		 		</table>
 		 		<button type="submit" name="submit" value = "Login">Login</button>
-		 		<button type="submit" name="forgotPW" value = "Forgot Password ">Forgot Password </button>
+		 		<form action="${pageContext.servletContext.contextPath}/sentResetToEmail" method="get">
+		 			<button type="submit" name="forgotPW" value = "Forgot Password ">Forgot Password </button>
+		 		</form>
+		 		<br><br>
+      </form>
+		 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+				<input type = "Submit" class="button2" value = "Create Account">
 			 </form>
 		 </div>
 		<hr>

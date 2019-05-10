@@ -21,7 +21,7 @@
 		<h1>Student Home Page</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/student" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -38,7 +38,7 @@
 		</ul>		
 		<div class = "searchSection">
 			<p>Don't like what's trending? Try searching our database</p>
-			<form action="${pageContext.servletContext.contextPath}" method="get"> 
+			<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 			<input type = "Submit" name = "searchPage" class="button2" value = "search">
 			</form>
 		</div>

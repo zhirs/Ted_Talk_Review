@@ -6,7 +6,6 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  
 <servlet>
 	<servlet-name>homeServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.homeservlet</servlet-class>
@@ -36,34 +35,81 @@
 	<servlet-class>tedtalk.servlet.reviewservlet</servlet-class>
 </servlet>
 <servlet>
-	<servlet-name>requestServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.requestservlet</servlet-class>
-</servlet>
-<servlet>
 	<servlet-name>professorSettingServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.professorsettingservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>createAdminServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createadminservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>createProfessorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createprofessorservlet</servlet-class>
 </servlet>
 <servlet>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.networkadminsettingservlet</servlet-class>
 </servlet>
-
 <servlet>
-	<servlet-name>studentHomeServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.studenthomeservlet</servlet-class>
-</servlet>
-<servlet>
-	<servlet-name>professorHomeServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.professorhomeservlet</servlet-class>
+	<servlet-name>createStudentServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.createstudentservlet</servlet-class>
 </servlet>
 <servlet>
 	<servlet-name>networkAdminHomeServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.networkadminhomeservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorhomeservlet</servlet-class>
+</servlet><servlet>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studenthomeservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>promoteDemoteServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.promotedemoteservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>removeAccountServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.removeaccountservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>removeStudentServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.removestudentservlet</servlet-class>
+</servlet>
+<servlet>
+<servlet-name>resultServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.resultservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>pendingServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.pendingservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>resetPasswordServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.resetpasswordservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>sentResetToEmailServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.sentresettoemailservlet</servlet-class>
+</servlet>
 
+<!-- servlet mapping -->
 <servlet-mapping>
 	<servlet-name>homeServlet</servlet-name>
 	<url-pattern>/home</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>networkAdminHomeServlet</servlet-name>
+	<url-pattern>/networkadminHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>professorHomeServlet</servlet-name>
+	<url-pattern>/professorHome</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>studentHomeServlet</servlet-name>
+	<url-pattern>/studentHome</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>loginServlet</servlet-name>
@@ -72,10 +118,6 @@
 <servlet-mapping>
 	<servlet-name>reviewServlet</servlet-name>
 	<url-pattern>/review</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>requestServlet</servlet-name>
-	<url-pattern>/request</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>profileServlet</servlet-name>
@@ -87,11 +129,23 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminServlet</servlet-name>
-	<url-pattern>/networkAdmin</url-pattern>
+	<url-pattern>/networkadmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
 	<url-pattern>/networkadminSetting</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>createProfessorServlet</servlet-name>
+	<url-pattern>/createProfessor</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>createStudentServlet</servlet-name>
+	<url-pattern>/createStudent</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>createAdminServlet</servlet-name>
+	<url-pattern>/createAdmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>professorServlet</servlet-name>
@@ -101,18 +155,33 @@
 	<servlet-name>professorSettingServlet</servlet-name>
 	<url-pattern>/professorSetting</url-pattern>
 </servlet-mapping>
+<servlet-mapping>
+	<servlet-name>promoteDemoteServlet</servlet-name>
+	<url-pattern>/promoteDemote</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>removeAccountServlet</servlet-name>
+	<url-pattern>/removeAcc</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>removeStudentServlet</servlet-name>
+	<url-pattern>/removeStudent</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>resultServlet</servlet-name>
+	<url-pattern>/result</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>pendingServlet</servlet-name>
+	<url-pattern>/pending</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>resetPasswordServlet</servlet-name>
+	<url-pattern>/resetPassword</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>sentResetToEmailServlet</servlet-name>
+	<url-pattern>/sentResetToEmail</url-pattern>
+</servlet-mapping>
 
-<servlet-mapping>
-	<servlet-name>studentHomeServlet</servlet-name>
-	<url-pattern>/studentHome</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>professorHomeServlet</servlet-name>
-	<url-pattern>/professorHome</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>networkAdminHomeServlet</servlet-name>
-	<url-pattern>/networkadminHome</url-pattern>
-</servlet-mapping>
-
-</web-app>
+</web-app>	

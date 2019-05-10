@@ -1,19 +1,14 @@
 package tedtalk.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-
-import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.Controller.NetworkAdminController;
-import tedtalk.controller.ReviewController;
 
 public class networkadminsettingservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +20,7 @@ public class networkadminsettingservlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Network Admin Servlet: doGet");	
+		System.out.println("Network Admin Settings Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		password = (String) req.getSession().getAttribute("password");
 		email = (String) req.getSession().getAttribute("email");
@@ -54,7 +49,7 @@ public class networkadminsettingservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Network Admin Servlet: doPost");
+		System.out.println("Network Admin Settings Servlet: doPost");
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/networkadminSetting.jsp").forward(req, resp);
