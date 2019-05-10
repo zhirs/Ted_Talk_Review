@@ -43,6 +43,8 @@
 			</form>
 		</div>
 		<hr>
+		
+		
 		<p>Review queue</p>
 		<div class = "reviewQueue">
 			<c:forEach var="review" items="${ReviewQueue}">

@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Student;
 import tedtalkDB.persist.DerbyDatabase;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private int profID = -1;
 	private int roleID;
 	private DerbyDatabase derby;
 	@Override
