@@ -13,19 +13,65 @@ import tedtalkDB.persist.DerbyDatabase;
 
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//DATABASE INSTANCE:
+	DerbyDatabase derby = new DerbyDatabase();
+	//VARIABLES:
 	private String username = null;
+	private String review0 = null;
+	private String review1 = null;
+	private String review2 = null;
+	private String common1 = null;
+	private String common2 = null;
+	private int avgRating  = 0;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
-		// call JSP to generate empty form
+		review0 = (String) req.getSession().getAttribute("review0");
+		review1 = (String) req.getSession().getAttribute("review1");
+		review2 = (String) req.getSession().getAttribute("review2");
+		common1 = (String) req.getSession().getAttribute("common1");
+		common2 = (String) req.getSession().getAttribute("common2");
+
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
+			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
+			//String review0 = "Joseph Landau's Symposium";
+			ArrayList<Review> derbyResults = derby.findReview(review2);//SEARCHED BY TITLE
+			
+			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
+			req.setAttribute("description", derbyResults.get(0).getDesc());
+			req.setAttribute("presenterName", derbyResults.get(0).getPres());
+			req.setAttribute("url", derbyResults.get(0).getURL());
+			req.setAttribute("tag", derbyResults.get(0).getTag());
+			req.setAttribute("name",derbyResults.get(0).getName());
+			
+			//DISPLAY RELATED REVIEWS:
+			ArrayList<Review> tester = derby.findReview(review1);
+			req.setAttribute("common1Title", tester.get(0).getName());
+			req.setAttribute("common1URL", tester.get(0).getURL());
+			req.setAttribute("common1Rate", tester.get(0).getRate());
+			
+			ArrayList<Review> tester1 = derby.findReview(review2);			
+			req.setAttribute("common2Title", tester1.get(0).getName());
+			req.setAttribute("common2URL", tester1.get(0).getURL());
+			req.setAttribute("common2Rate", tester1.get(0).getRate());
+			
+			//AVG RATING:
+			avgRating += tester.get(0).getRate();
+			avgRating += tester1.get(0).getRate();
+			avgRating /= 2;
+
+			req.setAttribute("avgRating", avgRating);
+
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
+
+
 		}
 	}
 	@Override
@@ -36,31 +82,24 @@ public class reviewservlet extends HttpServlet {
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
 		DerbyDatabase derby = new DerbyDatabase();
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
+		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
 		
-		//USE OF THE ORGINAL MODEL TO SET ATTRIB:
+		//USE OF THE DATABASE'S REVIEW MODEL TO SET ATTRIBUTES:
 		handle.setDesc(req.getParameter("description"));
 		handle.setPres(req.getParameter("presenterName"));
 		handle.setRate(req.getIntHeader("rating"));
-		handle.setName( req.getParameter("title"));
+		handle.setName(req.getParameter("title"));
 				
-		//FIND OUT WHAT TYPE OF USER IS LOGGED IN CURRENTLY THEN GET THERE PROFID:		
-	//	revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
+		// GET CURRENT USER'S PROFID:	
+		derby.getProfID(username);
 		
-		//GET REVIEWS FROM DATABASE:
-		ArrayList<Review> derbyResults =  derby.findReview("Database");//SEARCHED BY KEYWORD
-		//handle.setDesc((String)derbyResults.get(6));//REVIEW DESCRIPTION;CAN'T CONVERT REVIEW TO STRING...
-							
-		handle.setDesc("TESTING AUTOFILL IN DESC FIELD");
-		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
-		//req.getSession().setAttribute("reviewHandle", handle);//JOES SUGGESTION
-
-		//reviews.add(revController.newReview(req.getSession().getAttribute("username"), rate, topic, pres, desc, profID, revID));
+		//CREATE NEW REVIEW FROM JSP FORM & SET STATUS TO PENDING(0):
+		derby.addReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), derby.getProfID(username), handle.getTag(),0);
 		
-		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);//SHOULD UPDATE CURRENT PAGE 
-		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);//ALSO UPDATE THE PENDING REVIEW SECTION ON PROFILE
-
+		// CALL JSP TO RENDER PROFILE PAGE REFLECTING NEW REVIEW:
+		//HOW DO WE KNOW WHAT JSP TO RENDER?:
+		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
+		//req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
 	}
 	
 }
