@@ -16,7 +16,7 @@ public class createstudentservlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("Create Student Servlet: doGet");	
+		System.out.println("Create Student Servlet: doGet");	 
 		// call JSP to generate empty form
 		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 	}
@@ -26,24 +26,27 @@ public class createstudentservlet extends HttpServlet {
 		
 		System.out.println("Create Student Servlet: doPost");
 		
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String user = req.getParameter("username");
+		String pass = req.getParameter("password");
 		String email = req.getParameter("email");
 		String section = req.getParameter("section");
 		String major = req.getParameter("major");
 		
 		NetworkAdminController NAController = new NetworkAdminController();
 		
-		System.out.println(username);
-		System.out.println(password);
+		System.out.println(user);
+		System.out.println(pass);
 		System.out.println(email);
 		System.out.println(section);
 		System.out.println(major);
 		
-		NAController.addStudents(username, password, email, section, major);
-		
-		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
+		NAController.addStudent(user, pass, email, section, major);
+		if(NAController.checkUsername(user) == 1) {
+			req.setAttribute("error", "Username already taken");
+		}
+		System.out.println("Saved new student in quarantine");
+		// now call the JSP to render the new page	
+		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);	
 	}
-	
+		
 }
