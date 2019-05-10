@@ -79,7 +79,7 @@
     <servlet-class>tedtalk.servlet.removestudentservlet</servlet-class>
 </servlet>
 <servlet>
-<servlet-name>resultServlet</servlet-name>
+	<servlet-name>resultServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.resultservlet</servlet-class>
 </servlet>
 <servlet>
@@ -98,6 +98,7 @@
 	<servlet-name>approvedStudentsServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.approvedStudents</servlet-class>
 </servlet>
+    
 
 <!-- servlet mapping -->
 <servlet-mapping>
@@ -134,7 +135,7 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminServlet</servlet-name>
-	<url-pattern>/networkadmin</url-pattern>
+	<url-pattern>/networkAdmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>

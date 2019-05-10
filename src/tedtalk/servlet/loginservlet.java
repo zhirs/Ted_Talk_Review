@@ -64,6 +64,8 @@ public class loginservlet extends HttpServlet {
 			session.setAttribute("username", user);
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
+			// global review status
+			session.setAttribute("modStat", derby.getGlobalMod());
 			if(derby.getRole(user) == 2){
 				String section = derby.getSection(login.getprofID());
 				session.setAttribute("section", section);
@@ -72,10 +74,14 @@ public class loginservlet extends HttpServlet {
 //			System.out.println(role);
 			session.setAttribute("role", role);
 			if(role==0) {
+				// if admin get modStat
+				session.setAttribute("moderator", derby.getModStat(login.getprofID()));
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
 			}
 			else if(role==1) {
+				// if professor get mod
+				session.setAttribute("moderator", derby.getMod(login.getprofID()));
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/professorHome");
 			}

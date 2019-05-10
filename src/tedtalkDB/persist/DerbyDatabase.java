@@ -27,6 +27,30 @@ public class DerbyDatabase implements IDatabase {
 			throw new IllegalStateException("Could not load Derby driver");
 		}
 	}
+	/*
+	 * REVIEW:
+	 * url, name, rate, pres, description, prof_id, tag, status, pubDate
+	 */
+	
+	/*
+	 * ACCOUNT:
+	 * username, password, email, role
+	 */
+	
+	/*
+	 * ADMIN:
+	 * prof_id, modstat
+	 */
+	
+	/*
+	 * PROFESSOR:
+	 * prof_id, mod
+	 */
+	
+	/*
+	 * STUDENT:
+	 * prof_id, section, major
+	 */
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
@@ -383,7 +407,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					if(storedStudentPass != null) {
 						if(BCrypt.checkpw(pass, storedStudentPass)){
-							//System.out.println("Found Account");
+							System.out.println("Found Account");
 							return true;
 						}
 					}
@@ -458,7 +482,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						//System.out.println("Found reviews");
+						System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -903,13 +927,13 @@ public class DerbyDatabase implements IDatabase {
 	protected NetworkAdmin loadAdmin(ResultSet resultSet, int index) throws SQLException {
 		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
-		//System.out.print("The profile id is: " + profID);
+		System.out.print(profID);
 		String username = resultSet.getString(index++);
-		//System.out.print(" The username is: " + username);
+		System.out.print(username);
 		String password = resultSet.getString(index++);
 		
 		String email = resultSet.getString(index++);
-		//System.out.println(" The back up email is: " + email);
+		System.out.print(email);
 		int modStat = resultSet.getInt(index++);
 		NetworkAdmin adminX = new NetworkAdmin(username, password, email, profID);
 		adminX.setModStat(modStat);
@@ -1326,7 +1350,7 @@ public class DerbyDatabase implements IDatabase {
 						foundProfID = resultSet1.getInt(1);
 					}
 					if(foundProfID != -1) {
-						//System.out.println("Found Account");
+						System.out.println("Found Account");
 						return foundProfID;
 					}
 					return null;
@@ -1698,15 +1722,14 @@ public class DerbyDatabase implements IDatabase {
 				
 				try { 
 					stmt1 = conn.prepareStatement(
-						" select modStat "+
+						" select modstat "+
 						" from admins "
 					);
 					resultSet1 = stmt1.executeQuery();
 					
-					int i = 0;
 					while(resultSet1.next()) {
 						// gets next mod from admin
-						int modStat = resultSet1.getInt(i++);
+						int modStat = resultSet1.getInt(1);
 						switch(modStat) {
 						case 1:
 							// if off, subract, otherwise add
@@ -1740,7 +1763,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1 = conn.prepareStatement(
 						" delete "+
 						" from reviews"
-						+ "where prof_ID = ?"
+						+ "where prof_id = ?"
 						+ "and name = ?"
 					);
 					stmt1.setInt(1, profID);
@@ -1797,41 +1820,6 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	@Override
-	public ArrayList<Review> getReviewByStatus(){
-		return executeTransaction(new Transaction<ArrayList<Review>>() {
-			@Override
-			public ArrayList<Review> execute(Connection conn) throws SQLException {
-				ArrayList<Review> reviews = new ArrayList<Review>();
-				PreparedStatement stmt1 = null;
-				ResultSet resultSet1 = null;
-				
-				try {
-					stmt1 = conn.prepareStatement(
-							"select * "
-							+ "from reviews "
-							+ "where status = 0 ");
-					//stmt1.setInt(1, profID);
-					resultSet1 = stmt1.executeQuery();
-					while(resultSet1.next()) {
-						Review review = new Review();
-						loadReview(review, resultSet1, 1);
-						reviews.add(review);
-					}
-					if(reviews.size() >= 1) {
-						//System.out.println("Found reviews");
-						return reviews;
-					}
-				}
-				finally {
-					DBUtil.closeQuietly(conn);
-				}
-				return reviews;
-			}
-		}
-		);
-	}
-	
 	@Override
 	public ArrayList<String> parseTitle(String title){
 		ArrayList<String> keys = new ArrayList<String>();
@@ -2109,27 +2097,31 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public ArrayList<Student> unapprovedStudents() {
+	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major) {
 		return executeTransaction(new Transaction<ArrayList<Student>>() {
 			@Override
 			public ArrayList<Student> execute(Connection conn) throws SQLException {
 				//  Auto-generated method stub
 				ArrayList<Student> students= new ArrayList<Student>();
 				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"select username, password, email, section, major " +
+						"select username, password, email, section, major" +
 						"from newStudents "
-					);					
+					);
 					resultSet1 = stmt1.executeQuery();
+					
+					resultSet1 = stmt2.executeQuery();
 					while(resultSet1.next()) {
+						int i = 1;
 						Student student = new Student();
-						student.setUsername(resultSet1.getString(1));
-						student.setPassword(resultSet1.getString(2));
-						student.setEmail(resultSet1.getString(3));
-						student.setSection(resultSet1.getString(4));
-						student.setMajor(resultSet1.getString(5));
+						student.setUsername(resultSet1.getString(i++));
+						student.setPassword(resultSet1.getString(i++));
+						student.setEmail(resultSet1.getString(i++));
+						student.setSection(resultSet1.getString(i++));
+						student.setMajor(resultSet1.getString(i++));
 						students.add(student);
 					}
 					return students;
@@ -2138,6 +2130,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -2280,4 +2273,5 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
+	}	
 }
