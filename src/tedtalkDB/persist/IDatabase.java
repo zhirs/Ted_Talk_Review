@@ -61,5 +61,4 @@ public interface IDatabase {
 	public Integer resetPassword(String username, String password);
 	public Integer averageReviewRating(String url);
 	public ArrayList<Student> denyStudent(String user);
-	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major);
 }
