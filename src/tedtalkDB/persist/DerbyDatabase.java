@@ -2096,6 +2096,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
 	@Override
 	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major) {
 		return executeTransaction(new Transaction<ArrayList<Student>>() {
