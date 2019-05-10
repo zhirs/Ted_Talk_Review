@@ -23,7 +23,7 @@
 		<h4>Welcome ${email} ${session}</h4>		
 		<hr>
 		<div id ="homeButtonRow">
-			<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+			<form action = "${pageContext.servletContext.contextPath}/studentHome" method = "get">
 			<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 			</form>
 			<form action="${pageContext.servletContext.contextPath}/review" method="get"> 

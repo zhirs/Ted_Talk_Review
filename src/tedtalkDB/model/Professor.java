@@ -1,10 +1,15 @@
 package tedtalkDB.model;
 
+import java.util.ArrayList;
+
+import tedtalkDB.persist.DerbyDatabase;
+
 public class Professor extends Account{
 	// moderator int determines who reviews reviews
 	// 0 is not a mod, 1 is a mod
 	private int mod;
 	private int professorID;
+	private DerbyDatabase derby;
 	public Professor(String user, String pass, String email, int profID) {
 		super(user, pass, email, profID);
 	}
@@ -12,6 +17,7 @@ public class Professor extends Account{
 
 	public Professor() {
 		// TODO Auto-generated constructor stub
+		derby= new DerbyDatabase();
 	}
 	
 	

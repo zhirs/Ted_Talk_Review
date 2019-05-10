@@ -19,7 +19,7 @@
 		</span>
 		<h1>Network Admin Settings</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -40,21 +40,13 @@
 		<input type = "Submit" name = "createStudent" class="button" value = "Create Student">
 		</form>
 		<br><br><br>
-		Promote/demote an account here:<br>
+		promote/demote an account here:<br>
 		<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "get">
 		<input type = "Submit" name = "promoteDemote" class="button" value = "Promote/Demote">
-		</form>
 		<br><br><br>
-		Remove an account here:<br>
+		or remove an account here:<br>
 		<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "get">
 		<input type = "Submit" name = "removeAcc" class="button" value = "Remove Account">
-		</form>
-		<br><br><br>
-		Or change reviewing(on/off):<br>
-		${globalModStat}<br>
-		your current reviewing status is: ${currentStat}<br>
-		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "post">
-		<input type = "Submit" name = "moderatorStatus" class="button" value = "On/Off">
 		</form>
 	</body>
 </html>

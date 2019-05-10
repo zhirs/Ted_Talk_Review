@@ -27,30 +27,6 @@ public class DerbyDatabase implements IDatabase {
 			throw new IllegalStateException("Could not load Derby driver");
 		}
 	}
-	/*
-	 * REVIEW:
-	 * url, name, rate, pres, description, prof_id, tag, status, pubDate
-	 */
-	
-	/*
-	 * ACCOUNT:
-	 * username, password, email, role
-	 */
-	
-	/*
-	 * ADMIN:
-	 * prof_id, modstat
-	 */
-	
-	/*
-	 * PROFESSOR:
-	 * prof_id, mod
-	 */
-	
-	/*
-	 * STUDENT:
-	 * prof_id, section, major
-	 */
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
@@ -407,7 +383,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					if(storedStudentPass != null) {
 						if(BCrypt.checkpw(pass, storedStudentPass)){
-							System.out.println("Found Account");
+							//System.out.println("Found Account");
 							return true;
 						}
 					}
@@ -482,7 +458,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -927,13 +903,13 @@ public class DerbyDatabase implements IDatabase {
 	protected NetworkAdmin loadAdmin(ResultSet resultSet, int index) throws SQLException {
 		// Auto-generated method stub
 		int profID = resultSet.getInt(index++);
-		System.out.print(profID);
+		//System.out.print("The profile id is: " + profID);
 		String username = resultSet.getString(index++);
-		System.out.print(username);
+		//System.out.print(" The username is: " + username);
 		String password = resultSet.getString(index++);
 		
 		String email = resultSet.getString(index++);
-		System.out.print(email);
+		//System.out.println(" The back up email is: " + email);
 		int modStat = resultSet.getInt(index++);
 		NetworkAdmin adminX = new NetworkAdmin(username, password, email, profID);
 		adminX.setModStat(modStat);
@@ -1350,7 +1326,7 @@ public class DerbyDatabase implements IDatabase {
 						foundProfID = resultSet1.getInt(1);
 					}
 					if(foundProfID != -1) {
-						System.out.println("Found Account");
+						//System.out.println("Found Account");
 						return foundProfID;
 					}
 					return null;
@@ -1722,14 +1698,15 @@ public class DerbyDatabase implements IDatabase {
 				
 				try { 
 					stmt1 = conn.prepareStatement(
-						" select modstat "+
+						" select modStat "+
 						" from admins "
 					);
 					resultSet1 = stmt1.executeQuery();
 					
+					int i = 0;
 					while(resultSet1.next()) {
 						// gets next mod from admin
-						int modStat = resultSet1.getInt(1);
+						int modStat = resultSet1.getInt(i++);
 						switch(modStat) {
 						case 1:
 							// if off, subract, otherwise add
@@ -1763,7 +1740,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1 = conn.prepareStatement(
 						" delete "+
 						" from reviews"
-						+ "where prof_id = ?"
+						+ "where prof_ID = ?"
 						+ "and name = ?"
 					);
 					stmt1.setInt(1, profID);
@@ -1820,6 +1797,41 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public ArrayList<Review> getReviewByStatus(){
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where status = 0 ");
+					//stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						//System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);
+	}
+	
 	@Override
 	public ArrayList<String> parseTitle(String title){
 		ArrayList<String> keys = new ArrayList<String>();
@@ -2134,5 +2146,126 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-	}	
+	}
+
+	@Override
+	public Integer resetPassword(String username, String password) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update accounts "
+							+ "set password = ? "
+							+ "where username = ? ");
+					stmt1.setString(1, password);
+					stmt1.setString(2, username);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);	
+	}
+
+	@Override
+	public Integer averageReviewRating(String url) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				int avrgSum = 0;
+				int counter=0;
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where url = ? ");
+					stmt1.setString(1, url);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						avrgSum+= review.getRate();
+						counter++;
+					}
+					avrgSum = avrgSum/counter;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return avrgSum;
+			}
+		}
+		);
+	}
+
+	@Override
+	public Integer changeReviewStatus(int status, int rev_id) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update reviews "
+							+ "set status = ? "
+							+ "where rev_id = ? ");
+					stmt1.setInt(1, status);
+					stmt1.setInt(2, rev_id);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+
+	@Override
+	public Review findReviewByRevID(int rev_id) {
+		return executeTransaction(new Transaction<Review>() {
+			@Override
+			public Review execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				Review review = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where reviews.rev_id  = ? ");
+					stmt1.setInt(1, rev_id);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						loadReview(review, resultSet1, 1);	//null pointer exception here
+					}
+					
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(conn);
+				}
+				return review;	//if the resultSet doesn't find anything it will return a nullpointer exception
+			}
+			
+		}
+		);
+	}
 }
