@@ -2125,7 +2125,6 @@ public class DerbyDatabase implements IDatabase {
 					);
 					resultSet1 = stmt1.executeQuery();
 					
-					resultSet1 = stmt2.executeQuery();
 					while(resultSet1.next()) {
 						int i = 1;
 						Student student = new Student();
@@ -2233,38 +2232,6 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(conn);
 				}
 			}
-		}
-		);
-	}
-
-	@Override
-	public Review findReviewByRevID(int rev_id) {
-		return executeTransaction(new Transaction<Review>() {
-			@Override
-			public Review execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				ResultSet resultSet1 = null;
-				Review review = null;
-				try {
-					stmt1 = conn.prepareStatement(
-							"select * "
-							+ "from reviews "
-							+ "where reviews.rev_id  = ? ");
-					stmt1.setInt(1, rev_id);
-					resultSet1 = stmt1.executeQuery();
-					while(resultSet1.next()) {
-						loadReview(review, resultSet1, 1);	//null pointer exception here
-					}
-					
-				}
-				finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(conn);
-				}
-				return review;	//if the resultSet doesn't find anything it will return a nullpointer exception
-			}
-			
 		}
 		);
 	}

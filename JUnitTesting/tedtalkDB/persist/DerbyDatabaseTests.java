@@ -27,7 +27,6 @@ public class DerbyDatabaseTests {
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
 	ArrayList<NetworkAdmin> admins= null;	
-	Review review = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -661,18 +660,12 @@ public class DerbyDatabaseTests {
 		}
 	}
 	@Test
-	public void testFindReviewByRevID() {
-		int rev_id = 1;
-		review = db.findReviewByRevID(rev_id);
-		assertTrue(review.getName().equals("Joseph Landau's Symposium"));
-	}
-	@Test
 	public void testChangeReviewStatus() {
 		int rev_id = 1;
 		int status= 1;
 		db.changeReviewStatus(status, rev_id);
-		review = db.findReviewByRevID(rev_id);
-		assertEquals(review.getStatus(), 1);
+		reviews = db.findReview("Joseph Landau's Symposium");
+		assertEquals(reviews.get(0).getStatus(), 1);
 	}
 	
 	@Test

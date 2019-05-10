@@ -6,7 +6,6 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  
 <servlet>
 	<servlet-name>homeServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.homeservlet</servlet-class>
@@ -94,7 +93,6 @@
     <servlet-name>sentResetToEmailServlet</servlet-name>
     <servlet-class>tedtalk.servlet.sentresettoemailservlet</servlet-class>
 </servlet>
-    
 
 <!-- servlet mapping -->
 <servlet-mapping>
