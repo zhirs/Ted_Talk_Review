@@ -1639,7 +1639,8 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
-				switch(getRole(user)) {
+				int role = getRole(user);
+				switch(role) {
 				case 0:
 					removeFromAdmin(user);
 					break;
@@ -1649,7 +1650,6 @@ public class DerbyDatabase implements IDatabase {
 				default:
 					removeFromStudent(user);	
 				}
-				int role = getRole(user);
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
 				int newRole = 0;
@@ -1740,7 +1740,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1 = conn.prepareStatement(
 						" delete "+
 						" from reviews"
-						+ "where profID = ?"
+						+ "where prof_ID = ?"
 						+ "and name = ?"
 					);
 					stmt1.setInt(1, profID);
