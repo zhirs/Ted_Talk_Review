@@ -27,7 +27,6 @@ public class DerbyDatabaseTests {
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
 	ArrayList<NetworkAdmin> admins= null;	
-	Review review = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -647,74 +646,18 @@ public class DerbyDatabaseTests {
 	}
 	
 	@Test
-	public void testUnapprovedStudents() {
-		ArrayList<Student> newbs = db.unapprovedStudents();
-		int preSize = newbs.size();
-		String user = "Zack";
-		String pass = "hirs";
-		String email = "zhirs6@ycp.edu";
-		String section = "CS320";
-		String major = "Civil Engineering";
-		db.addNewStudent(user, pass, email, section, major);
-		ArrayList<Student> superNewbs = db.unapprovedStudents();
-		int postSize = superNewbs.size();
-		db.approveStudent(user);
-		db.removeAccount(user, db.getRole(user));
-		if(postSize <= preSize) {
-			fail("Newstudent not added");
+	public void testGetGlobalModStat() {
+		for(int x = 1; x <= 4; x ++) {
+			db.updateModStat(x, 1);
 		}
-	}
-
-	
-	@Test
-	public void testGetReviewByStatus() {
-		reviews = db.getReviewByStatus();
-		if(reviews.isEmpty()) {
-			fail("The List was not filled with reviews");
-		}
-		else {
-			System.out.println("The descrption is " + reviews.get(0).getDesc());
-			System.out.println("The descrption is " + reviews.get(1).getDesc());
-			System.out.println("The descrption is " + reviews.get(2).getDesc());
-			assertTrue(reviews.get(0).getDesc().equals("Please don't flunk me"));
-		}
-	}
-	@Test
-	public void testFindReviewByRevID() {
-		int rev_id = 1;
-		review = db.findReviewByRevID(rev_id);
-		assertTrue(review.getName().equals("Joseph Landau's Symposium"));
-	}
-	@Test
-	public void testChangeReviewStatus() {
-		int rev_id = 1;
-		int status= 1;
-		db.changeReviewStatus(status, rev_id);
-		review = db.findReviewByRevID(rev_id);
-		assertEquals(review.getStatus(), 1);
-	}
-	
-	@Test
-	public void testResetPassword() {
-		String oldPassword = db.setLogin("student1").getPassword();
-		String username = "student1";
-		String newPassword = "testPassword";
-		System.out.println("The old password is " + oldPassword);
-		db.resetPassword(username, newPassword);
-		String currentPassword = db.setLogin(username).getPassword();
-		System.out.println("The new password is " + currentPassword);
-		assertTrue(currentPassword.equals(newPassword));
-		assertFalse(currentPassword.equals(oldPassword));
 		
-		db.resetPassword(username, oldPassword);
+		int global = db.getGlobalMod();
+		assertTrue(global < 1);
+		
+		for(int x = 1; x <= 4; x ++) {
+			db.updateModStat(x, 0);
+		}
 	}
-	@Test
-	public void testAverageReviewRating() {
-		String url = "www.ilovedb.com";
-		int avrgRate = db.averageReviewRating(url);
-		assertEquals(avrgRate, 5);
-	}
-
 }
 	
 

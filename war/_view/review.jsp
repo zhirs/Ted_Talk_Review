@@ -50,12 +50,8 @@
 			 			<td> <input type="text" name = "description" placeholder = "e.g. wearable tech is the future!" required = "required" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" value="${reviewHandle}"> </td>
-			 		</tr>
-			 		<tr><!-- consider having click to input rather than user entering asterisk -->
-			 			<td> <input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" value="${reviewHandle}"> </td>
-			 		</tr>
-			 		
+			 			<td> <input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" value="${reviewHandle}"> </td>
+			 		</tr>		
 			 	
 		 		</table>
 		 				 <%--This is the textfield for the review's description --%> 
@@ -63,6 +59,13 @@
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
 			
 			<textarea id="cct_embed_input_text" name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
+			   
+			   <div id="star5" class="notation-star" onClick="notation(this.id);"></div>
+			   <div id="star4" class="notation-star" onClick="notation(this.id);"></div>
+			   <div id="star3" class="notation-star" onClick="notation(this.id);"></div>
+			   <div id="star2" class="notation-star" onClick="notation(this.id);"></div>
+			   <div id="star1" class="notation-star" onClick="notation(this.id);"></div>
+			   <input type="hidden" id="notationNote" name="notation_note" value="0">
 			<input type = "Submit" class="button2" value = "Submit Review">
 			</form>
 			<div id="cct_embed_result"></div>

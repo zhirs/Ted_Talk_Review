@@ -12,15 +12,12 @@ import tedtalk.model.ProfileModel;
 import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
-import tedtalkDB.persist.DerbyDatabase;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private int profID = -1;
-	private int roleID;
-	private DerbyDatabase derby;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -75,18 +72,6 @@ public class reviewservlet extends HttpServlet {
 		//reviews.add(revController.newReview(req.getSession().getAttribute("username"), rate, topic, pres, desc, profID, revID));
 		
 		// now call the JSP to render the new page
-		//roleID = (int) derby.getRole(username);	//for some reason this method works but creates a null pointer exception
-		//System.out.println(username);
-		/*
-		if(roleID == 0) {
-			req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
-		}
-		else if(roleID== 1) {
-			req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
-		}
-		else{
-			req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
-		} */
 		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 	}
 	
