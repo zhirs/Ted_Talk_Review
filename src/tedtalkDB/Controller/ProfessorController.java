@@ -1,4 +1,6 @@
 package tedtalkDB.Controller;
+import java.util.ArrayList;
+
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
@@ -41,6 +43,17 @@ public class ProfessorController {
 	public void removeAccount(String student) {
 		// TODO Auto-generated method stub
 		derby.removeAccount(student, 1);
+	}
+	public ArrayList<Review> getReviewQueue(){
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		System.out.println(professorModel.getMod());
+		if((professorModel.getMod() == 1) || (professorModel.getMod()==0)) {
+			reviews.addAll(derby.getReviewByStatus());
+		}
+		else {
+			System.out.println("Error you are not a moderator ");
+		}
+		return reviews;
 	}
 
 }

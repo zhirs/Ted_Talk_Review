@@ -37,4 +37,6 @@ public interface IDatabase {
 	public Integer getProfID(String user);
 	public Integer getRole(String user);
 	public ArrayList<Integer> getRevID(String keyword);
+	public ArrayList<Review> getReviewByStatus();
+	public Integer resetPassword(String username, String password);
 }

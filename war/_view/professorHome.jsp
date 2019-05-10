@@ -43,6 +43,32 @@
 			</form>
 		</div>
 		<hr>
-		
+		<p>Review queue</p>
+		<div class = "reviewQueue">
+			<c:forEach var="review" items="${ReviewQueue}">
+			<table>
+				<tr>
+					<td> <input type="text" name = "name" placeholder = "e.g. my first review" required = "required" value="${review.getName()}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required" value="${review.getPres()}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" value="${review.getURL()}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "description" placeholder = "e.g. wearable tech is the future!" required = "required" value="${review.getDesc()}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td> <input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" value="${review.getTag()}"readonly> </td>
+		 		</tr>
+		 		<tr><!-- consider having click to input rather than user entering asterisk -->
+		 			<td> <input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" value="${review.getRate()}"readonly> </td>
+		 		</tr>
+			</table>
+			
+					<c:out value = "${UpdatedReviews}"/> <br>Created Review<br>
+			</c:forEach>
+	</div>
 	</body>
 </html>

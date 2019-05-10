@@ -82,7 +82,14 @@
     <servlet-name>removeStudentServlet</servlet-name>
     <servlet-class>tedtalk.servlet.removestudentservlet</servlet-class>
 </servlet>
-
+<servlet>
+    <servlet-name>resetPasswordServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.resetpasswordservlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>sentResetToEmailServlet</servlet-name>
+    <servlet-class>tedtalk.servlet.sentresettoemailservlet</servlet-class>
+</servlet>
     
 
 <!-- servlet mapping -->
@@ -124,7 +131,7 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminServlet</servlet-name>
-	<url-pattern>/networkAdmin</url-pattern>
+	<url-pattern>/networkadmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
@@ -161,6 +168,14 @@
 <servlet-mapping>
 	<servlet-name>removeStudentServlet</servlet-name>
 	<url-pattern>/removeStudent</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>resetPasswordServlet</servlet-name>
+	<url-pattern>/resetPassword</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>sentResetToEmailServlet</servlet-name>
+	<url-pattern>/sentResetToEmail</url-pattern>
 </servlet-mapping>
 
 </web-app>	

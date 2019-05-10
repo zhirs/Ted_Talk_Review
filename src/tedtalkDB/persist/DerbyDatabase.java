@@ -1764,4 +1764,65 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public ArrayList<Review> getReviewByStatus(){
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where status = 0 ");
+					//stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						//System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);
+	}
+
+	@Override
+	public Integer resetPassword(String username, String password) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"update accounts "
+							+ "set password = ? "
+							+ "where username = ? ");
+					stmt1.setString(1, password);
+					stmt1.setString(2, username);
+					stmt1.execute();
+					return 1;
+				}
+				catch(SQLException e){
+					return -1;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);	
+	}
 }

@@ -593,8 +593,31 @@ public class DerbyDatabaseTests {
 			fail("Incorrect review found");
 		}
 	}
+	@Test
+	public void testGetReviewByStatus() {
+		reviews = db.getReviewByStatus();
+		if(reviews.isEmpty()) {
+			fail("The List was not filled with reviews");
+		}
+		else {
+			assertTrue(reviews.get(0).getDesc().equals("This will be the large part of the review taking up much room and containing a lot of information"));
+		}
+	}
 	
-	
+	@Test
+	public void testResetPassword() {
+		String oldPassword = db.setLogin("student1").getPassword();
+		String username = "student1";
+		String newPassword = "testPassword";
+		System.out.println("The old password is " + oldPassword);
+		db.resetPassword(username, newPassword);
+		String currentPassword = db.setLogin(username).getPassword();
+		System.out.println("The new password is " + currentPassword);
+		assertTrue(currentPassword.equals(newPassword));
+		assertFalse(currentPassword.equals(oldPassword));
+		
+		db.resetPassword(username, oldPassword);
+	}
 }
 	
 
