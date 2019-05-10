@@ -17,7 +17,7 @@ import tedtalkDB.model.Tags;
 import tedtalkDB.persist.*;
 
 public class TestFakeDatabase {
-	private FakeDatabase test = new FakeDatabase();
+	private FakeDatabase test = null;
 	
 	@Test
 	public void credCheckZack() {

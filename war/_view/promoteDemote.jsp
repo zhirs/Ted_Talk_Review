@@ -39,6 +39,7 @@
 			 			<td> <input type="text" name = "promo" placeholder = "promote/demote" required = "required" value="${promo}"/> </td>
 			 		</tr>	 	
 		 </table>
+		  <div id="cct_embed_counts" align ="center">
 		<input type = "Submit" class="button2" value = "Promote/Demote">
 		</form>
 	</body>

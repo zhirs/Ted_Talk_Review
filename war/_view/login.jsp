@@ -33,6 +33,7 @@
 		 			<button type="submit" name="forgotPW" value = "Forgot Password ">Forgot Password </button>
 		 		</form>
 		 		<br><br>
+      </form>
 		 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 				<input type = "Submit" class="button2" value = "Create Account">
 			 </form>

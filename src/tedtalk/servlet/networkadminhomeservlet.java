@@ -25,7 +25,7 @@ public class networkadminhomeservlet extends HttpServlet {
 		derby = new DerbyDatabase();
 
 		// call JSP to generate empty form
-		if(username == null) {
+		if(username == null) { 
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {

@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
@@ -21,7 +22,7 @@ public class DerbyDatabaseTests {
 
 	private IDatabase db = null;
 	private int role;
-	
+	 
 	ArrayList<Student> students = null;
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
@@ -61,7 +62,6 @@ public class DerbyDatabaseTests {
 				
 		// insert new book (and possibly new author) into DB
 		admins = db.addAdmin(user, pass, email, modStat);
-
 		// check the return value - should be a book_id > 0
 		if (admins.size() >  0)
 		{
@@ -86,6 +86,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new admin into admin table: <" + user + ">");
 			fail("Failed to insert new admin <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddProfessor() {
@@ -125,6 +126,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new professor into professor table: <" + user + ">");
 			fail("Failed to insert new professor <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddReview() {
@@ -168,6 +170,7 @@ public class DerbyDatabaseTests {
 			fail("Failed to insert new review");
 		}
 	}
+	
 	@Test
 	public void testAddStudent() {
 		System.out.println("\n*** Testing addProfessor***");
@@ -207,6 +210,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new student into student table: <" + user + ">");
 			fail("Failed to insert new student<" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAdminByProfID() {
@@ -546,7 +550,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testUpdateStatus() {
 		System.out.println("\n*** Testing updateStatus***");
-		int revID = 50001;
+		int revID = 1;
 		int status = 2;
 		int initialStatus = db.getStatus(revID);
 		int found = db.updateStatus(revID, status);
@@ -641,6 +645,7 @@ public class DerbyDatabaseTests {
 			fail("failed existing username hit");
 		}
 	}
+
 	
 	@Test
 	public void testGetReviewByStatus() {
@@ -690,6 +695,7 @@ public class DerbyDatabaseTests {
 		int avrgRate = db.averageReviewRating(url);
 		assertEquals(avrgRate, 5);
 	}
+
 }
 	
 

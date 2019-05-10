@@ -22,7 +22,7 @@ import tedtalkDB.model.keywords;
 public class DerbyDatabase implements IDatabase {
 	static {
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver"); 
 		} catch (Exception e) {
 			throw new IllegalStateException("Could not load Derby driver");
 		}
@@ -114,6 +114,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt4 = null;
 				PreparedStatement stmt5 = null;
 				PreparedStatement stmt6 = null;
+				PreparedStatement stmt7 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table admins(" +
@@ -192,8 +193,20 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt6.executeUpdate();
 					System.out.println("Keywords table created");
-							
 					
+					stmt7 = conn.prepareStatement(
+							"create table newStudents(" + 
+							"	temp_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	username varchar(100), " +
+							"	password varchar(64), "	+
+							"	email varchar(200), " + 
+							"	section varchar(200), " +
+							" 	major varchar(200) " +
+							")");
+					stmt7.executeUpdate();
+					System.out.println("newStudents table created");
+				
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -202,6 +215,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
 					DBUtil.closeQuietly(stmt6);
+					DBUtil.closeQuietly(stmt7);
 				}
 			}
 		});
@@ -218,6 +232,7 @@ public class DerbyDatabase implements IDatabase {
 				List<Review> reviewList;
 				List<Account> accountList;
 				List<keywords> keyList;
+				List<Student> newStudentList;
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
@@ -225,6 +240,7 @@ public class DerbyDatabase implements IDatabase {
 					reviewList = InitialData.getReviews();
 					accountList = InitialData.getAccounts();
 					keyList = InitialData.getKeywords();
+					newStudentList = InitialData.getNewStudents();
 				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -235,7 +251,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertReview       = null;
 				PreparedStatement insertAccount = null;
 				PreparedStatement insertKeys = null;
-				
+				PreparedStatement insertNewStudents = null;
 				try {
 					insertAccount = conn.prepareStatement("insert into accounts(username, password, email, role) values (?, ?, ?, ?)");
 					for (Account account: accountList) {
@@ -313,6 +329,18 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertKeys.executeBatch();
 					System.out.println("Keywords table populated");
+					
+					insertNewStudents = conn.prepareStatement("insert into newStudents (username, password, email, section, major) values (?, ?, ?, ?, ?)");
+					for(Student newStudent : newStudentList) {
+						insertNewStudents.setString(1, newStudent.getUserName());
+						insertNewStudents.setString(2, newStudent.getPassword());
+						insertNewStudents.setString(3, newStudent.getEmail());
+						insertNewStudents.setString(4, newStudent.getSection());
+						insertNewStudents.setString(5, newStudent.getMajor());
+						insertNewStudents.addBatch();
+					}
+					insertNewStudents.executeBatch();
+					System.out.println("NewStudents table populated");
 					System.out.println("All tables populated");
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied				
@@ -324,6 +352,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertStudent);
 					DBUtil.closeQuietly(insertAdmin);
 					DBUtil.closeQuietly(insertAccount);
+					DBUtil.closeQuietly(insertKeys);
+					DBUtil.closeQuietly(insertNewStudents);
 				}
 			}
 		});
@@ -940,7 +970,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setInt(6, profID);
 					stmt1.setString(7, tag);
 					stmt1.setInt(8, status);
-					
+				
 					java.util.Date date = new java.util.Date();
 					java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 					stmt1.setDate(9, sqlDate);
@@ -953,7 +983,6 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setString(1, URL);
 					resultSet1 = stmt2.executeQuery();
-					
 					while(resultSet1.next()) {
 						Review rev = new Review();
 						loadReview(rev, resultSet1, 1);
@@ -1343,7 +1372,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	@Override
 	public Integer addToAdmin(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1385,7 +1414,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 		});
 	}
-	
+	@Override
 	public Integer addToProfessor(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1428,7 +1457,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 		});
 	}
-	
+	@Override
 	public Integer addToStudent(String user) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1471,7 +1500,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 		});
 	}
-
+	@Override
 	// deletes from sub branch
 	public Integer removeFromAdmin(String user) {
 		return executeTransaction(new Transaction<Integer>() {
@@ -1500,7 +1529,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	@Override
 	// deletes from sub branch
 	public Integer removeFromProfessor(String user) {
 		return executeTransaction(new Transaction<Integer>() {
@@ -1530,7 +1559,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	@Override
 	// deletes from sub branch
 	public Integer removeFromStudent(String user) {
 		return executeTransaction(new Transaction<Integer>() {
@@ -1561,6 +1590,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	// deletes from all branches
 	public Integer removeAccount(String user, int role) {
 		return executeTransaction(new Transaction<Integer>() {
@@ -1604,11 +1634,13 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public Integer updateRole(String user, boolean promo) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
-				switch(getRole(user)) {
+				int role = getRole(user);
+				switch(role) {
 				case 0:
 					removeFromAdmin(user);
 					break;
@@ -1618,7 +1650,6 @@ public class DerbyDatabase implements IDatabase {
 				default:
 					removeFromStudent(user);	
 				}
-				int role = getRole(user);
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
 				int newRole = 0;
@@ -1654,6 +1685,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public Integer getGlobalMod() {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1695,6 +1727,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public Integer removeReview(String user, String title) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1707,7 +1740,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1 = conn.prepareStatement(
 						" delete "+
 						" from reviews"
-						+ "where profID = ?"
+						+ "where prof_ID = ?"
 						+ "and name = ?"
 					);
 					stmt1.setInt(1, profID);

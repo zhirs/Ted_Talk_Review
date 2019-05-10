@@ -51,6 +51,7 @@ public class ProfessorController {
 	public void approveStudent(String user) {
 		derby.approveStudent(user);
 	}
+
 	public ArrayList<Review> getReviewQueue(){
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		System.out.println(professorModel.getMod());
@@ -62,5 +63,6 @@ public class ProfessorController {
 		}
 		return reviews;
 	}
+
 
 }

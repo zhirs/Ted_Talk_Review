@@ -9,7 +9,7 @@ public class NetworkAdminController {
 	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST LIKE IT DOES GARBAGE COLLECTION
 	
 	public void setModel(NetworkAdmin NAModel) {
-		this.NAModel = NAModel;
+		this.NAModel = NAModel; 
 	}
 	boolean verified() {
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
@@ -79,6 +79,8 @@ public class NetworkAdminController {
 				derby.updateRole(user, promote);
 			}
 		}
+		role = derby.getRole(user);
+		System.out.println(role);
 	}
 	
 	public void removeAccount(String user) {
@@ -90,5 +92,17 @@ public class NetworkAdminController {
 			//TOGGLE STATUS IN DB TO 1
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
+	}
+	
+	public void addStudent(String user, String pass, String email, String section, String major) {
+		derby.addNewStudent(user, pass, email, section, major);
+	}
+	
+	public void approveStudent(String user) {
+		derby.approveStudent(user);
+	}
+	public int checkUsername(String user) {
+		int result = derby.checkUsername(user);
+		return result;
 	}
 }
