@@ -9,22 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
-import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Review;
-import tedtalkDB.model.Student;
 import tedtalk.controller.ReviewController;
 
-public class reviewservlet extends HttpServlet {
+public class emptyresultservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
-	private int profID = -1;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
-		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
@@ -51,16 +47,16 @@ public class reviewservlet extends HttpServlet {
 		String tags = req.getParameter("tags");
 		int reviewRating = req.getIntHeader("rating");*/
 		
-		handle.setURL(req.getParameter("url"));
-		handle.setName( req.getParameter("title"));
-		handle.setRate(req.getIntHeader("rating"));
-		handle.setPres(req.getParameter("presenterName"));
+	/*	//USE OF THE ORGINAL MODEL TO SET ATTRIB:
 		handle.setDesc(req.getParameter("description"));
-		handle.setTag(req.getParameter("tags"));
-		
+		handle.setPres(req.getParameter("presenterName"));
+		handle.setRate(req.getIntHeader("rating"));
+		handle.setName( req.getParameter("name"));
+		handle.setTopic(req.getParameter("title"));*/
+				
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
+		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
 							
 		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * An interactive query tool for SQLite.
  */
-public class SQLDemo {
+public class SQLDemo { 
 	static class RowList extends ArrayList<List<String>> {
 		private static final long serialVersionUID = 1L;
 	}
