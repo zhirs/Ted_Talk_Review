@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tedtalkDB.Controller.NetworkAdminController;
+import tedtalkDB.model.Student;
 import tedtalkDB.model.Review;
 import tedtalkDB.persist.DerbyDatabase;
 
@@ -29,6 +31,13 @@ public class networkadminhomeservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
+			NetworkAdminController NAController = new NetworkAdminController();
+			ArrayList<Student> names = NAController.loadUnapproveds();
+			ArrayList<String> newbs = new ArrayList<String>();
+			for(Student stud : names) {
+				newbs.add(stud.getUserName());
+			}
+			req.getSession().setAttribute("newbs", newbs);
 			req.getRequestDispatcher("/_view/networkadminHome.jsp").forward(req, resp);
 		}
 	}
@@ -66,7 +75,9 @@ public class networkadminhomeservlet extends HttpServlet {
 		
 		req.setAttribute("reviews" , reviews);
 		System.out.println("Network Admin Home Servlet: doPost");
-		
+		NetworkAdminController NAController = new NetworkAdminController();
+		NAController.approveAllStudents();
+		req.getSession().setAttribute("newbs", "No new students to approve");
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/networkadminHome.jsp").forward(req, resp);
 	}

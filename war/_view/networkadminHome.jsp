@@ -42,6 +42,16 @@
 			</form>
 		</div>
 		<hr>
+		<h3>Accounts pending approval</h3>
+		
+		<c:forEach items="${newbs}" var="newbs">
+      		<td><c:out value="${newbs}"/></td>
+      		<p></p>
+  		</c:forEach>
+
+		<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post"> 
+		<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
+		</form>
 		 <div class = "searchSection">
 			<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post">
 			<input type="text" name = "searchName" placeholder = "Student Username" required = "required" >
