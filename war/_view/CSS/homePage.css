@@ -28,5 +28,11 @@
 	font-size: 9px;
 	}
 	.searchSection{text-align: center;}
+	.reviewQueue{
+	margin: auto;
+  	width: 50%;
+  	border: 3px solid green;
+  	padding: 10px;
+ 	 }
 	</style>
 </html>
