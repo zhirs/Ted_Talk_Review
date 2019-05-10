@@ -7,7 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tedtalk.model.ProfileModel;
+import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Review;
+import tedtalkDB.model.Student;
 import tedtalk.controller.ReviewController;
 import tedtalkDB.persist.DerbyDatabase;
 
@@ -24,6 +27,7 @@ public class reviewservlet extends HttpServlet {
 	private String common2 = null;
 	private int avgRating  = 0;
 	
+	private int profID = -1;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -36,6 +40,7 @@ public class reviewservlet extends HttpServlet {
 		common1 = (String) req.getSession().getAttribute("common1");
 		common2 = (String) req.getSession().getAttribute("common2");
 
+		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}

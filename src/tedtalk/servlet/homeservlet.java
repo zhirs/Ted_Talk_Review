@@ -22,6 +22,7 @@ public class homeservlet extends HttpServlet {
 	String review1 = "Darnell Hill smells funny";
 	String review2 = "Endgame spoilers suck";
 
+	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -46,7 +47,19 @@ public class homeservlet extends HttpServlet {
 			req.setAttribute("review2", derbyResults2.get(0).getName());//GET TITLE OF REVIEW
 
 			//DIRECTED TO HOME JSP:
-			req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
+			/*role = (int) req.getSession().getAttribute("role");
+			if(role==0) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
+			}
+			else if(role==1) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/professorHome");
+			}
+			else if(role ==2) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
+			} */
 		}
 	}
 	@Override
