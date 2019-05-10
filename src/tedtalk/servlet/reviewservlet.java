@@ -23,6 +23,7 @@ public class reviewservlet extends HttpServlet {
 	private String common1 = null;
 	private String common2 = null;
 	private int avgRating  = 0;
+	public ReviewController revController;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -94,7 +95,7 @@ public class reviewservlet extends HttpServlet {
 		derby.getProfID(username);
 		
 		//CREATE NEW REVIEW FROM JSP FORM & SET STATUS TO PENDING(0):
-		derby.addReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), derby.getProfID(username), handle.getTag(),0);
+		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), derby.getProfID(username), handle.getTag());
 		
 		// CALL JSP TO RENDER PROFILE PAGE REFLECTING NEW REVIEW:
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
