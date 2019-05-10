@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import junit.framework.Assert;
 import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
@@ -49,9 +50,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("jlandau2");
 		NAModel.setPassword("tree");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified()); //used to be
+		if(!controllerHandle.verified()) {
+		fail("expected result: true" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: true");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 		
 	}
 	@Test
@@ -60,9 +64,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("zhirs");
 		NAModel.setPassword("monkey");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified()); //used to be
+		if(!controllerHandle.verified()) {
+		fail("expected result: true" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: true");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 		
 	}
 	@Test
@@ -71,9 +78,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("acastro7");
 		NAModel.setPassword("wizard");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified());
-		System.out.println("expected result: true");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified()); //used to be
+		if(!controllerHandle.verified()) {
+		fail("expected result: true" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: true");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 		
 	}
 	@Test
@@ -82,9 +92,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("dhill22");
 		NAModel.setPassword("Monkey");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW1() {
@@ -92,9 +105,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("acastro7");
 		NAModel.setPassword("Monkey");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Existing_User_Invalid_PW2() {
@@ -102,9 +118,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("jlandau2");
 		NAModel.setPassword("wizard");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity0() {
@@ -112,9 +131,13 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("Jlandau2");
 		NAModel.setPassword("Tree");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity1() {
@@ -122,9 +145,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("Dhill22");
 		NAModel.setPassword("banana");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Existing_User_Case_Sensitivity2() {
@@ -132,9 +158,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("acastrO7");
 		NAModel.setPassword("Wizard");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Nonexisting_User0() {
@@ -142,9 +171,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("_dhill22");
 		NAModel.setPassword("nana");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Nonexisting_User1() {
@@ -152,9 +184,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("jlandau20");
 		NAModel.setPassword("tree");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void Test_Verified_Nonexisting_User2() {
@@ -162,9 +197,12 @@ public class NetworkAdminControllerTest {
 		NAModel.setUsername("jlandau20");
 		NAModel.setPassword("tree");
 		//TESTING VERIFIED():
-		assertTrue(controllerHandle.verified() == false);
-		System.out.println("expected result: false");
-		System.out.println("your result: " + controllerHandle.verified());
+		//assertTrue(controllerHandle.verified() == false); //used to be
+		if(controllerHandle.verified()) {
+		fail("expected result: false" + "\n your result: " + controllerHandle.verified());
+		//System.out.println("expected result: false");	//combined all the print statements into one
+		//System.out.println("your result: " + controllerHandle.verified());
+		}
 	}
 	@Test
 	public void testAddAdmin() {

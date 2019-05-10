@@ -19,7 +19,7 @@
 		</span>
 		<h1>Network Admin Settings</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">

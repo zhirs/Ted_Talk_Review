@@ -20,7 +20,7 @@
 		</span>
 		<h1>Network Admin Home</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -52,6 +52,28 @@
 		<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post"> 
 		<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
 		</form>
+		 <div class = "searchSection">
+			<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post">
+			<input type="text" name = "searchName" placeholder = "Student Username" required = "required" >
+			<input type="text" name = "month1" placeholder = "Month" required = "required" >
+			<input type="text" name = "day1" placeholder = "Day" required = "required">
+			<input type="text" name = "year1" placeholder = "Year" required = "required">
+			<br>
+			<input type="text" name = "month2" placeholder = "Month" required = "required" >
+			<input type="text" name = "day2" placeholder = "Day" required = "required">
+			<input type="text" name = "year2" placeholder = "Year" required = "required">
+		 		<button type="submit" name="submit" value = "searchDate">Submit Date</button>
+			 </form>
+		 </div>
+		 <div id = "reviewSection">	
+			<hr>	
+			<p>This should show the return value for all of the reviews</p>
+			
+			<c:forEach var="reviews" items="${reviews}">
+				<c:out value = "${reviews}"/> <br>Another Review<br>
+			</c:forEach>	
+			<hr>					
+		</div>
 		
 	</body>
 </html>
