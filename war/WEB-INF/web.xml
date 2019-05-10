@@ -36,10 +36,6 @@
 	<servlet-class>tedtalk.servlet.reviewservlet</servlet-class>
 </servlet>
 <servlet>
-	<servlet-name>requestServlet</servlet-name>
-	<servlet-class>tedtalk.servlet.requestservlet</servlet-class>
-</servlet>
-<servlet>
 	<servlet-name>professorSettingServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.professorsettingservlet</servlet-class>
 </servlet>
@@ -82,7 +78,10 @@
     <servlet-name>removeStudentServlet</servlet-name>
     <servlet-class>tedtalk.servlet.removestudentservlet</servlet-class>
 </servlet>
-
+<servlet>
+	<servlet-name>resultServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.resultservlet</servlet-class>
+</servlet>
     
 
 <!-- servlet mapping -->
@@ -109,10 +108,6 @@
 <servlet-mapping>
 	<servlet-name>reviewServlet</servlet-name>
 	<url-pattern>/review</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>requestServlet</servlet-name>
-	<url-pattern>/request</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>profileServlet</servlet-name>
@@ -162,5 +157,8 @@
 	<servlet-name>removeStudentServlet</servlet-name>
 	<url-pattern>/removeStudent</url-pattern>
 </servlet-mapping>
-
+<servlet-mapping>
+	<servlet-name>resultServlet</servlet-name>
+	<url-pattern>/result</url-pattern>
+</servlet-mapping>
 </web-app>	

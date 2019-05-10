@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ReviewControllerTest {
 	public void createNewReview() {
 		//result = fake.getReviewList();
 		System.out.println(result.size());
-		String testName = "Wilds";
+		String testName = "Wilds TEST";
 		String testURL = "tEDtalk.com/Wilds";
 		int testRate = 3;
 		String tag = "environmental";
@@ -52,14 +53,23 @@ public class ReviewControllerTest {
 		ArrayList<Review>InitialSize = reviewController.fetchReviews(fakeprofID);
 		int initialSize = InitialSize.size();
 		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
-
+		
 		//System.out.println(result.get(5).getName());
-		assertTrue(test.get(0).getName().equals("Wilds"));
+		assertTrue(test.get(0).getName().equals("Wilds TEST"));
 		assertTrue(test.get(0).getDesc().equals(testDescription));
 		assertTrue(test.get(0).getURL().equals(testURL));
 		
 		ArrayList<Review> doubleCheck = reviewController.fetchReviews(fakeprofID);
 		assertTrue(doubleCheck.size() == (initialSize + 1));
+	}
+	@Test
+	public void testSearch() {
+		String input = "Joseph Landau's Symposium";
+		ArrayList<Review> revs = reviewController.search(input);
+		assertTrue(revs.size() > 0);
+		for(int i = 0; i < revs.size(); i++) {
+			System.out.println(revs.get(i).getDesc());
+		}		
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/
