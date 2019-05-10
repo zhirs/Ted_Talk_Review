@@ -17,7 +17,7 @@ public class networkadminhomeservlet extends HttpServlet {
 		username = (String) req.getSession().getAttribute("username");
 
 		// call JSP to generate empty form
-		if(username == null) {
+		if(username == null) { 
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {

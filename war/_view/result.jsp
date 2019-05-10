@@ -36,6 +36,9 @@
 		</form>
 		<hr>
 		
-
+  			<c:forEach items="${titles}" var="titles">
+      			<td><c:out value="${titles}"/></td>
+  			</c:forEach>
+		
 	</body>
 </html>

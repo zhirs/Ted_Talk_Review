@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class homeservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private int role;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -22,6 +23,19 @@ public class homeservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
+			role = (int) req.getSession().getAttribute("role");
+			if(role==0) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
+			}
+			else if(role==1) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/professorHome");
+			}
+			else if(role ==2) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
+			}
 			req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
 		}
 	}

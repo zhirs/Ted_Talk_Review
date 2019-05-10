@@ -23,7 +23,7 @@ public class loginservlet extends HttpServlet {
 		System.out.println("Login Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
-		if(username != null) {
+		if(username != null) { 
 			req.getSession().setAttribute("username", null);
 			resp.sendRedirect(req.getContextPath() + "/login");
 		}
@@ -60,8 +60,9 @@ public class loginservlet extends HttpServlet {
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
 			session.setAttribute("section", "Section");	//need to change this depending if they are student/admin/ or professor
-			
 			role = derby.getRole(user);	//grabs the role number from accounts to find the correct home page
+//			System.out.println(role);
+			session.setAttribute("role", role);
 			if(role==0) {
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
