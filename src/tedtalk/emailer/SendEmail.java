@@ -38,8 +38,8 @@ public class SendEmail {
 	      properties.put("mail.debug", "true");
 	      properties.put("mail.store.protocol", "pop3");
 	      properties.put("mail.transport.protocol", "smtp");
-	      final String username = "cs320tedtalkreview@gmail.com";//
-	      final String password = "W4yU2!x!LHC5W=r2";
+	      final String username = "Berjoigy@gmail.com";//
+	      final String password = "Newk879*&hi";
 
 	      // Get the default Session object.
 	      Session session = Session.getDefaultInstance(properties, 
@@ -47,32 +47,31 @@ public class SendEmail {
                      protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                      }});
-	      if(isEmailValid(mailTo)) {
-		      try {
-		         // Create a default MimeMessage object.
-		         MimeMessage message = new MimeMessage(session);
-	
-		         // Set From: header field of the header.
-		         message.setFrom(new InternetAddress(mailFrom));
-	
-		         // Set To: header field of the header.
-		         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
-	
-		         // Set Subject: header field
-		         message.setSubject("Ted Talk Review Password Reset");
-	
-		         // Now set the actual message
-		         message.setText("Hello user, please follow this like if you want to reset your password. localhost:8081/tedTalkReview/resetPassword");
-		         
-		         //Sets the date for the message
-		         message.setSentDate(new Date());
-	
-		         // Send message
-		         Transport.send(message);
-		         System.out.println("Sent message successfully....");
-		      } catch (MessagingException mex) {
-		         mex.printStackTrace();
-		      }
+
+	      try {
+	         // Create a default MimeMessage object.
+	         MimeMessage message = new MimeMessage(session);
+
+	         // Set From: header field of the header.
+	         message.setFrom(new InternetAddress(mailFrom));
+
+	         // Set To: header field of the header.
+	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
+
+	         // Set Subject: header field
+	         message.setSubject("This is Adrian, testing stuff");
+
+	         // Now set the actual message
+	         message.setText("This is a test email please do not respond back");
+	         
+	         //Sets the date for the message
+	         message.setSentDate(new Date());
+
+	         // Send message
+	         Transport.send(message);
+	         System.out.println("Sent message successfully....");
+	      } catch (MessagingException mex) {
+	         mex.printStackTrace();
 	      }
 	   }
 	

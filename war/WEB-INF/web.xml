@@ -79,20 +79,12 @@
     <servlet-class>tedtalk.servlet.removestudentservlet</servlet-class>
 </servlet>
 <servlet>
-<servlet-name>resultServlet</servlet-name>
+	<servlet-name>resultServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.resultservlet</servlet-class>
 </servlet>
 <servlet>
 	<servlet-name>pendingServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.pendingservlet</servlet-class>
-</servlet>
-<servlet>
-    <servlet-name>resetPasswordServlet</servlet-name>
-    <servlet-class>tedtalk.servlet.resetpasswordservlet</servlet-class>
-</servlet>
-<servlet>
-    <servlet-name>sentResetToEmailServlet</servlet-name>
-    <servlet-class>tedtalk.servlet.sentresettoemailservlet</servlet-class>
 </servlet>
     
 
@@ -131,7 +123,7 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminServlet</servlet-name>
-	<url-pattern>/networkadmin</url-pattern>
+	<url-pattern>/networkAdmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
@@ -177,13 +169,4 @@
 	<servlet-name>pendingServlet</servlet-name>
 	<url-pattern>/pending</url-pattern>
 </servlet-mapping>
-<servlet-mapping>
-	<servlet-name>resetPasswordServlet</servlet-name>
-	<url-pattern>/resetPassword</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>sentResetToEmailServlet</servlet-name>
-	<url-pattern>/sentResetToEmail</url-pattern>
-</servlet-mapping>
-
 </web-app>	
