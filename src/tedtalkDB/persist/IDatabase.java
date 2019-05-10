@@ -38,8 +38,9 @@ public interface IDatabase {
 	public Integer getProfID(String user);
 	public Integer getRole(String user);
 	public ArrayList<Integer> getRevID(String keyword);
+	public ArrayList<Review> getReviews(int rev_id);
 	public ArrayList<keywords> addKeyword(String keyword, int rev_id);
-	public ArrayList<String> parseTitle(String title, int rev_id);
+	public ArrayList<String> parseTitle(String title);
 	public Integer removeReview(String user, String title);
 	public Integer addToAdmin(String user);
 	public Integer addToProfessor(String user);
@@ -50,4 +51,5 @@ public interface IDatabase {
 	public Integer removeAccount(String user, int role);
 	public Integer updateRole(String user, boolean promo);
 	public Integer getGlobalMod();
+	ArrayList<String> addandParse(String title, int rev_id);
 }

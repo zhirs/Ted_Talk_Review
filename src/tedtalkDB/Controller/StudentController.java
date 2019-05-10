@@ -1,4 +1,6 @@
 package tedtalkDB.Controller;
+import java.util.ArrayList;
+
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 

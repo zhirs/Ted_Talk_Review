@@ -1768,7 +1768,20 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public ArrayList<String> parseTitle(String title, int rev_id){
+	public ArrayList<String> parseTitle(String title){
+		ArrayList<String> keys = new ArrayList<String>();
+		String[] parsed = title.split(" ");
+		for(int i = 0; i < parsed.length - 1; i++) {
+			keys.add(parsed[i]);
+			if(parsed.length > 1) {
+				keys.add(parsed[i] + " " + parsed[i+1]);
+			}
+		}
+		return keys;
+	}
+	
+	@Override
+	public ArrayList<String> addandParse(String title, int rev_id){
 		ArrayList<String> keys = new ArrayList<String>();
 		String[] parsed = title.split(" ");
 		for(int i = 0; i < parsed.length - 1; i++) {
@@ -1830,5 +1843,38 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
+	@Override
+	public ArrayList<Review> getReviews(int rev_id) {
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where rev_id = ? " );
+					stmt1.setInt(1, rev_id);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);
+	}	
 }

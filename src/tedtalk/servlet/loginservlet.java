@@ -72,7 +72,7 @@ public class loginservlet extends HttpServlet {
 			}
 			else if(role ==2) {
 				System.out.println("Login Servlet: Login Successful");
-				resp.sendRedirect(req.getContextPath() + "/StudentHome");
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
 			else {	//this should never occur
 				System.out.println("Login Servlet: Login Successful");

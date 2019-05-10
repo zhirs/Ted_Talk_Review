@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalk.model.ProfileModel;
-import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Review;
-import tedtalkDB.model.Student;
 import tedtalk.controller.ReviewController;
 
-public class reviewservlet extends HttpServlet {
+public class resultservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	@Override
@@ -40,10 +38,6 @@ public class reviewservlet extends HttpServlet {
 		ReviewController revController = new ReviewController();
 		Review handle = new Review();
 		ProfileModel profileHandle = new ProfileModel();
-		StudentController sController = new StudentController();
-		Student student = new Student();
-		sController.setModel(student);
-		sController.createLogin(username);
 		/*USE OF THE DB REVIEWMODEL TO SET OBTAIN ATTRIB:
 		 * String reviewName = req.getParameter("name");
 		String reviewDesc = req.getParameter("reviewText");
@@ -53,17 +47,16 @@ public class reviewservlet extends HttpServlet {
 		String tags = req.getParameter("tags");
 		int reviewRating = req.getIntHeader("rating");*/
 		
-		handle.setURL(req.getParameter("url"));
-		handle.setName( req.getParameter("title"));
-		handle.setRate(req.getIntHeader("rating"));
-		handle.setPres(req.getParameter("presenterName"));
+	/*	//USE OF THE ORGINAL MODEL TO SET ATTRIB:
 		handle.setDesc(req.getParameter("description"));
-		handle.setTag(req.getParameter("tags"));
-		handle.setProfID(student.getprofID());
-		
+		handle.setPres(req.getParameter("presenterName"));
+		handle.setRate(req.getIntHeader("rating"));
+		handle.setName( req.getParameter("name"));
+		handle.setTopic(req.getParameter("title"));*/
+				
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), handle.getProfID(),  handle.getTag());
+		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profileHandle.getProfID(),  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
 							
 		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER

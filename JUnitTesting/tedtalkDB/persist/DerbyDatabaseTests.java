@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
@@ -598,7 +599,7 @@ public class DerbyDatabaseTests {
 	}
 	
 	@Test
-	public void testParseTitle() {
+	public void testaddandParse() {
 		String URL = "placeholder.com";
 		String name = "One hundred dollars would be nice";
 		int rate = 5;
@@ -610,12 +611,9 @@ public class DerbyDatabaseTests {
 		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
 		int rev_id = revs.get(0).getrevID();
 		System.out.print(rev_id);
-		ArrayList<String> keys =  db.parseTitle(name, rev_id);
-		if(keys.contains("hundred")) {
-			System.out.println("Successfully added");
-		}
-		else {
-			fail("not found.");
+		ArrayList<String> keys =  db.addandParse(name, rev_id);
+		if(!keys.contains("hundred")){
+			fail("nothing added");
 		}
 	}
 	

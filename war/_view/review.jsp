@@ -49,7 +49,7 @@
 			 			<td> <input type="text" name = "description" placeholder = "e.g. wearable tech is the future!" required = "required" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" value="${reviewHandle}"> </td>
+			 			<td> <input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" value="${reviewHandle}"> </td>
 			 		</tr>
 			 		<tr><!-- consider having click to input rather than user entering asterisk -->
 			 			<td> <input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" value="${reviewHandle}"> </td>

@@ -1,6 +1,8 @@
 package tedtalkDB.persist;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import tedtalkDB.model.NetworkAdmin;
@@ -8,6 +10,7 @@ import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
 import tedtalkDB.model.Tags;
+import tedtalkDB.model.keywords;
 import tedtalkDB.model.Account;
 
 public class FakeDatabase implements IDatabase{
@@ -16,7 +19,7 @@ public class FakeDatabase implements IDatabase{
 	private ArrayList<Review> reviewList;
 	
 	// every time called, recreates userList and reviewList
-	public FakeDatabase(){
+	public FakeDatabase() throws ParseException{
 		userList = new ArrayList<Account>();
 		reviewList = new ArrayList<Review>();
 		
@@ -92,7 +95,7 @@ public class FakeDatabase implements IDatabase{
 			newUser = new NetworkAdmin(user, pass, email, userList.size() + 1);
 			break;
 		default:
-			newUser = new Student(user, pass, email, section, userList.size() + 1);
+			//newUser = new Student(user, pass, email, section, userList.size() + 1);
 		}
 		userList.add(newUser);
 		return userList;
@@ -120,9 +123,9 @@ public class FakeDatabase implements IDatabase{
 	}
 	
 	// find total count of reviews by a certain profile
-	public int getReviewTotal(int profID) {
-		return getProfIDReviewList(profID).size();
-	}
+//	public int getReviewTotal(int profID) {
+	//	return getProfIDReviewList(profID).size();
+//	}
 	
 	// will be used as general lookup by keyword, topic, name
 	public ArrayList<Review> findReview(String keyword) {
@@ -171,27 +174,231 @@ public class FakeDatabase implements IDatabase{
 		}
 	}
 
-	@Override
-	public ArrayList<Professor> addProfessor(String user, String pass, String email) {
+//	@Override
+	//public ArrayList<Professor> addProfessor(String user, String pass, String email) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		//return null;
+	//}
 
-	@Override
-	public ArrayList<Student> addStudent(String user, String pass, String email, String section) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	//@Override
+//	public ArrayList<Student> addStudent(String user, String pass, String email, String section) {
+//		 TODO Auto-generated method stub
+//		return null;
+//	}
 
-	@Override
-	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email) {
+//		 TODO Auto-generated method stub
+//		return null;
+//	}
 
 	@Override
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID,
 			String tag, int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Professor> addProfessor(String user, String pass, String email, int mod) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email, int modstat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getReviewTotal(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getModStat(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMod(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateModStat(int profID, int modStat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateMod(int input, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> getReviewsBetweenDates(int profID, Date date1, Date date2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateStatus(int revID, int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getStatus(int revID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> studentsByMajor(String major) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Student studentByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateSection(int profID, String section) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSection(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Professor professorByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NetworkAdmin adminByProfID(int profID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getProfID(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getRole(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Integer> getRevID(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<keywords> addKeyword(String keyword, int rev_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Integer removeReview(String user, String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer addToAdmin(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer addToProfessor(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer addToStudent(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer removeFromAdmin(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer removeFromProfessor(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer removeFromStudent(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer removeAccount(String user, int role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateRole(String user, boolean promo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getGlobalMod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> getReviews(int rev_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> parseTitle(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> addandParse(String title, int rev_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
