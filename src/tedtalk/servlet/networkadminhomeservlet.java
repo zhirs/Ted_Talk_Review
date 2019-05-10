@@ -27,6 +27,18 @@ public class networkadminhomeservlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		//getting the data from the search bar
+		NetworkAdminController NAController = new NetworkAdminController();
+		System.out.println("Network Admin Home Servlet: doPost");
+		
+		String delete = (String) req.getParameter("delete");
+		ArrayList<Student> newbies = NAController.denyStudent(delete);
+		ArrayList<String> newNames = new ArrayList<String>();
+		for(Student stud : newbies) {
+			newNames.add(stud.getUserName());
+		}
+		req.getSession().setAttribute("newbs", null);
+		req.getSession().setAttribute("newbies", newNames);
 		
 		System.out.println("Network Admin Home Servlet: doPost");
 		

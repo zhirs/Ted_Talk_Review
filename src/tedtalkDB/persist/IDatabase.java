@@ -55,5 +55,11 @@ public interface IDatabase {
 	public ArrayList<Student> approveStudent(String user);
 	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major);
 	public Integer checkUsername(String user);
+	public ArrayList<Student> unapprovedStudents();
+	public ArrayList<Review> getReviewByStatus();
+	public Integer changeReviewStatus(int status, int rev_id);
+	public Integer resetPassword(String username, String password);
+	public Integer averageReviewRating(String url);
+	public ArrayList<Student> denyStudent(String user);
 	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major);
 }

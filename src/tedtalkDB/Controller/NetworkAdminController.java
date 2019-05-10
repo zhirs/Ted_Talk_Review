@@ -105,4 +105,20 @@ public class NetworkAdminController {
 		int result = derby.checkUsername(user);
 		return result;
 	}
+	public ArrayList<Student> loadUnapproveds(){
+		ArrayList<Student> rejects = derby.unapprovedStudents();
+		return rejects;
+	}
+	public ArrayList<Student> approveAllStudents(){
+		ArrayList<Student> newbs = derby.unapprovedStudents();
+		ArrayList<Student> joined = new ArrayList<Student>();
+		for(Student stud : newbs) {
+			joined.addAll(derby.approveStudent(stud.getUserName()));
+		}
+		return joined;
+	}
+	public ArrayList<Student> denyStudent(String user){
+		derby.denyStudent(user);
+		return derby.unapprovedStudents();
+	}
 }
