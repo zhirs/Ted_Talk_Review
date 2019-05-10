@@ -1,4 +1,6 @@
 package tedtalkDB.Controller;
+import java.util.ArrayList;
+
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
@@ -10,7 +12,7 @@ public class StudentController {
 	public void setModel(Student studentModel) {
 		this.studentModel = studentModel;
 	}
-	boolean verified() {
+	boolean verified() { 
 		//USING DERBY'S CHECK CREDIT METHOD TO AUTHENTICATE USER:
 		return (derby.checkCredentials(studentModel.getUserName(), studentModel.getPassword()));
 	}
