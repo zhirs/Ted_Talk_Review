@@ -2259,7 +2259,24 @@ public class DerbyDatabase implements IDatabase {
 				}
 				return review;	//if the resultSet doesn't find anything it will return a nullpointer exception
 			}
-			
+		}
+		);
+	}
+	@Override
+	public ArrayList<Student> denyStudent(String user) {
+		return executeTransaction(new Transaction<ArrayList<Student>>() {
+			@Override
+			public ArrayList<Student> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ArrayList<Student> temp = new ArrayList<Student>();
+				stmt1 = conn.prepareStatement(
+						"delete "
+						+ "from newStudents "
+						+ "where username = ?" );
+				stmt1.setString(1, user);
+				stmt1.executeUpdate();
+				return temp;
+			}
 		}
 		);
 	}

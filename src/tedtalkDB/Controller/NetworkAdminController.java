@@ -119,4 +119,8 @@ public class NetworkAdminController {
 		}
 		return joined;
 	}
+	public ArrayList<Student> denyStudent(String user){
+		derby.denyStudent(user);
+		return derby.unapprovedStudents();
+	}
 }

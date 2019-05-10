@@ -45,39 +45,17 @@ public class networkadminhomeservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//getting the data from the search bar
-		String searchName = req.getParameter("searchName");
-		String year = req.getParameter("year1");
-		String month = req.getParameter("month1"); //remember to use ## format. EX: 01 or 12
-		String day = req.getParameter("day1"); //remember to use ## format. EX: 04
-		String year2 = req.getParameter("year2");
-		String month2 = req.getParameter("month2");   
-		String day2 = req.getParameter("day2");  
-		profID = derby.getProfID(searchName);
-		
-		String date1 = year+"/"+month+"/"+day;
-		//String date1 = "2019/04/26";
-		java.util.Date utilDate1 = new java.util.Date(date1);
-	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
-		
-		String date2 = year2+"/"+month2+"/"+day2;
-	    //String date2 = "2019/04/28";
-		java.util.Date utilDate2 = new java.util.Date(date2);
-	    java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
-	    
-	    ArrayList<Review> revReturn = derby.getReviewsBetweenDates(profID, sqlDate1, sqlDate2);
-	    ArrayList<String> reviews = new ArrayList<String>();
-		
-		if(!revReturn.isEmpty()) {
-			for(int i = 0; i < revReturn.size(); i++) {
-				reviews.add(revReturn.get(i).getDesc());
-			}
-		}
-		
-		req.setAttribute("reviews" , reviews);
-		System.out.println("Network Admin Home Servlet: doPost");
 		NetworkAdminController NAController = new NetworkAdminController();
-		NAController.approveAllStudents();
-		req.getSession().setAttribute("newbs", "No new students to approve");
+		System.out.println("Network Admin Home Servlet: doPost");
+		
+		String delete = (String) req.getParameter("delete");
+		ArrayList<Student> newbies = NAController.denyStudent(delete);
+		ArrayList<String> newNames = new ArrayList<String>();
+		for(Student stud : newbies) {
+			newNames.add(stud.getUserName());
+		}
+		req.getSession().setAttribute("newbs", null);
+		req.getSession().setAttribute("newbies", newNames);
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/networkadminHome.jsp").forward(req, resp);
 	}

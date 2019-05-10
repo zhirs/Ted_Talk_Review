@@ -94,7 +94,10 @@
     <servlet-name>sentResetToEmailServlet</servlet-name>
     <servlet-class>tedtalk.servlet.sentresettoemailservlet</servlet-class>
 </servlet>
-    
+<servlet>
+	<servlet-name>approvedStudentsServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.approvedStudents</servlet-class>
+</servlet>
 
 <!-- servlet mapping -->
 <servlet-mapping>
@@ -185,5 +188,8 @@
 	<servlet-name>sentResetToEmailServlet</servlet-name>
 	<url-pattern>/sentResetToEmail</url-pattern>
 </servlet-mapping>
-
+<servlet-mapping>
+	<servlet-name>approvedStudentsServlet</servlet-name>
+	<url-pattern>/approvedStudents</url-pattern>
+</servlet-mapping>
 </web-app>	

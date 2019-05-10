@@ -714,6 +714,17 @@ public class DerbyDatabaseTests {
 		int avrgRate = db.averageReviewRating(url);
 		assertEquals(avrgRate, 5);
 	}
+	@Test
+	public void testDenyStudent() {
+		int preSize = db.unapprovedStudents().size();
+		db.addNewStudent("user", "pass", "email", "section", "major");
+		db.denyStudent("user");
+		ArrayList<Student> postt = db.unapprovedStudents();
+		int postSize = postt.size();
+		if(postSize != preSize) {
+			fail("Deny incorrect.");
+		}
+	}
 
 }
 	

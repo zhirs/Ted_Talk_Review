@@ -426,4 +426,40 @@ public class FakeDatabase implements IDatabase{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Review findReviewByRevID(int rev_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Review> getReviewByStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer changeReviewStatus(int status, int rev_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer resetPassword(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer averageReviewRating(String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> denyStudent(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
