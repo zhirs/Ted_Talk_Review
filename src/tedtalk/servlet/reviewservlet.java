@@ -17,12 +17,14 @@ import tedtalk.controller.ReviewController;
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
+	private int profID = -1;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
+		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
@@ -40,10 +42,6 @@ public class reviewservlet extends HttpServlet {
 		ReviewController revController = new ReviewController();
 		Review handle = new Review();
 		ProfileModel profileHandle = new ProfileModel();
-		StudentController sController = new StudentController();
-		Student student = new Student();
-		sController.setModel(student);
-		sController.createLogin(username);
 		/*USE OF THE DB REVIEWMODEL TO SET OBTAIN ATTRIB:
 		 * String reviewName = req.getParameter("name");
 		String reviewDesc = req.getParameter("reviewText");
@@ -59,11 +57,10 @@ public class reviewservlet extends HttpServlet {
 		handle.setPres(req.getParameter("presenterName"));
 		handle.setDesc(req.getParameter("description"));
 		handle.setTag(req.getParameter("tags"));
-		handle.setProfID(student.getprofID());
 		
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), handle.getProfID(),  handle.getTag());
+		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
 							
 		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER

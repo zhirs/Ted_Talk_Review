@@ -22,12 +22,17 @@ public class ReviewController {
 	public ArrayList<Review> newReview(String url, String name, int rate, String pres, String desc, int profID, String tag) {
 		ArrayList<Review>result = derby.addReview(url, name, rate, pres, desc, profID, tag, 0);
 		// if mods are turned off, review is automatically approved and added
-		String[] parsed = result.get(0).getName().split(" ");
-		if(parsed.length > 0) {
+		try {
+			String[] parsed = result.get(0).getName().split(" ");
+			if(parsed.length > 0) {
 			derby.addandParse(name, result.get(0).getrevID());
+			}
+			if(derby.getModStat(profID) == 1) {
+				result.get(result.size() - 1).setStatus(1);
+			}
 		}
-		if(derby.getModStat(profID) == 1) {
-			result.get(result.size() - 1).setStatus(1);
+		catch (Exception e){
+			System.out.println("No review found");
 		}
 		return result;
 	}

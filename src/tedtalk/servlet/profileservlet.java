@@ -48,35 +48,10 @@ public class profileservlet extends HttpServlet {
 				break;
 			case 1:	
 				req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
-				break;
+				break; 
 			default:
 				req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
 			}
-			 
-			ReviewController revController = new ReviewController();
-			Review revModel = new Review();
-
-			//Adrian's code, needed something that would grab the session parameter. temporary
-			ArrayList<String> test = new ArrayList<String>();
-			test.add(req.getParameter("UpdatedReviews"));
-			
-			revController.setModel(revModel);
-			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
-			ArrayList<String> reviews = new ArrayList<String>();
-						
-			if(!revReturn.isEmpty()) {
-				for(int i = 0; i < revReturn.size(); i++) {
-					reviews.add(revReturn.get(i).getDesc());
-				}
-			}
-			
-			req.setAttribute("reviews" , reviews);
-			req.setAttribute("errorMessage", errorMessage);
-			req.getSession().setAttribute("role", role);
-			//req.setAttribute("profileM", model);
-			//req.setAttribute("userModel", model);
-			req.setAttribute("email", email);
-			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
 	}
 	@Override
