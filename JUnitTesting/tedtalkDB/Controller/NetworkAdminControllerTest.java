@@ -289,6 +289,12 @@ public class NetworkAdminControllerTest {
 		controllerHandle.removeAccount(user);
 	}
 	//***************************************************************     17 TEST CASES     *******************************************************************
-
-
+	@Test
+	public void testLoadUnapproveds() {
+		ArrayList<Student> newbs = controllerHandle.approveAllStudents();
+		System.out.println(newbs.size());
+		ArrayList<Student> news = controllerHandle.loadUnapproveds();
+		System.out.println(news.size());
+		assertTrue(news.size() == 0);
+	}
 }

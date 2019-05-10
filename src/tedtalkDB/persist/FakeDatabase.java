@@ -420,4 +420,10 @@ public class FakeDatabase implements IDatabase{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ArrayList<Student> unapprovedStudents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

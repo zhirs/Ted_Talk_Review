@@ -2074,31 +2074,27 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major) {
+	public ArrayList<Student> unapprovedStudents() {
 		return executeTransaction(new Transaction<ArrayList<Student>>() {
 			@Override
 			public ArrayList<Student> execute(Connection conn) throws SQLException {
 				//  Auto-generated method stub
 				ArrayList<Student> students= new ArrayList<Student>();
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
 				ResultSet resultSet1 = null;
 				try {
 					stmt1 = conn.prepareStatement(
-						"select username, password, email, section, major" +
+						"select username, password, email, section, major " +
 						"from newStudents "
-					);
+					);					
 					resultSet1 = stmt1.executeQuery();
-					
-					resultSet1 = stmt2.executeQuery();
 					while(resultSet1.next()) {
-						int i = 1;
 						Student student = new Student();
-						student.setUsername(resultSet1.getString(i++));
-						student.setPassword(resultSet1.getString(i++));
-						student.setEmail(resultSet1.getString(i++));
-						student.setSection(resultSet1.getString(i++));
-						student.setMajor(resultSet1.getString(i++));
+						student.setUsername(resultSet1.getString(1));
+						student.setPassword(resultSet1.getString(2));
+						student.setEmail(resultSet1.getString(3));
+						student.setSection(resultSet1.getString(4));
+						student.setMajor(resultSet1.getString(5));
 						students.add(student);
 					}
 					return students;
@@ -2107,7 +2103,6 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});

@@ -644,6 +644,25 @@ public class DerbyDatabaseTests {
 			fail("failed existing username hit");
 		}
 	}
+	
+	@Test
+	public void testUnapprovedStudents() {
+		ArrayList<Student> newbs = db.unapprovedStudents();
+		int preSize = newbs.size();
+		String user = "Zack";
+		String pass = "hirs";
+		String email = "zhirs6@ycp.edu";
+		String section = "CS320";
+		String major = "Civil Engineering";
+		db.addNewStudent(user, pass, email, section, major);
+		ArrayList<Student> superNewbs = db.unapprovedStudents();
+		int postSize = superNewbs.size();
+		db.approveStudent(user);
+		db.removeAccount(user, db.getRole(user));
+		if(postSize <= preSize) {
+			fail("Newstudent not added");
+		}
+	}
 }
 	
 
