@@ -8,12 +8,12 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
-//import tedtalkDB.persist.FakeDatabase;
+import tedtalkDB.persist.FakeDatabase;
 import tedtalkDB.persist.DerbyDatabase;
 
 public class ProfileController{
 	private ProfileModel model;
-	//private FakeDatabase fake = new FakeDatabase();
+	private FakeDatabase fake = new FakeDatabase();
 	private DerbyDatabase derby = new DerbyDatabase();
 	
 	public ProfileController() {
@@ -40,7 +40,7 @@ public class ProfileController{
 		model.setUser(login.getUserName());
 		
 		// finds whether reviewing reviews is on or off
-		//model.setModStat(fake.getModStat());
+		model.setModStat(fake.getModStat());
 		// sets role based on account class
 		// also if student sets section
 		if(login instanceof NetworkAdmin) {
@@ -59,23 +59,23 @@ public class ProfileController{
 	
 	// adds a user to users list temporarily on the fake database, profID automatically created
 	// role = 0 for students,  1 for professors, 2 for networkAdmins
-	/*public ArrayList<Account> userCreation(String user, String pass, String email, String section, int role) {
-		//ArrayList<Account> newUser = fake.addUser(user, pass, email, section, role);
+	public ArrayList<Account> userCreation(String user, String pass, String email, String section, int role) {
+		ArrayList<Account> newUser = fake.addUser(user, pass, email, section, role);
 		
 		return newUser;
-	}*/
+	}
 	
 	
 	//adds a professor to add into the database and the arraylist of Professors
 	public ArrayList<Professor> professorCreation(String user, String pass, String email){
-		ArrayList<Professor> newProfessor = derby.addProfessor(user, pass, email,0);//SET MOD TO 0 INIT
+		ArrayList<Professor> newProfessor = derby.addProfessor(user, pass, email);
 		
 		return newProfessor;
 	}
 	
 	//add a network admin to an array list and the database
 	public ArrayList<NetworkAdmin> adminCreation(String user, String pass, String email){
-		ArrayList<NetworkAdmin> newAdmin = derby.addAdmin(user, pass, email,0);//SET MODSTAT TO 0 INIT
+		ArrayList<NetworkAdmin> newAdmin = derby.addAdmin(user, pass, email);
 		
 		return newAdmin;
 	}
