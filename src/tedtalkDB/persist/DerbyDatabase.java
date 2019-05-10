@@ -17,11 +17,12 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 
 public class DerbyDatabase implements IDatabase {
 	static {
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver"); 
 		} catch (Exception e) {
 			throw new IllegalStateException("Could not load Derby driver");
 		}
@@ -112,6 +113,8 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt3 = null;				
 				PreparedStatement stmt4 = null;
 				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;
+				PreparedStatement stmt7 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table admins(" +
@@ -178,8 +181,32 @@ public class DerbyDatabase implements IDatabase {
 							")"
 							);
 					stmt5.executeUpdate();
-					System.out.println("Accounts table created");					
+					System.out.println("Accounts table created");		
 					
+					stmt6 = conn.prepareStatement(
+							"create table keywords( " +
+							"	keywords_id integer primary key " + 
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	words varchar(200), " +
+							" 	rev_id integer " + 
+							")"
+							);
+					stmt6.executeUpdate();
+					System.out.println("Keywords table created");
+					
+					stmt7 = conn.prepareStatement(
+							"create table newStudents(" + 
+							"	temp_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	username varchar(100), " +
+							"	password varchar(64), "	+
+							"	email varchar(200), " + 
+							"	section varchar(200), " +
+							" 	major varchar(200) " +
+							")");
+					stmt7.executeUpdate();
+					System.out.println("newStudents table created");
+				
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -187,6 +214,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+					DBUtil.closeQuietly(stmt7);
 				}
 			}
 		});
@@ -202,13 +231,16 @@ public class DerbyDatabase implements IDatabase {
 				List<Student> studentList;
 				List<Review> reviewList;
 				List<Account> accountList;
-				
+				List<keywords> keyList;
+				List<Student> newStudentList;
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
 					studentList = InitialData.getStudents();
 					reviewList = InitialData.getReviews();
 					accountList = InitialData.getAccounts();
+					keyList = InitialData.getKeywords();
+					newStudentList = InitialData.getNewStudents();
 				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -218,6 +250,8 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
 				PreparedStatement insertAccount = null;
+				PreparedStatement insertKeys = null;
+				PreparedStatement insertNewStudents = null;
 				try {
 					insertAccount = conn.prepareStatement("insert into accounts(username, password, email, role) values (?, ?, ?, ?)");
 					for (Account account: accountList) {
@@ -286,6 +320,27 @@ public class DerbyDatabase implements IDatabase {
 					insertReview.executeBatch();					
 					System.out.println("Reviews table populated");					
 					
+					insertKeys = conn.prepareStatement("insert into keywords (words, rev_id) values (?, ?)");
+					for(keywords key : keyList) {
+						insertKeys.setString(1, key.getKeyWord());
+						insertKeys.setInt(2, key.getReviewID());
+						
+						insertKeys.addBatch();
+					}
+					insertKeys.executeBatch();
+					System.out.println("Keywords table populated");
+					
+					insertNewStudents = conn.prepareStatement("insert into newStudents (username, password, email, section, major) values (?, ?, ?, ?, ?)");
+					for(Student newStudent : newStudentList) {
+						insertNewStudents.setString(1, newStudent.getUserName());
+						insertNewStudents.setString(2, newStudent.getPassword());
+						insertNewStudents.setString(3, newStudent.getEmail());
+						insertNewStudents.setString(4, newStudent.getSection());
+						insertNewStudents.setString(5, newStudent.getMajor());
+						insertNewStudents.addBatch();
+					}
+					insertNewStudents.executeBatch();
+					System.out.println("NewStudents table populated");
 					System.out.println("All tables populated");
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied				
@@ -297,6 +352,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertStudent);
 					DBUtil.closeQuietly(insertAdmin);
 					DBUtil.closeQuietly(insertAccount);
+					DBUtil.closeQuietly(insertKeys);
+					DBUtil.closeQuietly(insertNewStudents);
 				}
 			}
 		});
@@ -913,7 +970,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setInt(6, profID);
 					stmt1.setString(7, tag);
 					stmt1.setInt(8, status);
-					
+				
 					java.util.Date date = new java.util.Date();
 					java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 					stmt1.setDate(9, sqlDate);
@@ -926,7 +983,6 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setString(1, URL);
 					resultSet1 = stmt2.executeQuery();
-					
 					while(resultSet1.next()) {
 						Review rev = new Review();
 						loadReview(rev, resultSet1, 1);
@@ -1316,4 +1372,744 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public Integer addToAdmin(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into admins (prof_id, modStat) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	@Override
+	public Integer addToProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into professors (prof_id, mod) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	@Override
+	public Integer addToStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into students (prof_id, section, major) "+
+							"values(?, ?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "");
+						stmt1.setString(3, "");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	@Override
+	// deletes from sub branch
+	public Integer removeFromAdmin(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from admins " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	@Override
+	// deletes from sub branch
+	public Integer removeFromProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from professors " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	@Override
+	// deletes from sub branch
+	public Integer removeFromStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from students " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	// deletes from all branches
+	public Integer removeAccount(String user, int role) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				if(role == 0) {
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+				}
+				else {
+					removeFromStudent(user);
+				}
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				
+				try {
+					// deletes from main branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from accounts " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public Integer updateRole(String user, boolean promo) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				int role = getRole(user);
+				switch(role) {
+				case 0:
+					removeFromAdmin(user);
+					break;
+				case 1: 
+					removeFromProfessor(user);
+					break;
+				default:
+					removeFromStudent(user);	
+				}
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int newRole = 0;
+				
+				// checks type of role change
+				if(promo == true) {
+					// subtracts since account role integers are backwards
+					newRole = role - 1;
+				}
+				else {
+					// 0 is admin, 2 is student
+					newRole = role + 1;
+				}
+				
+				try {
+					// updates main branch role 
+					stmt1 = conn.prepareStatement(
+						" update accounts "+
+						" set role = ? " +
+						" where username = ?"
+					);
+					stmt1.setInt(1, newRole);
+					stmt1.setString(2, user);
+					stmt1.executeUpdate();
+				
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public Integer getGlobalMod() {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				// count of modStat, 0 or negative if off, positive if on
+				int countStat = 0;
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" select modStat "+
+						" from admins "
+					);
+					resultSet1 = stmt1.executeQuery();
+					
+					int i = 0;
+					while(resultSet1.next()) {
+						// gets next mod from admin
+						int modStat = resultSet1.getInt(i++);
+						switch(modStat) {
+						case 1:
+							// if off, subract, otherwise add
+							countStat --;
+							break;
+						case 2: 
+							countStat ++;
+						}
+					}
+					return countStat;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(resultSet1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public Integer removeReview(String user, String title) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from reviews"
+						+ "where prof_ID = ?"
+						+ "and name = ?"
+					);
+					stmt1.setInt(1, profID);
+					stmt1.setString(2, title);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+
+	@Override
+	public ArrayList<Integer> getRevID(String keyword) {
+		return executeTransaction(new Transaction<ArrayList<Integer>>() {
+			@Override
+			public ArrayList<Integer>execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<Integer> revIDS = new ArrayList<Integer>();
+				try {
+					stmt1 = conn.prepareStatement(
+						" select rev_id "+
+						" from keywords " +
+						" where words = ?"
+					);
+					stmt1.setString(1, keyword);
+					resultSet1 = stmt1.executeQuery();
+					int foundRevID = -1;
+					int i = 1;
+					while(resultSet1.next()) { 
+						foundRevID = resultSet1.getInt(i++);
+						revIDS.add(foundRevID);
+					}
+					if(revIDS.size() != 0) {
+						System.out.println("Found review");
+						return revIDS;
+					}
+					else {
+						System.out.println("No reviews found");
+						return revIDS;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	@Override
+	public ArrayList<String> parseTitle(String title){
+		ArrayList<String> keys = new ArrayList<String>();
+		String[] parsed = title.split(" ");
+		for(int i = 0; i < parsed.length - 1; i++) {
+			keys.add(parsed[i]);
+			if(parsed.length > 1) {
+				keys.add(parsed[i] + " " + parsed[i+1]);
+			}
+		}
+		return keys;
+	}
+	
+	@Override
+	public ArrayList<String> addandParse(String title, int rev_id){
+		ArrayList<String> keys = new ArrayList<String>();
+		String[] parsed = title.split(" ");
+		for(int i = 0; i < parsed.length - 1; i++) {
+			addKeyword(parsed[i], rev_id);
+			keys.add(parsed[i]);
+			if(parsed.length > 1) {
+				addKeyword(parsed[i] + " " + parsed[i+1], rev_id);
+				keys.add(parsed[i] + " " + parsed[i+1]);
+			}
+		}
+		return keys;
+	}
+	
+	@Override
+	public ArrayList<keywords> addKeyword(String keyword, int rev_id) {
+		return executeTransaction(new Transaction<ArrayList<keywords>>() {
+			@Override
+			public ArrayList<keywords> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				ArrayList<keywords> keys= new ArrayList<keywords>();
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						"insert into keywords(words, rev_id) "+
+						"values(?, ?)"
+					);
+					stmt1.setString(1, keyword);
+					stmt1.setInt(2, rev_id);
+					stmt1.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+						"select * "
+						+ "from keywords "
+						+ "where words = ? ");
+					stmt2.setString(1, keyword);
+					resultSet1 = stmt2.executeQuery();
+					while(resultSet1.next()) {
+						int i = 1;
+						keywords key = new keywords();
+						key.setkeywordID(resultSet1.getInt(i++)); //FIX
+						key.setkeyWord(resultSet1.getString(i++));
+						keys.add(key);
+					}
+					if(keys.size() < 0) {
+						System.out.println("Keyword not added correctly");
+					}
+					else {
+						System.out.println("Keyword found");
+					}
+					return keys;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+
+	@Override
+	public ArrayList<Review> getReviews(int rev_id) {
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where rev_id = ? " );
+					stmt1.setInt(1, rev_id);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);
+	}
+	@Override
+	public ArrayList<Student> approveStudent(String user) {
+		return executeTransaction(new Transaction<ArrayList<Student>>() {
+			@Override
+			public ArrayList<Student> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				ArrayList<Student> students= new ArrayList<Student>();
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+					"select username, password, email, section, major " 
+					+ "from newStudents " 
+					+ "where username = ? " 
+					);
+					stmt1.setString(1, user);
+					
+					resultSet1 = stmt1.executeQuery();
+				
+					String username = null;
+					String password = null;
+					String email = null;
+					String section = null;
+					String major = null;
+					while(resultSet1.next()) {
+						int i = 1;
+						username = resultSet1.getString(i++);
+						password = resultSet1.getString(i++);
+						email = resultSet1.getString(i++);
+						section = resultSet1.getString(i++);
+						major = resultSet1.getString(i++);
+					}
+					addStudent(username, password, email, section, major);
+					stmt2 = conn.prepareStatement(
+							"delete " +
+							"from newStudents " +
+							"where username = ? and password = ? and email = ? and section = ? and major = ?");
+					stmt2.setString(1, username);
+					stmt2.setString(2, password);
+					stmt2.setString(3, email);
+					stmt2.setString(4, section);
+					stmt2.setString(5, major);
+					stmt2.executeUpdate();
+					
+					stmt3 = conn.prepareStatement(
+							"select accounts.username, accounts.email, students.section, students.major "
+							+ "from students, accounts "
+							+ "where accounts.prof_id = students.prof_id "
+							+ "and accounts.username = ? and email = ? and section = ? and major = ?"
+							);
+					
+					stmt3.setString(1, user);
+					stmt3.setString(2, email);
+					stmt3.setString(3, section);
+					stmt3.setString(4, major);
+					resultSet2 = stmt3.executeQuery();
+					int j = 1;
+					while(resultSet2.next()) {
+						Student student = new Student();
+						student.setUsername(resultSet2.getString(j++));
+						student.setEmail(resultSet2.getString(j++));
+						student.setSection(resultSet2.getString(j++));
+						student.setMajor(resultSet2.getString(j++));
+						students.add(student);
+					}
+					return students;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+				}
+			}
+		});
+	}
+	@Override 
+	public Integer checkUsername(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException{
+				int result = 0;
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				stmt1 = conn.prepareStatement(
+						"select email " +
+						"from accounts " +
+						"where username = ?");
+				stmt1.setString(1, user);
+				resultSet1 = stmt1.executeQuery();
+				ArrayList<Student> students = new ArrayList<Student>();
+				int i = 1;
+				while(resultSet1.next()) {
+					Student student = new Student();
+					student.setEmail(resultSet1.getString((i++)));
+					students.add(student);
+				}
+				if(!students.isEmpty()) {
+					result = 1;
+					return result;
+				}
+				return result;
+			}
+		});
+	}
+	@Override
+	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major) {
+		return executeTransaction(new Transaction<ArrayList<Student>>() {
+			@Override
+			public ArrayList<Student> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				ArrayList<Student> students= new ArrayList<Student>();
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						"insert into newStudents (username, password, email, section, major) "+
+						"values(?, ?, ?, ?, ?)"
+					);
+					stmt1.setString(1, user);
+					stmt1.setString(2, pass);
+					stmt1.setString(3, email);
+					stmt1.setString(4, section);
+					stmt1.setString(5, major);
+					stmt1.executeUpdate();
+				
+					stmt2 = conn.prepareStatement(
+							"select username, password, email, section, major "
+							+ "from newStudents "
+							+ "where username = ? and email = ? and password = ? and section = ? and major = ?"
+							);
+					stmt2.setString(1, user);
+					stmt2.setString(2, email);
+					stmt2.setString(3, pass);
+					stmt2.setString(4, section);
+					stmt2.setString(5, major);
+					resultSet1 = stmt2.executeQuery();
+					while(resultSet1.next()) {
+						int i = 1;
+						Student student = new Student();
+						student.setUsername(resultSet1.getString(i++));
+						student.setPassword(resultSet1.getString(i++));
+						student.setEmail(resultSet1.getString(i++));
+						student.setSection(resultSet1.getString(i++));
+						student.setMajor(resultSet1.getString(i++));
+						students.add(student);
+					}
+					return students;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}
+	@Override
+	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major) {
+		return executeTransaction(new Transaction<ArrayList<Student>>() {
+			@Override
+			public ArrayList<Student> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				ArrayList<Student> students= new ArrayList<Student>();
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						"select username, password, email, section, major" +
+						"from newStudents "
+					);
+					resultSet1 = stmt1.executeQuery();
+					
+					resultSet1 = stmt2.executeQuery();
+					while(resultSet1.next()) {
+						int i = 1;
+						Student student = new Student();
+						student.setUsername(resultSet1.getString(i++));
+						student.setPassword(resultSet1.getString(i++));
+						student.setEmail(resultSet1.getString(i++));
+						student.setSection(resultSet1.getString(i++));
+						student.setMajor(resultSet1.getString(i++));
+						students.add(student);
+					}
+					return students;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}	
 }
