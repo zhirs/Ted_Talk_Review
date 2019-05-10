@@ -36,7 +36,6 @@ public class homeservlet extends HttpServlet {
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
-			req.getRequestDispatcher("/_view/home.jsp").forward(req, resp);
 		}
 	}
 	@Override
