@@ -1,6 +1,4 @@
 package tedtalkDB.Controller;
-import java.util.ArrayList;
-
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
@@ -106,17 +104,5 @@ public class NetworkAdminController {
 	public int checkUsername(String user) {
 		int result = derby.checkUsername(user);
 		return result;
-	}
-	public ArrayList<Student> loadUnapproveds(){
-		ArrayList<Student> rejects = derby.unapprovedStudents();
-		return rejects;
-	}
-	public ArrayList<Student> approveAllStudents(){
-		ArrayList<Student> newbs = derby.unapprovedStudents();
-		ArrayList<Student> joined = new ArrayList<Student>();
-		for(Student stud : newbs) {
-			joined.addAll(derby.approveStudent(stud.getUserName()));
-		}
-		return joined;
 	}
 }

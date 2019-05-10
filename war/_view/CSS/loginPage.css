@@ -17,22 +17,5 @@
 	display: inline-block;
 	font-size: 9px;		
 	}
-	.center{
-	margin: auto;
-	width: 50%;
-	border: 3px solid green;
-	padding: 10px;
-	}
-	.button {
-	background-color: #9370DB; 
-	border: 1px solid black;
-	color: white;
-	padding: 10px 21px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 9px;
-	float: left;
-	}
 	</style>
 </html>

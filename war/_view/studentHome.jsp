@@ -21,7 +21,7 @@
 		<h1>Student Home Page</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/student" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">

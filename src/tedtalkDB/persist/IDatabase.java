@@ -2,6 +2,7 @@ package tedtalkDB.persist;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
@@ -20,7 +21,6 @@ public interface IDatabase {
 	public ArrayList<Review> getProfIDReviewList(int profID);
 	public Integer getReviewTotal(int profID);
 	public ArrayList<Review> findReview(String keyword);
-	public Review findReviewByRevID(int rev_id);
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID, String tag, int status);
 	public Integer getModStat(int profID);
 	public Integer getMod(int profID);
@@ -55,10 +55,5 @@ public interface IDatabase {
 	public ArrayList<Student> approveStudent(String user);
 	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major);
 	public Integer checkUsername(String user);
-	public ArrayList<Student> unapprovedStudents();
 	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major);
-	public ArrayList<Review> getReviewByStatus();
-	public Integer changeReviewStatus(int status, int rev_id);
-	public Integer resetPassword(String username, String password);
-	public Integer averageReviewRating(String url);
 }
