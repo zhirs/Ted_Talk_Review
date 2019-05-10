@@ -22,7 +22,7 @@ public class DerbyDatabaseTests {
 
 	private IDatabase db = null;
 	private int role;
-	
+	 
 	ArrayList<Student> students = null;
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
@@ -617,7 +617,32 @@ public class DerbyDatabaseTests {
 		}
 	}
 	
+	@Test
+	public void testApproveStudent() {
+		
+		String user = "dhill23";
+		String pass = "test";
+		String email= "jlandau68@ycp.edu";
+		String section = "CS365";
+		String major = "Civil Engineering";
+		ArrayList<Student> addStudent = db.addNewStudent(user, pass, email, section, major);
+		if(addStudent.isEmpty()) {
+			fail("No new student added");
+		}
+		ArrayList<Student> approved = db.approveStudent(user);
+		if(approved.isEmpty()) {
+			fail("No students approved");
+		}
+		db.removeAccount(user, db.getRole(user));
+	}
 	
+	@Test
+	public void testCheckUsername() {
+		int check = db.checkUsername("jlandau2");
+		if(check == 0) {
+			fail("failed existing username hit");
+		}
+	}
 }
 	
 

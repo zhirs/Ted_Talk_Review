@@ -51,5 +51,8 @@ public interface IDatabase {
 	public Integer removeAccount(String user, int role);
 	public Integer updateRole(String user, boolean promo);
 	public Integer getGlobalMod();
-	ArrayList<String> addandParse(String title, int rev_id);
+	public ArrayList<String> addandParse(String title, int rev_id);
+	public ArrayList<Student> approveStudent(String user);
+	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major);
+	public Integer checkUsername(String user);
 }

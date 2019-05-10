@@ -19,7 +19,7 @@ public class InitialData {
 		ReadCSV readAdmins = new ReadCSV("admins.csv");
 		// four superadmins created
 		try {
-			Integer adminID = 1;
+			Integer adminID = 1; 
 			while(true) {
 				List<String> tuple = readAdmins.next();
 				if(tuple == null) {
@@ -76,7 +76,7 @@ public class InitialData {
 		ReadCSV readStudents = new ReadCSV("students.csv");
 		// four superadmins created
 		try {
-			Integer studentID = 20000;
+			Integer studentID = 1;
 			while(true) {
 				List<String> tuple = readStudents.next();
 				if(tuple == null) {
@@ -108,7 +108,7 @@ public class InitialData {
 		ReadCSV readReviews = new ReadCSV("reviews.csv");
 		// four superadmins created
 		try {
-			Integer reviewID = 50000;
+			Integer reviewID = 1;
 			while(true) {
 				List<String> tuple = readReviews.next();
 				if(tuple == null) {
@@ -196,6 +196,37 @@ public class InitialData {
 		}
 		finally {
 			readKeyWords.close();
+		}
+	}
+	public static List<Student> getNewStudents() throws IOException{
+		List<Student> studentList = new ArrayList<Student>();
+		ReadCSV readStudents = new ReadCSV("newStudents.csv");
+		// four superadmins created
+		try {
+			Integer newStudentID = 1;
+			while(true) {
+				List<String> tuple = readStudents.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				Student student = new Student();
+				
+				student.setNewStudentID(newStudentID++);
+				student.setUsername(i.next());
+				student.setPassword(i.next());
+				student.setEmail(i.next());
+				student.setSection(i.next()); 
+				student.setMajor(i.next());
+				
+				studentList.add(student);
+			}
+			System.out.println("newStudentList loaded from CSV file");
+			return studentList;
+		}
+		finally {
+			readStudents.close();
 		}
 	}
 }

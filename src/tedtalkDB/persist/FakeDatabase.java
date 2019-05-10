@@ -402,4 +402,22 @@ public class FakeDatabase implements IDatabase{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ArrayList<Student> approveStudent(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer checkUsername(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
