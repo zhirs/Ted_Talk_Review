@@ -27,7 +27,10 @@ public class ProfessorController {
 		//CREATES NEW ADMIN IN THE DATABASE:
 		derby.addProfessor(professorModel.getUserName(),professorModel.getPassword(),professorModel.getEmail(), derby.getMod(professorModel.getMod()));
 				
-	}	
+	}
+	public void addStudents(String user, String pass, String email, String section, String major) {
+		derby.addStudent(user, pass, email, section, major);
+	}
 	
 	public void verifyReview(Review rev, int approve) {
 		if(approve == 1) {//INDICATES ADMIN APPROVED REVIEW
@@ -35,5 +38,15 @@ public class ProfessorController {
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
 	}
-
+	public void removeAccount(String student) {
+		// TODO Auto-generated method stub
+		derby.removeAccount(student, 1);
+	}
+	public void addStudent(String user, String pass, String email, String section, String major) {
+		derby.addNewStudent(user, pass, email, section, major);
+	}
+	
+	public void approveStudent(String user) {
+		derby.approveStudent(user);
+	}
 }

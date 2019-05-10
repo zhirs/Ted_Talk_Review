@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
@@ -20,7 +21,8 @@ import tedtalkDB.model.NetworkAdmin;
 public class DerbyDatabaseTests {
 
 	private IDatabase db = null;
-	
+	private int role;
+	 
 	ArrayList<Student> students = null;
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
@@ -59,7 +61,6 @@ public class DerbyDatabaseTests {
 				
 		// insert new book (and possibly new author) into DB
 		admins = db.addAdmin(user, pass, email, modStat);
-
 		// check the return value - should be a book_id > 0
 		if (admins.size() >  0)
 		{
@@ -84,6 +85,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new admin into admin table: <" + user + ">");
 			fail("Failed to insert new admin <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddProfessor() {
@@ -123,6 +125,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new professor into professor table: <" + user + ">");
 			fail("Failed to insert new professor <" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAddReview() {
@@ -166,6 +169,7 @@ public class DerbyDatabaseTests {
 			fail("Failed to insert new review");
 		}
 	}
+	
 	@Test
 	public void testAddStudent() {
 		System.out.println("\n*** Testing addProfessor***");
@@ -205,6 +209,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new student into student table: <" + user + ">");
 			fail("Failed to insert new student<" + user + "> ");
 		}
+		db.removeAccount(user, db.getRole(user));
 	}
 	@Test
 	public void testAdminByProfID() {
@@ -544,7 +549,7 @@ public class DerbyDatabaseTests {
 	@Test
 	public void testUpdateStatus() {
 		System.out.println("\n*** Testing updateStatus***");
-		int revID = 50001;
+		int revID = 1;
 		int status = 2;
 		int initialStatus = db.getStatus(revID);
 		int found = db.updateStatus(revID, status);
@@ -555,6 +560,102 @@ public class DerbyDatabaseTests {
 		else if (found == 1) {
 			int newStatus = db.getStatus(revID);
 			System.out.println("found: " + initialStatus + " changed to " + newStatus);
+		}
+	}
+	@Test
+	public void testGetRole() {
+		String username = "jlandau2";
+		role = db.getRole(username);
+		if (role >= 0) {	//zero role number should be for network admin
+			if(role!=0) {
+				System.out.println(db.getProfID(username) + "is the wrong id");
+				fail("Wrong id");
+			}
+		}
+		else {
+			System.out.println("Account role not found");
+			fail("Account not found"); 
+		}
+	}
+	
+	@Test
+	public void testGetRevID() {
+		String key = "Endgame";
+		
+		ArrayList<Integer> revs = db.getRevID(key);
+		if(revs.get(0) != 3) {
+			fail("Incorrect review found");
+		}
+		
+		ArrayList<Integer> revs2 = db.getRevID("Hill");
+		if(revs2.get(0) != 2) {
+			fail("Incorrect review found");
+		}
+		
+		ArrayList<Integer> revs3 = db.getRevID("Symposium");
+		if(revs3.get(0) != 1) {
+			fail("Incorrect review found");
+		}
+	}
+	
+	
+	@Test
+	public void testaddandParse() {
+		String URL = "placeholder.com";
+		String name = "One hundred dollars would be nice";
+		int rate = 5;
+		String pres = "Brendan Frasier";
+		String desc = "I bet the big B.F. could make a great database";
+		int profID = 9;
+		String tag = "Civil Engineering";
+		int status = 0;
+		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
+		int rev_id = revs.get(0).getrevID();
+		System.out.print(rev_id);
+		ArrayList<String> keys =  db.addandParse(name, rev_id);
+		if(!keys.contains("hundred")){
+			fail("nothing added");
+		}
+	}
+	
+	@Test
+	public void testApproveStudent() {
+		
+		String user = "dhill23";
+		String pass = "test";
+		String email= "jlandau68@ycp.edu";
+		String section = "CS365";
+		String major = "Civil Engineering";
+		ArrayList<Student> addStudent = db.addNewStudent(user, pass, email, section, major);
+		if(addStudent.isEmpty()) {
+			fail("No new student added");
+		}
+		ArrayList<Student> approved = db.approveStudent(user);
+		if(approved.isEmpty()) {
+			fail("No students approved");
+		}
+		db.removeAccount(user, db.getRole(user));
+	}
+	
+	@Test
+	public void testCheckUsername() {
+		int check = db.checkUsername("jlandau2");
+		if(check == 0) {
+			fail("failed existing username hit");
+		}
+	}
+	
+	@Test
+	public void testGetGlobalModStat() {
+		for(int x = 1; x <= 4; x ++) {
+			db.updateModStat(x, 1);
+		}
+		
+		int global = db.getGlobalMod();
+		assertTrue(global < 1);
+		
+		for(int x = 1; x <= 4; x ++) {
+			db.updateModStat(x, 0);
 		}
 	}
 }

@@ -15,6 +15,7 @@ public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private DerbyDatabase derby;
+	private int role; 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -22,8 +23,12 @@ public class loginservlet extends HttpServlet {
 		System.out.println("Login Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		// call JSP to generate empty form
-		if(username != null) {
+		if(username != null) { 
 			req.getSession().setAttribute("username", null);
+			req.getSession().setAttribute("email", null);
+			req.getSession().setAttribute("profID", null);
+			req.getSession().setAttribute("section", null);
+			req.getSession().setAttribute("role", null);
 			resp.sendRedirect(req.getContextPath() + "/login");
 		}
 		else {
@@ -55,20 +60,50 @@ public class loginservlet extends HttpServlet {
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
 			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("username", login.getUserName());
+			
+			session.setAttribute("username", user);
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
-			session.setAttribute("section", "Section");	//need to change this depending if they are student/admin/ or professor
-			
-			System.out.println("Login Servlet: Login Successful");
-			resp.sendRedirect(req.getContextPath() + "/home");
+			// global review status
+			session.setAttribute("modStat", derby.getGlobalMod());
+			if(derby.getRole(user) == 2){
+				String section = derby.getSection(login.getprofID());
+				session.setAttribute("section", section);
+			}//need to change this depending if they are student/admin/ or professor
+			role = derby.getRole(user);	//grabs the role number from accounts to find the correct home page
+//			System.out.println(role);
+			session.setAttribute("role", role);
+			if(role==0) {
+				// if admin get modStat
+				session.setAttribute("moderator", derby.getModStat(login.getprofID()));
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
+			}
+			else if(role==1) {
+				// if professor get mod
+				session.setAttribute("moderator", derby.getMod(login.getprofID()));
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/professorHome");
+			}
+			else if(role ==2) {
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
+			}
+			else {	//this should never occur
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/home");
+			}
+		}
+		
+		else if(user.equals("") || pass.equals("")) {
+			req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 		}
 		
 		else{
 			req.setAttribute("response", "Incorrect Username or Password");
 			System.out.println("Login Servlet: Login Failed");				
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
-			}
+		}
 		// now call the JSP to render the new page	
 	}
 }

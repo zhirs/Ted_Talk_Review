@@ -1,15 +1,28 @@
 package tedtalkDB.Controller;
 import tedtalkDB.model.*;
+import tedtalkDB.persist.DatabaseProvider;
+import tedtalkDB.persist.DerbyDatabase;
+import tedtalkDB.persist.IDatabase;
+
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class ProfessorControllerTest {
 	Professor professorHandle = new Professor();
 	ProfessorController controllerHandle = new ProfessorController();
+	private IDatabase db;
+	ArrayList<Student> students;
 	@Before
 	public void init() {
 		controllerHandle.setModel(professorHandle);
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		db = DatabaseProvider.getInstance();
+		students = new ArrayList<Student>();
 	}
 	@Test
 	public void Test_Verified_Existing_User0() {
@@ -133,6 +146,32 @@ public class ProfessorControllerTest {
 		assertTrue(controllerHandle.verified() == false);
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandle.verified());
+	}
+	@Test
+	public void testAddStudent() {
+		String user  = "newStudent";
+		String pass  = "testpass";
+		String email = "profZ@ycp.edu";
+		String section = "CS320";
+		String major = "Computer Science";
+  
+				
+		// insert new student into DB
+		students = db.addStudent(user, pass, email, section, major);
+
+		// methods should add a class into the array list
+		if (students.size() >  0)
+		{	
+			if (db.getProfID(user) == null) {
+				System.out.println("Failed to insert new student" + user);
+				fail("Failed to insert new student<" + user + ">");
+			}
+		}
+		else
+		{
+			System.out.println("Failed to insert new student into student table: <" + user + ">");
+			fail("Failed to insert new student<" + user + "> ");
+		}
 	}
 	//***************************************************************     12 TEST CASES     *******************************************************************
 
