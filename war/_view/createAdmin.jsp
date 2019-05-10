@@ -33,13 +33,13 @@
 		<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "post">
 			<table>
 					<tr>
-						<td> <input type="text" name = "Username" placeholder = "User Name" required = "required" value="${username}"> </td>
+						<td> <input type="text" name = "Username" placeholder = "User Name" required = "required" value="${username}"/> </td>
 			 		</tr>
 					<tr>
-						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${password}"> </td>
+						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${password}"/> </td>
 			 		</tr>
 			 		<tr>
-			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${email}"> </td>
+			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${email}"/> </td>
 			 		</tr>			 	
 		 	</table>
 		 <input type = "Submit" class="button2" value = "Create Account">

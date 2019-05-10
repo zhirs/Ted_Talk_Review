@@ -79,6 +79,8 @@ public class NetworkAdminController {
 				derby.updateRole(user, promote);
 			}
 		}
+		role = derby.getRole(user);
+		System.out.println(role);
 	}
 	
 	public void removeAccount(String user) {

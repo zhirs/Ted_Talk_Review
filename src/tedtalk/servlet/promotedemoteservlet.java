@@ -42,8 +42,8 @@ public class promotedemoteservlet extends HttpServlet {
 		String user = req.getParameter("user");
 		String promo = req.getParameter("promo");
 		boolean promote = false;
-		
-		if(promo == "promote") {
+
+		if(promo.equals("promote")) {
 			promote = true;
 		}
 		
