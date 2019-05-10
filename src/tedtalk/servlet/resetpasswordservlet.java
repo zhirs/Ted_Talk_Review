@@ -32,6 +32,7 @@ public class resetpasswordservlet extends HttpServlet {
 		
 		System.out.println(username);
 		System.out.println(password);
+		//derby.resetPassword(username, password);	//remove the comments once joe gets the new method to hash passwords
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
