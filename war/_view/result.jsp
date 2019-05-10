@@ -35,10 +35,10 @@
 		<input type = "text" name = "input" placeholder = "search" required = "required" value = "${input}">
 		</form>
 		<hr>
-		
-  			<c:forEach items="${titles}" var="titles">
-      			<td><c:out value="${titles}"/></td>
-  			</c:forEach>
-		
+  	
+  		<c:forEach items="${titles}" var="titles">
+      		<td><c:out value="${titles}"/></td>
+  		</c:forEach>
+		<h2>${error}</h2>	
 	</body>
 </html>
