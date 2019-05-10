@@ -594,6 +594,54 @@ public class DerbyDatabaseTests {
 			fail("Incorrect review found");
 		}
 	}
+	
+	
+	@Test
+	public void testaddandParse() {
+		String URL = "placeholder.com";
+		String name = "One hundred dollars would be nice";
+		int rate = 5;
+		String pres = "Brendan Frasier";
+		String desc = "I bet the big B.F. could make a great database";
+		int profID = 9;
+		String tag = "Civil Engineering";
+		int status = 0;
+		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
+		int rev_id = revs.get(0).getrevID();
+		System.out.print(rev_id);
+		ArrayList<String> keys =  db.addandParse(name, rev_id);
+		if(!keys.contains("hundred")){
+			fail("nothing added");
+		}
+	}
+	
+	@Test
+	public void testApproveStudent() {
+		
+		String user = "dhill23";
+		String pass = "test";
+		String email= "jlandau68@ycp.edu";
+		String section = "CS365";
+		String major = "Civil Engineering";
+		ArrayList<Student> addStudent = db.addNewStudent(user, pass, email, section, major);
+		if(addStudent.isEmpty()) {
+			fail("No new student added");
+		}
+		ArrayList<Student> approved = db.approveStudent(user);
+		if(approved.isEmpty()) {
+			fail("No students approved");
+		}
+		db.removeAccount(user, db.getRole(user));
+	}
+	
+	@Test
+	public void testCheckUsername() {
+		int check = db.checkUsername("jlandau2");
+		if(check == 0) {
+			fail("failed existing username hit");
+		}
+	}
+	
 	@Test
 	public void testGetReviewByStatus() {
 		reviews = db.getReviewByStatus();
