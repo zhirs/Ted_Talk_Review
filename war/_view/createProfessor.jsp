@@ -4,7 +4,7 @@
 
 <html>
 	<head>		
-		<title>Professor Settings</title>
+		<title>Professor Creation</title>
 		<jsp:include page ="CSS/homePage.css"/>	<!-- ALTERNATIVE TO USEING HREFS-->			
  	</head>
 	
@@ -17,20 +17,33 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Professor Settings</h1>
+		<h1>Create Professor Account</h1>
 		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
-		<input type = "Submit" name = "home" class="button" value = "Home">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "get">
+		<input type = "Submit" name = "settings" class="button" value = "Settings">
+		</form>
 		<br><br><br>
-		<hr>
-		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
-		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+	
+	<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "post">
+		<table>
+					<tr>
+						<td> <input type="text" name = "Username" placeholder = "User Name" required = "required" value="${username}"> </td>
+			 		</tr>
+					<tr>
+						<td> <input type="text" name = "Password" placeholder = "Password" required = "required" value="${password}"> </td>
+			 		</tr>
+			 		<tr>
+			 			<td> <input type="text" name = "Email" placeholder = "Email" required = "required" value="${email}"> </td>
+			 		</tr>			 	
+		 </table>
+		 <div id="cct_embed_counts" align ="center">
+	<input type = "Submit" class="button2" value = "Create Account">
+	</form>
 	</body>
-</html>	
+</html>

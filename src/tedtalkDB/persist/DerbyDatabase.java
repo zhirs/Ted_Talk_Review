@@ -17,6 +17,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -112,6 +113,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt3 = null;				
 				PreparedStatement stmt4 = null;
 				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table admins(" +
@@ -178,7 +180,19 @@ public class DerbyDatabase implements IDatabase {
 							")"
 							);
 					stmt5.executeUpdate();
-					System.out.println("Accounts table created");					
+					System.out.println("Accounts table created");		
+					
+					stmt6 = conn.prepareStatement(
+							"create table keywords( " +
+							"	keywords_id integer primary key " + 
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	words varchar(200), " +
+							" 	rev_id integer " + 
+							")"
+							);
+					stmt6.executeUpdate();
+					System.out.println("Keywords table created");
+							
 					
 					return true;
 				} finally {
@@ -187,6 +201,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
 				}
 			}
 		});
@@ -202,13 +217,14 @@ public class DerbyDatabase implements IDatabase {
 				List<Student> studentList;
 				List<Review> reviewList;
 				List<Account> accountList;
-				
+				List<keywords> keyList;
 				try {
 					adminList = InitialData.getAdmins();
 					profList = InitialData.getProfs();
 					studentList = InitialData.getStudents();
 					reviewList = InitialData.getReviews();
 					accountList = InitialData.getAccounts();
+					keyList = InitialData.getKeywords();
 				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -218,6 +234,8 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertReview       = null;
 				PreparedStatement insertAccount = null;
+				PreparedStatement insertKeys = null;
+				
 				try {
 					insertAccount = conn.prepareStatement("insert into accounts(username, password, email, role) values (?, ?, ?, ?)");
 					for (Account account: accountList) {
@@ -286,6 +304,15 @@ public class DerbyDatabase implements IDatabase {
 					insertReview.executeBatch();					
 					System.out.println("Reviews table populated");					
 					
+					insertKeys = conn.prepareStatement("insert into keywords (words, rev_id) values (?, ?)");
+					for(keywords key : keyList) {
+						insertKeys.setString(1, key.getKeyWord());
+						insertKeys.setInt(2, key.getReviewID());
+						
+						insertKeys.addBatch();
+					}
+					insertKeys.executeBatch();
+					System.out.println("Keywords table populated");
 					System.out.println("All tables populated");
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied				
@@ -1307,6 +1334,427 @@ public class DerbyDatabase implements IDatabase {
 						return foundProfID;
 					}
 					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	public Integer addToAdmin(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into admins (prof_id, modStat) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	
+	public Integer addToProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into professors (prof_id, mod) "+
+							"values(?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "0");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+	
+	public Integer addToStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				// finds role of account
+				int profID = getProfID(user);
+				
+				PreparedStatement stmt1 = null;
+				
+				try {					
+					// removes sub role account
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+					
+					// inserts in blank student
+					stmt1 = conn.prepareStatement(
+							"insert into students (prof_id, section, major) "+
+							"values(?, ?, ?)"
+					);
+						stmt1.setInt(1, profID);
+						stmt1.setString(2, "");
+						stmt1.setString(3, "");
+						stmt1.executeUpdate();
+					}
+				
+					finally {		
+						DBUtil.closeQuietly(conn);
+						DBUtil.closeQuietly(stmt1);
+					}
+					
+					return null;
+				}
+		});
+	}
+
+	// deletes from sub branch
+	public Integer removeFromAdmin(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from admins " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from sub branch
+	public Integer removeFromProfessor(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from professors " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from sub branch
+	public Integer removeFromStudent(String user) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				
+				try {
+					// deletes from sub branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from students " +
+						" where prof_id = ? "
+					);
+					stmt1.setInt(1, profID);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	// deletes from all branches
+	public Integer removeAccount(String user, int role) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				if(role == 0) {
+					switch(getRole(user)) {
+					case 0:
+						removeFromAdmin(user);
+						break;
+					case 1: 
+						removeFromProfessor(user);
+						break;
+					default:
+						removeFromStudent(user);	
+					}
+				}
+				else {
+					removeFromStudent(user);
+				}
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				
+				try {
+					// deletes from main branch
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from accounts " +
+						" where username = ?"
+					);
+					stmt1.setString(1, user);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	public Integer updateRole(String user, boolean promo) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				switch(getRole(user)) {
+				case 0:
+					removeFromAdmin(user);
+					break;
+				case 1: 
+					removeFromProfessor(user);
+					break;
+				default:
+					removeFromStudent(user);	
+				}
+				int role = getRole(user);
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int newRole = 0;
+				
+				// checks type of role change
+				if(promo == true) {
+					// subtracts since account role integers are backwards
+					newRole = role - 1;
+				}
+				else {
+					// 0 is admin, 2 is student
+					newRole = role + 1;
+				}
+				
+				try {
+					// updates main branch role 
+					stmt1 = conn.prepareStatement(
+						" update accounts "+
+						" set role = ? " +
+						" where username = ?"
+					);
+					stmt1.setInt(1, newRole);
+					stmt1.setString(2, user);
+					stmt1.executeUpdate();
+				
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	public Integer getGlobalMod() {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				// count of modStat, 0 or negative if off, positive if on
+				int countStat = 0;
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" select modStat "+
+						" from admins "
+					);
+					resultSet1 = stmt1.executeQuery();
+					
+					int i = 0;
+					while(resultSet1.next()) {
+						// gets next mod from admin
+						int modStat = resultSet1.getInt(i++);
+						switch(modStat) {
+						case 1:
+							// if off, subract, otherwise add
+							countStat --;
+							break;
+						case 2: 
+							countStat ++;
+						}
+					}
+					return countStat;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(resultSet1);
+				}
+			}
+		});
+	}
+	
+	public Integer removeReview(String user, String title) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				int profID = getProfID(user);
+				
+				try { 
+					stmt1 = conn.prepareStatement(
+						" delete "+
+						" from reviews"
+						+ "where profID = ?"
+						+ "and name = ?"
+					);
+					stmt1.setInt(1, profID);
+					stmt1.setString(2, title);
+					stmt1.executeUpdate();
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+
+	@Override
+	public ArrayList<Integer> getRevID(String keyword) {
+		return executeTransaction(new Transaction<ArrayList<Integer>>() {
+			@Override
+			public ArrayList<Integer>execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<Integer> revIDS = new ArrayList<Integer>();
+				try {
+					stmt1 = conn.prepareStatement(
+						" select rev_id "+
+						" from keywords " +
+						" where words = ?"
+					);
+					stmt1.setString(1, keyword);
+					resultSet1 = stmt1.executeQuery();
+					int foundRevID = -1;
+					int i = 1;
+					while(resultSet1.next()) { 
+						foundRevID = resultSet1.getInt(i++);
+						revIDS.add(foundRevID);
+					}
+					if(revIDS.size() != 0) {
+						System.out.println("Found review");
+						return revIDS;
+					}
+					else {
+						System.out.println("No reviews found");
+						return revIDS;
+					}
 				}
 				finally {
 					DBUtil.closeQuietly(conn);

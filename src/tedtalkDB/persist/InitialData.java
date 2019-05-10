@@ -11,6 +11,7 @@ import tedtalkDB.model.NetworkAdmin;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 
 public class InitialData {
 	public static List<NetworkAdmin> getAdmins() throws IOException{
@@ -169,6 +170,32 @@ public class InitialData {
 		}
 		finally {
 			readStudents.close();
+		}
+	}
+	public static List<keywords> getKeywords() throws IOException, ParseException {
+		List<keywords> keyList = new ArrayList<keywords>();
+		ReadCSV readKeyWords = new ReadCSV("keywords.csv");
+		// four superadmins created
+		try {
+			Integer keywordID = 1;
+			while(true) {
+				List<String> tuple = readKeyWords.next();
+				if(tuple == null) {
+					break;
+				}
+				Iterator<String>i = tuple.iterator();
+				Integer.parseInt(i.next());
+				keywords newkey = new keywords();
+				newkey.setkeywordID(keywordID++);
+				newkey.setkeyWord(i.next());
+				newkey.setReviewID(Integer.parseInt(i.next()));
+				keyList.add(newkey);
+			}
+			System.out.println("keywordList loaded from CSV file");
+			return keyList;
+		}
+		finally {
+			readKeyWords.close();
 		}
 	}
 }

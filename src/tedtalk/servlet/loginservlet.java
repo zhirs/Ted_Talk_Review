@@ -75,16 +75,20 @@ public class loginservlet extends HttpServlet {
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
 			else {	//this should never occur
-			System.out.println("Login Servlet: Login Successful");
-			resp.sendRedirect(req.getContextPath() + "/home");
+				System.out.println("Login Servlet: Login Successful");
+				resp.sendRedirect(req.getContextPath() + "/home");
 			}
+		}
+		
+		else if(user.equals("") || pass.equals("")) {
+			req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 		}
 		
 		else{
 			req.setAttribute("response", "Incorrect Username or Password");
 			System.out.println("Login Servlet: Login Failed");				
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
-			}
+		}
 		// now call the JSP to render the new page	
 	}
 }
