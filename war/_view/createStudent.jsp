@@ -29,7 +29,7 @@
 		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
 		<br><br><br>
-	
+	<h2>${error}</h2>
 	<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "post">
 		<table>
 				<tr>
@@ -50,6 +50,7 @@
 		 </table>	
 		 <div id="cct_embed_counts" align ="center">
 		<input type = "Submit" class="button2" value = "Create Account">
+		</div>
 		</form>
 	</body>
 </html>

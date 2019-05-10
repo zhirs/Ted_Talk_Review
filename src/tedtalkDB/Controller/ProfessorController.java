@@ -42,5 +42,11 @@ public class ProfessorController {
 		// TODO Auto-generated method stub
 		derby.removeAccount(student, 1);
 	}
-
+	public void addStudent(String user, String pass, String email, String section, String major) {
+		derby.addNewStudent(user, pass, email, section, major);
+	}
+	
+	public void approveStudent(String user) {
+		derby.approveStudent(user);
+	}
 }

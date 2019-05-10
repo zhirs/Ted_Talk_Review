@@ -1929,13 +1929,14 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setString(1, user);
 					
 					resultSet1 = stmt1.executeQuery();
-					int i = 1;
+				
 					String username = null;
 					String password = null;
 					String email = null;
 					String section = null;
 					String major = null;
 					while(resultSet1.next()) {
+						int i = 1;
 						username = resultSet1.getString(i++);
 						password = resultSet1.getString(i++);
 						email = resultSet1.getString(i++);

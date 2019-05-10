@@ -82,6 +82,10 @@
 	<servlet-name>resultServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.resultservlet</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>pendingServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.pendingservlet</servlet-class>
+</servlet>
     
 
 <!-- servlet mapping -->
@@ -160,5 +164,9 @@
 <servlet-mapping>
 	<servlet-name>resultServlet</servlet-name>
 	<url-pattern>/result</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>pendingServlet</servlet-name>
+	<url-pattern>/pending</url-pattern>
 </servlet-mapping>
 </web-app>	
