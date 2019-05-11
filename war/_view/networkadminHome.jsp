@@ -28,6 +28,13 @@
 		</form>
 		<br><br><br>
 		<hr>
+		<h2>Suggested TEDTalks:</h2>
+		<p>What your peers are viewing:</p>
+		<ul id = "links"><!-- THE HREF SHOULD GO TO A LINK THAT AUTO-FILLS THE REVIEW PAGE WITH THE CORRESPONDING TED TALK -->
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review0}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review1}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review2}</a></li>
+		</ul>	
 		<div class = "searchSection">
 			<p>Search Page:</p>
 			<form action="${pageContext.servletContext.contextPath}/result" method="get"> 

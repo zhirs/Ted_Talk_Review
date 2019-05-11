@@ -2280,5 +2280,27 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
+
+	@Override
+	public ArrayList<String> getMajors() {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
+			@Override
+			public ArrayList<String> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet results = null;
+				ArrayList<String> temp = new ArrayList<String>();
+				stmt1 = conn.prepareStatement(
+						"select major "
+						+ "from students " );
+				results = stmt1.executeQuery();
+				int i = 1;
+				while(results.next()) {
+					temp.add(results.getString(i++));
+				}
+				return temp;
+			}
+		}
+		);
+	}
 }	
 
