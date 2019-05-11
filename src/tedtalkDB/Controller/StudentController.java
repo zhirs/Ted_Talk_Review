@@ -26,4 +26,13 @@ public class StudentController {
 		//CREATES A NEW ACCOUNT BASED ON THE TYPE:				
 		derby.addStudent(studentModel.getUserName(),studentModel.getPassword(),studentModel.getEmail(),studentModel.getSection(), studentModel.getMajor());
 	}
+	public Integer getRevTotal(int profID) {
+		return derby.getReviewTotal(profID);
+	}
+	public ArrayList<String> getMajors(){
+		return derby.getMajors();
+	}
+	public ArrayList<Student> getStudentsbyMajor(String major) {
+		return derby.studentsByMajor(major);
+	}
 }
