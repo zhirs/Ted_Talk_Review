@@ -104,7 +104,11 @@ public class loginservlet extends HttpServlet {
 			}
 			else if(role== 1) {
 				// if professor get mod
-				session.setAttribute("moderator", derby.getMod(login.getprofID()));
+				if(derby.getGlobalMod() > 0) {
+					session.setAttribute("moderator", 1);
+				}else {
+					session.setAttribute("moderator", derby.getMod(login.getprofID()));
+				}
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/professorHome");
 			}
