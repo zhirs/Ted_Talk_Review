@@ -32,6 +32,7 @@
 		<br><br><br>
 		<hr>		
 		<div class = "reviewSection">
+		<a href = "${url}" target = "blank"> "TedTalk Link: ${name}"</a>
 		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
 									<table>
 						<tr>
@@ -41,7 +42,7 @@
 				 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
 				 		</tr>
 				 		<tr>
-				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
+				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}">  </td>
 				 		</tr>
 				 		<tr>
 				 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" size = "30" value="${tag}"> </td>
@@ -63,13 +64,13 @@
 			   <div id="star1" class="notation-star" onClick="notation(this.id);"></div>
 			   <input type="hidden" id="notationNote" name="notation_note" value="0">
 			<input type = "Submit" class="button2" value = "Submit Review">
-			</form>
 			<div id="cct_embed_result"></div>
 			<div id="cct_powered_by">Powered by <a href="https://charactercounttool.com">Character Counter</a></div>
 			<script type="text/javascript" src="https://charactercounttool.com/cct_embed.min.js"></script>
 
 			</div>
-		</form>		
+		</form>	
+		</div>	
 		<hr>
 		<div class = "commonReviews"><!-- SECTION OF OTHER RELATED REVIEWS -->
 		<div id = "avgRating">
