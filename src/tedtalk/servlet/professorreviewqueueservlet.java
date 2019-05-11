@@ -9,27 +9,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
-import tedtalkDB.persist.DerbyDatabase;
+import tedtalkDB.Controller.ProfessorController;
 
 public class professorreviewqueueservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
-	private DerbyDatabase derby;
 	private ArrayList<Review> reviewQueue;
+	private ProfessorController controller;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("Professor Review Queue: doGet");	
 		username = (String) req.getSession().getAttribute("username");
-		derby = new DerbyDatabase();
-		reviewQueue = new ArrayList<Review>();
-		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
+		controller = new ProfessorController();
 		ArrayList<String> reviews = new ArrayList<String>();
+		reviewQueue.addAll(controller.getReviewByStatus(0));
 		//description, almost every element except rating
 		if(!reviewQueue.isEmpty()) {
 			for(int i = 0; i < reviewQueue.size(); i++) {
 				reviews.add(reviewQueue.get(i).getDesc());
-				System.out.println(reviewQueue.get(i).getDesc());
 			}
 		}
 		req.setAttribute("reviews" , reviews);
