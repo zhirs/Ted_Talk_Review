@@ -175,6 +175,7 @@ public class loginservlet extends HttpServlet {
 	}
 	
 	public void getTopProfiles() {
+		System.out.println("getTopProfiles");
 		ArrayList<String> students = new ArrayList<String>();
 		ArrayList<Integer> highest = new ArrayList<Integer>();
 		students.addAll(derby.getStudentUserNames());
