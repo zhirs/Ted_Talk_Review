@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class studenthomeservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
-	private String review0;
-	private String review1;
-	private String review2;
+	private String show[] = new String[5];
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -24,10 +22,13 @@ public class studenthomeservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			review0 = (String) req.getSession().getAttribute("review0");
-			review1 = (String) req.getSession().getAttribute("review1");
-			review2 = (String) req.getSession().getAttribute("review2");
+			show = (String[]) req.getSession().getAttribute("TopURL");
 			
+			req.setAttribute("review0", show[0]);
+			req.setAttribute("review1", show[1]);
+			req.setAttribute("review2", show[2]);
+			req.setAttribute("review3", show[3]);
+			req.setAttribute("review4", show[4]);
 			req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
 		}
 	}
