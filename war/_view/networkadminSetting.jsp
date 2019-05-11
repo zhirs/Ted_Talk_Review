@@ -25,8 +25,36 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<br><br><br>
-
+		<br><br><br><br><br><br>
 		
+		Create an account here:
+		<form action = "${pageContext.servletContext.contextPath}/createAdmin" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Admin">
+		</form>
+		<br><br>
+		<form action = "${pageContext.servletContext.contextPath}/createProfessor" method = "get">
+		<input type = "Submit" name = "createProfessor" class="button" value = "Create Professor">
+		</form>
+		<br><br>
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createStudent" class="button" value = "Create Student">
+		</form>
+		<br><br><br>
+		Promote/demote an account here:<br>
+		<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "get">
+		<input type = "Submit" name = "promoteDemote" class="button" value = "Promote/Demote">
+		</form>
+		<br><br><br>
+		Remove an account here:<br>
+		<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "get">
+		<input type = "Submit" name = "removeAcc" class="button" value = "Remove Account">
+		</form>
+		<br><br><br>
+		Or change reviewing(on/off):<br>
+		${globalModStat}<br>
+		your current reviewing status is: ${currentStat}<br>
+		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "post">
+		<input type = "Submit" name = "moderatorStatus" class="button" value = "On/Off">
+		</form>
 	</body>
 </html>

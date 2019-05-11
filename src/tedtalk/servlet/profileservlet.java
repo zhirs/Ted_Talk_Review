@@ -7,12 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import tedtalk.model.ProfileModel;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Review;
-import tedtalk.controller.ProfileController;
 import tedtalk.controller.ReviewController;
 import tedtalkDB.persist.DerbyDatabase;
 
@@ -44,42 +41,17 @@ public class profileservlet extends HttpServlet {
 			if(login == null) {
 				System.out.println("This is null");
 			}
-			int id = login.getprofID();
-			if(id < 20000) {
-				if(id < 10000) {
-					req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
-				}
-				else {
-					req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
-				}
-			}
-			else {
+			int role = derby.getRole(username);
+			switch(role){
+			case 0:
+				req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
+				break;
+			case 1:	
+				req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
+				break; 
+			default:
 				req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
 			}
-			 
-			ReviewController revController = new ReviewController();
-			Review revModel = new Review();
-
-			//Adrian's code, needed something that would grab the session parameter. temporary
-			ArrayList<String> test = new ArrayList<String>();
-			test.add(req.getParameter("UpdatedReviews"));
-			
-			revController.setModel(revModel);
-			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
-			ArrayList<String> reviews = new ArrayList<String>();
-						
-			if(!revReturn.isEmpty()) {
-				for(int i = 0; i < revReturn.size(); i++) {
-					reviews.add(revReturn.get(i).getDesc());
-				}
-			}
-			
-			req.setAttribute("reviews" , reviews);
-			req.setAttribute("errorMessage", errorMessage);
-			//req.setAttribute("profileM", model);
-			//req.setAttribute("userModel", model);
-			req.setAttribute("email", email);
-			req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		}
 	}
 	@Override
