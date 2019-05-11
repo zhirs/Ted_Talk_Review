@@ -44,5 +44,8 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 Acknowledgments
 Special thanks to Dr. Hamilton for allowing us to work on this project. Thank you to all of the aforementioned team members your hardwork made this project possible.  
 
+Thank you to Dr. Hake for allowing us to use the library examples to base our framework off of.
 
+Thank you Jason Steinberg for various help discussing the web app logic, including session work and navigation. 
 
+Thank you w3schools for helping with HTML and CSS logic.
