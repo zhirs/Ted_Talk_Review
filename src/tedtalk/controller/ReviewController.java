@@ -84,4 +84,8 @@ public class ReviewController {
 		revs.addAll(derby.getProfIDReviewList(prof_id, 0));
 		return revs;
 	}
+	public int getAverageRating(String url) {
+		int avrg = derby.averageReviewRating(url);
+		return avrg;
+	}
 }
