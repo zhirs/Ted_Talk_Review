@@ -28,7 +28,7 @@ public class ReviewControllerTest {
 			e.printStackTrace();
 		}
 		// sets model to a review already in database for testing methods
-		modelHandler = derby.getProfIDReviewList(8).get(0);
+		modelHandler = derby.getProfIDReviewList(8, 0).get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
 	}
@@ -70,6 +70,21 @@ public class ReviewControllerTest {
 		for(int i = 0; i < revs.size(); i++) {
 			System.out.println(revs.get(i).getDesc());
 		}		
+	}
+	@Test
+	public void testGetReviews() {
+		ArrayList<Review> pendingrevs = reviewController.getPendingRevs(8);
+		if(pendingrevs.isEmpty()){
+			fail("Returned no reviews");
+		}
+		ArrayList<Review> approvedrevs = reviewController.getApprovedRevs(8);
+		if(!approvedrevs.isEmpty()) {
+			fail("Returned incorrect review");
+		}
+		ArrayList<Review> deniedrevs = reviewController.getDeniedRevs(8);
+		if(!deniedrevs.isEmpty()) {
+			fail("Returned incorrect review");
+		}
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/

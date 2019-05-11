@@ -33,23 +33,24 @@
 		<hr>		
 		<div class = "reviewSection">
 		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
-									<table>
-						<tr>
-							<td>Review Title:<input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" size = "40" value="${name}"> </td>
-				 		</tr>
-				 		<tr>
-				 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
-				 		</tr>
-				 		<tr>
-				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
-				 		</tr>
-				 		<tr>
-				 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" size = "30" value="${tag}"> </td>
-				 		</tr>
-				 		<tr><!-- consider having click to input rather than user entering asterisk -->
-				 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
-				 		</tr>			 	
-			 		</table>
+			<table>
+				<tr>
+					<td>Review Title:<input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" size = "40" value="${name}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${tag}"> </td>
+		 		</tr>
+		 		<tr><!-- consider having click to input rather than user entering asterisk -->
+		 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
+		 		</tr>			 	
+	 		</table>
+
 		 				 <%--This is the textfield for the review's description --%> 
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
@@ -63,13 +64,13 @@
 			   <div id="star1" class="notation-star" onClick="notation(this.id);"></div>
 			   <input type="hidden" id="notationNote" name="notation_note" value="0">
 			<input type = "Submit" class="button2" value = "Submit Review">
-			</form>
 			<div id="cct_embed_result"></div>
 			<div id="cct_powered_by">Powered by <a href="https://charactercounttool.com">Character Counter</a></div>
 			<script type="text/javascript" src="https://charactercounttool.com/cct_embed.min.js"></script>
+			</div>
+		</form>
 
 			</div>
-		</form>		
 		<hr>
 		<div class = "commonReviews"><!-- SECTION OF OTHER RELATED REVIEWS -->
 		<div id = "avgRating">

@@ -41,7 +41,7 @@ public class ReviewController {
 	// used primarily for printing all reviews by the user within the profile page
 	public ArrayList<Review> fetchReviews(int profID){
 		ArrayList<Review> result = new ArrayList<Review>();
-		result.addAll(derby.getProfIDReviewList(profID));
+		result.addAll(derby.getProfIDReviewList(profID, 0));
 		return result;
 	}
 	
@@ -67,5 +67,30 @@ public class ReviewController {
 			revs.addAll(derby.getReviews(revIDS.get(i))); 
 		}
 		return revs;
+	}
+	public ArrayList<Review> findByTitle(String titles){
+		return derby.findReview(titles);		
+	}
+
+
+	
+	public ArrayList<Review> getApprovedRevs(int prof_id){
+		ArrayList<Review> revs = new ArrayList<Review>();
+		revs.addAll(derby.getProfIDReviewList(prof_id, 2));
+		return revs;
+	}
+	public ArrayList<Review> getDeniedRevs(int prof_id){
+		ArrayList<Review> revs = new ArrayList<Review>();
+		revs.addAll(derby.getProfIDReviewList(prof_id, 1));
+		return revs;
+	}
+	public ArrayList<Review> getPendingRevs(int prof_id){
+		ArrayList<Review> revs = new ArrayList<Review>();
+		revs.addAll(derby.getProfIDReviewList(prof_id, 0));
+		return revs;
+	}
+	public int getAverageRating(String url) {
+		int avrg = derby.averageReviewRating(url);
+		return avrg;
 	}
 }

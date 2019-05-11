@@ -27,6 +27,9 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
 		<br><br><br>
 		<hr>
 		<h2>Suggested TEDTalks:</h2>

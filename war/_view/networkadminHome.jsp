@@ -20,7 +20,7 @@
 		</span>
 		<h1>Network Admin Home</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -28,6 +28,9 @@
 		</form>
 		<br><br><br>
 		<hr>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
 		<h2>Suggested TEDTalks:</h2>
 		<p>What your peers are viewing:</p>
 		<ul id = "links"><!-- THE HREF SHOULD GO TO A LINK THAT AUTO-FILLS THE REVIEW PAGE WITH THE CORRESPONDING TED TALK -->
@@ -61,6 +64,5 @@
 		<form action="${pageContext.servletContext.contextPath}/approvedStudents" method="get"> 
 			<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
 		</form>
-		
 	</body>
 </html>

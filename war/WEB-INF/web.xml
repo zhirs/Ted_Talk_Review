@@ -98,6 +98,18 @@
 	<servlet-name>approvedStudentsServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.approvedStudents</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>checkStudentDateAdminServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.checkstudentdateadminservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>studentOverviewServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.studentoverviewservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>professorReviewQueueServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorreviewqueueservlet</servlet-class>
+</servlet>
     
 
 <!-- servlet mapping -->
@@ -135,7 +147,7 @@
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminServlet</servlet-name>
-	<url-pattern>/networkAdmin</url-pattern>
+	<url-pattern>/networkadmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>networkAdminSettingServlet</servlet-name>
@@ -192,5 +204,17 @@
 <servlet-mapping>
 	<servlet-name>approvedStudentsServlet</servlet-name>
 	<url-pattern>/approvedStudents</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>checkStudentDateAdminServlet</servlet-name>
+	<url-pattern>/checkStudentDateAdmin</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>studentOverviewServlet</servlet-name>
+	<url-pattern>/studentOverview</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	<servlet-name>professorReviewQueueServlet</servlet-name>
+	<url-pattern>/professorReviewQueue</url-pattern>
 </servlet-mapping>
 </web-app>	
