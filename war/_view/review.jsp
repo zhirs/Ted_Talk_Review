@@ -80,7 +80,19 @@
 			<p>${common2Title} || ${common2URL} || ${common2Rate}</p>
 		
 		</div>
-		
+		<p>These are the previous reviews for this Ted Talk</p>
+		<c:forEach var="i" begin = "0" end = "1">
+			<div class = "reviewSection">
+				<table>
+			 		<tr><!-- consider having click to input rather than user entering asterisk -->
+			 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${ratings.get(i)}"> </td>
+			 		</tr>	
+			 		<tr>
+			 		<td> <textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" value="${descriptions.get(i)}"></textarea> </td>
+			 		</tr>		 	
+		 		</table>
+			</div>
+		</c:forEach>
 
 	</body>
 </html>

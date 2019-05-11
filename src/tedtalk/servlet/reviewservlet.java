@@ -19,26 +19,23 @@ public class reviewservlet extends HttpServlet {
 	private String review0 = null;
 	private String review1 = null;
 	private String review2 = null;
-	private String titles ;
 	private String common1 = null;
 	private String common2 = null;
 	private int avgRating  = 0;
 	public ReviewController revController;
-	Review handle = new Review();
-
 	private int profID = -1;
-	
+	private ArrayList<String> descriptions;
+	private ArrayList<Integer> ratings;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		revController = new ReviewController();
+		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
 		review2 = (String) req.getSession().getAttribute("review2");
-		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
-		titles = title.get(0);
 
 		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
@@ -46,12 +43,7 @@ public class reviewservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			//revController.setModel(handle);//USED WITH THE DB REVIEW MODE
-
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-		
-			ArrayList<Review> derbyResults = derby.findReview(titles);//revController.findByTitle(titles);//DOES NOT WORK
-		
 			//String review0 = "Joseph Landau's Symposium";
 			ArrayList<Review> derbyResults = revController.search(review2);//SEARCHED BY TITLE
 			
@@ -61,8 +53,6 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("url", derbyResults.get(0).getURL());
 			req.setAttribute("tag", derbyResults.get(0).getTag());
 			req.setAttribute("name",derbyResults.get(0).getName());
-
-			ArrayList<Review> tester = derby.findReview(review1);
 			
 			//DISPLAY RELATED REVIEWS:
 			ArrayList<Review> tester = revController.search(review1);
@@ -77,11 +67,23 @@ public class reviewservlet extends HttpServlet {
 			
 			//AVG RATING:
 			avgRating = revController.getAverageRating(tester.get(0).getURL());
-			avgRating += tester.get(0).getRate();
-			avgRating += tester1.get(0).getRate();
-			avgRating /= 2;
+			
+			//Array list for previous review population
+			descriptions = new ArrayList<String>();
+			ratings = new ArrayList<Integer>();
+			for(Review reviews: derbyResults) {
+				descriptions.add(reviews.getDesc());
+				ratings.add(reviews.getRate());
+			}
+			/*for(int i = 0; i < descriptions.size(); i++) {
+				System.out.println("the description is: " + descriptions.get(i) + " : The rating is: " + ratings.get(i));
+			} */
+			int listSize = descriptions.size() -1;
 
 			req.setAttribute("avgRating", avgRating);
+			req.setAttribute("descriptions", descriptions);
+			req.setAttribute("ratings", ratings);
+			req.setAttribute("listSize", listSize);
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 
@@ -92,9 +94,6 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
-		
-
-		DerbyDatabase derby = new DerbyDatabase();
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
