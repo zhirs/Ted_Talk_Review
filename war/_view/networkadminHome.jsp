@@ -54,6 +54,5 @@
 		<form action="${pageContext.servletContext.contextPath}/approvedStudents" method="get"> 
 			<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
 		</form>
-		
 	</body>
 </html>
