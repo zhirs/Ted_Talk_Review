@@ -2247,9 +2247,38 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<Review> getReviewByStatus() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Review> getReviewByStatus(int status) {
+		return executeTransaction(new Transaction<ArrayList<Review>>() {
+			@Override
+			public ArrayList<Review> execute(Connection conn) throws SQLException {
+				ArrayList<Review> reviews = new ArrayList<Review>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select * "
+							+ "from reviews "
+							+ "where status = ? ");
+					stmt1.setInt(1, status);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						Review review = new Review();
+						loadReview(review, resultSet1, 1);
+						reviews.add(review);
+					}
+					if(reviews.size() >= 1) {
+						//System.out.println("Found reviews");
+						return reviews;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return reviews;
+			}
+		}
+		);
 	}
 }	
 

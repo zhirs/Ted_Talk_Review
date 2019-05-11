@@ -671,14 +671,12 @@ public class DerbyDatabaseTests {
 	}
 	@Test
 	public void testGetReviewByStatus() {
-		reviews = db.getReviewByStatus();
+		int status = 0;
+		reviews = db.getReviewByStatus(status);
 		if(reviews.isEmpty()) {
 			fail("The List was not filled with reviews");
 		}
 		else {
-			System.out.println("The descrption is " + reviews.get(0).getDesc());
-			System.out.println("The descrption is " + reviews.get(1).getDesc());
-			System.out.println("The descrption is " + reviews.get(2).getDesc());
 			assertTrue(reviews.get(0).getDesc().equals("Please don't flunk me"));
 		}
 	}
