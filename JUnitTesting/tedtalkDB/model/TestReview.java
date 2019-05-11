@@ -22,8 +22,8 @@ public class TestReview {
 		derby = new DerbyDatabase();
 		
 		// Add initial data
-		reviews1.addAll(derby.getProfIDReviewList(8));
-		reviews2.addAll(derby.getProfIDReviewList(9));
+		reviews1.addAll(derby.getProfIDReviewList(8, 0));
+		reviews2.addAll(derby.getProfIDReviewList(9, 0));
 	}
 	
 	@Test
