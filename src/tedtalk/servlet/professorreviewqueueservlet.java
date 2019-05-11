@@ -22,6 +22,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 		System.out.println("Professor Review Queue: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		controller = new ProfessorController();
+		reviewQueue = new ArrayList<Review>();
 		ArrayList<String> reviews = new ArrayList<String>();
 		reviewQueue.addAll(controller.getReviewByStatus(0));
 		//description, almost every element except rating

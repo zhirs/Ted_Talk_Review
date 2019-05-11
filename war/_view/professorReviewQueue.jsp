@@ -30,7 +30,7 @@
 		<br><br><br>
 		<hr>
 		<h2>Suggested TEDTalks:</h2>
-		<p>What your peers are viewing:</p>
+		<p>Yo Joe this is Adrian, I'm Stuck in the pc :( :</p>
 		<c:forEach var="reviews" items="${reviews}">
 			<c:out value = "${reviews}"/> <br><br>
 		</c:forEach>

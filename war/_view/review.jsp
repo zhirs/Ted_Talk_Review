@@ -85,10 +85,10 @@
 			<div class = "reviewSection">
 				<table>
 			 		<tr><!-- consider having click to input rather than user entering asterisk -->
-			 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${ratings.get(i)}"> </td>
+			 			<td>Rating:       <input type="text" name = "rating" size = "20" value="${ratings.get(i)}"> </td>
 			 		</tr>	
 			 		<tr>
-			 		<td> <textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" value="${descriptions.get(i)}"></textarea> </td>
+			 			<td>Description: <input id ="textboxid" type="text" name = "rating" size = "20" value="${descriptions.get(i)}"> </td>
 			 		</tr>		 	
 		 		</table>
 			</div>

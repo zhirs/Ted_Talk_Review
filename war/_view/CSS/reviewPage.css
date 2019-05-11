@@ -47,5 +47,10 @@
 	#avgRating{
 	text-align: right;
 	}
+
+	#textboxid
+	{
+    	height:100px;
+	}
 	</style>
 </html>
