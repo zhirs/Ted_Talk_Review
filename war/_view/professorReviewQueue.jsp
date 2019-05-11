@@ -31,32 +31,29 @@
 		<hr>
 		<h2>Suggested TEDTalks:</h2>
 		<h3>Reviews pending approval</h3>
-		<c:forEach var="reviews" items="${revDescriptions}">
+		<c:forEach var="i" begin = "0" end = "${listSize}">
 		<div>
 			<table>
 				<tr>
-					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames}"> </td>
+					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
 		 		</tr>
 		 		<tr>
-		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters}"> </td>
+		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters.get(i)}" readonly> </td>
 		 		</tr>
 		 		<tr>
-		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs}"> </td>
+		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs.get(i)}" readonly> </td>
 		 		</tr>
 		 		<tr>
-		 			<td>Description:<input type="text" name = "description" size = "100" value="${revDescriptions}"></td>
+		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
 		 		</tr>			 	
 	 		</table>
 	 		</div>
 		</c:forEach>
 		
 		
-		<h3>Review Name to reject</h3>
-  		<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post"> 
-  			<input type = "text" name = "delete" placeholder = "Username" value = "${delete}">
-		</form>
-		<form action="${pageContext.servletContext.contextPath}/approvedStudents" method="get"> 
-			<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
+		<h3>Review title to reject</h3>
+  		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+  			<input type = "text" name = "delete" value = "${delete}">
 		</form>
 	</body>
 </html>

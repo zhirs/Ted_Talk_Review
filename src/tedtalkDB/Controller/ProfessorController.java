@@ -52,8 +52,6 @@ public class ProfessorController {
 		derby.approveStudent(user);
 	}
 	public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
-		ArrayList<Review> reviewDate = new ArrayList<Review>();
-		
 		int tempProfID = derby.getProfID(searchName);
 		
 		String date1 = year1+"/"+month1+"/"+day1;
@@ -73,5 +71,19 @@ public class ProfessorController {
 		ArrayList<Review> reviewQueue = new ArrayList<Review>();
 		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
 		return reviewQueue;
+	}
+	public ArrayList<Review> search(String input) {
+		ArrayList<Review> revs = new ArrayList<Review>();
+		ArrayList<String> keys = derby.parseTitle(input);
+		ArrayList<Integer> revIDS = new ArrayList<Integer>();
+		keys.add(input);
+		revs.addAll(derby.findReview(input));
+		for(int i = 0; i < keys.size(); i++) {
+			revIDS.addAll(derby.getRevID(keys.get(i)));
+		}
+		for(int i = 0; i <revIDS.size(); i++) {
+			revs.addAll(derby.getReviews(revIDS.get(i))); 
+		}
+		return revs;
 	}
 }
