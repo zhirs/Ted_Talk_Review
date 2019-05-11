@@ -109,6 +109,20 @@ public class reviewservlet extends HttpServlet {
 		req.setAttribute("UpdatedReviews", reviews);
 		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
+		
+		//roleID = (int) derby.getRole(username);	//for some reason this method works but creates a null pointer exception
+		//System.out.println(username);
+		/*
+		if(roleID == 0) {
+			req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
+		}
+		else if(roleID== 1) {
+			req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
+		}
+		else{
+			req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
+		} */
+		
 		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
 		//req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
 	}

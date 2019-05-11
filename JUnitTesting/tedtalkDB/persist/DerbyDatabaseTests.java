@@ -669,6 +669,48 @@ public class DerbyDatabaseTests {
 			fail("Deny incorrect.");
 		}
 	}
+	@Test
+	public void testGetReviewByStatus() {
+		reviews = db.getReviewByStatus();
+		if(reviews.isEmpty()) {
+			fail("The List was not filled with reviews");
+		}
+		else {
+			System.out.println("The descrption is " + reviews.get(0).getDesc());
+			System.out.println("The descrption is " + reviews.get(1).getDesc());
+			System.out.println("The descrption is " + reviews.get(2).getDesc());
+			assertTrue(reviews.get(0).getDesc().equals("Please don't flunk me"));
+		}
+	}
+	@Test
+	public void testChangeReviewStatus() {
+		int rev_id = 1;
+		int status= 1;
+		db.changeReviewStatus(status, rev_id);
+		reviews = db.findReview("Joseph Landau's Symposium");
+		assertEquals(reviews.get(0).getStatus(), 1);
+	}
+	
+	@Test
+	public void testResetPassword() {
+		String oldPassword = db.setLogin("student1").getPassword();
+		String username = "student1";
+		String newPassword = "testPassword";
+		System.out.println("The old password is " + oldPassword);
+		db.resetPassword(username, newPassword);
+		String currentPassword = db.setLogin(username).getPassword();
+		System.out.println("The new password is " + currentPassword);
+		assertTrue(currentPassword.equals(newPassword));
+		assertFalse(currentPassword.equals(oldPassword));
+		
+		db.resetPassword(username, oldPassword);
+	}
+	@Test
+	public void testAverageReviewRating() {
+		String url = "www.ilovedb.com";
+		int avrgRate = db.averageReviewRating(url);
+		assertEquals(avrgRate, 5);
+	}
 
 }
 	
