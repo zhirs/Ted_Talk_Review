@@ -50,20 +50,16 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-			int i = 0;
-			do {
-				i++;			
-				ArrayList<Review> derbyResults = derby.findReview(titles);//SEARCHED BY TITLE
-			
-				//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
-				req.setAttribute("description", derbyResults.get(0).getDesc());
-				req.setAttribute("presenterName", derbyResults.get(0).getPres());
-				req.setAttribute("url", derbyResults.get(0).getURL());
-				req.setAttribute("tag", derbyResults.get(0).getTag());
-				req.setAttribute("name",derbyResults.get(0).getName());
-			
-			}while(i < 4);
-			//DISPLAY RELATED REVIEWS:
+		
+			ArrayList<Review> derbyResults = derby.findReview(titles);//SEARCHED BY TITLE
+		
+			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
+			req.setAttribute("description", derbyResults.get(0).getDesc());
+			req.setAttribute("presenterName", derbyResults.get(0).getPres());
+			req.setAttribute("url", derbyResults.get(0).getURL());
+			req.setAttribute("tag", derbyResults.get(0).getTag());
+			req.setAttribute("name",derbyResults.get(0).getName());
+
 			ArrayList<Review> tester = derby.findReview(review1);
 			req.setAttribute("common1Title", tester.get(0).getName());
 			req.setAttribute("common1URL", tester.get(0).getURL());
