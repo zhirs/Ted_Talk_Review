@@ -409,7 +409,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					if(storedStudentPass != null) {
 						if(BCrypt.checkpw(pass, storedStudentPass)){
-							System.out.println("Found Account");
+							//System.out.println("Found Account");
 							return true;
 						}
 					}
@@ -448,7 +448,7 @@ public class DerbyDatabase implements IDatabase {
 						accounts.add(account);
 					}
 					if(accounts.size() == 1) {
-						System.out.println("Found Account");
+						//System.out.println("Found Account");
 						return accounts.get(0);
 					}
 					return null;
@@ -485,7 +485,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -519,7 +519,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews.size();
 					}
 				}
@@ -1052,7 +1052,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -1353,7 +1353,7 @@ public class DerbyDatabase implements IDatabase {
 						foundProfID = resultSet1.getInt(1);
 					}
 					if(foundProfID != -1) {
-						System.out.println("Found Account");
+						//System.out.println("Found Account");
 						return foundProfID;
 					}
 					return null;
@@ -1921,7 +1921,7 @@ public class DerbyDatabase implements IDatabase {
 						reviews.add(review);
 					}
 					if(reviews.size() >= 1) {
-						System.out.println("Found reviews");
+						//System.out.println("Found reviews");
 						return reviews;
 					}
 				}
@@ -2319,6 +2319,7 @@ public class DerbyDatabase implements IDatabase {
 						+ "from students");
 				resultSet1 = stmt1.executeQuery();
 				while(resultSet1.next()) {
+					System.out.println(resultSet1.getInt(1));
 					students.add(getUser(resultSet1.getInt(1)));
 				}
 				return students;
@@ -2347,7 +2348,7 @@ public class DerbyDatabase implements IDatabase {
 						foundUser = resultSet1.getString(1);
 					}
 					if(foundUser != null) {
-						System.out.println("Found Account");
+						//System.out.println("Found Account");
 						return foundUser;
 					}
 					return null;
@@ -2377,7 +2378,9 @@ public class DerbyDatabase implements IDatabase {
 					temp.add(results.getInt(1)); 
 				}
 				return temp;
-	
+			}
+		});
+	}
 	@Override
 	public ArrayList<Integer> getReviewTop() {
 		return executeTransaction(new Transaction<ArrayList<Integer>>() {
