@@ -18,6 +18,7 @@ public class studentservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private String email = null;
+	private int profID;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -25,37 +26,44 @@ public class studentservlet extends HttpServlet {
 		System.out.println("Student Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		email = (String) req.getSession().getAttribute("email");
+		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			Student model = new Student();
-			
-			StudentController controller = new StudentController();
-		
-			String errorMessage = null;
-			
-			controller.setModel(model);
-			 
 			ReviewController revController = new ReviewController();
+			StudentController controller = new StudentController();
+			Student model = new Student();
 			Review revModel = new Review();
-
-			//Adrian's code, needed something that would grab the session parameter. temporary
-			ArrayList<String> test = new ArrayList<String>();
-			test.add(req.getParameter("UpdatedReviews"));
-			
+			String errorMessage = null;
+			controller.setModel(model);
 			revController.setModel(revModel);
-			ArrayList<Review> revReturn= revController.fetchReviews((int) req.getSession().getAttribute("profID"));
-			ArrayList<String> reviews = new ArrayList<String>();
-						
-			if(!revReturn.isEmpty()) {
-				for(int i = 0; i < revReturn.size(); i++) {
-					reviews.add(revReturn.get(i).getDesc());
+			//Adrian's code, needed something that would grab the session parameter. temporary
+			ArrayList<Review> approved = revController.getApprovedRevs(profID);
+			ArrayList<String> approvedDescs = new ArrayList<String>();
+			if(!approved.isEmpty()) {
+				for(int i = 0; i < approved.size(); i++) {
+					approvedDescs.add("Review:" + approved.get(i).getName() + "Description:" + approved.get(i).getDesc()  );
 				}
 			}
-			
-			req.setAttribute("reviews" , reviews);
+			ArrayList<Review> denied = revController.getDeniedRevs(profID);
+			ArrayList<String> deniedDescs = new ArrayList<String>();
+			if(!denied.isEmpty()) {
+				for(int i = 0; i < denied.size(); i++) {
+					deniedDescs.add("Review: " + denied.get(i).getName() + "Description:" + denied.get(i).getDesc());
+				}
+			}
+			ArrayList<Review> pending = revController.getPendingRevs(profID);
+			ArrayList<String> pendingDescs = new ArrayList<String>();
+			if(!pending.isEmpty()) {
+				for(int i = 0; i < pending.size(); i++) {
+					pendingDescs.add("Review: " + pending.get(i).getName() + "Description:" + pending.get(i).getDesc());
+				}
+			}
+			req.setAttribute("pendingDescs" , pendingDescs);
+			req.setAttribute("deniedDescs" , deniedDescs);
+			req.setAttribute("approvedDescs", approvedDescs);
 			req.setAttribute("errorMessage", errorMessage);
 			req.setAttribute("studentM", model);
 			req.setAttribute("userModel", model);

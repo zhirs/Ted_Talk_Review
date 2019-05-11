@@ -461,7 +461,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 
-	public ArrayList<Review> getProfIDReviewList(int profID) {
+	public ArrayList<Review> getProfIDReviewList(int profID, int status) {
 		return executeTransaction(new Transaction<ArrayList<Review>>() {
 			@Override
 			public ArrayList<Review> execute(Connection conn) throws SQLException {
@@ -473,8 +473,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt1 = conn.prepareStatement(
 							"select * "
 							+ "from reviews "
-							+ "where prof_id = ? ");
+							+ "where prof_id = ? and status = ?");
 					stmt1.setInt(1, profID);
+					stmt1.setInt(2, status);
 					resultSet1 = stmt1.executeQuery();
 					while(resultSet1.next()) {
 						Review review = new Review();
