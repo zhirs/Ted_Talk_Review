@@ -10,12 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
 import tedtalk.controller.ReviewController;
-import tedtalkDB.persist.DerbyDatabase;
 
 public class reviewservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//DATABASE INSTANCE:
-	DerbyDatabase derby = new DerbyDatabase();
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
@@ -45,7 +42,7 @@ public class reviewservlet extends HttpServlet {
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
 			//String review0 = "Joseph Landau's Symposium";
-			ArrayList<Review> derbyResults = derby.findReview(review2);//SEARCHED BY TITLE
+			ArrayList<Review> derbyResults = revController.search(review2);//SEARCHED BY TITLE
 			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
@@ -55,17 +52,18 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("name",derbyResults.get(0).getName());
 			
 			//DISPLAY RELATED REVIEWS:
-			ArrayList<Review> tester = derby.findReview(review1);
+			ArrayList<Review> tester = revController.search(review1);
 			req.setAttribute("common1Title", tester.get(0).getName());
 			req.setAttribute("common1URL", tester.get(0).getURL());
 			req.setAttribute("common1Rate", tester.get(0).getRate());
 			
-			ArrayList<Review> tester1 = derby.findReview(review2);			
+			ArrayList<Review> tester1 = revController.search(review2);			
 			req.setAttribute("common2Title", tester1.get(0).getName());
 			req.setAttribute("common2URL", tester1.get(0).getURL());
 			req.setAttribute("common2Rate", tester1.get(0).getRate());
 			
 			//AVG RATING:
+			avgRating = revController.getAverageRating(tester.get(0).getURL());
 			avgRating += tester.get(0).getRate();
 			avgRating += tester1.get(0).getRate();
 			avgRating /= 2;
@@ -83,10 +81,8 @@ public class reviewservlet extends HttpServlet {
 		System.out.println("Review Servlet: doPost");
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
-		DerbyDatabase derby = new DerbyDatabase();
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
 
-    derby.getProfID(username);
 		handle.setURL(req.getParameter("url"));
 		System.out.println(handle.getURL());
 		handle.setName( req.getParameter("title"));
