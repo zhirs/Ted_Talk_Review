@@ -61,6 +61,13 @@ public class loginservlet extends HttpServlet {
 			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
 			
+			String review0 = "Joseph Landau's Symposium";
+			String review1 = "Darnell Hill smells funny";
+			String review2 = "Endgame spoilers suck";
+			
+			session.setAttribute("review0", review0);
+			session.setAttribute("review1", review1);
+			session.setAttribute("review2", review2);
 			session.setAttribute("username", user);
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
@@ -73,19 +80,19 @@ public class loginservlet extends HttpServlet {
 			role = derby.getRole(user);	//grabs the role number from accounts to find the correct home page
 //			System.out.println(role);
 			session.setAttribute("role", role);
-			if(role==0) {
+			if(role == 0) {
 				// if admin get modStat
 				session.setAttribute("moderator", derby.getModStat(login.getprofID()));
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/networkadminHome");
 			}
-			else if(role==1) {
+			else if(role== 1) {
 				// if professor get mod
 				session.setAttribute("moderator", derby.getMod(login.getprofID()));
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/professorHome");
 			}
-			else if(role ==2) {
+			else if(role == 2) {
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
@@ -95,6 +102,7 @@ public class loginservlet extends HttpServlet {
 			}
 		}
 		
+		//check if changing else below to check cred != true will work better for running this
 		else if(user.equals("") || pass.equals("")) {
 			req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);
 		}
