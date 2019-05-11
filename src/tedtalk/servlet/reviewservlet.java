@@ -25,6 +25,7 @@ public class reviewservlet extends HttpServlet {
 	private String review0 = null;
 	private String review1 = null;
 	private String review2 = null;
+	private String titles ;
 	private String common1 = null;
 	private String common2 = null;
 	private int avgRating  = 0;
@@ -39,6 +40,8 @@ public class reviewservlet extends HttpServlet {
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
 		review2 = (String) req.getSession().getAttribute("review2");
+		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
+		titles = title.get(0);
 
 		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
@@ -47,16 +50,19 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-			//String review0 = "Joseph Landau's Symposium";
-			ArrayList<Review> derbyResults = derby.findReview(review2);//SEARCHED BY TITLE
+			int i = 0;
+			do {
+				i++;			
+				ArrayList<Review> derbyResults = derby.findReview(titles);//SEARCHED BY TITLE
 			
-			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
-			req.setAttribute("description", derbyResults.get(0).getDesc());
-			req.setAttribute("presenterName", derbyResults.get(0).getPres());
-			req.setAttribute("url", derbyResults.get(0).getURL());
-			req.setAttribute("tag", derbyResults.get(0).getTag());
-			req.setAttribute("name",derbyResults.get(0).getName());
+				//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
+				req.setAttribute("description", derbyResults.get(0).getDesc());
+				req.setAttribute("presenterName", derbyResults.get(0).getPres());
+				req.setAttribute("url", derbyResults.get(0).getURL());
+				req.setAttribute("tag", derbyResults.get(0).getTag());
+				req.setAttribute("name",derbyResults.get(0).getName());
 			
+			}while(i < 4);
 			//DISPLAY RELATED REVIEWS:
 			ArrayList<Review> tester = derby.findReview(review1);
 			req.setAttribute("common1Title", tester.get(0).getName());
