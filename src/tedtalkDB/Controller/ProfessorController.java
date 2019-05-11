@@ -1,4 +1,6 @@
 package tedtalkDB.Controller;
+import java.util.ArrayList;
+
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
@@ -48,5 +50,28 @@ public class ProfessorController {
 	
 	public void approveStudent(String user) {
 		derby.approveStudent(user);
+	}
+	public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
+		ArrayList<Review> reviewDate = new ArrayList<Review>();
+		
+		int tempProfID = derby.getProfID(searchName);
+		
+		String date1 = year1+"/"+month1+"/"+day1;
+		//String date1 = "2019/04/26";
+		java.util.Date utilDate1 = new java.util.Date(date1);
+	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
+		
+		String date2 = year2+"/"+month2+"/"+day2;
+	    //String date2 = "2019/04/28";
+		java.util.Date utilDate2 = new java.util.Date(date2);
+	    java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
+		
+		return derby.getReviewsBetweenDates(tempProfID, sqlDate1, sqlDate2);
+		
+	}
+	public ArrayList<Review> getReviewByStatus(int status){
+		ArrayList<Review> reviewQueue = new ArrayList<Review>();
+		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
+		return reviewQueue;
 	}
 }
