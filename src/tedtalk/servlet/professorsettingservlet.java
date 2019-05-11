@@ -69,20 +69,14 @@ public class professorsettingservlet extends HttpServlet {
 		
 		System.out.println("Professor Servlet: doPost");
 		
-		switch(mod) {
-		case 0: 
-			mod = 1;
-			break;
-		case 1: 
-			mod = 0;
-			break;
-		default:
-			mod = 0;
-		}
+		ProfessorController profController = new ProfessorController();
+		mod = profController.switchMod(username);
 		
 		changeToString();
-		derby.updateMod(profID, mod);		
 		
+		HttpSession session = req.getSession(true);
+		
+		session.setAttribute("moderator", mod);
 		req.setAttribute("globalModStat", globalModStatStatus);
 		req.setAttribute("currentStat", personalStat);
 		// now call the JSP to render the new page
@@ -103,7 +97,6 @@ public class professorsettingservlet extends HttpServlet {
 				personalStat = "not assigned";
 			}
 		}else {
-			mod = 1;
 			globalModStatStatus = "tED Talk review reviewing by professor is currently on, you are required to be a review moderator";
 			personalStat = "off";
 		}

@@ -17,6 +17,7 @@ import tedtalkDB.model.keywords;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Pair;
 
 public class DerbyDatabaseTests {
 
@@ -668,6 +669,17 @@ public class DerbyDatabaseTests {
 		if(postSize != preSize) {
 			fail("Deny incorrect.");
 		}
+	}
+	
+	@Test
+	public void testGetLeaderboard() {
+		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+		result = db.leaderBoardTotals();
+		
+		assertTrue(result.size() == 3);
+		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
+		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
+		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
 	}
 
 }

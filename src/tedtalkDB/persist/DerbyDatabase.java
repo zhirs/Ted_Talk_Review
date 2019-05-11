@@ -10,10 +10,12 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
 import src.org.mindrot.jbcrypt.BCrypt;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Pair;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Student;
@@ -2249,6 +2251,100 @@ public class DerbyDatabase implements IDatabase {
 	public ArrayList<Review> getReviewByStatus() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public ArrayList<Pair<Integer, Integer>> leaderBoardTotals() {
+		return executeTransaction(new Transaction<ArrayList<Pair<Integer, Integer>>>() {
+			@Override
+			public ArrayList<Pair<Integer, Integer>> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+				
+				stmt1 = conn.prepareStatement(
+						"select prof_id "
+						+ "from students");
+				resultSet1 = stmt1.executeQuery();
+				int i = 0;
+				while(resultSet1.next()) {
+					//temp.add(getReviewTotal(resultSet1.getInt(0)));
+					int totalForProfID = getReviewTotal(resultSet1.getInt(1));
+					
+					result.add(new Pair<Integer, Integer>(totalForProfID, resultSet1.getInt(1)));
+					System.out.println("ProfID: " + result.get(i).getRight() + " Total Reviews: " + result.get(i).getLeft());
+					i ++;
+				}
+				// saves top 3 profiles
+				ArrayList<Pair<Integer, Integer>> topThree = new ArrayList<Pair<Integer, Integer>>();
+				// gets first result to save as initial max
+				Pair<Integer, Integer> top = new Pair<Integer, Integer>(result.get(0).getLeft(), result.get(0).getRight());
+				
+				// runs 3 times
+				for(int y = 0; y < 3; y ++) {
+					// gets top profile, along with amount of reviews
+					System.out.println("This is the " + y + " leaderboard top");
+					for(int x = 1; x < result.size(); x ++) {
+						boolean count = true;
+						// checks if it repeats
+						System.out.println("     This is the " + x + " run to find top leader");
+						for(int w = 0; w < y; w ++) {
+							System.out.println("            This is top profile: " + topThree.get(w).getRight() + " vs. profile: " + result.get(x).getRight());
+							if(topThree.get(w).getRight() == result.get(x).getRight()) {
+								// if repeat, skips this result
+								System.out.println("Skips profile " + topThree.get(w).getRight());
+								count = false;
+							}
+						}
+						if(result.get(x).getLeft() >= top.getLeft() && count == true) {
+							System.out.println("profile: " + result.get(x).getRight());
+							top.setLeft(result.get(x).getLeft());
+							top.setRight(result.get(x).getRight());
+						}
+					}
+					// adds top profile to topThree list
+					topThree.add(top);
+				}
+				// should return only top 3
+				return topThree;
+			}
+		}
+		);
+	}
+	@Override
+	public String getUser(int profID) {
+		return executeTransaction(new Transaction<String>() {
+			@Override
+			public String execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				try {
+					stmt1 = conn.prepareStatement(
+						" select username "+
+						" from accounts " +
+						" where prof_id = ?"
+					);
+					stmt1.setInt(1, profID);
+					resultSet1 = stmt1.executeQuery();
+					String foundUser = null;
+					while(resultSet1.next()) { 
+						foundUser = resultSet1.getString(1);
+					}
+					if(foundUser != null) {
+						System.out.println("Found Account");
+						return foundUser;
+					}
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
 	}
 }	
 

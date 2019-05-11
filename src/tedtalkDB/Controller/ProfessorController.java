@@ -49,4 +49,28 @@ public class ProfessorController {
 	public void approveStudent(String user) {
 		derby.approveStudent(user);
 	}
+	
+	public int switchMod(String user) {
+		int mod = derby.getMod(derby.getProfID(user));
+		int globalMod = derby.getGlobalMod();
+		
+		if(globalMod <= 0) {
+			switch(mod) {
+			case 0: 
+				mod = 1;
+				break;
+			case 1: 
+				mod = 0;
+				break;
+			default:
+				mod = 0;
+			}
+		}
+		else {
+			mod = 1;
+		}
+		
+		derby.updateMod(derby.getProfID(user), mod);
+		return mod;
+	}
 }
