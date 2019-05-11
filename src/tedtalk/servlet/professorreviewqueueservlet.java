@@ -15,6 +15,10 @@ public class professorreviewqueueservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private ArrayList<Review> reviewQueue;
+	private ArrayList<String> revNames;
+	private ArrayList<String> revURLs;
+	private ArrayList<String> revPresenters;
+	private ArrayList<String> revDescriptions;
 	private ProfessorController controller;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -23,15 +27,22 @@ public class professorreviewqueueservlet extends HttpServlet {
 		username = (String) req.getSession().getAttribute("username");
 		controller = new ProfessorController();
 		reviewQueue = new ArrayList<Review>();
-		ArrayList<String> reviews = new ArrayList<String>();
-		reviewQueue.addAll(controller.getReviewByStatus(0));
+		revDescriptions = new ArrayList<String>();
+		reviewQueue.addAll(controller.getReviewByStatus(0));	//the zero is to get every review that has not been approved or denied
+		reviewQueue.get(0).getName();
 		//description, almost every element except rating
 		if(!reviewQueue.isEmpty()) {
 			for(int i = 0; i < reviewQueue.size(); i++) {
-				reviews.add(reviewQueue.get(i).getDesc());
+				//revNames.add(reviewQueue.get(i).getName());
+				//revURLs.add(reviewQueue.get(i).getURL());
+				//revPresenters.add(reviewQueue.get(i).getPres());
+				revDescriptions.add(reviewQueue.get(i).getDesc());
 			}
 		}
-		req.setAttribute("reviews" , reviews);
+		req.setAttribute("revNames" , revNames);
+		req.setAttribute("revURLs" , revURLs);
+		req.setAttribute("revPresenters" , revPresenters);
+		req.setAttribute("revDescriptions" , revDescriptions);
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);

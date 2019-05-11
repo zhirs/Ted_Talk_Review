@@ -30,9 +30,33 @@
 		<br><br><br>
 		<hr>
 		<h2>Suggested TEDTalks:</h2>
-		<c:forEach var="reviews" items="${reviews}">
-			<c:out value = "${reviews}"/> <br><br>
+		<h3>Reviews pending approval</h3>
+		<c:forEach var="reviews" items="${revDescriptions}">
+		<div>
+			<table>
+				<tr>
+					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs}"> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Description:<input type="text" name = "description" size = "100" value="${revDescriptions}"></td>
+		 		</tr>			 	
+	 		</table>
+	 		</div>
 		</c:forEach>
-		<hr>
+		
+		
+		<h3>Review Name to reject</h3>
+  		<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post"> 
+  			<input type = "text" name = "delete" placeholder = "Username" value = "${delete}">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/approvedStudents" method="get"> 
+			<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
+		</form>
 	</body>
 </html>

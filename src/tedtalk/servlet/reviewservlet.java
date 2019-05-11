@@ -68,6 +68,9 @@ public class reviewservlet extends HttpServlet {
 			//AVG RATING:
 			avgRating = revController.getAverageRating(tester.get(0).getURL());
 			
+			for(int i = 0; i < derbyResults.size(); i++) {
+				System.out.println("----the description is: " + derbyResults.get(i).getDesc() + " the name is " + derbyResults.get(i).getName());
+			}
 			//Array list for previous review population
 			descriptions = new ArrayList<String>();
 			ratings = new ArrayList<Integer>();
@@ -75,9 +78,6 @@ public class reviewservlet extends HttpServlet {
 				descriptions.add(reviews.getDesc());
 				ratings.add(reviews.getRate());
 			}
-			/*for(int i = 0; i < descriptions.size(); i++) {
-				System.out.println("the description is: " + descriptions.get(i) + " : The rating is: " + ratings.get(i));
-			} */
 			int listSize = descriptions.size() -1;
 
 			req.setAttribute("avgRating", avgRating);
