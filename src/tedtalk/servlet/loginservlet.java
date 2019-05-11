@@ -18,12 +18,13 @@ public class loginservlet extends HttpServlet {
 	private String username = null;
 	private DerbyDatabase derby = new DerbyDatabase();
 	private int role; 
-	private ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
 	private String leader = null;
 	private String second = null;
 	private String third = null;
 	private int max[] = new int[5];
 	private String show[] = new String[5];
+	private int count[] = new int[3];
+	private String student[] = new String[3];
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -31,7 +32,7 @@ public class loginservlet extends HttpServlet {
 		System.out.println("Login Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		
-		result.addAll(derby.leaderBoardTotals());
+		getTopProfiles();
 		printLeaderBoards();
 		
 		req.setAttribute("leader", leader);
@@ -71,11 +72,11 @@ public class loginservlet extends HttpServlet {
 		//model.setUser(user);
 		//model.setPass(pass);
 		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
+		getTopProfiles();
+		printLeaderBoards();
+		getTopReviews();
 		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
-			printLeaderBoards();
-			getTopReviews();
-
 			req.setAttribute("leader", leader);
 			req.setAttribute("second", second);
 			req.setAttribute("third", third);
@@ -132,13 +133,13 @@ public class loginservlet extends HttpServlet {
 	}
 	
 	public void printLeaderBoards() {
-		leader = derby.getUser(result.get(0).getRight());
-		second = derby.getUser(result.get(1).getRight());
-		third = derby.getUser(result.get(2).getRight());
+		leader = student[0];
+		second = student[1];
+		third = student[2];
 		
-		leader += " with " + result.get(0).getLeft();
-		second += " with " + result.get(1).getLeft();
-		third += " with " + result.get(2).getLeft();
+		leader += " with " + count[0];
+		second += " with " + count[1];
+		third += " with " + count[2];
 	}
 	
 	public void getTopReviews() {
@@ -170,6 +171,39 @@ public class loginservlet extends HttpServlet {
 		for(int x = 0; x < 5; x ++) {
 			show[x] = derby.getReviewNameByURL(show[x]).get(0);
 			System.out.println(show[x]);
+		}
+	}
+	
+	public void getTopProfiles() {
+		ArrayList<String> students = new ArrayList<String>();
+		ArrayList<Integer> highest = new ArrayList<Integer>();
+		students.addAll(derby.getStudentUserNames());
+		for(int x = 0; x < students.size(); x ++) {
+			highest.add(derby.getReviewTotal(derby.getProfID(students.get(x))));
+		}
+	
+		for(int x = 0; x < 3; x ++) {
+			count[x] = -1;
+			student[x] = null;
+		}
+		
+		for(int w = 0; w < 3; w ++) {
+			for(int x = 0; x < highest.size(); x ++) {
+				if(highest.get(x) > count[w]) {
+					count[w] = highest.get(x);
+					student[w] = students.get(x);
+				}
+			}
+			for(int x = 0; x < highest.size(); x ++) {
+				if(student[w].equals(students.get(x))) {
+					students.remove(x);
+					highest.remove(x);
+				}
+			}
+		}
+		
+		for(int x = 0; x < 3; x ++) {
+			System.out.println(student[x] + "   " + count[x]);
 		}
 	}
 }

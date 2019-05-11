@@ -2305,60 +2305,23 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public ArrayList<Pair<Integer, Integer>> leaderBoardTotals() {
-		return executeTransaction(new Transaction<ArrayList<Pair<Integer, Integer>>>() {
+	public ArrayList<String> getStudentUserNames() {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
 			@Override
-			public ArrayList<Pair<Integer, Integer>> execute(Connection conn) throws SQLException {
+			public ArrayList<String> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
 				
-				ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+				ArrayList<String> students = new ArrayList<String>();
 				
 				stmt1 = conn.prepareStatement(
 						"select prof_id "
 						+ "from students");
 				resultSet1 = stmt1.executeQuery();
-				int i = 0;
 				while(resultSet1.next()) {
-					//temp.add(getReviewTotal(resultSet1.getInt(0)));
-					int totalForProfID = getReviewTotal(resultSet1.getInt(1));
-					
-					result.add(new Pair<Integer, Integer>(totalForProfID, resultSet1.getInt(1)));
-					System.out.println("ProfID: " + result.get(i).getRight() + " Total Reviews: " + result.get(i).getLeft());
-					i ++;
+					students.add(getUser(resultSet1.getInt(1)));
 				}
-				// saves top 3 profiles
-				ArrayList<Pair<Integer, Integer>> topThree = new ArrayList<Pair<Integer, Integer>>();
-				// gets first result to save as initial max
-				Pair<Integer, Integer> top = new Pair<Integer, Integer>(result.get(0).getLeft(), result.get(0).getRight());
-				
-				// runs 3 times
-				for(int y = 0; y < 3; y ++) {
-					// gets top profile, along with amount of reviews
-					System.out.println("This is the " + y + " leaderboard top");
-					for(int x = 1; x < result.size(); x ++) {
-						boolean count = true;
-						// checks if it repeats
-						System.out.println("     This is the " + x + " run to find top leader");
-						for(int w = 0; w < y; w ++) {
-							System.out.println("            This is top profile: " + topThree.get(w).getRight() + " vs. profile: " + result.get(x).getRight());
-							if(topThree.get(w).getRight() == result.get(x).getRight()) {
-								// if repeat, skips this result
-								System.out.println("Skips profile " + topThree.get(w).getRight());
-								count = false;
-							}
-						}
-						if(result.get(x).getLeft() >= top.getLeft() && count == true) {
-							System.out.println("profile: " + result.get(x).getRight());
-							top.setLeft(result.get(x).getLeft());
-							top.setRight(result.get(x).getRight());
-						}
-					}
-					// adds top profile to topThree list
-					topThree.add(top);
-				}
-				// should return only top 3
-				return topThree;
+				return students;
 			}
 		}
 		);
