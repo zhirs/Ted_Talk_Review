@@ -42,6 +42,7 @@ public class TestReview {
 	
 	@Test
 	public void testGetRevID() {
+		System.out.println(reviews1.get(0).getrevID());
 		assertTrue(reviews1.get(0).getrevID() == 1);
 		assertTrue(reviews2.get(0).getrevID() == 2);
 	}
@@ -58,5 +59,6 @@ public class TestReview {
 		reviews1.get(0).setDesc("this is an updated description");
 		
 		assertTrue(rev != reviews1.get(0).getDesc());
+		reviews1.get(0).setDesc(rev);
 	}
 }
