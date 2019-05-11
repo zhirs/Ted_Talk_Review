@@ -44,7 +44,7 @@
 				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
 				 		</tr>
 				 		<tr>
-				 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${tag}"> </td>
+				 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" size = "30" value="${tag}"> </td>
 				 		</tr>
 				 		<tr><!-- consider having click to input rather than user entering asterisk -->
 				 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
@@ -54,7 +54,7 @@
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
 			
-			<textarea id="cct_embed_input_text" name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
+			<textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
 			   
 			   <div id="star5" class="notation-star" onClick="notation(this.id);"></div>
 			   <div id="star4" class="notation-star" onClick="notation(this.id);"></div>
