@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
+import tedtalkDB.persist.DerbyDatabase;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -16,13 +17,15 @@ public class reviewservlet extends HttpServlet {
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
-	private String review0 = null;
+	private String review0 = null; 
 	private String review1 = null;
 	private String review2 = null;
 	private String common1 = null;
 	private String common2 = null;
 	private int avgRating  = 0;
-	public ReviewController revController;
+	private ReviewController revController;
+	Review handle = new Review();
+	private String[] show;
 	private int profID = -1;
 	private ArrayList<String> descriptions;
 	private ArrayList<Integer> ratings;
@@ -33,6 +36,11 @@ public class reviewservlet extends HttpServlet {
 		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
+
+		show = (String[]) req.getSession().getAttribute("TopURL");
+		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
+		titles = title.get(0);
+
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
 		review2 = (String) req.getSession().getAttribute("review2");
@@ -44,8 +52,10 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
+		
+			ArrayList<Review> derbyResults = revController.search(titles);//revController.findByTitle(titles);//DOES NOT WORK
+		
 			//String review0 = "Joseph Landau's Symposium";
-			ArrayList<Review> derbyResults = revController.search(review2);//SEARCHED BY TITLE
 			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
@@ -94,6 +104,7 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
+    
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODE

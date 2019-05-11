@@ -51,7 +51,32 @@ public class ProfessorController {
 	public void approveStudent(String user) {
 		derby.approveStudent(user);
 	}
-	public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
+	
+	public int switchMod(String user) {
+		int mod = derby.getMod(derby.getProfID(user));
+		int globalMod = derby.getGlobalMod();
+		
+		if(globalMod <= 0) {
+			switch(mod) {
+			case 0: 
+				mod = 1;
+				break;
+			case 1: 
+				mod = 0;
+				break;
+			default:
+				mod = 0;
+			}
+		}
+		else {
+			mod = 1;
+		}
+		
+		derby.updateMod(derby.getProfID(user), mod);
+		return mod;
+  }
+  public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
+		
 		int tempProfID = derby.getProfID(searchName);
 		
 		String date1 = year1+"/"+month1+"/"+day1;

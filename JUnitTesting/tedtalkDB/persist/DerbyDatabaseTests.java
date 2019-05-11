@@ -17,13 +17,14 @@ import tedtalkDB.model.keywords;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Pair;
 
 public class DerbyDatabaseTests {
 
 	private IDatabase db = null;
 	private int role;
 	 
-	ArrayList<Student> students = null;
+	ArrayList<Student> students = null; 
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
 	ArrayList<NetworkAdmin> admins= null;	
@@ -669,6 +670,18 @@ public class DerbyDatabaseTests {
 			fail("Deny incorrect.");
 		}
 	}
+
+	@Test
+	public void testGetLeaderboard() {
+		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+		result = db.leaderBoardTotals();
+		
+		assertTrue(result.size() == 3);
+		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
+		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
+		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
+	}
+	
 	@Test
 	public void testGetReviewByStatus() {
 		int status = 0;
