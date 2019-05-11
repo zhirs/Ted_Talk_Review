@@ -20,9 +20,11 @@ public class loginservlet extends HttpServlet {
 	private DerbyDatabase derby = new DerbyDatabase();
 	private int role; 
 	private ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
-	private String leader;
-	private String second;
-	private String third;
+	private String leader = null;
+	private String second = null;
+	private String third = null;
+	private int max[] = new int[5];
+	private String show[] = new String[5];
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -72,6 +74,7 @@ public class loginservlet extends HttpServlet {
 		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
 			printLeaderBoards();
+			getTopReviews();
 
 			req.setAttribute("leader", leader);
 			req.setAttribute("second", second);
@@ -80,13 +83,7 @@ public class loginservlet extends HttpServlet {
 			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
 			
-			String review0 = "Joseph Landau's Symposium";
-			String review1 = "Darnell Hill smells funny";
-			String review2 = "Endgame spoilers suck";
-			
-			session.setAttribute("review0", review0);
-			session.setAttribute("review1", review1);
-			session.setAttribute("review2", review2);
+			session.setAttribute("TopURL", show);
 			session.setAttribute("username", user);
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
@@ -142,5 +139,37 @@ public class loginservlet extends HttpServlet {
 		leader += " with " + result.get(0).getLeft();
 		second += " with " + result.get(1).getLeft();
 		third += " with " + result.get(2).getLeft();
+	}
+	
+	public void getTopReviews() {
+		ArrayList<String> unique = new ArrayList<String>();
+		ArrayList<Integer> top = new ArrayList<Integer>();
+		top.addAll(derby.getReviewTop());
+		unique.addAll(derby.getReviewUnique());
+	
+		for(int x = 0; x < 5; x ++) {
+			max[x] = -1;
+			show[x] = null;
+		}
+		
+		for(int w = 0; w < 5; w ++) {
+			for(int x = 0; x < top.size(); x ++) {
+				if(top.get(x) > max[w]) {
+					max[w] = top.get(x);
+					show[w] = unique.get(x);
+				}
+			}
+			for(int x = 0; x < top.size(); x ++) {
+				if(show[w].equals(unique.get(x))) {
+					unique.remove(x);
+					top.remove(x);
+				}
+			}
+		}
+		
+		for(int x = 0; x < 5; x ++) {
+			show[x] = derby.getReviewNameByURL(show[x]).get(0);
+			System.out.println(show[x]);
+		}
 	}
 }

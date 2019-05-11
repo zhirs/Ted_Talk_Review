@@ -2414,10 +2414,118 @@ public class DerbyDatabase implements IDatabase {
 					temp.add(results.getInt(1)); 
 				}
 				return temp;
+	
+	@Override
+	public ArrayList<Integer> getReviewTop() {
+		return executeTransaction(new Transaction<ArrayList<Integer>>() {
+			@Override
+			public ArrayList<Integer> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<String> urls = new ArrayList<String>();
+				try {
+					stmt1 = conn.prepareStatement(
+						" select url "+
+						" from reviews ");
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) { 
+						urls.add(resultSet1.getString(1));
+					}
+					ArrayList<String> unique = new ArrayList<String>();
+					unique.addAll(getReviewUnique());
+				
+					ArrayList<Integer> top = new ArrayList<Integer>();
+					
+					for(int i = 0; i < unique.size(); i ++) {
+						top.add(0);
+					}
+					
+					for(int x = 0; x < top.size(); x ++) {
+						for(int y = 0; y < urls.size(); y ++) {
+							if(urls.get(y).equals(unique.get(x))) {
+								top.set(x, top.get(x) + 1);
+							}
+						}
+					}
+					return top;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public ArrayList<String> getReviewUnique() {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
+			@Override
+			public ArrayList<String> execute(Connection conn) throws SQLException {
+				//  Auto-generated method stub
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				ArrayList<String> unique = new ArrayList<String>();
+				try {
+					stmt1 = conn.prepareStatement(
+						" select url "+
+						" from reviews ");
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) { 
+						boolean count = true;
+						for(int i = 0; i < unique.size(); i ++) {
+							if(resultSet1.getString(1).equals(unique.get(i))){
+								count = false;
+							}
+						}
+						if(count) {
+							unique.add(resultSet1.getString(1));
+						}
+					}				
+					return unique;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public ArrayList<String> getReviewNameByURL(String URL) {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
+			@Override
+			public ArrayList<String> execute(Connection conn) throws SQLException {
+				ArrayList<String> names = new ArrayList<String>();
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select name "
+							+ "from reviews "
+							+ "where url = ? ");
+					stmt1.setString(1, URL);
+					resultSet1 = stmt1.executeQuery();
+					while(resultSet1.next()) {
+						names.add(resultSet1.getString(1));
+					}
+					if(names.size() >= 1) {
+						//System.out.println("Found reviews");
+						return names;
+					}
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+				return names;
 			}
 		}
 		);
 	}
-	
 }	
 

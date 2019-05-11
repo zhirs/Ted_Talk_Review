@@ -35,6 +35,8 @@
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review0}</a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review1}</a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review2}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review3}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review4}</a></li>
 		</ul>		
 		<div class = "searchSection">
 			<p>Don't like what's trending? Try searching our database</p>

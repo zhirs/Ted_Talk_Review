@@ -62,8 +62,11 @@ public interface IDatabase {
 	public Integer resetPassword(String username, String password);
 	public Integer averageReviewRating(String url);
 	public ArrayList<Student> denyStudent(String user);
-	ArrayList<Pair<Integer, Integer>> leaderBoardTotals();
-	String getUser(int profID);
+	public ArrayList<Pair<Integer, Integer>> leaderBoardTotals();
+	public String getUser(int profID);
 	public ArrayList<String> getMajors();
 	ArrayList<Integer> getStudents();
+	public ArrayList<String> getReviewUnique();
+	public ArrayList<Integer> getReviewTop();
+	ArrayList<String> getReviewNameByURL(String URL);
 }
