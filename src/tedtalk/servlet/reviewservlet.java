@@ -35,7 +35,7 @@ public class reviewservlet extends HttpServlet {
 		username = (String) req.getSession().getAttribute("username");
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
-		//review2 = (String) req.getSession().getAttribute("review2");
+		review2 = (String) req.getSession().getAttribute("review2");
 
 		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
@@ -71,7 +71,6 @@ public class reviewservlet extends HttpServlet {
 			avgRating /= 2;
 
 			req.setAttribute("avgRating", avgRating);
-			
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 
