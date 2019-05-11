@@ -88,7 +88,7 @@
 			 			<td>Rating:       <input type="text" name = "rating" size = "20" value="${ratings.get(i)}"> </td>
 			 		</tr>	
 			 		<tr>
-			 			<td>Description: <input id ="textboxid" type="text" name = "rating" size = "20" value="${descriptions.get(i)}"> </td>
+			 			<td>Description: <input type="text" name = "rating" size = "100" value="${descriptions.get(i)}"> </td>
 			 		</tr>		 	
 		 		</table>
 			</div>
