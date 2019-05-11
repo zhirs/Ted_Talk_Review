@@ -27,6 +27,7 @@ public class reviewservlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		revController = new ReviewController();
 		
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
