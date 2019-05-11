@@ -146,4 +146,7 @@ public class NetworkAdminController {
 		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
 		return reviewQueue;
 	}
+	public void resetPassword(String username, String password) {
+		derby.resetPassword(username, password);	//Method needs to hash passwords
+	}
 }
