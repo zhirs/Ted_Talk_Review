@@ -20,7 +20,7 @@
 		</span>
 		<h1>Network Admin Home</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -28,20 +28,41 @@
 		</form>
 		<br><br><br>
 		<hr>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
 		<h2>Suggested TEDTalks:</h2>
 		<p>What your peers are viewing:</p>
 		<ul id = "links"><!-- THE HREF SHOULD GO TO A LINK THAT AUTO-FILLS THE REVIEW PAGE WITH THE CORRESPONDING TED TALK -->
-			<li><a href="https://www.ted.com/talks/anupam_mishra_the_ancient_ingenuity_of_water_harvesting" target = blank>Ingenuity of water harvesting</a></li>
-			<li><a href="https://www.ted.com/talks/norman_foster_s_green_agenda" target = blank>Norman Foster's Green Agenda</a></li>
-			<li><a href="https://www.ted.com/talks/majd_mashharawi_how_i_m_making_bricks_out_of_ashes_and_rubble_in_gaza" target = blank>Rubble in Gaza</a></li>
-		</ul>		
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review0}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review1}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review2}</a></li>
+		</ul>	
 		<div class = "searchSection">
-			<p>Don't like what's trending? Try searching our database</p>
+			<p>Search Page:</p>
 			<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 			<input type = "Submit" name = "searchPage" class="button2" value = "search">
 			</form>
 		</div>
 		<hr>
+		<h3>Accounts pending approval</h3>
 		
+		<c:forEach items="${newbs}" var="newbs">
+      		<td><c:out value="${newbs}"/></td>
+      		<p></p>
+  		</c:forEach>
+  		
+  		<c:forEach items="${newbies}" var="newbies">
+      		<td><c:out value="${newbies}"/></td>
+      		<p></p>
+  		</c:forEach>	
+  			
+  		<h3>Account to reject</h3>
+  		<form action="${pageContext.servletContext.contextPath}/networkadminHome" method="post"> 
+  			<input type = "text" name = "delete" placeholder = "Username" value = "${delete}">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/approvedStudents" method="get"> 
+			<input type = "Submit" name = "searchPage" class="button2" value = "Approve all students">
+		</form>
 	</body>
 </html>

@@ -18,7 +18,7 @@ public interface IDatabase {
 	public ArrayList<Professor> addProfessor(String user, String pass, String email, int mod);
 	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major);
 	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email, int modstat);
-	public ArrayList<Review> getProfIDReviewList(int profID);
+	public ArrayList<Review> getProfIDReviewList(int profID, int status);
 	public Integer getReviewTotal(int profID);
 	public ArrayList<Review> findReview(String keyword);
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID, String tag, int status);
@@ -55,5 +55,11 @@ public interface IDatabase {
 	public ArrayList<Student> approveStudent(String user);
 	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major);
 	public Integer checkUsername(String user);
-	public ArrayList<Student> unapprovedStudents(String user, String pass, String email, String section, String major);
+	public ArrayList<Student> unapprovedStudents();
+	public ArrayList<Review> getReviewByStatus(int status);
+	public Integer changeReviewStatus(int status, int rev_id);
+	public Integer resetPassword(String username, String password);
+	public Integer averageReviewRating(String url);
+	public ArrayList<Student> denyStudent(String user);
+	public ArrayList<String> getMajors();
 }

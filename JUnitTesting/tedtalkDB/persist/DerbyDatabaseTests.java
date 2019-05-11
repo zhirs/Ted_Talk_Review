@@ -314,7 +314,7 @@ public class DerbyDatabaseTests {
 	public void testGetProfIDReviewList() {
 		System.out.println("\n*** Testing getProfIDReviewList**");
 		int profID = 9;
-		reviews = db.getProfIDReviewList(profID);
+		reviews = db.getProfIDReviewList(profID, 0);
 		if(reviews.size() <= 0) {
 			System.out.println("No reviews found");
 			fail("No reviews found");
@@ -658,6 +658,58 @@ public class DerbyDatabaseTests {
 			db.updateModStat(x, 0);
 		}
 	}
+	@Test
+	public void testDenyStudent() {
+		int preSize = db.unapprovedStudents().size();
+		db.addNewStudent("user", "pass", "email", "section", "major");
+		db.denyStudent("user");
+		ArrayList<Student> postt = db.unapprovedStudents();
+		int postSize = postt.size();
+		if(postSize != preSize) {
+			fail("Deny incorrect.");
+		}
+	}
+	@Test
+	public void testGetReviewByStatus() {
+		int status = 0;
+		reviews = db.getReviewByStatus(status);
+		if(reviews.isEmpty()) {
+			fail("The List was not filled with reviews");
+		}
+		else {
+			assertTrue(reviews.get(0).getDesc().equals("Please don't flunk me"));
+		}
+	}
+	@Test
+	public void testChangeReviewStatus() {
+		int rev_id = 1;
+		int status= 1;
+		db.changeReviewStatus(status, rev_id);
+		reviews = db.findReview("Joseph Landau's Symposium");
+		assertEquals(reviews.get(0).getStatus(), 1);
+	}
+	
+	@Test
+	public void testResetPassword() {
+		String oldPassword = db.setLogin("student1").getPassword();
+		String username = "student1";
+		String newPassword = "testPassword";
+		System.out.println("The old password is " + oldPassword);
+		db.resetPassword(username, newPassword);
+		String currentPassword = db.setLogin(username).getPassword();
+		System.out.println("The new password is " + currentPassword);
+		assertTrue(currentPassword.equals(newPassword));
+		assertFalse(currentPassword.equals(oldPassword));
+		
+		db.resetPassword(username, oldPassword);
+	}
+	@Test
+	public void testAverageReviewRating() {
+		String url = "www.ilovedb.com";
+		int avrgRate = db.averageReviewRating(url);
+		assertEquals(avrgRate, 5);
+	}
+
 }
 	
 

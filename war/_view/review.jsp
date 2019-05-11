@@ -50,6 +50,7 @@
 		 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
 		 		</tr>			 	
 	 		</table>
+
 		 				 <%--This is the textfield for the review's description --%> 
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 

@@ -40,11 +40,14 @@ public class createstudentservlet extends HttpServlet {
 		System.out.println(section);
 		System.out.println(major);
 		
-		NAController.addStudent(user, pass, email, section, major);
+		
 		if(NAController.checkUsername(user) == 1) {
 			req.setAttribute("error", "Username already taken");
 		}
-		System.out.println("Saved new student in quarantine");
+		else {
+			NAController.addStudent(user, pass, email, section, major);
+			System.out.println("Saved new student in quarantine");
+		}
 		// now call the JSP to render the new page	
 		req.getRequestDispatcher("/_view/createStudent.jsp").forward(req, resp);	
 	}
