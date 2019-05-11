@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
+import tedtalkDB.persist.DerbyDatabase;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -16,14 +17,14 @@ public class reviewservlet extends HttpServlet {
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
-	private String review0 = null;
+	private String review0 = null; 
 	private String review1 = null;
 	private String review2 = null;
 	private String titles ;
 	private String common1 = null;
 	private String common2 = null;
 	private int avgRating  = 0;
-	public ReviewController revController;
+	private ReviewController revController;
 	Review handle = new Review();
 	private String[] show;
 	private int profID = -1;
@@ -48,10 +49,9 @@ public class reviewservlet extends HttpServlet {
 
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
 		
-			ArrayList<Review> derbyResults = derby.findReview(titles);//revController.findByTitle(titles);//DOES NOT WORK
+			ArrayList<Review> derbyResults = revController.search(titles);//revController.findByTitle(titles);//DOES NOT WORK
 		
 			//String review0 = "Joseph Landau's Symposium";
-			ArrayList<Review> derbyResults = revController.search(review2);//SEARCHED BY TITLE
 			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
@@ -60,7 +60,6 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("tag", derbyResults.get(0).getTag());
 			req.setAttribute("name",derbyResults.get(0).getName());
 
-			ArrayList<Review> tester = derby.findReview(review1);
 			
 			//DISPLAY RELATED REVIEWS:
 			ArrayList<Review> tester = revController.search(review1);
@@ -92,7 +91,6 @@ public class reviewservlet extends HttpServlet {
 		System.out.println("Review Servlet: doPost");
 		
 
-		DerbyDatabase derby = new DerbyDatabase();
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODE

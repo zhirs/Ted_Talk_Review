@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Account;
 import tedtalkDB.model.Pair;
 import tedtalkDB.persist.DerbyDatabase;
@@ -112,7 +113,7 @@ public class loginservlet extends HttpServlet {
 			else if(role == 2) {
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
-			}
+			} 
 			else {	//this should never occur
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/home");
