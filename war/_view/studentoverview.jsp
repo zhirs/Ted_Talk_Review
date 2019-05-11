@@ -35,7 +35,6 @@
 			</form>
 		</div>
 		<hr>
-		<h3>Accounts pending approval</h3>
 		<c:forEach items="${tabs}" var="tabs">
       		<td><c:out value="${tabs}"/></td>
       		<p></p>
