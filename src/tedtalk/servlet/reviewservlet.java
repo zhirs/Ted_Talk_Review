@@ -30,11 +30,14 @@ public class reviewservlet extends HttpServlet {
 	private String common2 = null;
 	private int avgRating  = 0;
 	public ReviewController revController;
+	Review handle = new Review();
+
 	private int profID = -1;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		review0 = (String) req.getSession().getAttribute("review0");
@@ -49,9 +52,11 @@ public class reviewservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
+			//revController.setModel(handle);//USED WITH THE DB REVIEW MODE
+
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
 		
-			ArrayList<Review> derbyResults = derby.findReview(titles);//SEARCHED BY TITLE
+			ArrayList<Review> derbyResults = derby.findReview(titles);//revController.findByTitle(titles);//DOES NOT WORK
 		
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
@@ -87,10 +92,9 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
-		Review handle = new Review();
-		ReviewController revController = new ReviewController();
+		
+
 		DerbyDatabase derby = new DerbyDatabase();
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
 
     derby.getProfID(username);
 		handle.setURL(req.getParameter("url"));

@@ -68,4 +68,9 @@ public class ReviewController {
 		}
 		return revs;
 	}
+	public ArrayList<Review> findByTitle(String titles){
+		return derby.findReview(titles);		
+	}
+
+
 }
