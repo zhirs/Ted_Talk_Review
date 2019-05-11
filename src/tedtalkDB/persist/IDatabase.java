@@ -65,4 +65,5 @@ public interface IDatabase {
 	ArrayList<Pair<Integer, Integer>> leaderBoardTotals();
 	String getUser(int profID);
 	public ArrayList<String> getMajors();
+	ArrayList<Integer> getStudents();
 }
