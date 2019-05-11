@@ -24,7 +24,7 @@ public class DerbyDatabaseTests {
 	private IDatabase db = null;
 	private int role;
 	 
-	ArrayList<Student> students = null;
+	ArrayList<Student> students = null; 
 	ArrayList<Professor> professors = null;
 	ArrayList<Review> reviews = null;
 	ArrayList<NetworkAdmin> admins= null;	
@@ -680,6 +680,8 @@ public class DerbyDatabaseTests {
 		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
 		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
 		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
+	}
+	
 	@Test
 	public void testGetReviewByStatus() {
 		int status = 0;
