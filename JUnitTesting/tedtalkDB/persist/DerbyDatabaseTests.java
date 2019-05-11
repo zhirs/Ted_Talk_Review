@@ -314,7 +314,7 @@ public class DerbyDatabaseTests {
 	public void testGetProfIDReviewList() {
 		System.out.println("\n*** Testing getProfIDReviewList**");
 		int profID = 9;
-		reviews = db.getProfIDReviewList(profID);
+		reviews = db.getProfIDReviewList(profID, 0);
 		if(reviews.size() <= 0) {
 			System.out.println("No reviews found");
 			fail("No reviews found");

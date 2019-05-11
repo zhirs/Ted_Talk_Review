@@ -55,7 +55,7 @@
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
 			
-			<textarea id="cct_embed_input_text" name="reviewText" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
+			<textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
 			   
 			   <div id="star5" class="notation-star" onClick="notation(this.id);"></div>
 			   <div id="star4" class="notation-star" onClick="notation(this.id);"></div>

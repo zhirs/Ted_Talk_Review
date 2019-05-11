@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tedtalk.model.ProfileModel;
-import tedtalkDB.Controller.StudentController;
 import tedtalkDB.model.Review;
-import tedtalkDB.model.Student;
 import tedtalk.controller.ReviewController;
 import tedtalkDB.persist.DerbyDatabase;
 
@@ -74,7 +71,6 @@ public class reviewservlet extends HttpServlet {
 			avgRating /= 2;
 
 			req.setAttribute("avgRating", avgRating);
-
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 
@@ -92,18 +88,24 @@ public class reviewservlet extends HttpServlet {
 
     derby.getProfID(username);
 		handle.setURL(req.getParameter("url"));
+		System.out.println(handle.getURL());
 		handle.setName( req.getParameter("title"));
+		System.out.println(handle.getName());
 		handle.setRate(req.getIntHeader("rating"));
+		System.out.println(handle.getRate());
 		handle.setPres(req.getParameter("presenterName"));
+		System.out.println(handle.getPres());
 		handle.setDesc(req.getParameter("description"));
+		System.out.println(handle.getDesc());
 		handle.setTag(req.getParameter("tags"));
+		System.out.println(handle.getTag());
 		
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
 		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
 							
-		String reviewDesc = req.getParameter("reviewText");//REMOVE THIS LINE LATER
+		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
 		reviews.add(reviewDesc);
 		req.setAttribute("UpdatedReviews", reviews);
