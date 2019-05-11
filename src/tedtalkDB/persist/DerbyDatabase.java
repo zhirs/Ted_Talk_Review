@@ -2296,7 +2296,7 @@ public class DerbyDatabase implements IDatabase {
 						+ "from students " );
 				results = stmt1.executeQuery();
 				while(results.next()) {
-					temp.add(results.getString(1));
+					temp.add(results.getString(1)); 
 				}
 				return temp;
 			}
@@ -2361,6 +2361,23 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+
+	@Override
+	public ArrayList<Integer> getStudents() {
+		return executeTransaction(new Transaction<ArrayList<Integer>>() {
+			@Override
+			public ArrayList<Integer> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet results = null;
+				ArrayList<Integer> temp = new ArrayList<Integer>();
+				stmt1 = conn.prepareStatement(
+						"select prof_id "
+						+ "from students " );
+				results = stmt1.executeQuery();
+				while(results.next()) {
+					temp.add(results.getInt(1)); 
+				}
+				return temp;
 	
 	@Override
 	public ArrayList<Integer> getReviewTop() {
