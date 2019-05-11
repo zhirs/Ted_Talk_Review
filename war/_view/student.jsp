@@ -37,25 +37,22 @@
 		<br><br><br>
 		<hr>
 		<%--div that presents a created review. when real database is implemented this will be unnecessary --%>
-		<div id = "reviewSection">
-			<h3>Your pending reviews:</h3>		
-			<div class = "pendingReviewSection">
-			
-				<c:forEach var="review" items="${UpdatedReviews}">
-					<c:out value = "${UpdatedReviews}"/> <br>Created Review<br>
-				</c:forEach>
-			</div>
-		</div>
 		<div id = "reviewSection">	
 			<hr>	
-			<p>THIS IS AN EXAMPLE OF A USER'S PERSONAL REVIEW</p>
-			
-			<c:forEach var="reviews" items="${reviews}">
-				<c:out value = "${reviews}"/> <br>Another Review<br>
+			<p>Pending reviews:</p>
+			<c:forEach items="${pendingDescs}" var="pendingDescs">
+				<c:out value = "${pendingDescs}"/>
 			</c:forEach>	
-			<hr>					
+			<hr>
+			<p>Approved reviews:</p>
+			<c:forEach items="${approvedDescs}" var="approvedDescs">
+				<c:out value = "${approvedDescs}"/>
+			</c:forEach>
+			<hr>
+			<p>Denied reviews:</p>
+			<c:forEach items="${deniedDescs}" var="deniedDescs">
+				<c:out value = "${deniedDescs}"/>
+			</c:forEach>							
 		</div>					
-
-
 	</body>
 </html>

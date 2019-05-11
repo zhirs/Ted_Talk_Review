@@ -35,6 +35,9 @@
 			<form action = "${pageContext.servletContext.contextPath}/professor" method = "get">
 			<input type = "Submit" name = "professor Setting" class="button" value = "Change">
 			</form>
+			<form action = "${pageContext.servletContext.contextPath}/checkStudentDateAdmin" method = "get">
+			<input type = "Submit" name = "professor Setting" class="button" value = "Review Dates">
+			</form>
 			<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 			<input type = "Submit" name = "logout" class="button" value = "Logout">
 			</form>			
