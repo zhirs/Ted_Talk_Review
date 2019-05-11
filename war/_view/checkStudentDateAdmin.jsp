@@ -52,7 +52,7 @@
 			<p>This should show the return value for all of the reviews</p>
 			
 			<c:forEach var="reviews" items="${reviews}">
-				<c:out value = "${reviews}"/> <br>Another Review<br>
+				<c:out value = "${reviews}"/> <br><br>
 			</c:forEach>	
 			<hr>					
 		</div>

@@ -106,6 +106,10 @@
 	<servlet-name>studentOverviewServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.studentoverviewservlet</servlet-class>
 </servlet>
+	<servlet-name>professorReviewQueueServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.professorreviewqueueservlet</servlet-class>
+</servlet>
+    
 
 <!-- servlet mapping -->
 <servlet-mapping>
@@ -207,5 +211,8 @@
 <servlet-mapping>
 	<servlet-name>studentOverviewServlet</servlet-name>
 	<url-pattern>/studentOverview</url-pattern>
+ </servlet-mapping>
+	<servlet-name>professorReviewQueueServlet</servlet-name>
+	<url-pattern>/professorReviewQueue</url-pattern>
 </servlet-mapping>
 </web-app>	
