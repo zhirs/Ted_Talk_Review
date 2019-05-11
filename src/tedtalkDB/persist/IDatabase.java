@@ -6,9 +6,11 @@ import java.util.List;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Pair;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
+import tedtalkDB.model.keywords;
 
 public interface IDatabase {
 	// used for switching between real and fake databases
@@ -17,7 +19,7 @@ public interface IDatabase {
 	public ArrayList<Professor> addProfessor(String user, String pass, String email, int mod);
 	public ArrayList<Student> addStudent(String user, String pass, String email, String section, String major);
 	public ArrayList<NetworkAdmin> addAdmin(String user, String pass, String email, int modstat);
-	public ArrayList<Review> getProfIDReviewList(int profID);
+	public ArrayList<Review> getProfIDReviewList(int profID, int status);
 	public Integer getReviewTotal(int profID);
 	public ArrayList<Review> findReview(String keyword);
 	public ArrayList<Review> addReview(String URL, String name, int rate, String pres, String desc, int profID, String tag, int status);
@@ -36,4 +38,35 @@ public interface IDatabase {
 	public NetworkAdmin adminByProfID(int profID);
 	public Integer getProfID(String user);
 	public Integer getRole(String user);
+	public ArrayList<Integer> getRevID(String keyword);
+	public ArrayList<Review> getReviews(int rev_id);
+	public ArrayList<keywords> addKeyword(String keyword, int rev_id);
+	public ArrayList<String> parseTitle(String title);
+	public Integer removeReview(String user, String title);
+	public Integer addToAdmin(String user);
+	public Integer addToProfessor(String user);
+	public Integer addToStudent(String user);
+	public Integer removeFromAdmin(String user);
+	public Integer removeFromProfessor(String user);
+	public Integer removeFromStudent(String user);
+	public Integer removeAccount(String user, int role);
+	public Integer updateRole(String user, boolean promo);
+	public Integer getGlobalMod();
+	public ArrayList<String> addandParse(String title, int rev_id);
+	public ArrayList<Student> approveStudent(String user);
+	public ArrayList<Student> addNewStudent(String user, String pass, String email, String section, String major);
+	public Integer checkUsername(String user);
+	public ArrayList<Student> unapprovedStudents();
+	public ArrayList<Review> getReviewByStatus(int status);
+	public Integer changeReviewStatus(int status, int rev_id);
+	public Integer resetPassword(String username, String password);
+	public Integer averageReviewRating(String url);
+	public ArrayList<Student> denyStudent(String user);
+	public ArrayList<Pair<Integer, Integer>> leaderBoardTotals();
+	public String getUser(int profID);
+	public ArrayList<String> getMajors();
+	ArrayList<Integer> getStudents();
+	public ArrayList<String> getReviewUnique();
+	public ArrayList<Integer> getReviewTop();
+	ArrayList<String> getReviewNameByURL(String URL);
 }

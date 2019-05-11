@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ReviewControllerTest {
 			e.printStackTrace();
 		}
 		// sets model to a review already in database for testing methods
-		modelHandler = derby.getProfIDReviewList(8).get(0);
+		modelHandler = derby.getProfIDReviewList(8, 0).get(0);
 		reviewController.setModel(modelHandler);
 		result = new ArrayList<Review>();
 	}
@@ -42,7 +43,7 @@ public class ReviewControllerTest {
 	public void createNewReview() {
 		//result = fake.getReviewList();
 		System.out.println(result.size());
-		String testName = "Wilds";
+		String testName = "Wilds TEST";
 		String testURL = "tEDtalk.com/Wilds";
 		int testRate = 3;
 		String tag = "environmental";
@@ -52,14 +53,38 @@ public class ReviewControllerTest {
 		ArrayList<Review>InitialSize = reviewController.fetchReviews(fakeprofID);
 		int initialSize = InitialSize.size();
 		ArrayList<Review>test = reviewController.newReview(testURL, testName, testRate, testPresenter, testDescription, fakeprofID, tag);
-
+		
 		//System.out.println(result.get(5).getName());
-		assertTrue(test.get(0).getName().equals("Wilds"));
+		assertTrue(test.get(0).getName().equals("Wilds TEST"));
 		assertTrue(test.get(0).getDesc().equals(testDescription));
 		assertTrue(test.get(0).getURL().equals(testURL));
 		
 		ArrayList<Review> doubleCheck = reviewController.fetchReviews(fakeprofID);
 		assertTrue(doubleCheck.size() == (initialSize + 1));
+	}
+	@Test
+	public void testSearch() {
+		String input = "Joseph Landau's Symposium";
+		ArrayList<Review> revs = reviewController.search(input);
+		assertTrue(revs.size() > 0);
+		for(int i = 0; i < revs.size(); i++) {
+			System.out.println(revs.get(i).getDesc());
+		}		
+	}
+	@Test
+	public void testGetReviews() {
+		ArrayList<Review> pendingrevs = reviewController.getPendingRevs(8);
+		if(pendingrevs.isEmpty()){
+			fail("Returned no reviews");
+		}
+		ArrayList<Review> approvedrevs = reviewController.getApprovedRevs(8);
+		if(!approvedrevs.isEmpty()) {
+			fail("Returned incorrect review");
+		}
+		ArrayList<Review> deniedrevs = reviewController.getDeniedRevs(8);
+		if(!deniedrevs.isEmpty()) {
+			fail("Returned incorrect review");
+		}
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/

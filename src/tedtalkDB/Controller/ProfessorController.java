@@ -1,4 +1,6 @@
 package tedtalkDB.Controller;
+import java.util.ArrayList;
+
 import tedtalkDB.model.*;
 import tedtalkDB.persist.*;
 
@@ -38,5 +40,62 @@ public class ProfessorController {
 		}
 		//ELSE NOT NEEDED STATUS IS LEFT ON DENIED 			
 	}
-
+	public void removeAccount(String student) {
+		// TODO Auto-generated method stub
+		derby.removeAccount(student, 1);
+	}
+	public void addStudent(String user, String pass, String email, String section, String major) {
+		derby.addNewStudent(user, pass, email, section, major);
+	}
+	
+	public void approveStudent(String user) {
+		derby.approveStudent(user);
+	}
+	
+	public int switchMod(String user) {
+		int mod = derby.getMod(derby.getProfID(user));
+		int globalMod = derby.getGlobalMod();
+		
+		if(globalMod <= 0) {
+			switch(mod) {
+			case 0: 
+				mod = 1;
+				break;
+			case 1: 
+				mod = 0;
+				break;
+			default:
+				mod = 0;
+			}
+		}
+		else {
+			mod = 1;
+		}
+		
+		derby.updateMod(derby.getProfID(user), mod);
+		return mod;
+  }
+  public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
+		ArrayList<Review> reviewDate = new ArrayList<Review>();
+		
+		int tempProfID = derby.getProfID(searchName);
+		
+		String date1 = year1+"/"+month1+"/"+day1;
+		//String date1 = "2019/04/26";
+		java.util.Date utilDate1 = new java.util.Date(date1);
+	    java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
+		
+		String date2 = year2+"/"+month2+"/"+day2;
+	    //String date2 = "2019/04/28";
+		java.util.Date utilDate2 = new java.util.Date(date2);
+	    java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
+		
+		return derby.getReviewsBetweenDates(tempProfID, sqlDate1, sqlDate2);
+		
+	}
+	public ArrayList<Review> getReviewByStatus(int status){
+		ArrayList<Review> reviewQueue = new ArrayList<Review>();
+		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
+		return reviewQueue;
+	}
 }

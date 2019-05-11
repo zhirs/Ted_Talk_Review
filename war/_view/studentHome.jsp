@@ -21,7 +21,7 @@
 		<h1>Student Home Page</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/student" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -32,13 +32,15 @@
 		<h2>Suggested TEDTalks:</h2>
 		<p>What your peers are viewing:</p>
 		<ul id = "links"><!-- THE HREF SHOULD GO TO A LINK THAT AUTO-FILLS THE REVIEW PAGE WITH THE CORRESPONDING TED TALK -->
-			<li><a href="https://www.ted.com/talks/anupam_mishra_the_ancient_ingenuity_of_water_harvesting" target = blank>Ingenuity of water harvesting</a></li>
-			<li><a href="https://www.ted.com/talks/norman_foster_s_green_agenda" target = blank>Norman Foster's Green Agenda</a></li>
-			<li><a href="https://www.ted.com/talks/majd_mashharawi_how_i_m_making_bricks_out_of_ashes_and_rubble_in_gaza" target = blank>Rubble in Gaza</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review0}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review1}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review2}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review3}</a></li>
+			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review4}</a></li>
 		</ul>		
 		<div class = "searchSection">
 			<p>Don't like what's trending? Try searching our database</p>
-			<form action="${pageContext.servletContext.contextPath}" method="get"> 
+			<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 			<input type = "Submit" name = "searchPage" class="button2" value = "search">
 			</form>
 		</div>

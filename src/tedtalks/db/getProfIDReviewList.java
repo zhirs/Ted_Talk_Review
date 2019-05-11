@@ -17,7 +17,7 @@ public class getProfIDReviewList {
 		int prof_id= keyboard.nextInt();
 		
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<Review> found = db.getProfIDReviewList(prof_id);
+		ArrayList<Review> found = db.getProfIDReviewList(prof_id, 0);
 		if (found.size() == 0){
 			System.out.println("No reviews found");
 		}

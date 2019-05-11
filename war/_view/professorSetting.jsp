@@ -28,8 +28,18 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<br><br><br>
+		<br><br><br><br><br>
 		<hr>
-		
+		Create a student account: <br>
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		</form>
+		<br><br><br>
+		Or change reviewing(on/off):<br>
+		${globalModStat}<br>
+		your current reviewing status is: ${currentStat}<br>
+		<form action = "${pageContext.servletContext.contextPath}/professorSetting" method = "post">
+		<input type = "Submit" name = "moderatorStatus" class="button" value = "On/Off">
+		</form>
 	</body>
-</html>
+</html>	
