@@ -2,29 +2,28 @@ package tedtalk.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.persist.DerbyDatabase;
-import tedtalkDB.Controller.ProfessorController;
 
 public class checkstudentdateadminservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private DerbyDatabase derby;
-	private int profID;
+	private int profID = 0;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("Professor Check Student Date Servlet: doGet");
 		username = (String) req.getSession().getAttribute("username");
+		derby = new DerbyDatabase();
 		
 		// call JSP to generate empty form
 		if(username == null) {
@@ -46,7 +45,6 @@ public class checkstudentdateadminservlet extends HttpServlet {
 		String year2 = req.getParameter("year2");
 		String month2 = req.getParameter("month2");   
 		String day2 = req.getParameter("day2");
-		System.out.println(searchName);
 		profID = derby.getProfID(searchName);
 		
 		String date1 = year+"/"+month+"/"+day;
