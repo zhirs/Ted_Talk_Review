@@ -2378,7 +2378,9 @@ public class DerbyDatabase implements IDatabase {
 					temp.add(results.getInt(1)); 
 				}
 				return temp;
-	
+			}
+		});
+	}
 	@Override
 	public ArrayList<Integer> getReviewTop() {
 		return executeTransaction(new Transaction<ArrayList<Integer>>() {
