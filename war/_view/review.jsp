@@ -50,7 +50,7 @@
 		 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
 		 		</tr>			 	
 	 		</table>
-	 		
+
 		 				 <%--This is the textfield for the review's description --%> 
 			<div id="cct_embed_counts" align ="center">
 			 <%--the form action will call the post method in the review servlet, then it will redirect it to the profile servlet --%> 
@@ -64,13 +64,13 @@
 			   <div id="star1" class="notation-star" onClick="notation(this.id);"></div>
 			   <input type="hidden" id="notationNote" name="notation_note" value="0">
 			<input type = "Submit" class="button2" value = "Submit Review">
-			</form>
 			<div id="cct_embed_result"></div>
 			<div id="cct_powered_by">Powered by <a href="https://charactercounttool.com">Character Counter</a></div>
 			<script type="text/javascript" src="https://charactercounttool.com/cct_embed.min.js"></script>
+			</div>
+		</form>
 
 			</div>
-		</form>		
 		<hr>
 		<div class = "commonReviews"><!-- SECTION OF OTHER RELATED REVIEWS -->
 		<div id = "avgRating">
