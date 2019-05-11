@@ -2293,9 +2293,8 @@ public class DerbyDatabase implements IDatabase {
 						"select major "
 						+ "from students " );
 				results = stmt1.executeQuery();
-				int i = 1;
 				while(results.next()) {
-					temp.add(results.getString(i++));
+					temp.add(results.getString(1));
 				}
 				return temp;
 			}
