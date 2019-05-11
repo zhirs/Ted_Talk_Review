@@ -37,7 +37,8 @@
 		<hr>
   	
   		<c:forEach items="${titles}" var="titles">
-      		<td><c:out value="${titles}"/></td>
+      		<td> <input type = "hidden" value="${titles}"></td>
+      		<a href="${pageContext.servletContext.contextPath}/review" target = blank > ${titles} </a>
   		</c:forEach>
 		<h2>${error}</h2>	
 	</body>

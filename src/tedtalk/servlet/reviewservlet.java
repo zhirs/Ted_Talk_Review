@@ -36,7 +36,7 @@ public class reviewservlet extends HttpServlet {
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
 		review2 = (String) req.getSession().getAttribute("review2");
-
+		
 		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
 		if(username == null) {

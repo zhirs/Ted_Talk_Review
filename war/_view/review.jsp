@@ -32,7 +32,6 @@
 		<br><br><br>
 		<hr>		
 		<div class = "reviewSection">
-		<a href = "${url}" target = "blank"> "TedTalk Link: ${name}"</a>
 		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
 									<table>
 						<tr>
@@ -42,7 +41,7 @@
 				 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
 				 		</tr>
 				 		<tr>
-				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}">  </td>
+				 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"><a href = "${url}" target = "blank"> "TedTalk Link: ${name}"</a>  </td>
 				 		</tr>
 				 		<tr>
 				 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. engineering" required = "required" size = "30" value="${tag}"> </td>
