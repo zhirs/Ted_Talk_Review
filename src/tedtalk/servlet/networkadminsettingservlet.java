@@ -19,16 +19,13 @@ public class networkadminsettingservlet extends HttpServlet {
 	private int modStat;
 	private String globalModStatStatus = null;
 	private String personalStat = null;
-	private DerbyDatabase derby = new DerbyDatabase();
-	private int profID;
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Network Admin Settings Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
-		profID = (int) req.getSession().getAttribute("profID");
 		globalMod = (int) req.getSession().getAttribute("modStat");
 		// call JSP to generate empty form
 		if(username == null) {
@@ -53,25 +50,16 @@ public class networkadminsettingservlet extends HttpServlet {
 		
 		System.out.println("Network Admin Settings Servlet: doPost");
 		
-		switch(modStat) {
-		case 1: 
-			modStat = 2;
-			break;
-		case 2: 
-			modStat = 1;
-			break;
-		default:
-			modStat = 2;
-		}
-		
-		derby.updateModStat(profID, modStat);
-		globalMod = derby.getGlobalMod();
+		NetworkAdminController NAController = new NetworkAdminController();
+		modStat = NAController.updateModStat(username);
+		globalMod = NAController.findGlobalStat();
 		
 		changeToString();
 		
 		HttpSession session = req.getSession(true);
 		
 		session.setAttribute("modStat", globalMod);
+		session.setAttribute("moderator", modStat);
 		req.setAttribute("globalModStat", globalModStatStatus);
 		req.setAttribute("currentStat", personalStat);
 		// now call the JSP to render the new page

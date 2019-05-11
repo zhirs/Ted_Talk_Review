@@ -123,6 +123,28 @@ public class NetworkAdminController {
 		derby.denyStudent(user);
 		return derby.unapprovedStudents();
 	}
+
+  public int updateModStat(String user) {
+		int modStat = derby.getModStat(derby.getProfID(user));
+		
+		switch(modStat) {
+		case 1: 
+			modStat = 2;
+			break;
+		case 2: 
+			modStat = 1;
+			break;
+		default:
+			modStat = 2;
+		}
+		
+		derby.updateModStat(derby.getProfID(user), modStat);
+		return modStat;
+	}
+	
+	public int findGlobalStat() {
+		return derby.getGlobalMod();
+  }
 	public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
 		ArrayList<Review> reviewDate = new ArrayList<Review>();
 		

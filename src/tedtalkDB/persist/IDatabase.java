@@ -6,6 +6,7 @@ import java.util.List;
 
 import tedtalkDB.model.Account;
 import tedtalkDB.model.NetworkAdmin;
+import tedtalkDB.model.Pair;
 import tedtalkDB.model.Professor;
 import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
@@ -61,5 +62,7 @@ public interface IDatabase {
 	public Integer resetPassword(String username, String password);
 	public Integer averageReviewRating(String url);
 	public ArrayList<Student> denyStudent(String user);
+	ArrayList<Pair<Integer, Integer>> leaderBoardTotals();
+	String getUser(int profID);
 	public ArrayList<String> getMajors();
 }

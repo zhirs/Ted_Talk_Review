@@ -36,6 +36,10 @@
 			 </form>
 		 </div>
 		<hr>
+		<h1>Leaders In Review Count</h1>
+		First: ${leader}<br>
+		Second: ${second}<br>
+		Third: ${third}<br>
 		
 	</body>
 </html>

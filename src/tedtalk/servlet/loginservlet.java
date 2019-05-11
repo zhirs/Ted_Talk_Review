@@ -1,6 +1,7 @@
 package tedtalk.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,19 +10,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tedtalkDB.model.Account;
+import tedtalkDB.model.Pair;
 import tedtalkDB.persist.DerbyDatabase;
 
 public class loginservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
-	private DerbyDatabase derby;
+	private DerbyDatabase derby = new DerbyDatabase();
 	private int role; 
+	private ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+	private String leader;
+	private String second;
+	private String third;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		System.out.println("Login Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
+		
+		result.addAll(derby.leaderBoardTotals());
+		printLeaderBoards();
+		
+		req.setAttribute("leader", leader);
+		req.setAttribute("second", second);
+		req.setAttribute("third", third);
+		
 		// call JSP to generate empty form
 		if(username != null) { 
 			req.getSession().setAttribute("username", null);
@@ -54,10 +68,15 @@ public class loginservlet extends HttpServlet {
 
 		//model.setUser(user);
 		//model.setPass(pass);
-		derby = new DerbyDatabase();	//used derby instead of controller
 		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
 		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
+			printLeaderBoards();
+
+			req.setAttribute("leader", leader);
+			req.setAttribute("second", second);
+			req.setAttribute("third", third);
+			
 			Account login = derby.setLogin(user);
 			HttpSession session = req.getSession(true);
 			
@@ -113,5 +132,15 @@ public class loginservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		// now call the JSP to render the new page	
+	}
+	
+	public void printLeaderBoards() {
+		leader = derby.getUser(result.get(0).getRight());
+		second = derby.getUser(result.get(1).getRight());
+		third = derby.getUser(result.get(2).getRight());
+		
+		leader += " with " + result.get(0).getLeft();
+		second += " with " + result.get(1).getLeft();
+		third += " with " + result.get(2).getLeft();
 	}
 }
