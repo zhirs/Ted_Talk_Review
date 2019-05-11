@@ -73,8 +73,6 @@ public class loginservlet extends HttpServlet {
 		//model.setUser(user);
 		//model.setPass(pass);
 		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
-		getTopProfiles();
-		printLeaderBoards();
 		getTopReviews();
 		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
@@ -170,7 +168,8 @@ public class loginservlet extends HttpServlet {
 		}
 		
 		for(int x = 0; x < 5; x ++) {
-			show[x] = derby.getReviewNameByURL(show[x]).get(0);
+			String temp = show[x];
+			show[x] = derby.getReviewNameByURL(temp).get(0);
 			System.out.println(show[x]);
 		}
 	}
