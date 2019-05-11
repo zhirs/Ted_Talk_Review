@@ -33,8 +33,8 @@ public class loginservlet extends HttpServlet {
 		System.out.println("Login Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		
-		getTopProfiles();
-		printLeaderBoards();
+		//getTopProfiles();
+		//printLeaderBoards();
 		
 		req.setAttribute("leader", leader);
 		req.setAttribute("second", second);
@@ -174,37 +174,37 @@ public class loginservlet extends HttpServlet {
 		}
 	}
 	
-	public void getTopProfiles() {
-		System.out.println("getTopProfiles");
-		ArrayList<String> students = new ArrayList<String>();
-		ArrayList<Integer> highest = new ArrayList<Integer>();
-		students.addAll(derby.getStudentUserNames());
-		for(int x = 0; x < students.size(); x ++) {
-			highest.add(derby.getReviewTotal(derby.getProfID(students.get(x))));
-		}
-	
-		for(int x = 0; x < 3; x ++) {
-			count[x] = -1;
-			student[x] = null;
-		}
-		
-		for(int w = 0; w < 3; w ++) {
-			for(int x = 0; x < highest.size(); x ++) {
-				if(highest.get(x) > count[w]) {
-					count[w] = highest.get(x);
-					student[w] = students.get(x);
-				}
-			}
-			for(int x = 0; x < highest.size(); x ++) {
-				if(student[w].equals(students.get(x))) {
-					students.remove(x);
-					highest.remove(x);
-				}
-			}
-		}
-		
-		for(int x = 0; x < 3; x ++) {
-			System.out.println(student[x] + "   " + count[x]);
-		}
-	}
+//	public void getTopProfiles() {
+//		System.out.println("getTopProfiles");
+//		ArrayList<String> students = new ArrayList<String>();
+//		ArrayList<Integer> highest = new ArrayList<Integer>();
+//		students.addAll(derby.getStudentUserNames());
+//		for(int x = 0; x < students.size(); x ++) {
+//			highest.add(derby.getReviewTotal(derby.getProfID(students.get(x)))); 
+//		}
+//	
+//		for(int x = 0; x < 3; x ++) {
+//			count[x] = -1;
+//			student[x] = null;
+//		}
+//		
+//		for(int w = 0; w < 3; w ++) {
+//			for(int x = 0; x < highest.size(); x ++) {
+//				if(highest.get(x) > count[w]) {
+//					count[w] = highest.get(x);
+//					student[w] = students.get(x);
+//				}
+//			}
+//			for(int x = 0; x < highest.size(); x ++) {
+//				if(student[w].equals(students.get(x))) {
+//					students.remove(x);
+//					highest.remove(x);
+//				}
+//			}
+//		}
+//		
+//		for(int x = 0; x < 3; x ++) {
+//			System.out.println(student[x] + "   " + count[x]);
+//		}
+//	}
 }

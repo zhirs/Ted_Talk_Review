@@ -27,7 +27,7 @@ public class reviewservlet extends HttpServlet {
 	Review handle = new Review();
 	private String[] show;
 	private int profID = -1;
-	private ArrayList<String> descriptions;
+	private ArrayList<String> descriptions;  
 	private ArrayList<Integer> ratings;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -38,9 +38,7 @@ public class reviewservlet extends HttpServlet {
 		username = (String) req.getSession().getAttribute("username");
 
 		show = (String[]) req.getSession().getAttribute("TopURL");
-		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
-		titles = title.get(0);
-
+	 
 		review0 = (String) req.getSession().getAttribute("review0");
 		review1 = (String) req.getSession().getAttribute("review1");
 		review2 = (String) req.getSession().getAttribute("review2");
@@ -52,8 +50,12 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-		
-			ArrayList<Review> derbyResults = revController.search(titles);//revController.findByTitle(titles);//DOES NOT WORK
+			
+			ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
+			if(title != null) {
+			String newTitle = title.get(0); 
+
+			ArrayList<Review> derbyResults = revController.search(newTitle);//revController.findByTitle(titles);//DOES NOT WORK
 		
 			//String review0 = "Joseph Landau's Symposium";
 			
@@ -65,6 +67,7 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("name",derbyResults.get(0).getName());
 			
 			//DISPLAY RELATED REVIEWS:
+			if(review1 != null) {
 			ArrayList<Review> tester = revController.search(review1);
 			req.setAttribute("common1Title", tester.get(0).getName());
 			req.setAttribute("common1URL", tester.get(0).getURL());
@@ -94,8 +97,9 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("descriptions", descriptions);
 			req.setAttribute("ratings", ratings);
 			req.setAttribute("listSize", listSize);
+			}
+			}
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
-
 
 		}
 	}

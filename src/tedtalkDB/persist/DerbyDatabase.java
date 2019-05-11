@@ -1826,12 +1826,14 @@ public class DerbyDatabase implements IDatabase {
 	@Override
 	public ArrayList<String> parseTitle(String title){
 		ArrayList<String> keys = new ArrayList<String>();
+		if(title != null) {
 		String[] parsed = title.split(" ");
 		for(int i = 0; i < parsed.length - 1; i++) {
 			keys.add(parsed[i]);
 			if(parsed.length > 1) {
 				keys.add(parsed[i] + " " + parsed[i+1]);
 			}
+		}
 		}
 		return keys;
 	}

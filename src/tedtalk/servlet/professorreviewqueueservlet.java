@@ -19,7 +19,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 	private ArrayList<String> revNames;
 	private ArrayList<String> revURLs;
 	private ArrayList<String> revPresenters;
-	private ArrayList<String> revDescriptions;
+	private ArrayList<String> revDescriptions; 
 	private ProfessorController controller;
 	private int listSize;
 	
@@ -67,7 +67,6 @@ public class professorreviewqueueservlet extends HttpServlet {
 		System.out.println("Professor Review Queue: doPost");
 		
 		String delete = (String) req.getParameter("delete");
-		controller.
 		ArrayList<Review> newbies = controller.search(delete);
 		ArrayList<String> newNames = new ArrayList<String>();
 		for(Review stud : newbies) {
