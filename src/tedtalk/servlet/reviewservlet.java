@@ -26,7 +26,7 @@ public class reviewservlet extends HttpServlet {
 	private int avgRating  = 0;
 	private ReviewController revController;
 	Review handle = new Review();
-
+	private String[] show;
 	private int profID = -1;
 	
 	@Override
@@ -35,9 +35,7 @@ public class reviewservlet extends HttpServlet {
 		revController = new ReviewController();
 		System.out.println("Review Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
-		review0 = (String) req.getSession().getAttribute("review0");
-		review1 = (String) req.getSession().getAttribute("review1");
-		review2 = (String) req.getSession().getAttribute("review2");
+		show = (String[]) req.getSession().getAttribute("TopURL");
 		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
 		titles = title.get(0);
 
