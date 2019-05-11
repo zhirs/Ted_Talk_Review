@@ -30,10 +30,30 @@
 		<br><br><br>
 		<hr>
 		<h2>Suggested TEDTalks:</h2>
-		<p>What your peers are viewing:</p>
-		<c:forEach var="reviews" items="${reviews}">
-			<c:out value = "${reviews}"/> <br><br>
+		<h3>Reviews pending approval</h3>
+		<c:forEach var="i" begin = "0" end = "${listSize}">
+		<div>
+			<table>
+				<tr>
+					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters.get(i)}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs.get(i)}" readonly> </td>
+		 		</tr>
+		 		<tr>
+		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
+		 		</tr>			 	
+	 		</table>
+	 		</div>
 		</c:forEach>
-		<hr>
+		
+		
+		<h3>Review title to reject</h3>
+  		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+  			<input type = "text" name = "delete" value = "${delete}">
+		</form>
 	</body>
 </html>

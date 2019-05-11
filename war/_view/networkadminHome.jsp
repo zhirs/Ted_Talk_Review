@@ -52,11 +52,6 @@
 		<c:forEach items="${newbs}" var="newbs">
       		<td><c:out value="${newbs}"/></td>
       		<p></p>
-  		</c:forEach>
-  		
-  		<c:forEach items="${newbies}" var="newbies">
-      		<td><c:out value="${newbies}"/></td>
-      		<p></p>
   		</c:forEach>	
   			
   		<h3>Account to reject</h3>

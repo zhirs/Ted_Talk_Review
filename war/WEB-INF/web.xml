@@ -103,6 +103,10 @@
 	<servlet-class>tedtalk.servlet.checkstudentdateadminservlet</servlet-class>
 </servlet>
 <servlet>
+	<servlet-name>checkStudentDateProfessorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.checkstudentdateprofessorservlet</servlet-class>
+</servlet>
+<servlet>
 	<servlet-name>studentOverviewServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.studentoverviewservlet</servlet-class>
 </servlet>
@@ -208,6 +212,10 @@
 <servlet-mapping>
 	<servlet-name>checkStudentDateAdminServlet</servlet-name>
 	<url-pattern>/checkStudentDateAdmin</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>checkStudentDateProfessorServlet</servlet-name>
+	<url-pattern>/checkStudentDateProfessor</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>studentOverviewServlet</servlet-name>
