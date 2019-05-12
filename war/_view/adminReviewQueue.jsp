@@ -18,10 +18,10 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Professor Review Queue</h1>		
+		<h1>Network Admin Review Queue</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/professor" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -47,7 +47,7 @@
 		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
 		 		</tr>			 	
 	 		</table>
-	 		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+	 		<form action="${pageContext.servletContext.contextPath}/adminReviewQueue" method="post"> 
   			<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
 		</form>
 	 		</div>

@@ -23,7 +23,7 @@
 		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/professorReviewQueue" method = "get">
+		<form action = "${pageContext.servletContext.contextPath}/adminReviewQueue" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
