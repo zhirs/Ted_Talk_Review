@@ -146,8 +146,6 @@ public class NetworkAdminController {
 		return derby.getGlobalMod();
   }
 	public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
-		ArrayList<Review> reviewDate = new ArrayList<Review>();
-		
 		int tempProfID = derby.getProfID(searchName);
 		
 		String date1 = year1+"/"+month1+"/"+day1;
@@ -170,5 +168,8 @@ public class NetworkAdminController {
 	}
 	public void resetPassword(String username, String password) {
 		derby.resetPassword(username, password);	//Method needs to hash passwords
+	}
+	public int findRoleID(String username) {
+		return derby.getRole(username);
 	}
 }

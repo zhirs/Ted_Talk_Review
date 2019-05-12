@@ -671,16 +671,16 @@ public class DerbyDatabaseTests {
 		}
 	}
 
-	@Test
-	public void testGetLeaderboard() {
-		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
-		result = db.leaderBoardTotals();
-		
-		assertTrue(result.size() == 3);
-		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
-		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
-		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
-	}
+	//@Test
+//	public void testGetLeaderboard() {
+//		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+//		result = db.leaderBoardTotals();
+//		
+//		assertTrue(result.size() == 3);
+//		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
+//		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
+//		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
+//	}
 	
 	@Test
 	public void testGetReviewByStatus() {
@@ -689,7 +689,7 @@ public class DerbyDatabaseTests {
 		if(reviews.isEmpty()) {
 			fail("The List was not filled with reviews");
 		}
-		else {
+		else {  
 			assertTrue(reviews.get(0).getDesc().equals("Please don't flunk me"));
 		}
 	}
