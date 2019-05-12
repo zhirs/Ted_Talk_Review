@@ -17,11 +17,11 @@ public class reviewservlet extends HttpServlet {
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
-	private String review0 = null; 
-	private String review1 = null;
-	private String review2 = null;
+	//the review strings don't need to be set to null because it is implied
+	private String review0, review1, review2, review3, review4;
 	private String common1 = null;
 	private String common2 = null;
+	private String titlez = null;
 	private int avgRating  = 0;
 	private ReviewController revController;
 	private NetworkAdminController adminController;
@@ -38,7 +38,6 @@ public class reviewservlet extends HttpServlet {
 		
 		System.out.println("Review Servlet: doGet");	
 		
-		System.out.println("yO This is the url in session " + req.getAttribute("url"));
 		username = (String) req.getSession().getAttribute("username");
 
 		show = (String[]) req.getSession().getAttribute("TopURL");

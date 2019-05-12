@@ -16,10 +16,8 @@ public class professorreviewqueueservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private ArrayList<Review> reviewQueue;
-	private ArrayList<String> revNames;
-	private ArrayList<String> revURLs;
-	private ArrayList<String> revPresenters;
-	private ArrayList<String> revDescriptions; 
+	private ArrayList<String> revNames, revURLs, revPresenters, revDescriptions;
+	private ArrayList<Integer> revIDs;
 	private ProfessorController controller;
 	private int listSize;
 	
@@ -34,6 +32,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 		revURLs = new ArrayList<String>();
 		revPresenters = new ArrayList<String>();
 		revDescriptions = new ArrayList<String>();
+		revIDs = new ArrayList<Integer>();
 		
 		//the zero is to get every review that has not been approved or denied
 		reviewQueue.addAll(controller.getReviewByStatus(0));	
@@ -44,6 +43,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 				revURLs.add(reviewQueue.get(i).getURL());
 				revPresenters.add(reviewQueue.get(i).getPres());
 				revDescriptions.add(reviewQueue.get(i).getDesc());
+				revIDs.add(reviewQueue.get(i).getRevID());
 			}
 		}
 		listSize = revNames.size() - 1;
@@ -52,6 +52,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 		req.setAttribute("revURLs" , revURLs);
 		req.setAttribute("revPresenters" , revPresenters);
 		req.setAttribute("revDescriptions" , revDescriptions);
+		req.setAttribute("revIDs" , revIDs);
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
@@ -63,20 +64,45 @@ public class professorreviewqueueservlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
 		System.out.println("Professor Review Queue: doPost");
 		
-		String delete = (String) req.getParameter("delete");
-		ArrayList<Review> newbies = controller.search(delete);
-		ArrayList<String> newNames = new ArrayList<String>();
-		for(Review stud : newbies) {
-			newNames.add(stud.getName());
+		listSize = 0;
+		revNames = new ArrayList<String>();
+		revURLs = new ArrayList<String>();
+		revPresenters = new ArrayList<String>();
+		revDescriptions = new ArrayList<String>();
+		revIDs = new ArrayList<Integer>();
+
+		if(req.getParameter("delete") != null) {
+			int delete = Integer.parseInt(req.getParameter("delete"));	//converts the String parameter to int
+			controller.changeReviewStatus(1, delete);
+			//the zero is to get every review that has not been approved or denied
+			reviewQueue = new ArrayList<Review>();
+			reviewQueue = controller.getReviewByStatus(0);	
+			//description, almost every element except rating
+			if(!reviewQueue.isEmpty()) {
+				for(int i = 0; i < reviewQueue.size(); i++) {
+					revNames.add(reviewQueue.get(i).getName());
+					revURLs.add(reviewQueue.get(i).getURL());
+					revPresenters.add(reviewQueue.get(i).getPres());
+					revDescriptions.add(reviewQueue.get(i).getDesc());
+					revIDs.add(reviewQueue.get(i).getRevID());
+				}
+			}
+			listSize = revNames.size() - 1;
+			
+			
+			
 		}
-		req.getSession().setAttribute("newbs", null);
-		req.getSession().setAttribute("newbies", newNames);
 		
 		// now call the JSP to render the new page
+		req.setAttribute("listSize", listSize);
+		req.setAttribute("revNames" , revNames);
+		req.setAttribute("revURLs" , revURLs);
+		req.setAttribute("revPresenters" , revPresenters);
+		req.setAttribute("revDescriptions" , revDescriptions);
+		req.setAttribute("revIDs" , revIDs);
 		req.getRequestDispatcher("/_view/professorReviewQueue.jsp").forward(req, resp);
-	}
+	} 
 	
 }

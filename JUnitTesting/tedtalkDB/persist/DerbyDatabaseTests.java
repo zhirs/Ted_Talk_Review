@@ -151,7 +151,7 @@ public class DerbyDatabaseTests {
 			// try to retrieve the book and author from the DB
 			// get the list of (Author, Book) pairs from DB
 			
-			if (reviews.get(0).getrevID() > 0) {
+			if (reviews.get(0).getRevID() > 0) {
 				System.out.println("New review (ID: " + reviews.get(0).getRevID() + ") successfully added to reviews table>");
 			
 			}
@@ -611,7 +611,7 @@ public class DerbyDatabaseTests {
 		String tag = "Civil Engineering";
 		int status = 0;
 		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
-		int rev_id = revs.get(0).getrevID();
+		int rev_id = revs.get(0).getRevID();
 		System.out.print(rev_id);
 		ArrayList<String> keys =  db.addandParse(name, rev_id);
 		if(!keys.contains("hundred")){

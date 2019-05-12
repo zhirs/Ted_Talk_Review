@@ -25,7 +25,7 @@ public class ReviewController {
 		try {
 			String[] parsed = result.get(0).getName().split(" ");
 			if(parsed.length > 0) {
-			derby.addandParse(name, result.get(0).getrevID());
+			derby.addandParse(name, result.get(0).getRevID());
 			}
 			if(derby.getModStat(profID) == 1) {
 				result.get(result.size() - 1).setStatus(1);

@@ -42,9 +42,9 @@ public class TestReview {
 	
 	@Test
 	public void testGetRevID() {
-		System.out.println(reviews1.get(0).getrevID());
-		assertTrue(reviews1.get(0).getrevID() == 1);
-		assertTrue(reviews2.get(0).getrevID() == 2);
+		System.out.println(reviews1.get(0).getRevID());
+		assertTrue(reviews1.get(0).getRevID() == 1);
+		assertTrue(reviews2.get(0).getRevID() == 2);
 	}
 	
 	@Test

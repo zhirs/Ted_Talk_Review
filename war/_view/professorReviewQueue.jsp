@@ -21,7 +21,7 @@
 		<h1>Professor Home</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/professor" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
@@ -32,7 +32,7 @@
 		<h2>Suggested TEDTalks:</h2>
 		<h3>Reviews pending approval</h3>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
-		<div>
+		<div class="pendingReviews">
 			<table>
 				<tr>
 					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
@@ -47,13 +47,12 @@
 		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
 		 		</tr>			 	
 	 		</table>
+	 		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+  			<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
+		</form>
 	 		</div>
 		</c:forEach>
 		
 		
-		<h3>Review title to reject</h3>
-  		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
-  			<input type = "text" name = "delete" value = "${delete}">
-		</form>
 	</body>
 </html>
