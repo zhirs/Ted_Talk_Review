@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
 import tedtalkDB.Controller.NetworkAdminController;
+import tedtalkDB.Controller.ProfessorController;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -133,7 +134,12 @@ public class reviewservlet extends HttpServlet {
 		
 		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
-							
+		NetworkAdminController nc = new NetworkAdminController();
+		ProfessorController pc = new ProfessorController();
+		if(nc.findGlobalStat() == 1) {
+			pc.approvalAllReivews();
+		}
+		  
 		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
 		reviews.add(reviewDesc);

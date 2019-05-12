@@ -29,30 +29,32 @@
 		</form>
 		<br><br><br>
 		<hr>
-		<h2>Suggested TEDTalks:</h2>
-		<h3>Reviews pending approval</h3>
+		<h3>Reviews pending approval:</h3>
+		<p>Delete reviews not wanted, then approve all at once. </p>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
 		<div class="pendingReviews">
 			<table>
 				<tr>
-					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
+					<td>Review Title:  ${revNames.get(i)} </td>
 		 		</tr>
 		 		<tr>
-		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters.get(i)}" readonly> </td>
+		 			<td>Presenter's Name:  ${revPresenters.get(i)} </td>
 		 		</tr>
 		 		<tr>
-		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs.get(i)}" readonly> </td>
+		 			<td>URL:  ${revURLs.get(i)} </td>
 		 		</tr>
 		 		<tr>
-		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
+		 			<td>Description:  ${revDescriptions.get(i)} </td>
 		 		</tr>			 	
 	 		</table>
 	 		<form action="${pageContext.servletContext.contextPath}/adminReviewQueue" method="post"> 
   			<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
-		</form>
+			</form>
 	 		</div>
 		</c:forEach>
-		
+		<form action="${pageContext.servletContext.contextPath}/approvedReview" method="get"> 
+  		<button id="deleteButton" class = "button" name="delete" value="${revIDs.get(i)}" type="submit">Approve ALL Reviews</button>
+		</form>
 		
 	</body>
 </html>

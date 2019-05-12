@@ -1,11 +1,14 @@
 <html>
 	<style type = "text/css">
+	backgroud{
+	
+	}
 	.images{
 		border-radius: 15px;
 	}	
 	body{
-	background-color: grey;
-	color: white;
+		background-color: grey;
+		color: white;
 	}
 	h1{
 	text-align: center;

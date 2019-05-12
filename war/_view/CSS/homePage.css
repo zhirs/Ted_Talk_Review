@@ -1,48 +1,53 @@
 <html>
 	<style type = text/css>
 	body{
-	background-color: orange;
-	color: black
-	}
-	h1{	text-align: center;	color: purple;}		
-	h2{text-align: center; color:red; }
-	h3{text-align: center;}
-	.button {
-	background-color: #9370DB; 
-	border: 1px solid black;
+	background-color: grey;
 	color: white;
-	padding: 10px 21px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 9px;
-	float: left;
+	}
+	h1{text-align: center; color: purple;}		
+	h2{color:purple;}
+	h3{color:purple;}
+	.button {
+		background-color: #9370DB; 
+		border: 2px solid black;
+		color: white;
+		padding: 20px 31px;
+		margin-left: 10px;
+		margin-right:10px;
+		text-align: center;
+		text-decoration: bold;
+		display: inline-block;
+		font-size: 13px;
+		float: left;
 	}
 	.button2 {
 	background-color: #9370DB; 
 	border: 1px solid black;
 	color: white;
-	padding: 10px 21px;
+	padding: 8px 14px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 9px;
+	font-size: 12px;
 	}
 	.searchSection{text-align: center;}
 
 	.reviewSection{	
-	overflow: auto;
-
-	border: 2px solid black;
-	background: url(Ted_Talk_Review/war/images/TedTalk.png);
-	background-size: cover;
+		overflow: auto;
+		border: 2px solid black;
+		background: url(Ted_Talk_Review/war/images/TedTalk.png);
+		background-size: cover;
+	}
+	.suggested{
+		
+		margin-top: 20px;
 	}
 	.deleteButton{
 	float: right;
 	}
 	#colorstrip{
     	width: 100%; height: 2px;
-   	 border-style: solid;
+   	 	border-style: solid;
     	border-color: white;
     	background-color: white;
 	}

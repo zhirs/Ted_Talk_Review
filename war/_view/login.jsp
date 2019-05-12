@@ -37,9 +37,9 @@
 		 </div>
 		<hr>
 		<h1>Leaders In Review Count</h1>
-		First: ${leader}<br>
-		Second: ${second}<br>
-		Third: ${third}<br>
+		<h3>First: ${leader}</h3>
+		<h3>Second: ${second}</h3>
+		<h3>Third: ${third}</h3>
 		
 	</body>
 </html>
