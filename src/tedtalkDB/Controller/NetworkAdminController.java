@@ -169,4 +169,7 @@ public class NetworkAdminController {
 	public void resetPassword(String username, String password) {
 		derby.resetPassword(username, password);	//Method needs to hash passwords
 	}
+	public int findRoleID(String username) {
+		return derby.getRole(username);
+	}
 }
