@@ -25,14 +25,14 @@ public class profileservlet extends HttpServlet {
 		System.out.println("Profile Servlet: doGet");	
 		username = (String) req.getSession().getAttribute("username");
 		email = (String) req.getSession().getAttribute("email");
-		System.out.println("This is the titles in session " + req.getAttribute("titles"));
+		
+		//clears unneeded session data
 		req.setAttribute("description", null);
 		req.setAttribute("presenterName", null);
 		req.setAttribute("url", null);
 		req.setAttribute("tag", null);
 		req.setAttribute("name", null);
 		req.getSession().setAttribute("titles", null);
-		System.out.println("This is the titles in session " + req.getAttribute("titles"));
 		// call JSP to generate empty form
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);

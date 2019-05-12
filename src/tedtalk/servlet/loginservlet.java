@@ -74,6 +74,8 @@ public class loginservlet extends HttpServlet {
 		//model.setPass(pass);
 		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
 		
+		getTopReviews();
+		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
 			req.setAttribute("leader", leader);
 			req.setAttribute("second", second);

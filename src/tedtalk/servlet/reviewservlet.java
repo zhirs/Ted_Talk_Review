@@ -54,7 +54,6 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-			System.out.println("-------This is the titles in session " + req.getSession().getAttribute("titles"));
 			ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
 			if(title != null) {
 			String newTitle = title.get(0); 
@@ -103,7 +102,6 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("listSize", listSize);
 			}
 			}
-			System.out.println("--------This is the titles in session " + req.getAttribute("titles"));
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 		}
@@ -141,7 +139,8 @@ public class reviewservlet extends HttpServlet {
 		reviews.add(reviewDesc);
 		req.setAttribute("UpdatedReviews", reviews);
 		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
-		//resets session data
+		
+		//clears unneeded session data
 		req.setAttribute("description", null);
 		req.setAttribute("presenterName", null);
 		req.setAttribute("url", null);

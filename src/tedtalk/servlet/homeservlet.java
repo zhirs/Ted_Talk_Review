@@ -26,11 +26,14 @@ public class homeservlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Home Servlet: doGet");	
 		
+		//clears unneeded session data
 		req.setAttribute("description", null);
 		req.setAttribute("presenterName", null);
 		req.setAttribute("url", null);
 		req.setAttribute("tag", null);
 		req.setAttribute("name", null);
+		req.getSession().setAttribute("titles", null);
+		
 		username = (String) req.getSession().getAttribute("username");
 		//comeout
 
