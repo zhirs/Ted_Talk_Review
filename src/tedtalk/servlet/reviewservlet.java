@@ -35,6 +35,7 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		revController = new ReviewController();
 		adminController = new NetworkAdminController();
+		ArrayList<Review> derbyResults = new ArrayList<Review>();
 		
 		System.out.println("Review Servlet: doGet");	
 		
@@ -57,10 +58,10 @@ public class reviewservlet extends HttpServlet {
 			if(title != null) {
 			String newTitle = title.get(0); 
 
-			ArrayList<Review> derbyResults = revController.search(newTitle);//revController.findByTitle(titles);//DOES NOT WORK
+			derbyResults.addAll(revController.search(newTitle));
+			derbyResults.remove(derbyResults.size() - 1);	//without this the review controller adds an extra review
 		
 			//String review0 = "Joseph Landau's Symposium";
-			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
 			req.setAttribute("presenterName", derbyResults.get(0).getPres());
@@ -79,10 +80,10 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("common2Title", tester1.get(0).getName());
 			req.setAttribute("common2URL", tester1.get(0).getURL());
 			req.setAttribute("common2Rate", tester1.get(0).getRate());
+			}
 			
 			//AVG RATING:
-			avgRating = revController.getAverageRating(tester.get(0).getURL());
-			
+			avgRating = revController.getAverageRating(derbyResults.get(0).getURL());
 			for(int i = 0; i < derbyResults.size(); i++) {
 				System.out.println("----the description is: " + derbyResults.get(i).getDesc() + " the name is " + derbyResults.get(i).getName());
 			}
@@ -100,7 +101,7 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("ratings", ratings);
 			req.setAttribute("listSize", listSize);
 			}
-			}
+			
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 		}

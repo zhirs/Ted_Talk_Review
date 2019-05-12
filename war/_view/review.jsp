@@ -81,6 +81,7 @@
 		
 		</div>
 		<p>These are the previous reviews for this Ted Talk</p>
+		<p>Currently any review that has the same Title, URL, etc has the same rating and description as well so everything looks the same<p>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
 			<div class = "reviewSection">
 				<table>
