@@ -43,7 +43,6 @@ public class resultservlet extends HttpServlet {
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
 		
 		String input = req.getParameter("input");
-		System.out.println("input");
 		ArrayList<Review> revs =  revController.search(input);
 		ArrayList<String> titles = new ArrayList<String>();
 		for(Review review : revs) {
