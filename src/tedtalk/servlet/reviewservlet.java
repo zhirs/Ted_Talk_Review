@@ -139,7 +139,7 @@ public class reviewservlet extends HttpServlet {
 		NetworkAdminController nc = new NetworkAdminController();
 		ProfessorController pc = new ProfessorController();
 		if(nc.findGlobalStat() < 0) {
-			pc.approvalAllReivews();
+			pc.approvalAllReviews();
 		}
 		  
 		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
