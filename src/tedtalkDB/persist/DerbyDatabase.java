@@ -1720,7 +1720,7 @@ public class DerbyDatabase implements IDatabase {
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
-				// count of modStat, 0 or negative if off, positive if on
+				// count of modStat, 0 or negative if reviewing off, positive if reviewing on
 				int countStat = 0;
 				
 				try { 
@@ -2322,7 +2322,6 @@ public class DerbyDatabase implements IDatabase {
 						+ "from students");
 				resultSet1 = stmt1.executeQuery();
 				while(resultSet1.next()) {
-					System.out.println(resultSet1.getInt(1));
 					students.add(getUser(resultSet1.getInt(1)));
 				}
 				return students;

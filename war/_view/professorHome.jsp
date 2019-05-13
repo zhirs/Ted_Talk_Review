@@ -29,8 +29,8 @@
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 		<input type = "Submit" name = "searchPage" class="button" value = "search">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Logout">
+		<form action = "${pageContext.servletContext.contextPath}/professorReviewQueue" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
