@@ -100,7 +100,7 @@ public class ProfessorController {
 	public void changeReviewStatus(int status, int revID) {
 		derby.changeReviewStatus(status, revID);
 	}
-	public void approvalAllReivews() {
+	public void approvalAllReviews() {
 		revs = new ArrayList<Review>();
 		revs.addAll(derby.getReviewByStatus(0));
 		for(int i = 0; i < revs.size(); i++) {
