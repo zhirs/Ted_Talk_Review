@@ -55,20 +55,26 @@ public class ReviewController {
 	}
 	
 	public ArrayList<Review> search(String input) {
+		ArrayList<Review> tempRevs = new ArrayList<Review>();
 		ArrayList<Review> revs = new ArrayList<Review>();
 		ArrayList<String> keys = derby.parseTitle(input);
 		ArrayList<Integer> revIDS = new ArrayList<Integer>();
 		ArrayList<String> URLs = new ArrayList<String>();
 		keys.add(input);
 		
-		revs.addAll(derby.findReview(input));
+		tempRevs.addAll(derby.findReview(input));
 		
 		for(int i = 0; i < keys.size(); i++) {
 			revIDS.addAll(derby.getRevID(keys.get(i)));
 		}
 		
 		for(int i = 0; i < revIDS.size(); i++) {
-			revs.addAll(derby.getReviews(revIDS.get(i))); 
+			tempRevs.addAll(derby.getReviews(revIDS.get(i))); 
+		}
+		for(int i = 0; i < tempRevs.size(); i++) {
+			if(tempRevs.get(i).getStatus() == 2) {
+				revs.add(tempRevs.get(i));
+			}
 		}
 		return revs;
 	}

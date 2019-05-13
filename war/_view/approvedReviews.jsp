@@ -18,7 +18,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Approved Students</h1>	
+		<h1>Approved Reviews</h1>	
 		<form action = "${pageContext.servletContext.contextPath}/home" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Home">
 		</form>

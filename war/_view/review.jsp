@@ -28,7 +28,7 @@
 		<br><br><br>
 		<hr>		
 		<div class = "reviewSection">
-		<form action = "${pageContext.servletContext.contextPath}/home" method = "post">
+		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
 			<table>
 				<tr>
 					<td>Review Title:<input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" size = "40" value="${name}"> </td>
@@ -37,15 +37,16 @@
 		 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
 		 		</tr>
 		 		<tr>
-		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> <a href = "${url}" target = "blank"> ${url} </a></td>
+		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
 		 		</tr>
 		 		<tr>
 		 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${tag}"> </td>
 		 		</tr>
 		 		<tr><!-- consider having click to input rather than user entering asterisk -->
-		 			<td>Rating:<input type="text" name = "rating" placeholder = "e.g. * * * * *" required = "required" size = "20" value="${reviewHandle}"> </td>
+		 			
 		 		</tr>			 	
 	 		</table>
+	 		<a href = "http://${url}" target = "blank"> ${url} </a>
 
 		 				 <%--This is the textfield for the review's description --%> 
 			<div id="cct_embed_counts" align ="center">
@@ -53,13 +54,12 @@
 			
 			<textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
 			   
-			   <div id="star5" class="notation-star" onClick="notation(this.id);"></div>
-			   <div id="star4" class="notation-star" onClick="notation(this.id);"></div>
-			   <div id="star3" class="notation-star" onClick="notation(this.id);"></div>
-			   <div id="star2" class="notation-star" onClick="notation(this.id);"></div>
-			   <div id="star1" class="notation-star" onClick="notation(this.id);"></div>
-			   <input type="hidden" id="notationNote" name="notation_note" value="0">
-			<input type = "Submit" class="button2" value = "Submit Review">
+			<p>Rating</p><select name="rating">
+   						 		<option value="1">1</option>
+    							<option value="2">2</option>
+    							<option value="3">3</option>
+  								</select>
+  					<input type="submit" value="Submit"> </td>
 			<div id="cct_embed_result"></div>
 			<div id="cct_powered_by">Powered by <a href="https://charactercounttool.com">Character Counter</a></div>
 			<script type="text/javascript" src="https://charactercounttool.com/cct_embed.min.js"></script>

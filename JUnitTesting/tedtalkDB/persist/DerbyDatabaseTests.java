@@ -169,7 +169,6 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new review into reviews table: <>");
 			fail("Failed to insert new review");
 		}
-		db.removeReview(db.getUser(profID), name);
 	}
 	
 	@Test
@@ -743,7 +742,7 @@ public class DerbyDatabaseTests {
 	public void testGetStudents() {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.addAll(db.getStudents());
-		assertTrue(temp.size() == 3);
+		assertTrue(temp.size() > 3);
 		assertTrue(temp.get(0) == 8);
 	}
 	

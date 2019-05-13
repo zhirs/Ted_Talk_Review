@@ -2167,7 +2167,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		}
 		);	
-	}
+	} 
 
 	@Override
 	public Integer averageReviewRating(String url) {
@@ -2524,6 +2524,8 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
-
+	
+	
+	
 }	
 

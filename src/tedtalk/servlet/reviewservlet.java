@@ -123,7 +123,7 @@ public class reviewservlet extends HttpServlet {
 		System.out.println(handle.getURL());
 		handle.setName( req.getParameter("title"));
 		System.out.println(handle.getName());
-		handle.setRate(req.getIntHeader("rating"));
+		handle.setRate(Integer.parseInt(req.getParameter("rating")));
 		System.out.println(handle.getRate());
 		handle.setPres(req.getParameter("presenterName"));
 		System.out.println(handle.getPres());
@@ -159,6 +159,6 @@ public class reviewservlet extends HttpServlet {
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
 		
 	
-		req.getRequestDispatcher("/_view/studentHome.jsp");
+		req.getRequestDispatcher("/_view/home.jsp");
 	}
 }

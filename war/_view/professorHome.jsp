@@ -27,13 +27,13 @@
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
 		</form>
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
-		<input type = "Submit" name = "searchPage" class="button" value = "search">
-		</form>
-		<form action = "${pageContext.servletContext.contextPath}/professorReviewQueue" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
+		<input type = "Submit" name = "searchPage" class="button" value = "Search">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form><br>
 		<br>
 		<br>

@@ -5,7 +5,7 @@
 <html>
 	<head>
 			<title>Approved Students</title>
-			<jsp:include page ="CSS/profilePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+			<jsp:include page ="CSS/homePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 					
 	</head>
 	

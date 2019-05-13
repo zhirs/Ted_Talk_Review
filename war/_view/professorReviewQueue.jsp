@@ -54,6 +54,8 @@
 	 		</div>
 		</c:forEach>
 		
-		
+		<form action="${pageContext.servletContext.contextPath}/approvedReview" method="get"> 
+  		<button id="deleteButton" class = "button" name="delete" value="${revIDs.get(i)}" type="submit">Approve ALL Reviews</button>
+		</form>
 	</body>
 </html>
