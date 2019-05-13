@@ -25,7 +25,7 @@ public class approvedReviews extends HttpServlet {
 		System.out.println("Pending Servlet: doGet");	
 		// call JSP to generate empty form
 		ProfessorController pc = new ProfessorController();
-		pc.approvalAllReivews();
+		pc.approvalAllReviews();
 		req.getRequestDispatcher("/_view/approvedStudents.jsp").forward(req, resp);
 	}
 	

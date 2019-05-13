@@ -28,28 +28,27 @@ public class TestReview {
 	
 	@Test
 	public void testGetName() {
-		assertTrue(reviews1.get(0).getName().equals("Joseph Landau's Symposium"));
+		assertTrue(reviews1.get(0).getName().equals("Endgame spoilers suck"));
 		assertTrue(reviews2.get(0).getName().equals("Darnell Hill smells funny"));
 	}
 	
 	@Test
 	public void testGetPres() {
-		assertTrue(reviews1.get(0).getPres().equals("Professor X"));
+		assertTrue(reviews1.get(0).getPres().equals("Stan Lee"));
 		assertTrue(reviews2.get(0).getPres().equals("Prof Hake"));
-		assertTrue(reviews1.get(0).getRate() == 5);
+		assertTrue(reviews1.get(0).getRate() == 1);
 		assertTrue(reviews2.get(0).getRate() == 2);
 	}
 	
 	@Test
 	public void testGetRevID() {
-		System.out.println(reviews1.get(0).getRevID());
-		assertTrue(reviews1.get(0).getRevID() == 1);
+		assertTrue(reviews1.get(0).getRevID() == 4);
 		assertTrue(reviews2.get(0).getRevID() == 2);
 	}
 	
 	@Test
 	public void testGetDesc() {
-		assertTrue(reviews1.get(0).getDesc().equals("This will be the large part of the review taking up much room and containing a lot of information"));
+		assertTrue(reviews1.get(0).getDesc().equals("Seriously endgame spoilers make me mad"));
 		assertTrue(reviews2.get(0).getDesc().equals("Please don't flunk me"));
 	}
 	

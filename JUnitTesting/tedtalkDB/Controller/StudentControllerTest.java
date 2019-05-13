@@ -135,6 +135,22 @@ public class StudentControllerTest {
 		System.out.println("expected result: false");
 		System.out.println("your result: " + controllerHandle.verified());
 	}
+	
+	@Test
+	public void testLoadLeaders() {
+		int top[] = new int[3];
+		top = controllerHandle.loadLeaders();
+		for(int x = 0; x < 3; x ++) {
+			assertTrue(top[x] >= 0);
+		}
+	}
+	
+	@Test
+	public void testGetUsername() {
+		int profID = 8;
+		String prof = "student1";
+		assertTrue(controllerHandle.getUserName(profID).equals(prof));
+	}
 	//***************************************************************     12 TEST CASES     *******************************************************************
 
 }

@@ -298,5 +298,20 @@ public class NetworkAdminControllerTest {
 		assertTrue(1 == controllerHandle.findRoleID(username2));
 		assertTrue(2 == controllerHandle.findRoleID(username3));
 	}
+	
+	@Test
+	public void testUpdateModStat() {
+		String user1  = "testAdmin";
+		String pass1  = "testpass";
+		String email1 = "jjrocks@ycp.edu";
+		int modStat = 0;
+		
+		db.addAdmin(user1, pass1, email1, modStat);
+		assertTrue(db.getModStat(db.getProfID(user1)) == 0);
+		controllerHandle.updateModStat(user1);
+		assertTrue(db.getModStat(db.getProfID(user1)) != 0);
+		
+		controllerHandle.removeAccount(user1);
+	}
 
 }

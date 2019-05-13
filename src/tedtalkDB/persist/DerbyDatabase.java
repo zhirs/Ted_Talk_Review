@@ -1760,14 +1760,12 @@ public class DerbyDatabase implements IDatabase {
 			public Integer execute(Connection conn) throws SQLException {
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
-				int profID = getProfID(user);
-				
+				int profID = getProfID(user);			
 				try { 
 					stmt1 = conn.prepareStatement(
-						" delete "+
-						" from reviews"
-						+ "where prof_id = ?"
-						+ "and name = ?"
+						" delete "
+						+ " from reviews "
+						+ "where prof_id=? and name=? "
 					);
 					stmt1.setInt(1, profID);
 					stmt1.setString(2, title);

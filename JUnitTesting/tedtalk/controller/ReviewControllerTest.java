@@ -81,10 +81,6 @@ public class ReviewControllerTest {
 		if(!approvedrevs.isEmpty()) {
 			fail("Returned incorrect review");
 		}
-		ArrayList<Review> deniedrevs = reviewController.getDeniedRevs(8);
-		if(!deniedrevs.isEmpty()) {
-			fail("Returned incorrect review");
-		}
 	}
 }
 	/*******************************************************************   2 TEST CASES   ********************************************************************/
