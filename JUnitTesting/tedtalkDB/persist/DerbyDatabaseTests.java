@@ -169,6 +169,7 @@ public class DerbyDatabaseTests {
 			System.out.println("Failed to insert new review into reviews table: <>");
 			fail("Failed to insert new review");
 		}
+		db.removeReview(db.getUser(profID), name);
 	}
 	
 	@Test

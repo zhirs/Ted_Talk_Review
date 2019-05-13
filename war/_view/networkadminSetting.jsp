@@ -22,6 +22,15 @@
 		<form action = "${pageContext.servletContext.contextPath}/networkadminHome" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/adminReviewQueue" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "search">
+		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
@@ -50,7 +59,7 @@
 		<br><br><br>
 		<h2> Or change reviewing(on/off):</h2>
 		<h2> ${globalModStat} </h2>
-		<h3> your current reviewing status is: ${currentStat}</h3><br>
+		<h3> your current reviewing status is: ${currentStat}</h3>
 		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "post">
 		<input type = "Submit" name = "moderatorStatus" class="button" value = "On/Off">
 		</form>

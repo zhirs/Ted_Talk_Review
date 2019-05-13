@@ -33,23 +33,23 @@
 	<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "post">
 		<table>
 				<tr>
-					<td> <input type="text" name = "username" placeholder = "User Name" required = "required" value="${username}"/> </td>
+					<td> <input type="text" name = "username" placeholder = "User Name" required = "required"/> </td>
 		 		</tr>
 				<tr>
-					<td> <input type="text" name = "password" placeholder = "Password" required = "required" value="${password}"/> </td>
+					<td> <input type="text" name = "password" placeholder = "Password" required = "required" /> </td>
 		 		</tr>
 		 		<tr>
-		 			<td> <input type="text" name = "email" placeholder = "Email" required = "required" value="${email}"/> </td>
+		 			<td> <input type="text" name = "email" placeholder = "Email" required = "required" /> </td>
 		 		</tr>
 		 		<tr>
-					<td> <input type="text" name = "section" placeholder = "Section" required = "required" value="${section}"/> </td>
+					<td> <input type="text" name = "section" placeholder = "Section" required = "required" /> </td>
 		 		</tr>
 		 		<tr>
-		 			<td> <input type="text" name = "major" placeholder = "Major" required = "required" value="${major}"/> </td>
+		 			<td> <input type="text" name = "major" placeholder = "Major" required = "required"/> </td>
 		 		</tr>			 	
 		 </table>	
 		 <div id="cct_embed_counts" align ="center">
-		<input type = "Submit" class="button2" value = "Create Account">
+		<input type = "Submit" class="button" value = "Create Account">
 		</div>
 		</form>
 	</body>

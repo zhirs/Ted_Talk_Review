@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title>TedTalkReviews</title>
-		<jsp:include page = "CSS/reviewPage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+		<jsp:include page = "CSS/homePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 	</head>
 	
 	<body>
@@ -22,10 +22,6 @@
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 		</form>
-		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
@@ -41,7 +37,7 @@
 		 			<td>Presenter's Name:<input type="text" name = "presenterName" placeholder = "e.g. John Appleseed" required = "required"size = "40" value="${presenterName}"> </td>
 		 		</tr>
 		 		<tr>
-		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
+		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> <a href = "${url}" target = "blank"> ${url} </a></td>
 		 		</tr>
 		 		<tr>
 		 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${tag}"> </td>
@@ -72,9 +68,7 @@
 
 			</div>
 		<hr>
-
-		<div id = "avgRating">
-			<p> average rating: ${avgRating}</p>
+		<p> average rating: ${avgRating}</p>
 		<p>These are the previous reviews for this Ted Talk</p>
 		<p>Currently any review that has the same Title, URL, etc has the same rating and description as well so everything looks the same<p>
 		<c:forEach var="i" begin = "0" end = "${listSize}">

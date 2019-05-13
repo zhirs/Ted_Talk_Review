@@ -18,7 +18,7 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>OOF</h1>		
+		<h1>Account Pending</h1>		
 
 		<h4>Welcome</h4>		
 		<h2>Thank you for joining TedTalksReviews</h2>

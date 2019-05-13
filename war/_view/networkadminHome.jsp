@@ -19,21 +19,20 @@
 			</a>			
 		</span>
 		<h1>Network Admin Home</h1>
-		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Settings">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/adminReviewQueue" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Logout">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
 		</form>
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 		<input type = "Submit" name = "searchPage" class="button" value = "search">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br>
 		<div class = "suggested">
@@ -47,7 +46,6 @@
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review4}</a></li>
 		</ul>	
 		</div>
-		<hr>
 		<h3>Accounts pending approval</h3>
 		<c:forEach items="${newbs}" var="newbs">
       		<td><c:out value="${newbs}"/></td>
