@@ -31,11 +31,11 @@
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 		<input type = "Submit" name = "searchPage" class="button" value = "Search">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Logout">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/checkStudentDateAdmin" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Check Dates">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br>
 		<div class = "suggested">
