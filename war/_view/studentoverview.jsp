@@ -19,7 +19,6 @@
 			</a>			
 		</span>
 		<h1>Student Overview</h1>
-		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
 		</form>
@@ -29,9 +28,9 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<hr>
-		<hr>
-		<br><br><br>
+		
+		<br><br><br><br><br>
+	<hr>
 		<c:forEach items="${tabs}" var="tabs">
       		<td><c:out  value="${tabs}"/></td>
       		<p></p>

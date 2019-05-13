@@ -51,15 +51,15 @@ public class adminreviewqueueservlet extends HttpServlet {
 					revIDs.add(reviewQueue.get(i).getRevID());
 				}
 			}
-			
-			if(listSize > 0) {
+			listSize = revNames.size() - 1;
+			if(listSize >= 0) {
 				req.setAttribute("listSize", listSize);
 				req.setAttribute("revNames" , revNames);
 				req.setAttribute("revURLs" , revURLs);
 				req.setAttribute("revPresenters" , revPresenters);
 				req.setAttribute("revDescriptions" , revDescriptions);
 				req.setAttribute("revIDs" , revIDs);
-				req.getRequestDispatcher("/_view/professorReviewQueue.jsp").forward(req, resp);
+				req.getRequestDispatcher("/_view/adminReviewQueue.jsp").forward(req, resp);
 			}
 			else {
 				req.getRequestDispatcher("/_view/approvedReviews.jsp").forward(req, resp);

@@ -47,6 +47,7 @@ public class resultservlet extends HttpServlet {
 		ArrayList<String> titles = new ArrayList<String>();
 		for(Review review : revs) {
 			titles.add(review.getName());
+			System.out.println(review.getName());
 		}
 	
 		if(!titles.isEmpty()) {

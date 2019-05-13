@@ -184,8 +184,10 @@ public class loginservlet extends HttpServlet {
 		ArrayList<String> students = new ArrayList<String>();
 		ArrayList<Integer> highest = new ArrayList<Integer>();
 		students.addAll(derby.getStudentUserNames());
-		for(int x = 0; x < students.size(); x ++) {
-			highest.add(derby.getReviewTotal(derby.getProfID(students.get(x))));
+		for(int x = 0; x < students.size(); x++) {
+			if(students.get(x)!=null) {
+				highest.add(derby.getReviewTotal(derby.getProfID(students.get(x))));
+			}
 		}
 	
 		for(int x = 0; x < 3; x ++) {

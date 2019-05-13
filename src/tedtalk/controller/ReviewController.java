@@ -73,6 +73,7 @@ public class ReviewController {
 		for(int i = 0; i < tempRevs.size(); i++) {
 			if(tempRevs.get(i).getStatus() == 2) {
 				revs.add(tempRevs.get(i));
+				System.out.println("HERE");
 			}
 		}
 		return revs;

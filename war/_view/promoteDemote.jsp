@@ -19,8 +19,8 @@
 		</span>
 		<h1>Promote Demote Account</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/home" method="get">
+		<input type = "Submit" name = "redirectProfile" class="button" value = "Home">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
@@ -28,19 +28,18 @@
 		<form action = "${pageContext.servletContext.contextPath}/networkadminSetting" method = "get">
 		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
-		<br><br><br>
+		<br><br><br><br><br>
 
 		<form action = "${pageContext.servletContext.contextPath}/promoteDemote" method = "post">
-		<table>
+			<table>
 					<tr>
 						<td> <input type="text" name = "user" placeholder = "Username" required = "required" value="${user}"/> </td>
 			 		</tr>
 			 		<tr>
 			 			<td> <input type="text" name = "promo" placeholder = "promote/demote" required = "required" value="${promo}"/> </td>
 			 		</tr>	 	
-		 </table>
-		  <div id="cct_embed_counts" align ="center">
-		<input type = "Submit" class="button2" value = "Promote/Demote">
+			 </table>
+			<input type = "Submit" class="button2" value = "Promote/Demote">
 		</form>
 	</body>
 </html>
