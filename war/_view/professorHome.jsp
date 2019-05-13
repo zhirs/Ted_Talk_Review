@@ -21,14 +21,17 @@
 		<h1>Professor Home</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
+		<form action = "${pageContext.servletContext.contextPath}/professorSetting" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
-		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Logout">
+		<form action = "${pageContext.servletContext.contextPath}/professorReviewQueue" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br>
 		<hr>

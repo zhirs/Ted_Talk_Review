@@ -57,10 +57,6 @@ public class Review {
 		return profID;
 	}
 	
-	public int getrevID() {
-		return revID;
-	}
-	
 	public int getStatus() {
 		return status;
 	}

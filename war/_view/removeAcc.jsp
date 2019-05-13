@@ -30,16 +30,9 @@
 		</form>
 		<br><br><br>
 
-		IMPORTANT: ONCE AN ACCOUNT IS DELETED IT IS GONE FOREVER <br><br>
-		<table>
-					<tr>
-						<td> <input type="text" name = "Username" placeholder = "Username" required = "required" value="${remove}"> </td>
-			 		</tr>	 	
-		 </table>
-		 		
-			<div id="cct_embed_counts" align ="center">
-			
-			<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "post">
-			<input type = "Submit" class="button2" value = "Remove Account">
+		<h1>IMPORTANT: ONCE AN ACCOUNT IS DELETED IT IS GONE FOREVER </h1><br><br>
+		<form action = "${pageContext.servletContext.contextPath}/removeAcc" method = "post">
+		<input type = "text" name = "remove" placeholder = "Username" required = "required" value="${remove}">
+		</form>
 	</body>
 </html>

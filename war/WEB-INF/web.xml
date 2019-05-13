@@ -103,6 +103,10 @@
 	<servlet-class>tedtalk.servlet.checkstudentdateadminservlet</servlet-class>
 </servlet>
 <servlet>
+	<servlet-name>checkStudentDateProfessorServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.checkstudentdateprofessorservlet</servlet-class>
+</servlet>
+<servlet>
 	<servlet-name>studentOverviewServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.studentoverviewservlet</servlet-class>
 </servlet>
@@ -110,7 +114,14 @@
 	<servlet-name>professorReviewQueueServlet</servlet-name>
 	<servlet-class>tedtalk.servlet.professorreviewqueueservlet</servlet-class>
 </servlet>
-    
+<servlet>
+	<servlet-name>adminReviewQueueServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.adminreviewqueueservlet</servlet-class>
+</servlet>
+<servlet>
+	<servlet-name>approvedReviewServlet</servlet-name>
+	<servlet-class>tedtalk.servlet.approvedReviews</servlet-class>
+</servlet>    
 
 <!-- servlet mapping -->
 <servlet-mapping>
@@ -210,6 +221,10 @@
 	<url-pattern>/checkStudentDateAdmin</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
+	<servlet-name>checkStudentDateProfessorServlet</servlet-name>
+	<url-pattern>/checkStudentDateProfessor</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
 	<servlet-name>studentOverviewServlet</servlet-name>
 	<url-pattern>/studentOverview</url-pattern>
  </servlet-mapping>
@@ -217,4 +232,13 @@
 	<servlet-name>professorReviewQueueServlet</servlet-name>
 	<url-pattern>/professorReviewQueue</url-pattern>
 </servlet-mapping>
+ <servlet-mapping>
+	<servlet-name>adminReviewQueueServlet</servlet-name>
+	<url-pattern>/adminReviewQueue</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>approvedReviewServlet</servlet-name>
+	<url-pattern>/approvedReview</url-pattern>
+</servlet-mapping>
+
 </web-app>	

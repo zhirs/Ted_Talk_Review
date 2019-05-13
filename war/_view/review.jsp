@@ -72,15 +72,23 @@
 
 			</div>
 		<hr>
-		<div class = "commonReviews"><!-- SECTION OF OTHER RELATED REVIEWS -->
+
 		<div id = "avgRating">
 			<p> average rating: ${avgRating}</p>
-		</div>
-			<p>${common1Title} || ${common1URL} || ${common1Rate}</p>
-			<p>${common2Title} || ${common2URL} || ${common2Rate}</p>
-		
-		</div>
-		
+		<p>These are the previous reviews for this Ted Talk</p>
+		<p>Currently any review that has the same Title, URL, etc has the same rating and description as well so everything looks the same<p>
+		<c:forEach var="i" begin = "0" end = "${listSize}">
+			<div class = "reviewSection">
+				<table>
+			 		<tr><!-- consider having click to input rather than user entering asterisk -->
+			 			<td>Rating:       <input type="text" name = "rating" size = "20" value="${ratings.get(i)}"> </td>
+			 		</tr>	
+			 		<tr>
+			 			<td>Description: <input type="text" name = "rating" size = "100" value="${descriptions.get(i)}"> </td>
+			 		</tr>		 	
+		 		</table>
+			</div>
+		</c:forEach>
 
 	</body>
 </html>

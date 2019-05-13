@@ -6,10 +6,10 @@ import tedtalkDB.persist.*;
 
 public class ProfessorController {
 	private Professor professorModel;
+	private ArrayList<Review> revs;
 	private DerbyDatabase derby = new DerbyDatabase();
 	
 	//NOTE: JAVA CREATES A DEFAULT CONSTRUCTOR JUST AS IT DOES GARBAGE COLLECTION
-
 	public void setModel(Professor professorModel) {
 		this.professorModel = professorModel;
 	}
@@ -76,7 +76,6 @@ public class ProfessorController {
 		return mod;
   }
   public ArrayList<Review> getReviewsBetweenDates(String searchName, String year1, String month1, String day1, String year2, String month2, String day2){
-		ArrayList<Review> reviewDate = new ArrayList<Review>();
 		
 		int tempProfID = derby.getProfID(searchName);
 		
@@ -94,8 +93,33 @@ public class ProfessorController {
 		
 	}
 	public ArrayList<Review> getReviewByStatus(int status){
-		ArrayList<Review> reviewQueue = new ArrayList<Review>();
-		reviewQueue.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
-		return reviewQueue;
+		revs = new ArrayList<Review>();
+		revs.addAll(derby.getReviewByStatus(0));	//0 is the default has not been reviewed
+		return revs;
 	}
+	public void changeReviewStatus(int status, int revID) {
+		derby.changeReviewStatus(status, revID);
+	}
+	public void approvalAllReivews() {
+		revs = new ArrayList<Review>();
+		revs.addAll(derby.getReviewByStatus(0));
+		for(int i = 0; i < revs.size(); i++) {
+			derby.changeReviewStatus(2, revs.get(i).getRevID());
+		}
+	}
+	public ArrayList<Review> search(String input) {
+		revs = new ArrayList<Review>();
+		ArrayList<String> keys = derby.parseTitle(input);
+		ArrayList<Integer> revIDS = new ArrayList<Integer>();
+		keys.add(input);
+		revs.addAll(derby.findReview(input));
+		for(int i = 0; i < keys.size(); i++) {
+			revIDS.addAll(derby.getRevID(keys.get(i)));
+		}
+		for(int i = 0; i <revIDS.size(); i++) {
+			revs.addAll(derby.getReviews(revIDS.get(i))); 
+		}
+		return revs;
+	}
+	
 }

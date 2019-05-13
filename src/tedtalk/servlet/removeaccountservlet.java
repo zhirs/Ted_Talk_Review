@@ -40,11 +40,12 @@ public class removeaccountservlet extends HttpServlet {
 		System.out.println("Remove Account Servlet: doPost");
 		
 		NetworkAdminController NAController = new NetworkAdminController();
-		String handle = null;
+		String handle = (String)req.getParameter("remove");
 		
+		System.out.println(handle);
 		NAController.removeAccount(handle);
 		
-		req.setAttribute("remove", handle);//CREATING AN ATTRIB TO USE IN JSP
+//		req.setAttribute("remove", handle);//CREATING AN ATTRIB TO USE IN JSP
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/removeAcc.jsp").forward(req, resp);

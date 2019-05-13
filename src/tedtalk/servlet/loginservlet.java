@@ -73,6 +73,7 @@ public class loginservlet extends HttpServlet {
 		//model.setUser(user);
 		//model.setPass(pass);
 		//Question for the future how do we decide which controller to use if we don't know if they actually have an account yet
+		
 		getTopReviews();
 		
 		if(derby.checkCredentials(user, pass)) {	//replaced controller methods with derby methods
@@ -104,7 +105,11 @@ public class loginservlet extends HttpServlet {
 			}
 			else if(role== 1) {
 				// if professor get mod
-				session.setAttribute("moderator", derby.getMod(login.getprofID()));
+				if(derby.getGlobalMod() > 0) {
+					session.setAttribute("moderator", 1);
+				}else {
+					session.setAttribute("moderator", derby.getMod(login.getprofID()));
+				}
 				System.out.println("Login Servlet: Login Successful");
 				resp.sendRedirect(req.getContextPath() + "/professorHome");
 			}

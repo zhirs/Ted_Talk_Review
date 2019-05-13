@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
-import tedtalkDB.persist.DerbyDatabase;
+import tedtalkDB.Controller.NetworkAdminController;
+import tedtalkDB.Controller.ProfessorController;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -17,27 +18,35 @@ public class reviewservlet extends HttpServlet {
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
-	private String review0 = null; 
-	private String review1 = null;
-	private String review2 = null;
-	private String titles ;
+	//the review strings don't need to be set to null because it is implied
+	private String review0, review1, review2, review3, review4;
 	private String common1 = null;
 	private String common2 = null;
+	private String titlez = null;
 	private int avgRating  = 0;
 	private ReviewController revController;
+	private NetworkAdminController adminController;
 	Review handle = new Review();
 	private String[] show;
 	private int profID = -1;
-	
+	private ArrayList<String> descriptions;  
+	private ArrayList<Integer> ratings;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		revController = new ReviewController();
+		adminController = new NetworkAdminController();
+		ArrayList<Review> derbyResults = new ArrayList<Review>();
+		
 		System.out.println("Review Servlet: doGet");	
+		
 		username = (String) req.getSession().getAttribute("username");
+
 		show = (String[]) req.getSession().getAttribute("TopURL");
-		ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
-		titles = title.get(0);
+	 
+		review0 = (String) req.getSession().getAttribute("review0");
+		review1 = (String) req.getSession().getAttribute("review1");
+		review2 = (String) req.getSession().getAttribute("review2");
 
 		profID = (int) req.getSession().getAttribute("profID");
 		// call JSP to generate empty form
@@ -45,23 +54,24 @@ public class reviewservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			//revController.setModel(handle);//USED WITH THE DB REVIEW MODE
-
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-		
-			ArrayList<Review> derbyResults = revController.search(titles);//revController.findByTitle(titles);//DOES NOT WORK
+			ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
+			if(title != null) {
+			String newTitle = title.get(0); 
+
+			derbyResults.addAll(revController.search(newTitle));
+			derbyResults.remove(derbyResults.size() - 1);	//without this the review controller adds an extra review
 		
 			//String review0 = "Joseph Landau's Symposium";
-			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
 			req.setAttribute("presenterName", derbyResults.get(0).getPres());
 			req.setAttribute("url", derbyResults.get(0).getURL());
 			req.setAttribute("tag", derbyResults.get(0).getTag());
 			req.setAttribute("name",derbyResults.get(0).getName());
-
 			
 			//DISPLAY RELATED REVIEWS:
+			if(review1 != null) {
 			ArrayList<Review> tester = revController.search(review1);
 			req.setAttribute("common1Title", tester.get(0).getName());
 			req.setAttribute("common1URL", tester.get(0).getURL());
@@ -71,16 +81,29 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("common2Title", tester1.get(0).getName());
 			req.setAttribute("common2URL", tester1.get(0).getURL());
 			req.setAttribute("common2Rate", tester1.get(0).getRate());
+			}
 			
 			//AVG RATING:
-			avgRating = revController.getAverageRating(tester.get(0).getURL());
-			avgRating += tester.get(0).getRate();
-			avgRating += tester1.get(0).getRate();
-			avgRating /= 2;
+			avgRating = revController.getAverageRating(derbyResults.get(0).getURL());
+			for(int i = 0; i < derbyResults.size(); i++) {
+				System.out.println("----the description is: " + derbyResults.get(i).getDesc() + " the name is " + derbyResults.get(i).getName());
+			}
+			//Array list for previous review population
+			descriptions = new ArrayList<String>();
+			ratings = new ArrayList<Integer>();
+			for(Review reviews: derbyResults) {
+				descriptions.add(reviews.getDesc());
+				ratings.add(reviews.getRate());
+			}
+			int listSize = descriptions.size() -1;
 
 			req.setAttribute("avgRating", avgRating);
+			req.setAttribute("descriptions", descriptions);
+			req.setAttribute("ratings", ratings);
+			req.setAttribute("listSize", listSize);
+			}
+			
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
-
 
 		}
 	}
@@ -89,8 +112,7 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("Review Servlet: doPost");
-		
-
+    
 		Review handle = new Review();
 		ReviewController revController = new ReviewController();
 		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
@@ -112,17 +134,31 @@ public class reviewservlet extends HttpServlet {
 		
 		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
 		ArrayList<String> reviews = new ArrayList<String>();
-							
+		NetworkAdminController nc = new NetworkAdminController();
+		ProfessorController pc = new ProfessorController();
+		if(nc.findGlobalStat() == 1) {
+			pc.approvalAllReivews();
+		}
+		  
 		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
 		reviews.add(reviewDesc);
 		req.setAttribute("UpdatedReviews", reviews);
 		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
+		
+		//clears unneeded session data
+		req.setAttribute("description", null);
+		req.setAttribute("presenterName", null);
+		req.setAttribute("url", null);
+		req.setAttribute("tag", null);
+		req.setAttribute("name", null);
+		req.getSession().setAttribute("titles", null);
+		
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
 		
-		//roleID = (int) derby.getRole(username);	//for some reason this method works but creates a null pointer exception
+		int roleID = adminController.findRoleID(username);	//for some reason this method works but creates a null pointer exception
 		//System.out.println(username);
-		/*
+		
 		if(roleID == 0) {
 			req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
 		}
@@ -131,10 +167,7 @@ public class reviewservlet extends HttpServlet {
 		}
 		else{
 			req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
-		} */
-		
-		req.getRequestDispatcher("/_view/profile.jsp").forward(req, resp);
-		//req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
+		} 
 	}
 	
 }

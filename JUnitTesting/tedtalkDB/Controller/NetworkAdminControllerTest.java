@@ -288,7 +288,15 @@ public class NetworkAdminControllerTest {
 		controllerHandle.removeAccount(user1);
 		controllerHandle.removeAccount(user);
 	}
-	//***************************************************************     17 TEST CASES     *******************************************************************
-
+	
+	@Test
+	public void testGetRoleID() {
+		String username1 = "acastro7";	//should be an network admin role id
+		String username2 = "profX"; 	//should be a professor role id
+		String username3 = "student1";	//should be a student role id
+		assertTrue(0 == controllerHandle.findRoleID(username1));
+		assertTrue(1 == controllerHandle.findRoleID(username2));
+		assertTrue(2 == controllerHandle.findRoleID(username3));
+	}
 
 }
