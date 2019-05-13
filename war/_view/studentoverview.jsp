@@ -30,7 +30,7 @@
 		</form>
 		
 		<br><br><br><br><br>
-	<hr>
+		<hr>
 		<c:forEach items="${tabs}" var="tabs">
       		<td><c:out  value="${tabs}"/></td>
       		<p></p>
