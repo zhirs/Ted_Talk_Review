@@ -59,7 +59,6 @@ public class ReviewController {
 		ArrayList<Review> revs = new ArrayList<Review>();
 		ArrayList<String> keys = derby.parseTitle(input);
 		ArrayList<Integer> revIDS = new ArrayList<Integer>();
-		ArrayList<String> URLs = new ArrayList<String>();
 		keys.add(input);
 		
 		tempRevs.addAll(derby.findReview(input));

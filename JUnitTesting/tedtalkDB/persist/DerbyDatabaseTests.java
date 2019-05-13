@@ -742,11 +742,8 @@ public class DerbyDatabaseTests {
 	public void testGetStudents() {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.addAll(db.getStudents());
-<<<<<<< HEAD
 		assertTrue(temp.size() > 3);
-=======
 		assertTrue(temp.size() > 0);
->>>>>>> branch 'dev' of https://github.com/zhirs/Ted_Talk_Review.git
 		assertTrue(temp.get(0) == 8);
 	}
 	

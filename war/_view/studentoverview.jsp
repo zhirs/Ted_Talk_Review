@@ -20,19 +20,15 @@
 		</span>
 		<h1>Student Overview</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/student" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
 		</form>
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 		<input type = "Submit" name = "searchPage" class="button" value = "Search">
 		</form>
-		<form action="${pageContext.servletContext.contextPath}/review" method="get"> 
-		<input type = "Submit" name = "searchPage" class="button" value = "Review">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-
 		<hr>
 		<hr>
 		<br><br><br>

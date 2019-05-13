@@ -21,8 +21,11 @@
 		<h1>Professor Review Queue</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/professor" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "Search">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
@@ -55,7 +58,7 @@
 		</c:forEach>
 		
 		<form action="${pageContext.servletContext.contextPath}/approvedReview" method="get"> 
-  		<button id="deleteButton" class = "button" name="delete" value="${revIDs.get(i)}" type="submit">Approve ALL Reviews</button>
+		<input class = "button" type ="submit" name = "workda" value = "Approve All Reviews">
 		</form>
 	</body>
 </html>

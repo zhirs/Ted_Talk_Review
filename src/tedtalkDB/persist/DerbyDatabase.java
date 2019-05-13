@@ -182,13 +182,13 @@ public class DerbyDatabase implements IDatabase {
 							"	rev_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
-							"	url varchar(100), " +
-							"	name varchar(100)," +
+							"	url varchar(4000), " +
+							"	name varchar(4000)," +
 							"   rate integer, " +
-							"	pres varchar(100), " + 
+							"	pres varchar(4000), " + 
 							"	description varchar(4000), " +
 							"   prof_ID integer, " +
-							"	tag varchar(100), " +
+							"	tag varchar(4000), " +
 							"   status integer, " + //MISSING COMMA. 
 							"   pubDate date " +
 							")"

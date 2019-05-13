@@ -26,7 +26,7 @@ public class approvedReviews extends HttpServlet {
 		// call JSP to generate empty form
 		ProfessorController pc = new ProfessorController();
 		pc.approvalAllReviews();
-		req.getRequestDispatcher("/_view/approvedStudents.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/approvedReviews.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class approvedReviews extends HttpServlet {
 		System.out.println("Pending Servlet: doPost");
 		
 		// now call the JSP to render the new page
-		req.getRequestDispatcher("/_view/approvedStudents.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/approvedReviews.jsp").forward(req, resp);
 	}
 	
 }

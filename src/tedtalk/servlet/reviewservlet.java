@@ -60,7 +60,7 @@ public class reviewservlet extends HttpServlet {
 			String newTitle = title.get(0); 
 
 			derbyResults.addAll(revController.search(newTitle));
-			derbyResults.remove(derbyResults.size() - 1);	//without this the review controller adds an extra review
+			derbyResults.remove(derbyResults.size()-1);	//without this the review controller adds an extra review
 		
 			//String review0 = "Joseph Landau's Symposium";
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
@@ -115,40 +115,16 @@ public class reviewservlet extends HttpServlet {
 		
 		System.out.println("Review Servlet: doPost");
     
-		Review handle = new Review();
 		ReviewController revController = new ReviewController();
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
+		
+		revController.newReview(req.getParameter("url"), req.getParameter("title"), Integer.parseInt(req.getParameter("rating")), req.getParameter("presenterName"), req.getParameter("description"), profID,  req.getParameter("tags"));
+	
+		//String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
-		handle.setURL(req.getParameter("url"));
-		System.out.println(handle.getURL());
-		handle.setName( req.getParameter("title"));
-		System.out.println(handle.getName());
-		handle.setRate(Integer.parseInt(req.getParameter("rating")));
-		System.out.println(handle.getRate());
-		handle.setPres(req.getParameter("presenterName"));
-		System.out.println(handle.getPres());
-		handle.setDesc(req.getParameter("description"));
-		System.out.println(handle.getDesc());
-		handle.setTag(req.getParameter("tags"));
-		System.out.println(handle.getTag());
+		//reviews.add(reviewDesc);
+		//req.setAttribute("UpdatedReviews", reviews);
 		
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
-		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
-		ArrayList<String> reviews = new ArrayList<String>();
-		NetworkAdminController nc = new NetworkAdminController();
-		ProfessorController pc = new ProfessorController();
-		if(nc.findGlobalStat() < 0) {
-			pc.approvalAllReviews();
-		}
-		  
-		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
-
-		reviews.add(reviewDesc);
-		req.setAttribute("UpdatedReviews", reviews);
-		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
-		
-		//clears unneeded session data
+		//clears unneeded session data/		
 		req.setAttribute("description", null);
 		req.setAttribute("presenterName", null);
 		req.setAttribute("url", null);
@@ -157,8 +133,7 @@ public class reviewservlet extends HttpServlet {
 		req.getSession().setAttribute("titles", null);
 		
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
-		
-	
-		req.getRequestDispatcher("/_view/home.jsp");
+			
+		req.getRequestDispatcher("/_view/student.jsp").forward(req,resp);
 	}
 }

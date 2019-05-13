@@ -240,5 +240,4 @@
 	<servlet-name>approvedReviewServlet</servlet-name>
 	<url-pattern>/approvedReview</url-pattern>
 </servlet-mapping>
-
 </web-app>	

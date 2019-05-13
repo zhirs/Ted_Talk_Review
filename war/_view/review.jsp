@@ -39,9 +39,6 @@
 		 		<tr>
 		 			<td>URL:<input type="text" name = "url" placeholder = "e.g. https://www.ted.com/talks" required = "required" size = "40" value="${url}"> </td>
 		 		</tr>
-		 		<tr>
-		 			<td>Tags:<input type="text" name = "tags" placeholder = "e.g. enigneering" required = "required" size = "30" value="${tag}"> </td>
-		 		</tr>
 		 		<tr><!-- consider having click to input rather than user entering asterisk -->
 		 			
 		 		</tr>			 	
@@ -54,31 +51,42 @@
 			
 			<textarea id="cct_embed_input_text" name="description" rows="4" cols="50" maxlength="250" placeholder="Enter Description here max of 250 characters" spellcheck="true"></textarea>
 			   
-			<p>Rating</p><select name="rating">
+			<p>Rating</p> 
+							<select name="rating">
    						 		<option value="1">1</option>
     							<option value="2">2</option>
     							<option value="3">3</option>
-  								</select>
-  					<input type="submit" value="Submit"> </td>
+    							<option value="4">4</option>
+    							<option value="5">5</option>
+  							</select>
+  			<p>Tags</p>
+  							<select name = "tags">
+  								<option value = "Mechanical Engineering"> Mechanical Engineering </option>
+  								<option value = "Civil Engineering"> Civil Engineering </option>
+  								<option value = "Software Engineering"> Software Engineering </option>
+  								<option value = "Computer Science"> Computer Science </option>
+  								<option value = "Psychology"> Psychology </option>
+  							</select>
+  							<input  type="submit" value="Submit">
 			<div id="cct_embed_result"></div>
 			<div id="cct_powered_by">Powered by <a href="https://charactercounttool.com">Character Counter</a></div>
+	
 			<script type="text/javascript" src="https://charactercounttool.com/cct_embed.min.js"></script>
 			</div>
+		
 		</form>
 
 			</div>
 		<hr>
 		<p> average rating: ${avgRating}</p>
-		<p>These are the previous reviews for this Ted Talk</p>
-		<p>Currently any review that has the same Title, URL, etc has the same rating and description as well so everything looks the same<p>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
 			<div class = "reviewSection">
 				<table>
 			 		<tr><!-- consider having click to input rather than user entering asterisk -->
-			 			<td>Rating:       <input type="text" name = "rating" size = "20" value="${ratings.get(i)}"> </td>
+			 			<td>Rating: ${ratings.get(i)} </td>
 			 		</tr>	
 			 		<tr>
-			 			<td>Description: <input type="text" name = "rating" size = "100" value="${descriptions.get(i)}"> </td>
+			 			<td>Description: ${descriptions.get(i)} </td>
 			 		</tr>		 	
 		 		</table>
 			</div>

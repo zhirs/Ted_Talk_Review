@@ -22,11 +22,14 @@
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "Search">
+		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
-		</form>
-		<form action = "${pageContext.servletContext.contextPath}/professorSetting" method = "get">
-		<input type = "Submit" name = "settings" class="button" value = "Settings">
 		</form>
 		<br><br><br>
 	<h2>${error}</h2>
