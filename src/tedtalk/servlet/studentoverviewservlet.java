@@ -39,7 +39,9 @@ public class studentoverviewservlet extends HttpServlet {
 				}
 			}
 			for(int i = 0; i < students.size(); i++) {
-				tabs.add(students.get(i).getMajor() + " " + students.get(i).getUserName() + " " + sc.getRevTotal(students.get(i).getprofID()));
+				if( sc.getRevTotal(students.get(i).getprofID())> 0) {
+					tabs.add(students.get(i).getMajor() + " " + students.get(i).getUserName() + " " + sc.getRevTotal(students.get(i).getprofID()));
+				}
 			}
 			req.getSession().setAttribute("tabs", tabs);
 			req.getRequestDispatcher("/_view/studentoverview.jsp").forward(req, resp);

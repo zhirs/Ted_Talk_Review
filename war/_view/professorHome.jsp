@@ -20,23 +20,25 @@
 		</span>
 		<h1>Professor Home</h1>		
 
-		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/professorSetting" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/professorReviewQueue" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Review Queue">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
 		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "search">
+		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<br><br><br>
-		<hr>
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		</form>
+		<br>
+		<br>
+		<br>
 		<h2>Suggested TEDTalks:</h2>
-		<p>What your peers are viewing:</p>
 		<ul id = "links"><!-- THE HREF SHOULD GO TO A LINK THAT AUTO-FILLS THE REVIEW PAGE WITH THE CORRESPONDING TED TALK -->
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review0}</a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review1}</a></li>
@@ -44,12 +46,6 @@
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review3}</a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/review" target = blank> ${review4}</a></li>
 		</ul>		
-		<div class = "searchSection">
-			<p>Don't like what's trending? Try searching our database</p>
-			<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
-			<input type = "Submit" name = "searchPage" class="button2" value = "search">
-			</form>
-		</div>
 		<hr>
 	</body>
 </html>

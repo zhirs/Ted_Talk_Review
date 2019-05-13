@@ -92,8 +92,10 @@ public class reviewservlet extends HttpServlet {
 			descriptions = new ArrayList<String>();
 			ratings = new ArrayList<Integer>();
 			for(Review reviews: derbyResults) {
-				descriptions.add(reviews.getDesc());
-				ratings.add(reviews.getRate());
+				if(!descriptions.contains(reviews.getDesc())) {
+					descriptions.add(reviews.getDesc());
+					ratings.add(reviews.getRate());
+				}
 			}
 			int listSize = descriptions.size() -1;
 
@@ -136,7 +138,7 @@ public class reviewservlet extends HttpServlet {
 		ArrayList<String> reviews = new ArrayList<String>();
 		NetworkAdminController nc = new NetworkAdminController();
 		ProfessorController pc = new ProfessorController();
-		if(nc.findGlobalStat() == 1) {
+		if(nc.findGlobalStat() < 0) {
 			pc.approvalAllReivews();
 		}
 		  

@@ -63,7 +63,7 @@ public class ReviewController {
 		for(int i = 0; i < keys.size(); i++) {
 			revIDS.addAll(derby.getRevID(keys.get(i)));
 		}
-		for(int i = 0; i <revIDS.size(); i++) {
+		for(int i = 0; i < revIDS.size(); i++) {
 			revs.addAll(derby.getReviews(revIDS.get(i))); 
 		}
 		return revs;

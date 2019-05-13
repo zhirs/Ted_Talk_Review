@@ -172,6 +172,7 @@ public class ProfessorControllerTest {
 			System.out.println("Failed to insert new student into student table: <" + user + ">");
 			fail("Failed to insert new student<" + user + "> ");
 		}
+		db.removeAccount(user, 2);
 	}
 	//***************************************************************     12 TEST CASES     *******************************************************************
 

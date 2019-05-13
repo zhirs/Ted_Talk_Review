@@ -32,24 +32,25 @@
 		<h2>Suggested TEDTalks:</h2>
 		<h3>Reviews pending approval</h3>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
-		<div class="pendingReviews">
-			<table>
-				<tr>
-					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
-		 		</tr>			 	
-	 		</table>
-	 		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
-  			<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
-		</form>
+			<div class="pendingReviews">
+				<table>
+					<tr>
+						<td>Review Title: ${revNames.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>Presenter's Name: ${revPresenters.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>URL: ${revURLs.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>Description: ${revDescriptions.get(i)} </td>
+		 			</tr>			 	
+	 			</table>
+	 			<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+  				<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
+				</form>
+				<hr>
 	 		</div>
 		</c:forEach>
 		

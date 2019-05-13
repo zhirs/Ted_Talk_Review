@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title>TedTalkReviews</title>
-		<jsp:include page = "CSS/reviewPage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+		<jsp:include page = "CSS/homePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 	</head>
 	
 	<body>
@@ -21,10 +21,6 @@
 		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
-		</form>
-		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
@@ -72,14 +68,7 @@
 
 			</div>
 		<hr>
-		<div class = "commonReviews"><!-- SECTION OF OTHER RELATED REVIEWS -->
-		<div id = "avgRating">
-			<p> average rating: ${avgRating}</p>
-		</div>
-			<p>${common1Title} || ${common1URL} || ${common1Rate}</p>
-			<p>${common2Title} || ${common2URL} || ${common2Rate}</p>
-		
-		</div>
+		<p> average rating: ${avgRating}</p>
 		<p>These are the previous reviews for this Ted Talk</p>
 		<p>Currently any review that has the same Title, URL, etc has the same rating and description as well so everything looks the same<p>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
