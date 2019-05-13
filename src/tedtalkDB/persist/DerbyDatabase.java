@@ -1801,8 +1801,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setString(1, keyword);
 					resultSet1 = stmt1.executeQuery();
 					int foundRevID = -1;
-					int i = 1;
+				
 					while(resultSet1.next()) { 
+						int i = 1;
 						foundRevID = resultSet1.getInt(i++);
 						revIDS.add(foundRevID);
 					}
@@ -2495,5 +2496,35 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
+	@Override
+	public ArrayList<String> getURLfromReview(int revID) {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
+			@Override
+			public ArrayList<String>  execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select prof_id "
+							+ "from reviews "
+							+ "where url = ? ");
+					stmt1.setInt(1, revID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					ArrayList<String> profIDS = new ArrayList<String>();
+					while(resultSet1.next()) {
+						profIDS.add(resultSet1.getString(i++));
+					}
+					return profIDS;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+
 }	
 

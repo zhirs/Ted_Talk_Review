@@ -58,11 +58,15 @@ public class ReviewController {
 		ArrayList<Review> revs = new ArrayList<Review>();
 		ArrayList<String> keys = derby.parseTitle(input);
 		ArrayList<Integer> revIDS = new ArrayList<Integer>();
+		ArrayList<String> URLs = new ArrayList<String>();
 		keys.add(input);
+		
 		revs.addAll(derby.findReview(input));
+		
 		for(int i = 0; i < keys.size(); i++) {
 			revIDS.addAll(derby.getRevID(keys.get(i)));
 		}
+		
 		for(int i = 0; i < revIDS.size(); i++) {
 			revs.addAll(derby.getReviews(revIDS.get(i))); 
 		}
@@ -92,5 +96,16 @@ public class ReviewController {
 	public int getAverageRating(String url) {
 		int avrg = derby.averageReviewRating(url);
 		return avrg;
+	}
+	public ArrayList<String> getURL(ArrayList<Integer> revID) {
+		ArrayList<String> uniques = new ArrayList<String>();
+		for(Integer newID : revID) {
+			ArrayList<String> temp = derby.getURLfromReview(newID);
+			for(int i = 0; i < temp.size(); i++) {
+				if(!uniques.contains(temp.get(i)));
+				uniques.add(temp.get(i));
+			}
+		}
+		return uniques;
 	}
 }

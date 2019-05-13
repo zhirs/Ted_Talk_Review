@@ -28,7 +28,7 @@
 		<br><br><br>
 		<hr>		
 		<div class = "reviewSection">
-		<form action = "${pageContext.servletContext.contextPath}/review" method = "post">
+		<form action = "${pageContext.servletContext.contextPath}/home" method = "post">
 			<table>
 				<tr>
 					<td>Review Title:<input type="text" name = "title" placeholder = "e.g. Art of listening" required = "required" size = "40" value="${name}"> </td>

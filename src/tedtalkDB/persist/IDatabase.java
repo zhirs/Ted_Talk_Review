@@ -69,4 +69,5 @@ public interface IDatabase {
 	public ArrayList<String> getReviewUnique();
 	public ArrayList<Integer> getReviewTop();
 	ArrayList<String> getReviewNameByURL(String URL);
+	ArrayList<String> getURLfromReview(int revID);
 }
