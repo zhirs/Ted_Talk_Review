@@ -44,21 +44,21 @@ public class studentservlet extends HttpServlet {
 			ArrayList<String> approvedDescs = new ArrayList<String>();
 			if(!approved.isEmpty()) {
 				for(int i = 0; i < approved.size(); i++) {
-					approvedDescs.add("Review:" + approved.get(i).getName() + "Description:" + approved.get(i).getDesc()  );
+					approvedDescs.add("Review:" + approved.get(i).getName() + " Description:" + approved.get(i).getDesc()  );
 				}
 			}
 			ArrayList<Review> denied = revController.getDeniedRevs(profID);
 			ArrayList<String> deniedDescs = new ArrayList<String>();
 			if(!denied.isEmpty()) {
 				for(int i = 0; i < denied.size(); i++) {
-					deniedDescs.add("Review: " + denied.get(i).getName() + "Description:" + denied.get(i).getDesc());
+					deniedDescs.add("Review: " + denied.get(i).getName() + " Description:" + denied.get(i).getDesc());
 				}
 			}
 			ArrayList<Review> pending = revController.getPendingRevs(profID);
 			ArrayList<String> pendingDescs = new ArrayList<String>();
 			if(!pending.isEmpty()) {
 				for(int i = 0; i < pending.size(); i++) {
-					pendingDescs.add("Review: " + pending.get(i).getName() + "Description:" + pending.get(i).getDesc());
+					pendingDescs.add("Review: " + pending.get(i).getName() + " Description:" + pending.get(i).getDesc());
 				}
 			}
 			req.setAttribute("pendingDescs" , pendingDescs);

@@ -18,7 +18,7 @@ public class networkadminhomeservlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("Network Admin Home Servlet: doGet");	
+		System.out.println("Network Admin Home Servlet: doGet");
 		username = (String) req.getSession().getAttribute("username");
 
 		// call JSP to generate empty form
@@ -26,7 +26,7 @@ public class networkadminhomeservlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
-			System.out.println("Network Admin Home Servlet: doGet");
+			
 			NetworkAdminController NAController = new NetworkAdminController();
 			
 			show = (String[]) req.getSession().getAttribute("TopURL");
@@ -51,8 +51,8 @@ public class networkadminhomeservlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//getting the data from the search bar
-		NetworkAdminController NAController = new NetworkAdminController();
 		System.out.println("Network Admin Home Servlet: doPost");
+		NetworkAdminController NAController = new NetworkAdminController();
 		
 		String delete = (String) req.getParameter("delete");
 		ArrayList<Student> newbies = NAController.denyStudent(delete);
@@ -60,10 +60,15 @@ public class networkadminhomeservlet extends HttpServlet {
 		for(Student stud : newbies) {
 			newNames.add(stud.getUserName());
 		}
-		req.getSession().setAttribute("newbs", null);
-		req.getSession().setAttribute("newbies", newNames);
 		
-		System.out.println("Network Admin Home Servlet: doPost");
+		req.setAttribute("review0", show[0]);
+		req.setAttribute("review1", show[1]);
+		req.setAttribute("review2", show[2]);
+		req.setAttribute("review3", show[3]);
+		req.setAttribute("review4", show[4]);
+		req.getSession().setAttribute("newbs", null);
+		req.getSession().setAttribute("newbs", newNames);
+		
 		
 		// now call the JSP to render the new page
 		req.getRequestDispatcher("/_view/networkadminHome.jsp").forward(req, resp);

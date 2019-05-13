@@ -172,6 +172,29 @@ public class ProfessorControllerTest {
 			System.out.println("Failed to insert new student into student table: <" + user + ">");
 			fail("Failed to insert new student<" + user + "> ");
 		}
+		db.removeAccount(user, 2);
+	}
+	
+	@Test
+	public void testSwitchMod() {
+		String user  = "newProfessor";
+		String pass  = "testpass";
+		String email = "profP@ycp.edu";
+		int mod = 0;
+		
+		db.addProfessor(user, pass, email, mod);
+		assertTrue(db.getMod(db.getProfID(user)) == 0);
+		controllerHandle.switchMod(user);
+		assertTrue(db.getMod(db.getProfID(user)) != 0);
+		db.removeAccount(user, 1);
+	}
+	
+	@Test
+	public void testSearch() {
+		String name = "Endgame spoilers suck";
+		ArrayList<Review> revs = new ArrayList<Review>();
+		revs.addAll(controllerHandle.search(name));
+		assertTrue(revs.size() > 0);
 	}
 	//***************************************************************     12 TEST CASES     *******************************************************************
 

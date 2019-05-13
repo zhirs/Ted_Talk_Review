@@ -65,8 +65,9 @@ public interface IDatabase {
 	public ArrayList<String> getStudentUserNames();
 	public String getUser(int profID);
 	public ArrayList<String> getMajors();
-	ArrayList<Integer> getStudents();
+	public ArrayList<Integer> getStudents();
 	public ArrayList<String> getReviewUnique();
 	public ArrayList<Integer> getReviewTop();
-	ArrayList<String> getReviewNameByURL(String URL);
+	public ArrayList<String> getReviewNameByURL(String URL);
+	public ArrayList<String> getURLfromReview(int revID);
 }

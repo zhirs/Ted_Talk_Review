@@ -151,7 +151,7 @@ public class DerbyDatabaseTests {
 			// try to retrieve the book and author from the DB
 			// get the list of (Author, Book) pairs from DB
 			
-			if (reviews.get(0).getrevID() > 0) {
+			if (reviews.get(0).getRevID() > 0) {
 				System.out.println("New review (ID: " + reviews.get(0).getRevID() + ") successfully added to reviews table>");
 			
 			}
@@ -611,7 +611,7 @@ public class DerbyDatabaseTests {
 		String tag = "Civil Engineering";
 		int status = 0;
 		ArrayList<Review> revs = db.addReview(URL, name, rate, pres, desc, profID, tag, status);
-		int rev_id = revs.get(0).getrevID();
+		int rev_id = revs.get(0).getRevID();
 		System.out.print(rev_id);
 		ArrayList<String> keys =  db.addandParse(name, rev_id);
 		if(!keys.contains("hundred")){
@@ -671,17 +671,6 @@ public class DerbyDatabaseTests {
 		}
 	}
 
-	//@Test
-//	public void testGetLeaderboard() {
-//		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
-//		result = db.leaderBoardTotals();
-//		
-//		assertTrue(result.size() == 3);
-//		System.out.println(result.get(0).getLeft() + "   " + result.get(0).getRight());
-//		System.out.println(result.get(1).getLeft() + "   " + result.get(1).getRight());
-//		System.out.println(result.get(2).getLeft() + "   " + result.get(2).getRight());
-//	}
-	
 	@Test
 	public void testGetReviewByStatus() {
 		int status = 0;
@@ -722,7 +711,83 @@ public class DerbyDatabaseTests {
 		int avrgRate = db.averageReviewRating(url);
 		assertEquals(avrgRate, 5);
 	}
-
+	
+	@Test
+	public void testGetMajors() {
+		ArrayList<String> temp = new ArrayList<String>();
+		temp.addAll(db.getMajors());
+		assertTrue(temp.get(0).equals("ComputerScience"));
+		assertTrue(temp.get(1).equals("CivilEngineering"));
+		assertTrue(temp.get(2).equals("Psychology"));
+	}
+	
+	@Test
+	public void testGetStudentUsernames() {
+		ArrayList<String> temp = new ArrayList<String>();
+		temp.addAll(db.getStudentUserNames());
+		assertTrue(temp.get(0).equals("student1"));
+		assertTrue(temp.get(1).equals("student2"));
+		assertTrue(temp.get(2).equals("student3"));
+	}
+	
+	@Test
+	public void testGetUser() {
+		String user = db.getUser(4);
+		assertTrue(user.equals("zhirs"));
+		user = db.getUser(6);
+		assertTrue(user.equals("profY"));
+	}
+	
+	@Test
+	public void testGetStudents() {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.addAll(db.getStudents());
+		assertTrue(temp.size() > 3);
+		assertTrue(temp.size() > 0);
+		assertTrue(temp.get(0) == 8);
+	}
+	
+	@Test
+	public void testGetTopReviews() {
+		ArrayList<Integer> top = new ArrayList<Integer>();
+		top.addAll(db.getReviewTop());
+		assertTrue(top.size() > 0);
+	}
+	
+	@Test
+	public void testGetReviewUnique() {
+		ArrayList<String> unique = new ArrayList<String>();
+		unique.addAll(db.getReviewUnique());
+		assertTrue(unique.size() > 0);
+		assertTrue(unique.get(0).equals("www.ilovedb.com"));
+	}
+	
+	@Test
+	public void testGetReviewNameByURL() {
+		String temp = db.getReviewNameByURL("www.ilovedb.com").get(0);
+		assertTrue(temp.equals("Joseph Landau's Symposium"));
+	}
+	
+	@Test
+	public void testUpdateRole() {
+		assertTrue(db.getRole("zhirs") == 0);
+		db.updateRole("zhirs", false);
+		assertTrue(db.getRole("zhirs") == 1);
+		db.updateRole("zhirs", true);
+		assertTrue(db.getRole("zhirs") == 0);
+	}
+	
+	@Test
+	public void testGetGlobalMod() {
+		db.updateModStat(1, 0);
+		assertTrue(db.getGlobalMod() == 0);
+		db.updateModStat(1, 1);
+		assertTrue(db.getGlobalMod() < 0);
+		db.updateModStat(1, 2);
+		System.out.println("global mod is: " + db.getGlobalMod());
+		assertTrue(db.getGlobalMod() > 0);
+		db.updateModStat(1, 0);
+	}
 }
 	
 

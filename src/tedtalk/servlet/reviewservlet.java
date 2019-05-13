@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tedtalkDB.model.Review;
 import tedtalkDB.Controller.NetworkAdminController;
+import tedtalkDB.Controller.ProfessorController;
 import tedtalk.controller.ReviewController;
 
 public class reviewservlet extends HttpServlet {
@@ -17,11 +18,11 @@ public class reviewservlet extends HttpServlet {
 	//VARIABLES:
 	private String username = null;
   //TEMPORARY ONCE TOP10 QUERY IS COMPLETE WILL USE:
-	private String review0 = null; 
-	private String review1 = null;
-	private String review2 = null;
+	//the review strings don't need to be set to null because it is implied
+	private String review0, review1, review2, review3, review4;
 	private String common1 = null;
 	private String common2 = null;
+	private String titlez = null;
 	private int avgRating  = 0;
 	private ReviewController revController;
 	private NetworkAdminController adminController;
@@ -35,10 +36,10 @@ public class reviewservlet extends HttpServlet {
 			throws ServletException, IOException {
 		revController = new ReviewController();
 		adminController = new NetworkAdminController();
+		ArrayList<Review> derbyResults = new ArrayList<Review>();
 		
 		System.out.println("Review Servlet: doGet");	
 		
-		System.out.println("yO This is the url in session " + req.getAttribute("url"));
 		username = (String) req.getSession().getAttribute("username");
 
 		show = (String[]) req.getSession().getAttribute("TopURL");
@@ -58,10 +59,10 @@ public class reviewservlet extends HttpServlet {
 			if(title != null) {
 			String newTitle = title.get(0); 
 
-			ArrayList<Review> derbyResults = revController.search(newTitle);//revController.findByTitle(titles);//DOES NOT WORK
+			derbyResults.addAll(revController.search(newTitle));
+			derbyResults.remove(derbyResults.size()-1);	//without this the review controller adds an extra review
 		
 			//String review0 = "Joseph Landau's Symposium";
-			
 			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
 			req.setAttribute("description", derbyResults.get(0).getDesc());
 			req.setAttribute("presenterName", derbyResults.get(0).getPres());
@@ -80,10 +81,10 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("common2Title", tester1.get(0).getName());
 			req.setAttribute("common2URL", tester1.get(0).getURL());
 			req.setAttribute("common2Rate", tester1.get(0).getRate());
+			}
 			
 			//AVG RATING:
-			avgRating = revController.getAverageRating(tester.get(0).getURL());
-			
+			avgRating = revController.getAverageRating(derbyResults.get(0).getURL());
 			for(int i = 0; i < derbyResults.size(); i++) {
 				System.out.println("----the description is: " + derbyResults.get(i).getDesc() + " the name is " + derbyResults.get(i).getName());
 			}
@@ -91,8 +92,10 @@ public class reviewservlet extends HttpServlet {
 			descriptions = new ArrayList<String>();
 			ratings = new ArrayList<Integer>();
 			for(Review reviews: derbyResults) {
-				descriptions.add(reviews.getDesc());
-				ratings.add(reviews.getRate());
+				if(!descriptions.contains(reviews.getDesc())) {
+					descriptions.add(reviews.getDesc());
+					ratings.add(reviews.getRate());
+				}
 			}
 			int listSize = descriptions.size() -1;
 
@@ -101,7 +104,7 @@ public class reviewservlet extends HttpServlet {
 			req.setAttribute("ratings", ratings);
 			req.setAttribute("listSize", listSize);
 			}
-			}
+			
 			req.getRequestDispatcher("/_view/review.jsp").forward(req, resp);
 
 		}
@@ -112,35 +115,16 @@ public class reviewservlet extends HttpServlet {
 		
 		System.out.println("Review Servlet: doPost");
     
-		Review handle = new Review();
 		ReviewController revController = new ReviewController();
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODE
+		
+		revController.newReview(req.getParameter("url"), req.getParameter("title"), Integer.parseInt(req.getParameter("rating")), req.getParameter("presenterName"), req.getParameter("description"), profID,  req.getParameter("tags"));
+	
+		//String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
-		handle.setURL(req.getParameter("url"));
-		System.out.println(handle.getURL());
-		handle.setName( req.getParameter("title"));
-		System.out.println(handle.getName());
-		handle.setRate(req.getIntHeader("rating"));
-		System.out.println(handle.getRate());
-		handle.setPres(req.getParameter("presenterName"));
-		System.out.println(handle.getPres());
-		handle.setDesc(req.getParameter("description"));
-		System.out.println(handle.getDesc());
-		handle.setTag(req.getParameter("tags"));
-		System.out.println(handle.getTag());
+		//reviews.add(reviewDesc);
+		//req.setAttribute("UpdatedReviews", reviews);
 		
-		revController.setModel(handle);//USED WITH THE DB REVIEW MODEL
-		
-		revController.newReview(handle.getURL(), handle.getName(), handle.getRate(), handle.getPres(), handle.getDesc(), profID,  handle.getTag());
-		ArrayList<String> reviews = new ArrayList<String>();
-							
-		String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
-
-		reviews.add(reviewDesc);
-		req.setAttribute("UpdatedReviews", reviews);
-		req.setAttribute("reviewHandle",handle);//CREATING AN ATTRIB TO USE IN JSP
-		
-		//clears unneeded session data
+		//clears unneeded session data/		
 		req.setAttribute("description", null);
 		req.setAttribute("presenterName", null);
 		req.setAttribute("url", null);
@@ -149,19 +133,7 @@ public class reviewservlet extends HttpServlet {
 		req.getSession().setAttribute("titles", null);
 		
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
-		
-		int roleID = adminController.findRoleID(username);	//for some reason this method works but creates a null pointer exception
-		//System.out.println(username);
-		
-		if(roleID == 0) {
-			req.getRequestDispatcher("/_view/networkadmin.jsp").forward(req, resp);
-		}
-		else if(roleID== 1) {
-			req.getRequestDispatcher("/_view/professor.jsp").forward(req, resp);
-		}
-		else{
-			req.getRequestDispatcher("/_view/student.jsp").forward(req, resp);
-		} 
+			
+		req.getRequestDispatcher("/_view/student.jsp").forward(req,resp);
 	}
-	
 }

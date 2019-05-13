@@ -19,9 +19,6 @@
 		</span>
 		<h1>Professor Settings</h1>
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
-		</form>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "home" class="button" value = "Home">
 		</form>
@@ -30,16 +27,8 @@
 		</form>
 		<br><br><br><br><br>
 		<hr>
-		Create a student account: <br>
-		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
-		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
-		</form>
+		<h2> Create a student account: </h2>
+		
 		<br><br><br>
-		Or change reviewing(on/off):<br>
-		${globalModStat}<br>
-		your current reviewing status is: ${currentStat}<br>
-		<form action = "${pageContext.servletContext.contextPath}/professorSetting" method = "post">
-		<input type = "Submit" name = "moderatorStatus" class="button" value = "On/Off">
-		</form>
 	</body>
 </html>	

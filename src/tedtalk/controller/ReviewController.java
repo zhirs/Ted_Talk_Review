@@ -25,7 +25,7 @@ public class ReviewController {
 		try {
 			String[] parsed = result.get(0).getName().split(" ");
 			if(parsed.length > 0) {
-			derby.addandParse(name, result.get(0).getrevID());
+			derby.addandParse(name, result.get(0).getRevID());
 			}
 			if(derby.getModStat(profID) == 1) {
 				result.get(result.size() - 1).setStatus(1);
@@ -55,16 +55,25 @@ public class ReviewController {
 	}
 	
 	public ArrayList<Review> search(String input) {
+		ArrayList<Review> tempRevs = new ArrayList<Review>();
 		ArrayList<Review> revs = new ArrayList<Review>();
 		ArrayList<String> keys = derby.parseTitle(input);
 		ArrayList<Integer> revIDS = new ArrayList<Integer>();
 		keys.add(input);
-		revs.addAll(derby.findReview(input));
+		
+		tempRevs.addAll(derby.findReview(input));
+		
 		for(int i = 0; i < keys.size(); i++) {
 			revIDS.addAll(derby.getRevID(keys.get(i)));
 		}
-		for(int i = 0; i <revIDS.size(); i++) {
-			revs.addAll(derby.getReviews(revIDS.get(i))); 
+		
+		for(int i = 0; i < revIDS.size(); i++) {
+			tempRevs.addAll(derby.getReviews(revIDS.get(i))); 
+		}
+		for(int i = 0; i < tempRevs.size(); i++) {
+			if(tempRevs.get(i).getStatus() == 2) {
+				revs.add(tempRevs.get(i));
+			}
 		}
 		return revs;
 	}
@@ -92,5 +101,16 @@ public class ReviewController {
 	public int getAverageRating(String url) {
 		int avrg = derby.averageReviewRating(url);
 		return avrg;
+	}
+	public ArrayList<String> getURL(ArrayList<Integer> revID) {
+		ArrayList<String> uniques = new ArrayList<String>();
+		for(Integer newID : revID) {
+			ArrayList<String> temp = derby.getURLfromReview(newID);
+			for(int i = 0; i < temp.size(); i++) {
+				if(!uniques.contains(temp.get(i)));
+				uniques.add(temp.get(i));
+			}
+		}
+		return uniques;
 	}
 }

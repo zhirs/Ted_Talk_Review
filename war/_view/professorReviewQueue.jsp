@@ -18,11 +18,14 @@
 			<img src = "images/YorkCollge.png" align = "right" width = 200 height = 150 >
 			</a>			
 		</span>
-		<h1>Professor Home</h1>		
+		<h1>Professor Review Queue</h1>		
 
 		<hr>		
-		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "Search">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
@@ -32,28 +35,30 @@
 		<h2>Suggested TEDTalks:</h2>
 		<h3>Reviews pending approval</h3>
 		<c:forEach var="i" begin = "0" end = "${listSize}">
-		<div>
-			<table>
-				<tr>
-					<td>Review Title:<input type="text" name = "title" size = "40" value="${revNames.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>Presenter's Name:<input type="text" name = "presenterName"size = "40" value="${revPresenters.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>URL:<input type="text" name = "url" size = "40" value="${revURLs.get(i)}" readonly> </td>
-		 		</tr>
-		 		<tr>
-		 			<td>Description:<input type="text" name = "description" size = "200" value="${revDescriptions.get(i)}" readonly></td>
-		 		</tr>			 	
-	 		</table>
+			<div class="pendingReviews">
+				<table>
+					<tr>
+						<td>Review Title: ${revNames.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>Presenter's Name: ${revPresenters.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>URL: ${revURLs.get(i)} </td>
+		 			</tr>
+		 			<tr>
+		 				<td>Description: ${revDescriptions.get(i)} </td>
+		 			</tr>			 	
+	 			</table>
+	 			<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
+  				<button id="deleteButton" name="delete" value="${revIDs.get(i)}" type="submit">Delete</button>
+				</form>
+				<hr>
 	 		</div>
 		</c:forEach>
 		
-		
-		<h3>Review title to reject</h3>
-  		<form action="${pageContext.servletContext.contextPath}/professorReviewQueue" method="post"> 
-  			<input type = "text" name = "delete" value = "${delete}">
+		<form action="${pageContext.servletContext.contextPath}/approvedReview" method="get"> 
+		<input class = "button" type ="submit" name = "workda" value = "Approve All Reviews">
 		</form>
 	</body>
 </html>

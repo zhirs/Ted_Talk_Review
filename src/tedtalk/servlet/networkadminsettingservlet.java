@@ -68,11 +68,11 @@ public class networkadminsettingservlet extends HttpServlet {
 	
 	public void changeToString() {
 		if(globalMod < 0) {
-			globalModStatStatus = "tED Talk review reviewing by professor is currently off, " + Math.abs(globalMod) + " moderator status change(s) need to change review type";
+			globalModStatStatus = "Ted Talk review reviewing by professor is currently off, " + Math.abs(globalMod) + " moderator status change(s) need to change review type";
 		}else if(globalMod > 0){
-			globalModStatStatus = "tED Talk review reviewing by professor is currently on, " + globalMod + " moderator status change(s) need to change review type";
+			globalModStatStatus = "Ted Talk review reviewing by professor is currently on, " + globalMod + " moderator status change(s) need to change review type";
 		}else {
-			globalModStatStatus = "tED Talk review reviewing by professor is currently off, 1 moderator status change(s) need to change review type";
+			globalModStatStatus = "Ted Talk review reviewing by professor is currently off, 1 moderator status change(s) need to change review type";
 		}
 		
 		switch(modStat) {

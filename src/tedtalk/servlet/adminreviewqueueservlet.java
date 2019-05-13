@@ -12,7 +12,7 @@ import tedtalkDB.model.Review;
 import tedtalkDB.model.Student;
 import tedtalkDB.Controller.ProfessorController;
 
-public class professorreviewqueueservlet extends HttpServlet {
+public class adminreviewqueueservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String username = null;
 	private ArrayList<Review> reviewQueue;
@@ -24,10 +24,9 @@ public class professorreviewqueueservlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("Professor Review Queue: doGet");	
-		username = (String) req.getSession().getAttribute("username");
+		System.out.println("Network Admin Review Queue: doGet");	
 		
-		// call JSP to generate empty form
+		username = (String) req.getSession().getAttribute("username");
 		if(username == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
@@ -53,8 +52,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 				}
 			}
 			
-			listSize = revNames.size() - 1;
-			if(listSize >= 0) {
+			if(listSize > 0) {
 				req.setAttribute("listSize", listSize);
 				req.setAttribute("revNames" , revNames);
 				req.setAttribute("revURLs" , revURLs);
@@ -71,7 +69,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("Professor Review Queue: doPost");
+		System.out.println("Network Admin Review Queue: doPost");
 		
 		listSize = 0;
 		revNames = new ArrayList<String>();
@@ -106,7 +104,7 @@ public class professorreviewqueueservlet extends HttpServlet {
 		req.setAttribute("revPresenters" , revPresenters);
 		req.setAttribute("revDescriptions" , revDescriptions);
 		req.setAttribute("revIDs" , revIDs);
-		req.getRequestDispatcher("/_view/professorReviewQueue.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/adminReviewQueue.jsp").forward(req, resp);
 	} 
 	
 }

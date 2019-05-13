@@ -5,7 +5,7 @@
 <html>
 	<head>
 			<title>Approved Students</title>
-			<jsp:include page ="CSS/profilePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
+			<jsp:include page ="CSS/homePage.css"/> <!-- ALTERNATIVE TO USEING HREFS-->
 					
 	</head>
 	
@@ -19,12 +19,24 @@
 			</a>			
 		</span>
 		<h1>Approved Students</h1>	
-		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
+		<form action = "${pageContext.servletContext.contextPath}/home" method="get">
+		<input type = "Submit" name = "redirectProfile" class="button" value = "Home">
+		</form>
+		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
+		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
+		<input type = "Submit" name = "searchPage" class="button" value = "search">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<h2>All students in queue added</h2>
+		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		</form>
+		<br>
+		<br>
+		<br>
+		<h1>All students in queue added</h1>
 	</body>
 </html>

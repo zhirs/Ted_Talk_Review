@@ -182,13 +182,13 @@ public class DerbyDatabase implements IDatabase {
 							"	rev_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
 //							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
-							"	url varchar(100), " +
-							"	name varchar(100)," +
+							"	url varchar(4000), " +
+							"	name varchar(4000)," +
 							"   rate integer, " +
-							"	pres varchar(100), " + 
+							"	pres varchar(4000), " + 
 							"	description varchar(4000), " +
 							"   prof_ID integer, " +
-							"	tag varchar(100), " +
+							"	tag varchar(4000), " +
 							"   status integer, " + //MISSING COMMA. 
 							"   pubDate date " +
 							")"
@@ -1720,7 +1720,7 @@ public class DerbyDatabase implements IDatabase {
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
 				ResultSet resultSet1 = null;
-				// count of modStat, 0 or negative if off, positive if on
+				// count of modStat, 0 or negative if reviewing off, positive if reviewing on
 				int countStat = 0;
 				
 				try { 
@@ -1760,14 +1760,12 @@ public class DerbyDatabase implements IDatabase {
 			public Integer execute(Connection conn) throws SQLException {
 				//  Auto-generated method stub
 				PreparedStatement stmt1 = null;
-				int profID = getProfID(user);
-				
+				int profID = getProfID(user);			
 				try { 
 					stmt1 = conn.prepareStatement(
-						" delete "+
-						" from reviews"
-						+ "where prof_id = ?"
-						+ "and name = ?"
+						" delete "
+						+ " from reviews "
+						+ "where prof_id=? and name=? "
 					);
 					stmt1.setInt(1, profID);
 					stmt1.setString(2, title);
@@ -1801,8 +1799,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setString(1, keyword);
 					resultSet1 = stmt1.executeQuery();
 					int foundRevID = -1;
-					int i = 1;
+				
 					while(resultSet1.next()) { 
+						int i = 1;
 						foundRevID = resultSet1.getInt(i++);
 						revIDS.add(foundRevID);
 					}
@@ -2166,7 +2165,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		}
 		);	
-	}
+	} 
 
 	@Override
 	public Integer averageReviewRating(String url) {
@@ -2321,7 +2320,6 @@ public class DerbyDatabase implements IDatabase {
 						+ "from students");
 				resultSet1 = stmt1.executeQuery();
 				while(resultSet1.next()) {
-					System.out.println(resultSet1.getInt(1));
 					students.add(getUser(resultSet1.getInt(1)));
 				}
 				return students;
@@ -2495,5 +2493,37 @@ public class DerbyDatabase implements IDatabase {
 		}
 		);
 	}
+	@Override
+	public ArrayList<String> getURLfromReview(int revID) {
+		return executeTransaction(new Transaction<ArrayList<String>>() {
+			@Override
+			public ArrayList<String>  execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				ResultSet resultSet1 = null;
+				
+				try {
+					stmt1 = conn.prepareStatement(
+							"select prof_id "
+							+ "from reviews "
+							+ "where url = ? ");
+					stmt1.setInt(1, revID);
+					resultSet1 = stmt1.executeQuery();
+					int i = 1;
+					ArrayList<String> profIDS = new ArrayList<String>();
+					while(resultSet1.next()) {
+						profIDS.add(resultSet1.getString(i++));
+					}
+					return profIDS;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+				}
+			}
+		}
+		);
+	}
+	
+	
+	
 }	
 
