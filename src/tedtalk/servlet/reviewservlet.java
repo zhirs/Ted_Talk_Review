@@ -55,21 +55,22 @@ public class reviewservlet extends HttpServlet {
 		}
 		else {
 			//GET REVIEWS FROM DATABASE: TO AUTO POPULATE THE REVIEW PAGE:
-			ArrayList<String> title = (ArrayList<String>) req.getSession().getAttribute("titles");
-			if(title != null) {
-			String newTitle = title.get(0); 
+			if(show != null) {
+				for(int iterator = 0; iterator < show.length - 1; iterator++) {
 
-			derbyResults.addAll(revController.search(newTitle));
-			derbyResults.remove(derbyResults.size() - 1);	//without this the review controller adds an extra review
+					String newTitle = show[iterator];//title.get(0); 
 		
-			//String review0 = "Joseph Landau's Symposium";
-			//SETTING REFERENCE FOR JSP: INDEX OF 0 WILL RETURN THE FIRST HIT FOR THAT TITLE
-			req.setAttribute("description", derbyResults.get(0).getDesc());
-			req.setAttribute("presenterName", derbyResults.get(0).getPres());
-			req.setAttribute("url", derbyResults.get(0).getURL());
-			req.setAttribute("tag", derbyResults.get(0).getTag());
-			req.setAttribute("name",derbyResults.get(0).getName());
-			
+					derbyResults.addAll(revController.search(newTitle));
+					derbyResults.remove(derbyResults.size() - 1);	//without this the review controller adds an extra review
+				}
+				for(int i = 0; i < show.length -1; i++) {
+			req.setAttribute("description", derbyResults.get(i).getDesc());
+			req.setAttribute("presenterName", derbyResults.get(i).getPres());
+			req.setAttribute("url", derbyResults.get(i).getURL());
+			req.setAttribute("tag", derbyResults.get(i).getTag());
+			req.setAttribute("name",derbyResults.get(i).getName());
+				}
+
 			//DISPLAY RELATED REVIEWS:
 			if(review1 != null) {
 			ArrayList<Review> tester = revController.search(review1);
