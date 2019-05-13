@@ -20,7 +20,6 @@
 		</span>
 		<h1>Network Admin Review Queue</h1>		
 
-		<hr>		
 		<form action = "${pageContext.servletContext.contextPath}/networkadmin" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
@@ -55,6 +54,7 @@
 		<form action="${pageContext.servletContext.contextPath}/approvedReview" method="get"> 
   		<button id="deleteButton" class = "button" name="delete" value="${revIDs.get(i)}" type="submit">Approve ALL Reviews</button>
 		</form>
+		<hr>
 		
 	</body>
 </html>

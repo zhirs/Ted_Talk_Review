@@ -34,9 +34,13 @@
 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/checkStudentDateAdmin" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
+		</form>
 		<br>
 		<br>
 		<br>
 		<h1>All students in queue added</h1>
+		<hr>
 	</body>
 </html>

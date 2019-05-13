@@ -89,6 +89,7 @@ public class loginservlet extends HttpServlet {
 			session.setAttribute("email", login.getEmail());
 			session.setAttribute("profID", login.getprofID());
 			// global review status
+			System.out.println("Mod stat is: " +derby.getGlobalMod());
 			session.setAttribute("modStat", derby.getGlobalMod());
 			if(derby.getRole(user) == 2){
 				String section = derby.getSection(login.getprofID());

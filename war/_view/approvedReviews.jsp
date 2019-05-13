@@ -19,8 +19,10 @@
 			</a>			
 		</span>
 		<h1>Approved Reviews</h1>	
+		<div class = "buttonbar">
 		<form action = "${pageContext.servletContext.contextPath}/home" method="get">
-		<input type = "Submit" name = "redirectProfile" class="button" value = "Home">
+		<input type = "Submit" name = "redirectProfile" class="button" value = "Home"> 
+	
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/studentOverview" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Overview">
@@ -34,9 +36,11 @@
 		<form action = "${pageContext.servletContext.contextPath}/createStudent" method = "get">
 		<input type = "Submit" name = "createAdmin" class="button" value = "Create Student">
 		</form>
+		</div>
 		<br>
 		<br>
 		<br>
 		<h1>All reviews in queue approved</h1>
+		<hr>
 	</body>
 </html>

@@ -116,9 +116,12 @@ public class reviewservlet extends HttpServlet {
 		System.out.println("Review Servlet: doPost");
     
 		ReviewController revController = new ReviewController();
-		
+		ProfessorController pc = new ProfessorController();
 		revController.newReview(req.getParameter("url"), req.getParameter("title"), Integer.parseInt(req.getParameter("rating")), req.getParameter("presenterName"), req.getParameter("description"), profID,  req.getParameter("tags"));
-	
+		
+		if((Integer)(req.getSession().getAttribute("modStat")) < 0) {
+			pc.approvalAllReviews();
+		}
 		//String reviewDesc = req.getParameter("description");//REMOVE THIS LINE LATER
 
 		//reviews.add(reviewDesc);
@@ -134,6 +137,7 @@ public class reviewservlet extends HttpServlet {
 		
 		//HOW DO WE KNOW WHAT JSP TO RENDER?:
 			
-		req.getRequestDispatcher("/_view/student.jsp").forward(req,resp);
+		req.getRequestDispatcher("/_view/home.jsp").forward(req,resp);
+		
 	}
 }

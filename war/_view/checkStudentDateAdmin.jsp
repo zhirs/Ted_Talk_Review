@@ -20,7 +20,6 @@
 		</span>
 		<h1>Search Reviews by Date</h1>		
 
-		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/networkadminHome" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Home">
 		</form>		
@@ -31,7 +30,6 @@
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
 		<br><br><br>
-		<hr>
 		<h2>Search for Reviews:</h2>
 		
 		<div class = "searchSection">
@@ -47,14 +45,13 @@
 		 		<button type="submit" name="submit" value = "searchDate">Submit Date</button>
 			 </form>
 		 </div>
+		 <hr>
 		 <div id = "reviewSection">	
-			<hr>	
-			<p>This should show the return value for all of the reviews</p>
 			
 			<c:forEach var="reviews" items="${reviews}">
 				<c:out value = "${reviews}"/> <br><br>
 			</c:forEach>	
-			<hr>					
 		</div>
+		<hr>
 	</body>
 </html>

@@ -19,28 +19,27 @@
 		</span>
 		<h1> Search </h1>
 		<hr>
+		<br><br><br>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 		</form>
-		
 		<form action = "${pageContext.servletContext.contextPath}/profile" method="get">
 		<input type = "Submit" name = "redirectProfile" class="button" value = "Profile">
 		</form>
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		<br><br><br>
-		<hr>		
+		<br><br><br><br><br>
+		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/result" method = "post">
 		<input type = "text" name = "input" placeholder = "search" required = "required" value = "${input}">
 		</form>
-
-		<hr>
+		<br><br><br><br><br>
   		<h2>Results: </h2>
-
   		<c:forEach items="${titles}" var="titles">
       		<td> <input type = "hidden" value="${titles}"></td>
       		<a href="${pageContext.servletContext.contextPath}/review" target = blank > ${titles} </a>
   		</c:forEach>
+  		<hr>
   	</body>
 </html>

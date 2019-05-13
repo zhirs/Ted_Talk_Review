@@ -34,6 +34,9 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
+		<form action = "${pageContext.servletContext.contextPath}/checkStudentDateAdmin" method = "get">
+		<input type = "Submit" name = "createAdmin" class="button" value = "Check Dates">
+		</form>
 		<br>
 		<div class = "suggested">
 		<br><br><br>

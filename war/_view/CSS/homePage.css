@@ -1,14 +1,19 @@
 <html>
 	<style type = text/css>
 	body{
-	background-color: grey;
+	background-color: black;
 	color: white;
 	}
-	h1{text-align: center; color: purple;}		
-	h2{color:purple;}
-	h3{color:purple;}
+	h1{text-align: center; color: #EF2B2B;}		
+	h2{color:#EF2B2B;}
+	h3{color:#EF2B2B;}
+	hr{
+	height:5px;
+	background-color:white;
+	border-color:white;
+	}
 	.button {
-		background-color: #9370DB; 
+		background-color: grey; 
 		border: 2px solid black;
 		color: white;
 		padding: 20px 31px;
@@ -52,6 +57,10 @@
     	background-color: white;
 	}
 	#pendingReviews{
+	}
+	.buttonbar{
+		margin-right: 200px;
+		float: center;
 	}
 	</style>
 </html>

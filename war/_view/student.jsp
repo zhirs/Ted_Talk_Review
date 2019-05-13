@@ -20,7 +20,6 @@
 		</span>
 		
 		<h1>Welcome ${email} ${session}</h1>		
-		<hr>
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
 		<input type = "Submit" name = "redirectHome" class="button" value = "Home">
 		</form>
@@ -34,13 +33,13 @@
 		<%--div that presents a created review. when real database is implemented this will be unnecessary --%>
 		<div id = "reviewSection">	
 			<hr>	
-			<p>Pending reviews:</p>
+			<h2>Pending reviews:</h2>>
 			<c:forEach items="${pendingDescs}" var="pendingDescs">
 				<c:out value = "${pendingDescs}"/>
 				<p></p>
 			</c:forEach>	
 			<hr>
-			<p>Approved reviews:</p>
+			<h2>Approved reviews:</h2>
 			<c:forEach items="${approvedDescs}" var="approvedDescs">
 				<c:out value = "${approvedDescs}"/>
 				<p></p>

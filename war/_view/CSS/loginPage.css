@@ -17,7 +17,9 @@
 		color: white;
 	}
 	hr{
-		color: black;
+		height:10px;
+		background-color:purple;
+		border-color:purple;
 	}
 	#buttonForm{
 	border: 1px solid black;

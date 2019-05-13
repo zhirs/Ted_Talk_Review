@@ -19,8 +19,9 @@
 			</a>			
 		</span>
 		<h1>Student Overview</h1>
+		<div class = "buttonbar">
 		<form action = "${pageContext.servletContext.contextPath}/home" method = "get">
-		<input type = "Submit" name = "logout" class="button" value = "Overview">
+		<input type = "Submit" name = "logout" class="button" value = "Home">
 		</form>
 		<form action="${pageContext.servletContext.contextPath}/result" method="get"> 
 		<input type = "Submit" name = "searchPage" class="button" value = "Search">
@@ -28,12 +29,13 @@
 		<form action = "${pageContext.servletContext.contextPath}/login" method = "get">
 		<input type = "Submit" name = "logout" class="button" value = "Logout">
 		</form>
-		
+		</div>
 		<br><br><br><br><br>
 		<hr>
 		<c:forEach items="${tabs}" var="tabs">
       		<td><c:out  value="${tabs}"/></td>
       		<p></p>
-  		</c:forEach>  			
+  		</c:forEach>  		
+  		<hr>	
 	</body>
 </html>
